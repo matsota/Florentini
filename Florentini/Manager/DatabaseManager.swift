@@ -68,7 +68,7 @@ extension DatabaseManager.ChatMessages: DocumentSerializable{
         guard let name = dictionary[DatabaseManager.ChatMessagesCases.name.rawValue] as? String,
             let content = dictionary[DatabaseManager.ChatMessagesCases.content.rawValue] as? String,
             let uid = dictionary[DatabaseManager.ChatMessagesCases.uid.rawValue] as? String,
-            let timeStamp = dictionary["\(DatabaseManager.ChatMessagesCases.timeStamp.rawValue)"] as? Date else {return nil}
+            let timeStamp = dictionary[DatabaseManager.ChatMessagesCases.timeStamp.rawValue] as? Date else {return nil}
         self.init(name: name, content: content, uid: uid, timeStamp: timeStamp)
     }
 }
@@ -88,7 +88,7 @@ extension DatabaseManager {
         case name = "name"
         case content = "content"
         case uid = "uid"
-        case timeStamp = "timeStamp"
+        case timeStamp
     }
     
 }
