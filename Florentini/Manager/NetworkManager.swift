@@ -60,6 +60,20 @@ class NetworkManager {
     // Go/
     /// -> login: test@test.com  pass: 123456  ->  Вверху справа Чат.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    func chatUpdate(success: @escaping(DatabaseManager.ChatMessages) -> Void) {
+        db.collection("workersMessages").whereField(DatabaseManager.ChatMessagesCases.timeStamp.rawValue, isGreaterThan: Date()).addSnapshotListener { (querySnapshot, error) in
+            guard let snapshot = querySnapshot else {return}
+            
+            snapshot.documentChanges.forEach { diff in
+                if diff.type == .added {
+                    guard let newMessage = DatabaseManager.ChatMessages(dictionary: diff.document.data()) else {return}
+                    success(newMessage)
+                }
+            }
+        }
+    }
+    
 }
 
 extension NetworkManager {

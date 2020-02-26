@@ -10,8 +10,12 @@ import UIKit
 import Firebase
 
 class WorkersChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    
+    //MARK: TableView Outlet
     @IBOutlet weak var messageTableView: UITableView!
     
+    //MARK: Системные переменные
     let transition = SlideInTransition()
     let alert = UIAlertController()
     
@@ -20,7 +24,9 @@ class WorkersChatViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+     
+
+        //MARK: Подгрузка информации о сотруднике, для чата
         NetworkManager.shared.workersInfoLoad(success: { workerInfo in
             self.currentWorkerInfo = workerInfo
             self.currentWorkerInfo.forEach { workerInfo in
@@ -31,6 +37,7 @@ class WorkersChatViewController: UIViewController, UITableViewDelegate, UITableV
             print(error.localizedDescription)
         }
         
+        //MARK: Подгрузка всех сообщений, что сотрудники оставляли в чате
         NetworkManager.shared.workersMessagesLoad(success: { messages in
             self.messagesArray = messages
             DispatchQueue.main.async {
@@ -38,6 +45,14 @@ class WorkersChatViewController: UIViewController, UITableViewDelegate, UITableV
             }
         }) { error in
             print(error.localizedDescription)
+        }
+        
+        //MARK: Подгрузка новых сообщений, что сотрудники оставляли в чате, в процессе пользования приложением.
+        NetworkManager.shared.chatUpdate { newMessages in
+            self.messagesArray.insert(newMessages, at: 0)
+            DispatchQueue.main.async {
+                self.messageTableView.reloadData()
+            }
         }
     }
     
