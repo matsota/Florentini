@@ -32,6 +32,7 @@
 		8FE3F69924035BE4003001CA /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F69624035BE4003001CA /* CatalogViewController.swift */; };
 		8FE3F69D24035BED003001CA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F69B24035BED003001CA /* HomeViewController.swift */; };
 		8FE3F69F24035BF7003001CA /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F69E24035BF6003001CA /* MenuViewController.swift */; };
+		8FFEDF262407EC3500D894FD /* NewProductSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFEDF252407EC3500D894FD /* NewProductSetViewController.swift */; };
 		E86CADEFD3FB618B8C6FB2C4 /* Pods_Florentini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6A7F0BFE6E9D9665F2F01FE /* Pods_Florentini.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,7 @@
 		8FE3F69624035BE4003001CA /* CatalogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		8FE3F69B24035BED003001CA /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8FE3F69E24035BF6003001CA /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		8FFEDF252407EC3500D894FD /* NewProductSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProductSetViewController.swift; sourceTree = "<group>"; };
 		D6A7F0BFE6E9D9665F2F01FE /* Pods_Florentini.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Florentini.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E25E8B94760D73E4AD52FD3F /* Pods-Florentini.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Florentini.release.xcconfig"; path = "Target Support Files/Pods-Florentini/Pods-Florentini.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -92,6 +94,7 @@
 		8F2062AA23FF6002007C481A /* WorkSpace */ = {
 			isa = PBXGroup;
 			children = (
+				8FFEDF272407F39000D894FD /* Admin Service */,
 				8F2062CC23FFA75C007C481A /* Cells */,
 				8F2062B123FF668C007C481A /* Menu */,
 				8F2062A623FF5ECE007C481A /* LoginWorkSpaceViewController.swift */,
@@ -194,6 +197,14 @@
 				8FE3F69E24035BF6003001CA /* MenuViewController.swift */,
 			);
 			path = Menu;
+			sourceTree = "<group>";
+		};
+		8FFEDF272407F39000D894FD /* Admin Service */ = {
+			isa = PBXGroup;
+			children = (
+				8FFEDF252407EC3500D894FD /* NewProductSetViewController.swift */,
+			);
+			path = "Admin Service";
 			sourceTree = "<group>";
 		};
 		95E6EF1498E8FB12266CF420 /* Frameworks */ = {
@@ -322,6 +333,7 @@
 			files = (
 				8F2062BC23FF714D007C481A /* WorkersFAQViewController.swift in Sources */,
 				8F2062A323FEB25A007C481A /* MainWorkSpaceViewController.swift in Sources */,
+				8FFEDF262407EC3500D894FD /* NewProductSetViewController.swift in Sources */,
 				8F2062A723FF5ECE007C481A /* LoginWorkSpaceViewController.swift in Sources */,
 				8FE3F69924035BE4003001CA /* CatalogViewController.swift in Sources */,
 				8F2062A923FF5F94007C481A /* AuthenticationManager.swift in Sources */,

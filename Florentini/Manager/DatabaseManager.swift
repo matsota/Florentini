@@ -10,10 +10,11 @@ import Foundation
 import Firebase
 
 class DatabaseManager {
-    
+
+    //MARK: - Системные переменные
     static let shared = DatabaseManager()
     
-//MARK: Шаблон для информации о Сотруднике
+    //MARK: - Шаблон для информации о Сотруднике
     struct WorkerInfo {
         var name: String
         var position: String
@@ -26,7 +27,7 @@ class DatabaseManager {
         }
     }
     
-//MARK: Шаблон для информации о Чате
+    //MARK: - Шаблон для информации о Чате
     struct ChatMessages {
         var name: String
         var content: String
@@ -43,18 +44,37 @@ class DatabaseManager {
         }
     }
     
+    //MARK: - Шаблон для Сета нового товара
+    struct NewProduct {
+        var productName: String
+        var productPrice: Double
+        var productCategory: String
+        var productDescription: String
+        var productImageURL: String
+        
+        
+        var dictionary: [String:Any]{
+            return [
+                DatabaseManager.NewProductCases.productName.rawValue: productName,
+                DatabaseManager.NewProductCases.productPrice.rawValue: productPrice,
+                DatabaseManager.NewProductCases.productCategory.rawValue: productCategory,
+                DatabaseManager.NewProductCases.productDescription.rawValue: productDescription,
+                DatabaseManager.NewProductCases.productImageURL.rawValue: productImageURL
+            ]
+        }
+    }
+    
 }
 
-
-//MARK: Протокол шаблонов
+    //MARK: - OUT of Class
+    //MARK: - Протокол шаблонов
 protocol DocumentSerializable {
     init?(dictionary: [String:Any])
 }
 
 
-//MARK: Extensions
-
-///MARK: О сотрудниках
+    //MARK: - Extensions Init
+    //MARK: О сотрудниках
 extension DatabaseManager.WorkerInfo: DocumentSerializable {
     init?(dictionary: [String : Any]) {
         guard let name = dictionary[DatabaseManager.WorkerInfoCases.name.rawValue] as? String,
@@ -63,7 +83,7 @@ extension DatabaseManager.WorkerInfo: DocumentSerializable {
     }
 }
 
-///MARK:  Про чат
+    //MARK: Про чат
 extension DatabaseManager.ChatMessages: DocumentSerializable{
     init?(dictionary: [String: Any]) {
         guard let name = dictionary[DatabaseManager.ChatMessagesCases.name.rawValue] as? String,
@@ -73,23 +93,43 @@ extension DatabaseManager.ChatMessages: DocumentSerializable{
         self.init(name: name, content: content, uid: uid, timeStamp: timeStamp)
     }
 }
-
-
-//MARK: Cases
-extension DatabaseManager {
     
-///MARK: О сотрудниках
+    //MARK: Про Товар
+extension DatabaseManager.NewProduct: DocumentSerializable{
+    init?(dictionary: [String: Any]) {
+        guard let productName = dictionary[DatabaseManager.NewProductCases.productName.rawValue] as? String,
+            let productPrice = dictionary[DatabaseManager.NewProductCases.productPrice.rawValue] as? Double,
+            let productCategory = dictionary[DatabaseManager.NewProductCases.productCategory.rawValue] as? String,
+            let productDescription = dictionary[DatabaseManager.NewProductCases.productDescription.rawValue] as? String,
+            let productImageURL = dictionary[DatabaseManager.NewProductCases.productImageURL.rawValue] as? String else {return nil}
+        self.init(productName: productName, productPrice: productPrice, productCategory: productCategory, productDescription: productDescription, productImageURL: productImageURL)
+    }
+}
+
+
+    //MARK: - Cases Extension
+extension DatabaseManager {
+    //MARK: Про сотрудников
     enum WorkerInfoCases: String, CaseIterable {
         case name
         case position
     }
-    
-///MARK:  Про чат
+    //MARK: Про чат
     enum ChatMessagesCases: String, CaseIterable {
         case name
         case content
         case uid
         case timeStamp
+    }
+    //MARK: Про новый товар
+    enum NewProductCases: String, CaseIterable {
+        case productName
+        case productPrice
+        case productCategory
+        case productDescription
+        case productImageURL
+        
+        case imageCollection
     }
     
 }

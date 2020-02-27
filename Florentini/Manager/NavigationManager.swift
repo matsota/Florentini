@@ -10,13 +10,13 @@ import UIKit
 
 class NavigationManager: UINavigationController {
    
-    //MARK: Системные переменные
+    //MARK: - Системные переменные
     static let shared = NavigationManager()
     
 //    let transition = SlideInTransition()
     
     
-    //MARK: Enums for ViewControllers
+    //MARK: - Enums for ViewControllers
     enum IDVC: String, CaseIterable {
         
         //for clients
@@ -43,39 +43,39 @@ class NavigationManager: UINavigationController {
 //        view.window?.rootViewController = workersChatVC
 //        view.window?.makeKeyAndVisible()
 //    }
-    
-    func workerCatalogTransition() {
-        let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkerCatalogVC.rawValue) as? WorkerCatalogViewController
-        view.window?.rootViewController = catalogVC
-        view.window?.makeKeyAndVisible()
-    }
-
-      func menuOptionPicked(_ menuType: MenuType) {
-        switch menuType {
-        case .home:
-            print("website")
-            let homeVC = storyboard?.instantiateInitialViewController()
-            view.window?.rootViewController = homeVC
-            view.window?.makeKeyAndVisible()
-        case .catalog:
-            print("catalog")
-            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.CatalogVC.rawValue) as? CatalogViewController
-            view.window?.rootViewController = catalogVC
-            view.window?.makeKeyAndVisible()
-        case .feedback:
-            print("feedback")
-            let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? FeedbackViewController
-            view.window?.rootViewController = feedbackVC
-            view.window?.makeKeyAndVisible()
-        case .faq:
-            print("feedback")
-            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FAQVC.rawValue) as? FAQViewController
-            view.window?.rootViewController = faqVC
-            view.window?.makeKeyAndVisible()
-        case .website:
-            print("website")
-        }
-    }
+//    
+//    func workerCatalogTransition() {
+//        let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkerCatalogVC.rawValue) as? WorkerCatalogViewController
+//        view.window?.rootViewController = catalogVC
+//        view.window?.makeKeyAndVisible()
+//    }
+//
+//      func menuOptionPicked(_ menuType: MenuType) {
+//        switch menuType {
+//        case .home:
+//            print("website")
+//            let homeVC = storyboard?.instantiateInitialViewController()
+//            view.window?.rootViewController = homeVC
+//            view.window?.makeKeyAndVisible()
+//        case .catalog:
+//            print("catalog")
+//            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.CatalogVC.rawValue) as? CatalogViewController
+//            view.window?.rootViewController = catalogVC
+//            view.window?.makeKeyAndVisible()
+//        case .feedback:
+//            print("feedback")
+//            let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? FeedbackViewController
+//            view.window?.rootViewController = feedbackVC
+//            view.window?.makeKeyAndVisible()
+//        case .faq:
+//            print("feedback")
+//            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FAQVC.rawValue) as? FAQViewController
+//            view.window?.rootViewController = faqVC
+//            view.window?.makeKeyAndVisible()
+//        case .website:
+//            print("website")
+//        }
+//    }
     
 }
 

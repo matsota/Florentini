@@ -11,12 +11,14 @@ import Firebase
 
 class NetworkManager {
     
-//MARK: Системные переменные
+    //MARK: - Системные переменные
     static let shared = NetworkManager()
     
     
     let db = Firestore.firestore()
-    
+
+
+    //MARK: - Workers Dataload
     func workersInfoLoad (success: @escaping([DatabaseManager.WorkerInfo]) -> Void, failure: @escaping(Error) -> Void) {
         if AuthenticationManager.shared.currentUser?.uid == nil {
             failure(NetworkManagerError.workerNotSignedIn)
@@ -28,8 +30,8 @@ class NetworkManager {
         }
     }
  
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//MARK: Получение всех сообщений  для чата сотрудников
+
+    //MARK: - Получение всех сообщений  для чата сотрудников
     func workersMessagesLoad(success: @escaping([DatabaseManager.ChatMessages]) -> Void, failure: @escaping(Error) -> Void) {
         if AuthenticationManager.shared.currentUser?.uid == nil {
             failure(NetworkManagerError.workerNotSignedIn)
@@ -43,24 +45,25 @@ class NetworkManager {
             })
         }
     }
-//  Это для чата.
-//  Set в Firebase работает отлично. Сетит мне данные о сообщении по шаблону, который находится в database. А сам метод пока что находится в WorkersChatViewController на 135 позиции.( //MARK: Метод-Алерт для сообщения )
-//  На breakpoint'е показывает, что информации нет, когда я ее пытаюсь достать из firebase. Хотя метод вроде верный. По-крайне мере не вижу ошибки. Делал как и раньше
-//  Когда в DatabaseManager я вместе " guard let name = dictionary[DatabaseManager.ChatMessagesCases.name.rawValue] as? String ... else {return nil} " ставлю " let name = dictionary[DatabaseManager.ChatMessagesCases.name.rawValue] as! String ... " , то мне выдает Fatal Error, но я успеваю увидеть в консоли, что кусочек информации о сообщени вытянулся.
-//  DatabaseManager.ChatMessages сделал по аналогии, как и другие. Все String у меня через специальный enum для соответствующих нужд, что не ошибиться, когда их печают (как в прошлый раз).
-//  Но я раньше не делал init шаблона с Date, но timeStamp в firebase НЕ nil, и помеченно как "временная метка", то есть как Date
-//  Пример: DatabaseManager.ChatMessagesCases.name.rawValue
-//  "workersMessages" написан правильно, как и в firebase.
     
-//MARK: СПОСОБ ВХОДА В ЧАТ:
-/// run app ->  menu ->  "FEEDBACK" -> Опустить вниз до "Отзыв":
-    /// строка "Введите имя":
-    // /WorkSpace
-    /// строка "Введите отзыв":
-    // Go/
-    /// -> login: test@test.com  pass: 123456  ->  Вверху справа Чат.
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
+    //MARK: - Отправка сообщения в Чате сотрудников
+
+    func sendMessage(name: String, content: String) {
+        let newMessage = DatabaseManager.ChatMessages(name: name, content: content, uid: AuthenticationManager.shared.currentUser!.uid, timeStamp: Date())
+        var ref: DocumentReference? = nil
+        
+        ref = db.collection("workersMessages").addDocument(data: newMessage.dictionary) {
+            error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+            }else{
+                print("It's ok. Doc ID: \(ref!.documentID)")
+            }
+        }
+    }
+
+    //MARK: - Обновление содержимого Чата
     func chatUpdate(success: @escaping(DatabaseManager.ChatMessages) -> Void) {
         db.collection("workersMessages").whereField(DatabaseManager.ChatMessagesCases.timeStamp.rawValue, isGreaterThan: Date()).addSnapshotListener { (querySnapshot, error) in
             guard let snapshot = querySnapshot else {return}
@@ -76,6 +79,9 @@ class NetworkManager {
     
 }
 
+
+    //MARK: - Out of Class
+    //MARK: - Extensions
 extension NetworkManager {
     enum NetworkManagerError: Error {
         case workerNotSignedIn

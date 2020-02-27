@@ -12,16 +12,17 @@ import Firebase
 class WorkersChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
-    //MARK: TableView Outlet
+    //MARK: - TableView Outlet
     @IBOutlet weak var messageTableView: UITableView!
     
-    //MARK: Системные переменные
+    //MARK: - Системные переменные
     let transition = SlideInTransition()
     let alert = UIAlertController()
     
     var currentWorkerInfo = [DatabaseManager.WorkerInfo]()
     var messagesArray = [DatabaseManager.ChatMessages]()
-    
+
+    //MARK: - ViewDidLoad Method
     override func viewDidLoad() {
         super.viewDidLoad()
      
@@ -56,6 +57,7 @@ class WorkersChatViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
+    //MARK: - Menu Button
     @IBAction func workerMenuTapped(_ sender: Any) {
         guard let workMenuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkMenuVC.rawValue) as? WorkMenuViewController else {return}
         workMenuVC.workMenuTypeTapped = { workMenuType in
@@ -65,27 +67,9 @@ class WorkersChatViewController: UIViewController, UITableViewDelegate, UITableV
         workMenuVC.transitioningDelegate = self
         present(workMenuVC, animated: true)
     }
-
     
-//Table View Protocol
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messagesArray.count
-    }
-      
-      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "WorkerMessagesTVC", for: indexPath) as! WorkerMessagesTableViewCell
-        let message = messagesArray[indexPath.row]
-        cell.fill(name: message.name, content: message.content, date: "\(message.timeStamp)")
-        
-        return cell
-      }
-    
-
-    @IBAction func typeMessage(_ sender: UIButton) {
-        sendMessage()
-    }
-
-func menuOptionPicked(_ menuType: WorkMenuType) {
+        //MARK: - Menu Options
+    func menuOptionPicked(_ menuType: WorkMenuType) {
         switch menuType {
         case .orders:
             ordersTransition()
@@ -104,7 +88,27 @@ func menuOptionPicked(_ menuType: WorkMenuType) {
         }
     }
 
-//MARK: Методы переходов
+    
+    //MARK: - Table View Protocol
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messagesArray.count
+    }
+      
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "WorkerMessagesTVC", for: indexPath) as! WorkerMessagesTableViewCell
+        let message = messagesArray[indexPath.row]
+        cell.fill(name: message.name, content: message.content, date: "\(message.timeStamp)")
+        
+        return cell
+      }
+    
+    //MARK: - Message button
+    @IBAction func typeMessage(_ sender: UIButton) {
+        guard self.name != "" else {return}
+        self.present(self.alert.alertSendMessage(), animated: true)
+    }
+    
+    //MARK: - Методы переходов
     //чат
     func chatTransition() {
         print("chat")
@@ -147,44 +151,16 @@ func menuOptionPicked(_ menuType: WorkMenuType) {
         view.window?.makeKeyAndVisible()
     }
     
-//MARK: Метод-Алерт для сообщения
-    func sendMessage() {
-        
-        guard self.name != "" else {return}
-        
-        let composeAlert = UIAlertController(title: "Новое сообщение От \(self.name)", message: "Введите свое сообщение", preferredStyle: .alert)
-        
-        composeAlert.addTextField { (text:UITextField) in
-            text.placeholder = "Введите сообщение"
-        }
-        
-        composeAlert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
-        composeAlert.addAction(UIAlertAction(title: "Отправить", style: .default, handler: { (action: UIAlertAction) in
-            
-            if let content = composeAlert.textFields?.first?.text {
-                
-                let newMessage = DatabaseManager.ChatMessages(name: self.name, content: content, uid: AuthenticationManager.shared.currentUser!.uid, timeStamp: Date())
-                
-                var ref: DocumentReference? = nil
-                ref = NetworkManager.shared.db.collection("workersMessages").addDocument(data: newMessage.dictionary) {
-                    error in
-                    if let error = error {
-                        print("Error: \(error.localizedDescription)")
-                    }else{
-                        print("It's ok. Doc ID: \(ref!.documentID)")
-                    }
-                }
-            }
-            
-        }))
-        self.present(composeAlert, animated: true)
-    }
-    
+    //MARK: - Implementation
     private var name = String()
     private var position = String()
     
 }
 
+
+
+    //MARK: - Out of Class
+    //MARK: - Extensions
 extension WorkersChatViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.isPresented = true

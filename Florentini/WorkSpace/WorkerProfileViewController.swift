@@ -12,28 +12,29 @@ import FirebaseAuth
 class WorkerProfileViewController: UIViewController {
 
     
-//MARK: Системные переменные
+    //MARK: - TextField Outlet
     @IBOutlet weak var newPassword: UITextField!
     @IBOutlet weak var reNewPassword: UITextField!
     
-    @IBOutlet weak var positionLabel: UILabel!
-    @IBOutlet weak var emailLabel: UILabel!
-    @IBOutlet weak var nameLabel: UILabel!
-    
-    
+    //MARK: - Системные переменные
     let transition = SlideInTransition()
     let alert = UIAlertController()
-    
+
+    //MARK: - Implementation
     var currentWorkerInfo = [DatabaseManager.WorkerInfo]()
 
+    //MARK: - ViewDidLoad Method
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        workerInfoLoad()
-        
-        // Do any additional setup after loading the view.
-    }
     
+        //MARK: - New Product button appearance
+        
+            newProductButton.isHidden = false
+            
+        
+        
+    }
+    //MARK: - Menu Button
     @IBAction func workerMenuTapped(_ sender: UIButton) {
         guard let workMenuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkMenuVC.rawValue) as? WorkMenuViewController else {return}
         workMenuVC.workMenuTypeTapped = { workMenuType in
@@ -44,11 +45,7 @@ class WorkerProfileViewController: UIViewController {
         workMenuVC.transitioningDelegate = self
         present(workMenuVC, animated: true)
     }
-        
-    @IBAction func chatTapped(_ sender: UIButton) {
-        chatTransition()
-    }
-    
+    //menu method
     func menuOptionPicked(_ menuType: WorkMenuType) {
         switch menuType {
         case .orders:
@@ -68,6 +65,17 @@ class WorkerProfileViewController: UIViewController {
         }
     }
     
+    
+    //MARK: - Open Chat Button
+    @IBAction func chatTapped(_ sender: UIButton) {
+        chatTransition()
+    }
+    
+    //MARK: - Add New Product Button
+    @IBAction func newProductTapped(_ sender: UIButton) {
+    }
+    
+    //MARK: - Change Password Button
     @IBAction func passChangeTapped(_ sender: UIButton) {
         let newPass = newPassword.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let reNewPass = reNewPassword.text!.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -86,7 +94,7 @@ class WorkerProfileViewController: UIViewController {
     }
     
     
-//Метод получения информации о конкретном Сотруднике
+    //MARK: - Information About Co-workers Method
     func workerInfoLoad() {
         guard let email = Auth.auth().currentUser?.email else {return}
         emailLabel.text = email
@@ -106,7 +114,7 @@ class WorkerProfileViewController: UIViewController {
     }
     
 
-//MARK: Методы переходов
+    //MARK: - Transition Methods
     //чат
     func chatTransition() {
         print("chat")
@@ -149,9 +157,21 @@ class WorkerProfileViewController: UIViewController {
         view.window?.makeKeyAndVisible()
     }
     
-       
+    
+    //MARK: - Private Outlets
+    //MARK: Button Outlet
+    @IBOutlet weak private var newProductButton: UIButton!
+    
+    //MARK: Label Outlet
+    @IBOutlet weak private var positionLabel: UILabel!
+    @IBOutlet weak private var emailLabel: UILabel!
+    @IBOutlet weak private var nameLabel: UILabel!
+    
 }
 
+
+    //MARK: - Out of Class
+    //MARK: - extentions
 extension WorkerProfileViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.isPresented = true
