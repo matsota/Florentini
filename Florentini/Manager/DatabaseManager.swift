@@ -43,27 +43,8 @@ class DatabaseManager {
             ]
         }
     }
-    
-    //MARK: - Шаблон для Сета нового товара
-    struct NewProduct {
-        var productName: String
-        var productPrice: Double
-        var productCategory: String
-        var productDescription: String
-        var productImageURL: String
-        
-        
-        var dictionary: [String:Any]{
-            return [
-                DatabaseManager.NewProductCases.productName.rawValue: productName,
-                DatabaseManager.NewProductCases.productPrice.rawValue: productPrice,
-                DatabaseManager.NewProductCases.productCategory.rawValue: productCategory,
-                DatabaseManager.NewProductCases.productDescription.rawValue: productDescription,
-                DatabaseManager.NewProductCases.productImageURL.rawValue: productImageURL
-            ]
-        }
-    }
-    
+
+
 }
 
     //MARK: - OUT of Class
@@ -93,19 +74,6 @@ extension DatabaseManager.ChatMessages: DocumentSerializable{
         self.init(name: name, content: content, uid: uid, timeStamp: timeStamp)
     }
 }
-    
-    //MARK: Про Товар
-extension DatabaseManager.NewProduct: DocumentSerializable{
-    init?(dictionary: [String: Any]) {
-        guard let productName = dictionary[DatabaseManager.NewProductCases.productName.rawValue] as? String,
-            let productPrice = dictionary[DatabaseManager.NewProductCases.productPrice.rawValue] as? Double,
-            let productCategory = dictionary[DatabaseManager.NewProductCases.productCategory.rawValue] as? String,
-            let productDescription = dictionary[DatabaseManager.NewProductCases.productDescription.rawValue] as? String,
-            let productImageURL = dictionary[DatabaseManager.NewProductCases.productImageURL.rawValue] as? String else {return nil}
-        self.init(productName: productName, productPrice: productPrice, productCategory: productCategory, productDescription: productDescription, productImageURL: productImageURL)
-    }
-}
-
 
     //MARK: - Cases Extension
 extension DatabaseManager {

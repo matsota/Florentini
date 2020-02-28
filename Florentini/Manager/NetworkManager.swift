@@ -77,6 +77,42 @@ class NetworkManager {
         }
     }
     
+    //MARK: - Метод загрузки Фотографии продукта в Firebase
+    
+    func uploadPhoto(image: UIImage, name: String, complition: @escaping(String) -> Void) {
+        let uidAdmin = "Q0Lh49RsIrMU8itoNgNJHN3bjmD2"
+        guard uidAdmin == AuthenticationManager.shared.currentUser?.uid else {return}
+        let storageRef =  Storage.storage().reference().child("ProductPhotos/\(name)")
+
+        guard let imageData = image.jpegData(compressionQuality: 0.75) else {return}
+        
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/ipg"
+        
+        storageRef.putData(imageData, metadata: metaData) { (metaData, error) in
+            if error == nil, metaData != nil {
+                storageRef.downloadURL { (url, _) in
+                    guard let url = url?.absoluteString else {return}
+                    complition(url)
+                }
+            }
+        }
+    }
+    
+    //MARK: - Метод внесения информации  о товаре в Firebase
+    func imageData(name: String, price: String, category: String, description: String, url: String, documentNamedID: String, complition: @escaping ((_ success: Bool) -> ())) {
+        
+        let imageTemplate = [
+            DatabaseManager.NewProductCases.productName.rawValue: name,
+            DatabaseManager.NewProductCases.productPrice.rawValue: price,
+            DatabaseManager.NewProductCases.productCategory.rawValue: category,
+            DatabaseManager.NewProductCases.productDescription.rawValue: description,
+            DatabaseManager.NewProductCases.productImageURL.rawValue: url
+        ] as [String: Any]
+           
+        db.collection(DatabaseManager.NewProductCases.imageCollection.rawValue).document(documentNamedID).setData(imageTemplate, merge: true)
+    }
+    
 }
 
 

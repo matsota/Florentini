@@ -59,52 +59,24 @@ class NewProductSetViewController: UIViewController, UINavigationControllerDeleg
     
     //MARK: - Photo Uploading
     @IBAction func uploadTapped(_ sender: UIButton) {
+        let name = self.photoNameTextField.text!
+        let price = self.photoPriceTextField.text!
+        let category = self.photoCategoryTextField.text!
+        let description = self.photoDescriptionTextField.text!
+        
         guard let image = addedPhotoImageView.image else {return}
-        uploadPhoto(image: image) { url in
-            self.imageData(name: self.photoNameTextField.text!, url: url) { success in
-                if success == true{
-                    print("well played andrii")
+        NetworkManager.shared.uploadPhoto(image: image, name: name)  { url in
+            NetworkManager.shared.imageData(name: name, price: price, category: category, description: description, url: url, documentNamedID: name) { success in
+                if success {
+                    self.dismiss(animated: true, completion: nil)
                 }
             }
         }
-        
     }
     
     
     //MARK: - Test Area
-    
-    func uploadPhoto(image: UIImage, complition: @escaping(String) -> Void) {
-//        guard let uid = AuthenticationManager.shared.currentUser?.uid else {return}
-        let storageRef =  Storage.storage().reference().child("ProductPhotos/\(photoNameTextField.text!)")
 
-        guard let imageData = image.jpegData(compressionQuality: 0.75) else {return}
-        
-        let metaData = StorageMetadata()
-        metaData.contentType = "image/ipg"
-        
-        storageRef.putData(imageData, metadata: metaData) { (metaData, error) in
-            if error == nil, metaData != nil {
-                storageRef.downloadURL { (url, _) in
-                    guard let url = url?.absoluteString else {return}
-                    complition(url)
-                }
-            }
-        }
-    }
-    
-    
-    
-    func imageData(name: String, url: String, complition: @escaping ((_ success: Bool) -> ())) {
-        
-        let shablon = [
-            "name": name,
-            "url": url
-        ] as [String: Any]
-           
-        db.collection("photos").document(self.photoNameTextField.text!).setData(shablon, merge: true)
-    }
-    
-    
     
     func downLoadPhoto() {
         let image = UIImagePickerController()
