@@ -46,7 +46,9 @@ extension CatalogViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return productInfoArray.count
     }
-    
+  
+    //MARK: Информация достается, все получилось. let getInfo = productInfoArray[indexPath.row]
+    //Но не могу засетить на фотографию по ссылке, которая есть в этом Array: getInfo.productImageURL
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NavigationManager.IDVC.UserCatalogCell.rawValue, for: indexPath) as! UserCatalogCollectionViewCell
         let getInfo = productInfoArray[indexPath.row]
