@@ -13,8 +13,6 @@ class NetworkManager {
     
     //MARK: - Системные переменные
     static let shared = NetworkManager()
-    
-    
     let db = Firestore.firestore()
 
 
@@ -76,12 +74,13 @@ class NetworkManager {
             }
         }
     }
+
     
+//MARK: - О продуктах
     //MARK: - Метод загрузки Фотографии продукта в Firebase
-    
     func uploadPhoto(image: UIImage, name: String, complition: @escaping(String) -> Void) {
-        let uidAdmin = "Q0Lh49RsIrMU8itoNgNJHN3bjmD2"
-        guard uidAdmin == AuthenticationManager.shared.currentUser?.uid else {return}
+//        let uidAdmin = "Q0Lh49RsIrMU8itoNgNJHN3bjmD2"
+//        guard uidAdmin == AuthenticationManager.shared.currentUser?.uid else {return}
         let storageRef =  Storage.storage().reference().child("ProductPhotos/\(name)")
 
         guard let imageData = image.jpegData(compressionQuality: 0.75) else {return}
@@ -112,7 +111,34 @@ class NetworkManager {
            
         db.collection(DatabaseManager.NewProductCases.imageCollection.rawValue).document(documentNamedID).setData(imageTemplate, merge: true)
     }
+   
+    //MARK: - Метод Загрузки изображения по Ссылке в приложение
+    func downLoadImageByURL(url: String, success: @escaping(UIImage) -> Void) {
+        if let url = URL(string: url){
+            do {
+            let data = try Data(contentsOf: url)
+                guard let image = UIImage(data: data) else {return}
+                success(image)
+            }catch let error{
+                print(error.localizedDescription)
+            }
+        }
+    }
+    //MARK: - Метод Загрузки изображения из Галлереи в приложение
+    //Врядли этот метод должен быть в НетворкМанаджере
     
+//    //MARK: - Метод Загрузки изображения с Камеры в приложение
+//    Не получается. НО! Врядли этот метод должен быть в НетворкМанаджере
+//    func makePhoto(success: @escaping(UIImagePickerController) -> Void, error: @escaping(Error) -> Void) {
+//        if UIImagePickerController.isSourceTypeAvailable(.camera){
+//            let image = UIImagePickerController()
+//            image.delegate = (self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate)
+//            image.sourceType = UIImagePickerController.SourceType.camera
+//            image.allowsEditing = false
+//
+//            success(image)
+//        }
+//    }
 }
 
 

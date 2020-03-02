@@ -54,7 +54,7 @@ extension UIAlertController {
     
     
 //MARK: - Authentication Alerts
-//MARK: - Sign Up Method
+//MARK: - Sign Out Method
     func alertSignOut(success: @escaping() -> Void) -> (UIAlertController) {
         let alertSignOut = UIAlertController(title: "Внимание", message: "Подтвердите, что вы нажали на \"Выход\" неслучайно", preferredStyle: .actionSheet)
         alertSignOut.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { _ in
@@ -82,7 +82,6 @@ extension UIAlertController {
     func alertSendMessage() -> (UIAlertController) {
         var name = String()
         
-        
         NetworkManager.shared.workersInfoLoad(success: { workerInfo in
             workerInfo.forEach { workerInfo in
                 name = workerInfo.name
@@ -103,6 +102,20 @@ extension UIAlertController {
             }
         }))
         return alertMessage
+    }
+    
+    //MARK: - Alert Image from URL
+    func setImageByURL(success: @escaping(String) -> Void) -> (UIAlertController) {
+        let alert = UIAlertController(title: "Добавить Изображение по Ссылке", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { (action: UIAlertAction) in
+            let textField = alert.textFields?[0]
+            success((textField?.text)!)
+        }))
+        alert.addTextField { (textField: UITextField) in
+         textField.placeholder = "Введите ссылку"
+        }
+        return alert
     }
     
 //MARK: - invalidFields

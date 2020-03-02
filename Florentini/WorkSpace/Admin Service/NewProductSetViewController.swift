@@ -25,7 +25,7 @@ class NewProductSetViewController: UIViewController, UINavigationControllerDeleg
     //MARK: - System var&let
     let storage = Storage.storage()
     let storageRef = Storage.storage().reference()
-    
+    let alert = UIAlertController()
     var givenUrl: URL?
     
     
@@ -36,28 +36,34 @@ class NewProductSetViewController: UIViewController, UINavigationControllerDeleg
     }
     
     
-    //MARK: - Menu button
+    //MARK: - Кнопка меню
     @IBAction func menuTapped(_ sender: UIButton) {
     }
     
-    //MARK: - Chat button
-    @IBAction func chateTapped(_ sender: UIButton) {
+    //MARK: - Кнопка перехода в чат
+    @IBAction func chatTapped(_ sender: UIButton) {
     }
     
-    //MARK: - Photo Download by URL
+    //MARK: - Кнопка загрузки фотографии по ссылке
     @IBAction func downLoadByURLTapped(_ sender: UIButton) {
+        self.present(self.alert.setImageByURL { url in
+            NetworkManager.shared.downLoadImageByURL(url: url) { image in
+                self.addedPhotoImageView.image = image
+            }
+        }, animated: true)
     }
     
-    //MARK: - Photo in Gallery
+    //MARK: - Кнопка загрузки фотографии из галлерии
     @IBAction func galleryTapped(_ sender: UIButton) {
         downLoadPhoto()
     }
     
-    //MARK: - Photo by Camera
+    //MARK: - Кнопка загрузки фотографии со снимка Камеры телефона
     @IBAction func cameraTapped(_ sender: UIButton) {
+        makePhoto()
     }
     
-    //MARK: - Photo Uploading
+    //MARK: - Кнопка загрузки фотографии в Firebase
     @IBAction func uploadTapped(_ sender: UIButton) {
         let name = self.photoNameTextField.text!
         let price = self.photoPriceTextField.text!
@@ -68,16 +74,13 @@ class NewProductSetViewController: UIViewController, UINavigationControllerDeleg
         NetworkManager.shared.uploadPhoto(image: image, name: name)  { url in
             NetworkManager.shared.imageData(name: name, price: price, category: category, description: description, url: url, documentNamedID: name) { success in
                 if success {
-                    self.dismiss(animated: true, completion: nil)
+//                    self.dismiss(animated: true, completion: nil)
                 }
             }
         }
     }
     
-    
-    //MARK: - Test Area
-
-    
+    //MARK: - Созданить изображение для товара с помощью галлереи телефона
     func downLoadPhoto() {
         let image = UIImagePickerController()
         image.delegate = self
@@ -88,6 +91,23 @@ class NewProductSetViewController: UIViewController, UINavigationControllerDeleg
             //after it is complete
         }
     }
+
+    //MARK: - Созданить изображение для товара с помощью камеры телефона
+    func makePhoto() {
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            let image = UIImagePickerController()
+            image.delegate = self
+            image.sourceType = UIImagePickerController.SourceType.camera
+            image.allowsEditing = false
+
+            self.present(image, animated: true){
+                //after it is complete        }
+            }
+        }else{
+            self.present(self.alert.alertClassicInfoOK(title: "Внимание", message: "Камера не доступна"), animated: true)
+        }
+    }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
             self.addedPhotoImageView.image = image
@@ -96,11 +116,10 @@ class NewProductSetViewController: UIViewController, UINavigationControllerDeleg
         self.dismiss(animated: true, completion: nil)
     }
     
-    func savePhotoInfo(name: String, price: Double, category: String, description: String, uidImage: String) {
-        
-    }
+    //MARK: - TEST AREA
+       
+  
 
-    
     //MARK: - Transition Methods
     
     

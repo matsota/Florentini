@@ -19,6 +19,7 @@
 		8F2062C323FF747B007C481A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F2062C123FF747B007C481A /* Main.storyboard */; };
 		8F2062C723FF7F75007C481A /* WorkersChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062C623FF7F75007C481A /* WorkersChatViewController.swift */; };
 		8F2062CB23FFA4EF007C481A /* WorkerMessagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062CA23FFA4EF007C481A /* WorkerMessagesTableViewCell.swift */; };
+		8F67FAE6240ADE5D006EED49 /* UserCatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F67FAE5240ADE5D006EED49 /* UserCatalogCollectionViewCell.swift */; };
 		8FA80A9823FD65FA0015C878 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA80A9723FD65FA0015C878 /* NetworkManager.swift */; };
 		8FA80A9A23FD660A0015C878 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA80A9923FD660A0015C878 /* DatabaseManager.swift */; };
 		8FD4E4C123FCD1D800C62FA5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD4E4C023FCD1D800C62FA5 /* AppDelegate.swift */; };
@@ -50,6 +51,7 @@
 		8F2062C223FF747B007C481A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8F2062C623FF7F75007C481A /* WorkersChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkersChatViewController.swift; sourceTree = "<group>"; };
 		8F2062CA23FFA4EF007C481A /* WorkerMessagesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerMessagesTableViewCell.swift; sourceTree = "<group>"; };
+		8F67FAE5240ADE5D006EED49 /* UserCatalogCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCatalogCollectionViewCell.swift; sourceTree = "<group>"; };
 		8FA80A9723FD65FA0015C878 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		8FA80A9923FD660A0015C878 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		8FD4E4BD23FCD1D800C62FA5 /* Florentini.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Florentini.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +134,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		8F67FAE4240ADE4E006EED49 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8F67FAE5240ADE5D006EED49 /* UserCatalogCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		8FA80A9623FD65E70015C878 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +192,7 @@
 		8FE3F69324035BBB003001CA /* UserSpace */ = {
 			isa = PBXGroup;
 			children = (
+				8F67FAE4240ADE4E006EED49 /* Cells */,
 				8FE3F6A124035C43003001CA /* Menu */,
 				8FE3F69624035BE4003001CA /* CatalogViewController.swift */,
 				8FE3F69424035BE3003001CA /* FAQViewController.swift */,
@@ -331,6 +342,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F67FAE6240ADE5D006EED49 /* UserCatalogCollectionViewCell.swift in Sources */,
 				8F2062BC23FF714D007C481A /* WorkersFAQViewController.swift in Sources */,
 				8F2062A323FEB25A007C481A /* MainWorkSpaceViewController.swift in Sources */,
 				8FFEDF262407EC3500D894FD /* NewProductSetViewController.swift in Sources */,
