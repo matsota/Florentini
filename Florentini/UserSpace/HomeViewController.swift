@@ -43,7 +43,7 @@ class HomeViewController: UIViewController {
             view.window?.makeKeyAndVisible()
         case .feedback:
             print("feedback")
-            let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? FeedbackViewController
+            let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? AboutUsViewController
             view.window?.rootViewController = feedbackVC
             view.window?.makeKeyAndVisible()
         case .faq:

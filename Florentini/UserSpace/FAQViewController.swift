@@ -17,6 +17,25 @@ class FAQViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    @IBAction func showHidePaymentProcessTapped(_ sender: UIButton) {
+        paymentProcessDescriptionLabel.isHidden = !paymentProcessDescriptionLabel.isHidden
+    
+    }
+    
+    @IBAction func showHidePaymentOptionsTapped(_ sender: UIButton) {
+        paymentOptionsDescriptionStackView.isHidden = !paymentOptionsDescriptionStackView.isHidden
+    }
+    
+    @IBAction func showHideDeliveryProcessTapped(_ sender: UIButton) {
+        deliveryProcessDescriptionStackView.isHidden = !deliveryProcessDescriptionStackView.isHidden
+    }
+    
+    @IBAction func showHideFeedbackTapped(_ sender: UIButton) {
+        feedbackDescriptionLabel.isHidden = !feedbackDescriptionLabel.isHidden
+    }
+    
+    
+    //Вынести из UI
     @IBAction func menuTapped(_ sender: UIButton) {
         guard let menuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MenuVC.rawValue) as? MenuViewController else {return}
         menuVC.menuTypeTapped = { menuType in
@@ -41,7 +60,7 @@ class FAQViewController: UIViewController {
                     view.window?.makeKeyAndVisible()
                 case .feedback:
                     print("feedback")
-                    let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? FeedbackViewController
+                    let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? AboutUsViewController
                     view.window?.rootViewController = feedbackVC
                     view.window?.makeKeyAndVisible()
                 case .faq:
@@ -54,7 +73,13 @@ class FAQViewController: UIViewController {
                 }
             }
         
-    }
+    
+    //MARK: - Private Outlets for FAQ
+    @IBOutlet weak private var paymentProcessDescriptionLabel: UILabel!
+    @IBOutlet weak private var paymentOptionsDescriptionStackView: UIStackView!
+    @IBOutlet weak private var deliveryProcessDescriptionStackView: UIStackView!
+    @IBOutlet weak private var feedbackDescriptionLabel: UILabel!
+}
 
 
     extension FAQViewController: UIViewControllerTransitioningDelegate {

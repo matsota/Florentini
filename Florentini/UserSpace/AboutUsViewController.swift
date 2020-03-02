@@ -8,22 +8,27 @@
 
 import UIKit
 
-class FeedbackViewController: UIViewController {
+class AboutUsViewController: UIViewController {
     
-    let transition = SlideInTransition()
-    private let secretCode = "/WorkSpace"
-    private let secretCode2 = "Go/"
-    
+
+    //MARK: - Outlets
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var reviewTextField: UITextField!
+    @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
+
+    //MARK: - Системные переменные
+    let transition = SlideInTransition()
     
-    
+    //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        //MARK: Keyboard Observer
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
  
+    //MARK: - Меню
     @IBAction func menuTapped(_ sender: UIButton) {
         guard let menuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MenuVC.rawValue) as? MenuViewController else {return}
         menuVC.menuTypeTapped = { menuType in
@@ -34,8 +39,7 @@ class FeedbackViewController: UIViewController {
         menuVC.transitioningDelegate = self
         present(menuVC, animated: true)
     }
-
-
+        //Вынести за пределы UI
     func menuOptionPicked(_ menuType: MenuType) {
             switch menuType {
             case .home:
@@ -50,7 +54,7 @@ class FeedbackViewController: UIViewController {
                 view.window?.makeKeyAndVisible()
             case .feedback:
                 print("feedback")
-                let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? FeedbackViewController
+                let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? AboutUsViewController
                 view.window?.rootViewController = feedbackVC
                 view.window?.makeKeyAndVisible()
             case .faq:
@@ -63,7 +67,7 @@ class FeedbackViewController: UIViewController {
             }
         }
     
-//Review maker & enter into secret workSpace
+    //MARK: - Отправить отзыв / Переход в рабочую зону
     @IBAction func sendReviewTapped(_ sender: UIButton) {
         let name = nameTextField.text
         let review = reviewTextField.text
@@ -80,11 +84,32 @@ class FeedbackViewController: UIViewController {
         }
     }
     
+    //MARK: - Movement constrains for keyboard
+    @objc private func keyboardWillShow(notification: Notification) {
+        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber, let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
+        
+        scrollViewBottomConstraint.constant = -keyboardFrameValue.cgRectValue.height
+        UIView.animate(withDuration: duration.doubleValue) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    @objc private func keyboardWillHide(notification: Notification) {
+        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber else {return}
+        
+        scrollViewBottomConstraint.constant = 0
+        UIView.animate(withDuration: duration.doubleValue) {
+             self.view.layoutIfNeeded()
+        }
+    }
+    
+    //MARK: - Приватные системные переменные
+    private let secretCode = "/WorkSpace"
+    private let secretCode2 = "Go/"
     
 }
 
-
-    extension FeedbackViewController: UIViewControllerTransitioningDelegate {
+    //Вынести за пределы UI
+    extension AboutUsViewController: UIViewControllerTransitioningDelegate {
         func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
             transition.isPresented = true
             return transition

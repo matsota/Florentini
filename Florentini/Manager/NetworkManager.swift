@@ -77,10 +77,25 @@ class NetworkManager {
 
     
 //MARK: - О продуктах
+    //MARK: - Метод выгрузки Фотографии продукта из Firebase
+    func downLoadProductInfo(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+        if AuthenticationManager.shared.currentUser?.uid == nil {
+            failure(NetworkManagerError.workerNotSignedIn)
+        }else{
+            db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).getDocuments(completion: {
+                (querySnapshot, _) in
+                let messages = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
+                success(messages)
+                print(querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())})
+                print(messages)
+            })
+        }
+    }
+    
     //MARK: - Метод загрузки Фотографии продукта в Firebase
     func uploadPhoto(image: UIImage, name: String, complition: @escaping(String) -> Void) {
-//        let uidAdmin = "Q0Lh49RsIrMU8itoNgNJHN3bjmD2"
-//        guard uidAdmin == AuthenticationManager.shared.currentUser?.uid else {return}
+        
+        guard AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid else {return}
         let storageRef =  Storage.storage().reference().child("ProductPhotos/\(name)")
 
         guard let imageData = image.jpegData(compressionQuality: 0.75) else {return}
@@ -102,14 +117,14 @@ class NetworkManager {
     func imageData(name: String, price: String, category: String, description: String, url: String, documentNamedID: String, complition: @escaping ((_ success: Bool) -> ())) {
         
         let imageTemplate = [
-            DatabaseManager.NewProductCases.productName.rawValue: name,
-            DatabaseManager.NewProductCases.productPrice.rawValue: price,
-            DatabaseManager.NewProductCases.productCategory.rawValue: category,
-            DatabaseManager.NewProductCases.productDescription.rawValue: description,
-            DatabaseManager.NewProductCases.productImageURL.rawValue: url
+            DatabaseManager.ProductCases.productName.rawValue: name,
+            DatabaseManager.ProductCases.productPrice.rawValue: price,
+            DatabaseManager.ProductCases.productCategory.rawValue: category,
+            DatabaseManager.ProductCases.productDescription.rawValue: description,
+            DatabaseManager.ProductCases.productImageURL.rawValue: url
         ] as [String: Any]
            
-        db.collection(DatabaseManager.NewProductCases.imageCollection.rawValue).document(documentNamedID).setData(imageTemplate, merge: true)
+        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).document(documentNamedID).setData(imageTemplate, merge: true)
     }
    
     //MARK: - Метод Загрузки изображения по Ссылке в приложение

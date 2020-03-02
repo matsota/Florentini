@@ -73,9 +73,7 @@ class NewProductSetViewController: UIViewController, UINavigationControllerDeleg
         guard let image = addedPhotoImageView.image else {return}
         NetworkManager.shared.uploadPhoto(image: image, name: name)  { url in
             NetworkManager.shared.imageData(name: name, price: price, category: category, description: description, url: url, documentNamedID: name) { success in
-                if success {
-//                    self.dismiss(animated: true, completion: nil)
-                }
+                self.present(self.alert.alertClassicInfoOK(title: "Отлично!", message: "Товар добавлен или изменён"), animated: true)
             }
         }
     }

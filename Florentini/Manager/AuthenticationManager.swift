@@ -15,6 +15,7 @@ class AuthenticationManager {
     //MARK: - Системные переменные
     static var shared = AuthenticationManager()
     let currentUser = Auth.auth().currentUser
+    let uidAdmin = "Q0Lh49RsIrMU8itoNgNJHN3bjmD2"
     
     //MARK: - Метод SignIn
     func signIn(email: String, password: String, success: @escaping() -> Void, failure: @escaping(Error) -> Void) {

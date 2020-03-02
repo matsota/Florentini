@@ -29,7 +29,7 @@
 		8FD4E4D523FCD2EB00C62FA5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8FD4E4D423FCD2EB00C62FA5 /* GoogleService-Info.plist */; };
 		8FD4E4E323FCF01000C62FA5 /* SlideInTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD4E4E223FCF01000C62FA5 /* SlideInTransition.swift */; };
 		8FE3F69724035BE4003001CA /* FAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F69424035BE3003001CA /* FAQViewController.swift */; };
-		8FE3F69824035BE4003001CA /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F69524035BE4003001CA /* FeedbackViewController.swift */; };
+		8FE3F69824035BE4003001CA /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F69524035BE4003001CA /* AboutUsViewController.swift */; };
 		8FE3F69924035BE4003001CA /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F69624035BE4003001CA /* CatalogViewController.swift */; };
 		8FE3F69D24035BED003001CA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F69B24035BED003001CA /* HomeViewController.swift */; };
 		8FE3F69F24035BF7003001CA /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F69E24035BF6003001CA /* MenuViewController.swift */; };
@@ -63,7 +63,7 @@
 		8FD4E4D423FCD2EB00C62FA5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8FD4E4E223FCF01000C62FA5 /* SlideInTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInTransition.swift; sourceTree = "<group>"; };
 		8FE3F69424035BE3003001CA /* FAQViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQViewController.swift; sourceTree = "<group>"; };
-		8FE3F69524035BE4003001CA /* FeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
+		8FE3F69524035BE4003001CA /* AboutUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
 		8FE3F69624035BE4003001CA /* CatalogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		8FE3F69B24035BED003001CA /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8FE3F69E24035BF6003001CA /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -174,11 +174,11 @@
 		8FD4E4BF23FCD1D800C62FA5 /* Florentini */ = {
 			isa = PBXGroup;
 			children = (
+				8FD4E4C023FCD1D800C62FA5 /* AppDelegate.swift */,
+				8FD4E4C223FCD1D800C62FA5 /* SceneDelegate.swift */,
 				8FA80A9623FD65E70015C878 /* Manager */,
 				8F2062B423FF66EA007C481A /* Helpers */,
 				8FE3F69324035BBB003001CA /* UserSpace */,
-				8FD4E4C023FCD1D800C62FA5 /* AppDelegate.swift */,
-				8FD4E4C223FCD1D800C62FA5 /* SceneDelegate.swift */,
 				8F2062AA23FF6002007C481A /* WorkSpace */,
 				8FD4E4C923FCD1D800C62FA5 /* Assets.xcassets */,
 				8F2062C123FF747B007C481A /* Main.storyboard */,
@@ -194,10 +194,10 @@
 			children = (
 				8F67FAE4240ADE4E006EED49 /* Cells */,
 				8FE3F6A124035C43003001CA /* Menu */,
-				8FE3F69624035BE4003001CA /* CatalogViewController.swift */,
-				8FE3F69424035BE3003001CA /* FAQViewController.swift */,
-				8FE3F69524035BE4003001CA /* FeedbackViewController.swift */,
 				8FE3F69B24035BED003001CA /* HomeViewController.swift */,
+				8FE3F69624035BE4003001CA /* CatalogViewController.swift */,
+				8FE3F69524035BE4003001CA /* AboutUsViewController.swift */,
+				8FE3F69424035BE3003001CA /* FAQViewController.swift */,
 			);
 			path = UserSpace;
 			sourceTree = "<group>";
@@ -353,7 +353,7 @@
 				8FA80A9A23FD660A0015C878 /* DatabaseManager.swift in Sources */,
 				8F2062AC23FF6292007C481A /* UIAlertController + Custom.swift in Sources */,
 				8FA80A9823FD65FA0015C878 /* NetworkManager.swift in Sources */,
-				8FE3F69824035BE4003001CA /* FeedbackViewController.swift in Sources */,
+				8FE3F69824035BE4003001CA /* AboutUsViewController.swift in Sources */,
 				8FE3F69724035BE4003001CA /* FAQViewController.swift in Sources */,
 				8F2062CB23FFA4EF007C481A /* WorkerMessagesTableViewCell.swift in Sources */,
 				8F2062B823FF701C007C481A /* WorkerCatalogViewController.swift in Sources */,

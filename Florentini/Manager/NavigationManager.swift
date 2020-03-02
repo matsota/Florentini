@@ -20,21 +20,23 @@ class NavigationManager: UINavigationController {
     enum IDVC: String, CaseIterable {
         
         //for clients
-        case CatalogVC = "CatalogVC"
-        case FeedbackVC = "FeedbackVC"
-        case FAQVC = "FAQVC"
+        case CatalogVC
+        case FeedbackVC
+        case FAQVC
         
-        case MenuVC = "MenuVC"
+        case UserCatalogCell
+        
+        case MenuVC
    
         //for workers
-        case LoginWorkSpaceVC = "LoginWorkSpaceVC"
-        case MainWorkSpaceVC = "MainWorkSpaceVC"
-        case WorkerCatalogVC = "WorkerCatalogVC"
-        case WorkerProfileVC = "WorkerProfileVC"
-        case WorkersFAQVC = "WorkersFAQVC"
-        case WorkersChatVC = "WorkersChatVC"
+        case LoginWorkSpaceVC
+        case MainWorkSpaceVC
+        case WorkerCatalogVC
+        case WorkerProfileVC
+        case WorkersFAQVC
+        case WorkersChatVC
         
-        case WorkMenuVC = "WorkMenuVC"
+        case WorkMenuVC
     }
     
     

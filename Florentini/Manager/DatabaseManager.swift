@@ -43,6 +43,26 @@ class DatabaseManager {
             ]
         }
     }
+    
+    //MARK: - Шаблон Про Продукт (закачка)
+    struct ProductInfo {
+        var productName: String
+        var productPrice: String
+        var productDescription: String
+        var productCategory: String
+        var productImageURL: String
+        
+        var dictionary: [String:Any]{
+            return [
+                DatabaseManager.ProductCases.productName.rawValue: productName,
+                DatabaseManager.ProductCases.productPrice.rawValue: productPrice,
+                DatabaseManager.ProductCases.productDescription.rawValue: productDescription,
+                DatabaseManager.ProductCases.productCategory.rawValue: productCategory,
+                DatabaseManager.ProductCases.productImageURL.rawValue: productImageURL,
+            ]
+        }
+    }
+    
 
 
 }
@@ -74,6 +94,18 @@ extension DatabaseManager.ChatMessages: DocumentSerializable{
         self.init(name: name, content: content, uid: uid, timeStamp: timeStamp)
     }
 }
+    
+    //MARK: Про Продукт (закачка)
+extension DatabaseManager.ProductInfo: DocumentSerializable{
+    init?(dictionary: [String: Any]) {
+        guard let productName = dictionary[DatabaseManager.ProductCases.productName.rawValue] as? String,
+            let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? String,
+            let productDescription = dictionary[DatabaseManager.ProductCases.productDescription.rawValue] as? String,
+            let productCategory = dictionary[DatabaseManager.ProductCases.productCategory.rawValue] as? String,
+            let productImageURL = dictionary[DatabaseManager.ProductCases.productImageURL.rawValue] as? String else {return nil}
+        self.init(productName: productName, productPrice: productPrice, productDescription: productDescription, productCategory: productCategory, productImageURL: productImageURL)
+    }
+}
 
     //MARK: - Cases Extension
 extension DatabaseManager {
@@ -90,7 +122,7 @@ extension DatabaseManager {
         case timeStamp
     }
     //MARK: Про новый товар
-    enum NewProductCases: String, CaseIterable {
+    enum ProductCases: String, CaseIterable {
         case productName
         case productPrice
         case productCategory

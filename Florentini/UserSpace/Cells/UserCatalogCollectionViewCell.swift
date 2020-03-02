@@ -10,18 +10,26 @@ import UIKit
 
 class UserCatalogCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var productImageVIew: UIImageView!
-    @IBOutlet weak var layerView: UIView!
+    @IBOutlet weak private var productImageView: UIImageView!
+    @IBOutlet weak private var layerView: UIView!
+    @IBOutlet weak private var productNameLabel: UILabel!
+    @IBOutlet weak private var productPriceLabel: UILabel!
+    @IBOutlet weak private var productDescriptionTextView: UITextView!
     
-    @IBOutlet weak var productNameLabel: UILabel!
-    @IBOutlet weak var productPriceLabel: UILabel!
     
-    @IBOutlet weak var productDescriptionTextView: UITextView!
     
+    //MARK: Спрятать описание продукта
     @IBAction func hideDescriptionTapped(_ sender: UIButton) {
         self.layerView.isHidden = true
     }
     
-    @IBAction func basketTapped(_ sender: UIButton) {
+    @IBAction func addToBasketTapped(_ sender: UIButton) {
+    }
+    
+    func fill (name: String, price: String, description: String, image: UIImage){
+        productNameLabel.text = name
+        productPriceLabel.text = price
+        productDescriptionTextView.text = description
+        productImageView.image = image
     }
 }
