@@ -50,14 +50,14 @@ extension CatalogViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NavigationManager.IDVC.UserCatalogCell.rawValue, for: indexPath) as! UserCatalogCollectionViewCell
         let getInfo = productInfoArray[indexPath.row]
-        var images = UIImageView()
+        let images = UIImageView()
         if let url = URL(string: getInfo.productImageURL){
             DispatchQueue.main.async {
                 images.sd_setImage(with: url, completed: nil)
             }
         }
         
-        cell.fill(name: getInfo.productName, price: getInfo.productPrice, description: getInfo.productDescription, image: images)
+        cell.fill(name: getInfo.productName, price: getInfo.productPrice, description: getInfo.productDescription, image: images.image!)
         return cell
     }
     
