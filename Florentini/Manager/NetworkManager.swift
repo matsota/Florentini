@@ -76,6 +76,10 @@ class NetworkManager {
     }
 
     
+    
+    
+    
+    
 //MARK: - О продуктах
     //MARK: - Метод выгрузки Фотографии продукта из Firebase
     func downLoadProductInfo(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
@@ -84,11 +88,22 @@ class NetworkManager {
         }else{
             db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).getDocuments(completion: {
                 (querySnapshot, _) in
-                let messages = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
-                success(messages)
-                print(querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())})
-                print(messages)
+                let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
+                success(productInfo)
             })
+        }
+    }
+    
+    //MARK: - Метод Загрузки изображения по Ссылке в приложение
+    func downLoadImageByURL(url: String, success: @escaping(UIImage) -> Void) {
+        if let url = URL(string: url){
+            do {
+            let data = try Data(contentsOf: url)
+                guard let image = UIImage(data: data) else {return}
+                success(image)
+            }catch let error{
+                print(error.localizedDescription)
+            }
         }
     }
     
@@ -101,7 +116,7 @@ class NetworkManager {
         guard let imageData = image.jpegData(compressionQuality: 0.75) else {return}
         
         let metaData = StorageMetadata()
-        metaData.contentType = "image/ipg"
+//        metaData.contentType = "image/ipg"
         
         storageRef.putData(imageData, metadata: metaData) { (metaData, error) in
             if error == nil, metaData != nil {
@@ -125,19 +140,6 @@ class NetworkManager {
         ] as [String: Any]
            
         db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).document(documentNamedID).setData(imageTemplate, merge: true)
-    }
-   
-    //MARK: - Метод Загрузки изображения по Ссылке в приложение
-    func downLoadImageByURL(url: String, success: @escaping(UIImage) -> Void) {
-        if let url = URL(string: url){
-            do {
-            let data = try Data(contentsOf: url)
-                guard let image = UIImage(data: data) else {return}
-                success(image)
-            }catch let error{
-                print(error.localizedDescription)
-            }
-        }
     }
     //MARK: - Метод Загрузки изображения из Галлереи в приложение
     //Врядли этот метод должен быть в НетворкМанаджере
