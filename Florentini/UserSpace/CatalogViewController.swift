@@ -7,26 +7,25 @@
 //
 
 import UIKit
-import SDWebImage
 
-class CatalogViewController: UIViewController {
-
-    //MARK: - Системные переменные
-    let transition = SlideInTransition()
-    private var productInfoArray = [DatabaseManager.ProductInfo]()
-    
-    //MARK: - ViewDidload
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        NetworkManager.shared.downLoadProductInfo(success: { productInfo in
-            self.productInfoArray = productInfo
-        }) { error in
-            print(error.localizedDescription)
-        }
-        
+class CatalogViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
     }
     
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserCatalogCell", for: indexPath) as! UserCatalogCollectionViewCell
+        return cell
+    }
+    
+    
+    let transition = SlideInTransition()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
+    }
     
     @IBAction func menuTapped(_ sender: UIButton) {
         guard let menuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MenuVC.rawValue) as? MenuViewController else {return}
@@ -38,34 +37,38 @@ class CatalogViewController: UIViewController {
         menuVC.transitioningDelegate = self
         present(menuVC, animated: true)
     }
-        
-}
-
-    //MARK: - Collection View Extension
-extension CatalogViewController: UICollectionViewDelegate, UICollectionViewDataSource  {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return productInfoArray.count
-    }
-  
-    //MARK: Информация достается, все получилось. let getInfo = productInfoArray[indexPath.row]
-    //Но не могу засетить на фотографию по ссылке, которая есть в этом Array: getInfo.productImageURL
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NavigationManager.IDVC.UserCatalogCell.rawValue, for: indexPath) as! UserCatalogCollectionViewCell
-        let getInfo = productInfoArray[indexPath.row]
-        let images = UIImageView()
-        if let url = URL(string: getInfo.productImageURL){
-            DispatchQueue.main.async {
-                images.sd_setImage(with: url, completed: nil)
+    
+    
+func menuOptionPicked(_ menuType: MenuType) {
+            switch menuType {
+            case .home:
+                print("website")
+                let homeVC = storyboard?.instantiateInitialViewController()
+                view.window?.rootViewController = homeVC
+                view.window?.makeKeyAndVisible()
+            case .catalog:
+                print("catalog")
+                let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.CatalogVC.rawValue) as? CatalogViewController
+                view.window?.rootViewController = catalogVC
+                view.window?.makeKeyAndVisible()
+            case .feedback:
+                print("feedback")
+                let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? AboutUsViewController
+                view.window?.rootViewController = feedbackVC
+                view.window?.makeKeyAndVisible()
+            case .faq:
+                print("feedback")
+                let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FAQVC.rawValue) as? FAQViewController
+                view.window?.rootViewController = faqVC
+                view.window?.makeKeyAndVisible()
+            case .website:
+                print("website")
             }
         }
-        
-        cell.fill(name: getInfo.productName, price: getInfo.productPrice, description: getInfo.productDescription, image: images.image!)
-        return cell
-    }
     
 }
 
-//перенести из UI?
+
 extension CatalogViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.isPresented = true
@@ -74,33 +77,6 @@ extension CatalogViewController: UIViewControllerTransitioningDelegate {
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.isPresented = false
         return transition
-    }
-    
-    func menuOptionPicked(_ menuType: MenuType) {
-        switch menuType {
-        case .home:
-            print("website")
-            let homeVC = storyboard?.instantiateInitialViewController()
-            view.window?.rootViewController = homeVC
-            view.window?.makeKeyAndVisible()
-        case .catalog:
-            print("catalog")
-            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.CatalogVC.rawValue) as? CatalogViewController
-            view.window?.rootViewController = catalogVC
-            view.window?.makeKeyAndVisible()
-        case .feedback:
-            print("feedback")
-            let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? AboutUsViewController
-            view.window?.rootViewController = feedbackVC
-            view.window?.makeKeyAndVisible()
-        case .faq:
-            print("feedback")
-            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FAQVC.rawValue) as? FAQViewController
-            view.window?.rootViewController = faqVC
-            view.window?.makeKeyAndVisible()
-        case .website:
-            print("website")
-        }
     }
 }
 
