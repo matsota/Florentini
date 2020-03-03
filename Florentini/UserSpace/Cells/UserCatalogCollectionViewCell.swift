@@ -24,4 +24,13 @@ class UserCatalogCollectionViewCell: UICollectionViewCell {
     
     @IBAction func basketTapped(_ sender: UIButton) {
     }
+    
+    
+    func fill (image: UIImageView, name: String, price: String, description: String){
+        productImageVIew.image = image.image
+        productNameLabel.text = name
+        productPriceLabel.text = price
+        productDescriptionTextView.text = description
+        
+    }
 }
