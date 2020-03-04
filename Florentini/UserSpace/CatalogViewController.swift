@@ -86,30 +86,20 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource{
         let cell = catalogTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UserCatalogCell.rawValue, for: indexPath) as! UserCatalogTableViewCell
         
         let get = productInfo[indexPath.row]
-        var images: UIImage?
-        
-        //по этому reference я создаю файлы в Файрбейс. там сейчас 3 файла
-        //сейчас там get.productImageURL, gs нету
-        
-        let imageRef =  Storage.storage().reference().child("ProductPhotos/\(get.productName)")
-        
-//        let gsRef = imageRef.bucket
-
-//        imageRef.downloadURL { url, error in
-//          if let error = error {
-//            print(error.localizedDescription)
-//          } else {
-//            NetworkManager.shared.downLoadImageByURL(url: url!.absoluteString) { (image) in
-//                images = image
-//            }
-//          }
-//        }
-        
-        imageRef.getData(maxSize: 1 * 1024 * 1024) { (data, _) in
-            images = UIImage(data: data!)
+       
+        let storageRef = Storage.storage().reference(withPath: "imageCollection/\(get.productName)")
+        storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, error) in
+            if let error = error {
+                print("error occured \(error.localizedDescription)")
+                return
+            }
+            if let data = data {
+                cell.fill(image: UIImage(data: data)!, name: get.productName, price: get.productPrice, description: get.productDescription)
+                self.catalogTableView.reloadData()
+            }
+            
         }
-        
-        cell.fill(image: images!, name: get.productName, price: get.productPrice, description: get.productDescription)
+       
         return cell
     }
     

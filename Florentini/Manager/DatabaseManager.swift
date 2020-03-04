@@ -50,15 +50,13 @@ class DatabaseManager {
         var productPrice: String
         var productDescription: String
         var productCategory: String
-        var productImageURL: String
         
         var dictionary: [String:Any]{
             return [
                 DatabaseManager.ProductCases.productName.rawValue: productName,
                 DatabaseManager.ProductCases.productPrice.rawValue: productPrice,
                 DatabaseManager.ProductCases.productDescription.rawValue: productDescription,
-                DatabaseManager.ProductCases.productCategory.rawValue: productCategory,
-                DatabaseManager.ProductCases.productImageURL.rawValue: productImageURL,
+                DatabaseManager.ProductCases.productCategory.rawValue: productCategory
             ]
         }
     }
@@ -101,9 +99,8 @@ extension DatabaseManager.ProductInfo: DocumentSerializable{
         guard let productName = dictionary[DatabaseManager.ProductCases.productName.rawValue] as? String,
             let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? String,
             let productDescription = dictionary[DatabaseManager.ProductCases.productDescription.rawValue] as? String,
-            let productCategory = dictionary[DatabaseManager.ProductCases.productCategory.rawValue] as? String,
-            let productImageURL = dictionary[DatabaseManager.ProductCases.productImageURL.rawValue] as? String else {return nil}
-        self.init(productName: productName, productPrice: productPrice, productDescription: productDescription, productCategory: productCategory, productImageURL: productImageURL)
+            let productCategory = dictionary[DatabaseManager.ProductCases.productCategory.rawValue] as? String else {return nil}
+        self.init(productName: productName, productPrice: productPrice, productDescription: productDescription, productCategory: productCategory)
     }
 }
 

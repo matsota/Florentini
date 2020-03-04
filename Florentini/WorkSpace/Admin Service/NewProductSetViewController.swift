@@ -17,6 +17,7 @@ class NewProductSetViewController: UIViewController, UINavigationControllerDeleg
     @IBOutlet weak var photoPriceTextField: UITextField!
     @IBOutlet weak var photoCategoryTextField: UITextField!
     @IBOutlet weak var photoDescriptionTextField: UITextField!
+    @IBOutlet weak var progressView: UIProgressView!
     
     //MARK: - ImageView Outlet
     @IBOutlet weak var addedPhotoImageView: UIImageView!
@@ -70,11 +71,9 @@ class NewProductSetViewController: UIViewController, UINavigationControllerDeleg
         let category = self.photoCategoryTextField.text!
         let description = self.photoDescriptionTextField.text!
         
-        guard let image = addedPhotoImageView.image else {return}
-        NetworkManager.shared.uploadPhoto(image: image, name: name)  { url in
-            NetworkManager.shared.imageData(name: name, price: price, category: category, description: description, url: url, documentNamedID: name) { success in
-                self.present(self.alert.alertClassicInfoOK(title: "Отлично!", message: "Товар добавлен или изменён"), animated: true)
-            }
+        guard let image = addedPhotoImageView else {return}
+        NetworkManager.shared.uploadPhoto(image: image, name: name, progressIndicator: progressView)  {
+            NetworkManager.shared.imageData(name: name, price: price, category: category, description: description, documentNamedID: name)
         }
     }
     

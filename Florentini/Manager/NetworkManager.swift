@@ -108,35 +108,40 @@ class NetworkManager {
     }
     
     //MARK: - Метод загрузки Фотографии продукта в Firebase
-    func uploadPhoto(image: UIImage, name: String, complition: @escaping(String) -> Void) {
-        
+    func uploadPhoto(image: UIImageView, name: String, progressIndicator: UIProgressView, complition: @escaping() -> Void) {
+        progressIndicator.isHidden = false
         guard AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid else {return}
-        let storageRef =  Storage.storage().reference().child("ProductPhotos/\(name)")
-
-        guard let imageData = image.jpegData(compressionQuality: 0.75) else {return}
+//        let randomID = UUID.init().uuidString
+        let uploadRef = Storage.storage().reference(withPath: "imageCollection/\(name)")
+        guard let imageData = image.image?.jpegData(compressionQuality: 0.75) else {return}
+        let uploadMetadata = StorageMetadata.init()
+        uploadMetadata.contentType = "image/jpg"
         
-        let metaData = StorageMetadata()
-//        metaData.contentType = "image/ipg"
-        
-        storageRef.putData(imageData, metadata: metaData) { (metaData, error) in
-            if error == nil, metaData != nil {
-                storageRef.downloadURL { (url, _) in
-                    guard let url = url?.absoluteString else {return}
-                    complition(url)
-                }
+        let taskRef = uploadRef.putData(imageData, metadata: uploadMetadata) { (downloadMetadata, error) in
+            if let error = error {
+                print("Oh no! \(error.localizedDescription)")
+                return
             }
+            print("Done with metadata: \(String(describing: downloadMetadata))")
+            complition()
+        }
+        taskRef.observe(.progress){ (snapshot) in
+            guard let pctThere = snapshot.progress?.fractionCompleted else {return}
+            progressIndicator.progress = Float(pctThere)
+        }
+        taskRef.observe(.success) {_ in
+            progressIndicator.isHidden = true
         }
     }
     
     //MARK: - Метод внесения информации  о товаре в Firebase
-    func imageData(name: String, price: String, category: String, description: String, url: String, documentNamedID: String, complition: @escaping ((_ success: Bool) -> ())) {
+    func imageData(name: String, price: String, category: String, description: String, documentNamedID: String) {
         
         let imageTemplate = [
             DatabaseManager.ProductCases.productName.rawValue: name,
             DatabaseManager.ProductCases.productPrice.rawValue: price,
             DatabaseManager.ProductCases.productCategory.rawValue: category,
-            DatabaseManager.ProductCases.productDescription.rawValue: description,
-            DatabaseManager.ProductCases.productImageURL.rawValue: url
+            DatabaseManager.ProductCases.productDescription.rawValue: description
         ] as [String: Any]
            
         db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).document(documentNamedID).setData(imageTemplate, merge: true)
