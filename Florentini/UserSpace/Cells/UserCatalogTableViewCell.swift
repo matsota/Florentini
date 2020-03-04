@@ -32,9 +32,11 @@ class UserCatalogTableViewCell: UITableViewCell {
         
     }
     
-    
-    func fill (image: UIImage, name: String, price: String, description: String){
+    func imageFill(image: UIImage){
         productImageView.image = image
+    }
+    
+    func descriptionFill(name: String, price: String, description: String) {
         productNameLabel.text = name
         productPriceLabel.text = price
         productDescriptionTextView.text = description
