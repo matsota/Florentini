@@ -26,6 +26,7 @@ class CatalogViewController: UIViewController {
         }) { error in
             print(error.localizedDescription)
         }
+        self.catalogTableView.reloadData()
         
     }
     
@@ -94,12 +95,12 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource{
                 return
             }
             if let data = data {
-                cell.fill(image: UIImage(data: data)!, name: get.productName, price: get.productPrice, description: get.productDescription)
-                self.catalogTableView.reloadData()
+                let image = UIImage(data: data)
+                cell.imageFill(image: image!)
             }
-            
         }
        
+        cell.descriptionFill(name: get.productName, price: get.productPrice, description: get.productDescription)
         return cell
     }
     
