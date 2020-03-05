@@ -13,6 +13,8 @@ class UserCatalogTableViewCell: UITableViewCell {
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productPriceLabel: UILabel!
     @IBOutlet weak var productDescriptionTextView: UITextView!
+    @IBOutlet weak var descriptionView: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -32,14 +34,12 @@ class UserCatalogTableViewCell: UITableViewCell {
         
     }
     
-    func imageFill(image: UIImage){
-        productImageView.image = image
-    }
-    
-    func descriptionFill(name: String, price: String, description: String) {
+    func Fill(name: String, price: String, description: String, image: @escaping(UIImageView) -> Void) {
         productNameLabel.text = name
         productPriceLabel.text = price
         productDescriptionTextView.text = description
+        
+        image(productImageView)
         
     }
 

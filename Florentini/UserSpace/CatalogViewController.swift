@@ -8,7 +8,6 @@
 
 import UIKit
 import Firebase
-import SDWebImage
 import FirebaseUI
 
 class CatalogViewController: UIViewController {
@@ -23,10 +22,11 @@ class CatalogViewController: UIViewController {
         
         NetworkManager.shared.downLoadProductInfo(success: { productInfo in
             self.productInfo = productInfo
+            self.catalogTableView.reloadData()
         }) { error in
             print(error.localizedDescription)
         }
-        self.catalogTableView.reloadData()
+        
         
     }
     
@@ -88,19 +88,11 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource{
         
         let get = productInfo[indexPath.row]
        
-        let storageRef = Storage.storage().reference(withPath: "imageCollection/\(get.productName)")
-        storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, error) in
-            if let error = error {
-                print("error occured \(error.localizedDescription)")
-                return
-            }
-            if let data = data {
-                let image = UIImage(data: data)
-                cell.imageFill(image: image!)
-            }
-        }
+        let storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(get.productName)")
        
-        cell.descriptionFill(name: get.productName, price: get.productPrice, description: get.productDescription)
+        cell.Fill(name: get.productName, price: get.productPrice, description: get.productDescription) { image in
+            image.sd_setImage(with: storageRef)
+        }
         return cell
     }
     
