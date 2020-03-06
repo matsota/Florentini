@@ -20,6 +20,7 @@ class CatalogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//data Implementation
         NetworkManager.shared.downLoadProductInfo(success: { productInfo in
             self.productInfo = productInfo
             self.catalogTableView.reloadData()
