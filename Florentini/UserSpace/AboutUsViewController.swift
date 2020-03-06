@@ -40,7 +40,7 @@ class AboutUsViewController: UIViewController {
         present(menuVC, animated: true)
     }
     //Вынести за пределы UI
-    func menuOptionPicked(_ menuType: MenuType) {
+    func menuOptionPicked(_ menuType: MenuViewController.MenuType) {
         switch menuType {
         case .home:
             print("website")

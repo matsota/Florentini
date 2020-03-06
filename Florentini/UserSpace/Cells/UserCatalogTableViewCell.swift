@@ -27,7 +27,9 @@ class UserCatalogTableViewCell: UITableViewCell {
     }
     
     @IBAction func hideDescriptionTapped(_ sender: UIButton) {
-        descriptionView.isHidden = true
+        UIView.animate(withDuration: 0.3) {
+            self.descriptionView.isHidden = true
+        }
     }
     
     @IBAction func addToBasketTapped(_ sender: UIButton) {
@@ -42,7 +44,9 @@ class UserCatalogTableViewCell: UITableViewCell {
     }
     
     @objc func imageTapped(_ gestureRecognizer: UITapGestureRecognizer){
-        descriptionView.isHidden = false
+        UIView.animate(withDuration: 0.3) {
+            self.descriptionView.isHidden = false
+        }
     }
     
     //MARK: - Метод заполнения клетки

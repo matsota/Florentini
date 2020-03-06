@@ -27,6 +27,7 @@ class NavigationManager: UINavigationController {
         case UserCatalogCell
         
         case MenuVC
+        case BasketVC
         
         //for workers
         case LoginWorkSpaceVC

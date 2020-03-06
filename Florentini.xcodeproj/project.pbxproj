@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F0EEDF924129A3500948175 /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0EEDF824129A3500948175 /* BasketViewController.swift */; };
 		8F2062A323FEB25A007C481A /* MainWorkSpaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062A223FEB25A007C481A /* MainWorkSpaceViewController.swift */; };
 		8F2062A523FF555F007C481A /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062A423FF555F007C481A /* NavigationManager.swift */; };
 		8F2062A723FF5ECE007C481A /* LoginWorkSpaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062A623FF5ECE007C481A /* LoginWorkSpaceViewController.swift */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		684CBB7DD3C972328D14EE25 /* Pods-Florentini.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Florentini.debug.xcconfig"; path = "Target Support Files/Pods-Florentini/Pods-Florentini.debug.xcconfig"; sourceTree = "<group>"; };
+		8F0EEDF824129A3500948175 /* BasketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
 		8F2062A223FEB25A007C481A /* MainWorkSpaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWorkSpaceViewController.swift; sourceTree = "<group>"; };
 		8F2062A423FF555F007C481A /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		8F2062A623FF5ECE007C481A /* LoginWorkSpaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWorkSpaceViewController.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				8FE3F69E24035BF6003001CA /* MenuViewController.swift */,
+				8F0EEDF824129A3500948175 /* BasketViewController.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -348,6 +351,7 @@
 				8F2062A723FF5ECE007C481A /* LoginWorkSpaceViewController.swift in Sources */,
 				8FE3F69924035BE4003001CA /* CatalogViewController.swift in Sources */,
 				8F2062A923FF5F94007C481A /* AuthenticationManager.swift in Sources */,
+				8F0EEDF924129A3500948175 /* BasketViewController.swift in Sources */,
 				8FE3F69D24035BED003001CA /* HomeViewController.swift in Sources */,
 				8FA80A9A23FD660A0015C878 /* DatabaseManager.swift in Sources */,
 				8F2062AC23FF6292007C481A /* UIAlertController + Custom.swift in Sources */,

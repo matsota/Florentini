@@ -43,7 +43,7 @@ class CatalogViewController: UIViewController {
         present(menuVC, animated: true)
     }
     
-    func menuOptionPicked(_ menuType: MenuType) {
+    func menuOptionPicked(_ menuType: MenuViewController.MenuType) {
         switch menuType {
         case .home:
             print("website")

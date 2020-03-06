@@ -8,13 +8,15 @@
 
 import UIKit
 
-enum MenuType: Int {
-    case home
-    case catalog
-    case feedback
-    case faq
-    case website
-    
+extension MenuViewController{
+    enum MenuType: Int {
+        case home
+        case catalog
+        case feedback
+        case faq
+        case website
+        
+    }
 }
 
 class MenuViewController: UITableViewController {
@@ -22,9 +24,9 @@ class MenuViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    
     var menuTypeTapped: ((MenuType) -> Void)?
-
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let menuType = MenuType(rawValue: indexPath.row) else {return}
         dismiss(animated: true) { [weak self] in
@@ -32,5 +34,5 @@ class MenuViewController: UITableViewController {
             self?.menuTypeTapped?(menuType)
         }
     }
-
+    
 }
