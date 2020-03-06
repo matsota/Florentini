@@ -21,12 +21,12 @@ class WorkersChatViewController: UIViewController, UITableViewDelegate, UITableV
     
     var currentWorkerInfo = [DatabaseManager.WorkerInfo]()
     var messagesArray = [DatabaseManager.ChatMessages]()
-
+    
     //MARK: - ViewDidLoad Method
     override func viewDidLoad() {
         super.viewDidLoad()
-     
-
+        
+        
         //MARK: Подгрузка информации о сотруднике, для чата
         NetworkManager.shared.workersInfoLoad(success: { workerInfo in
             self.currentWorkerInfo = workerInfo
@@ -68,7 +68,7 @@ class WorkersChatViewController: UIViewController, UITableViewDelegate, UITableV
         present(workMenuVC, animated: true)
     }
     
-        //MARK: - Menu Options
+    //MARK: - Menu Options
     func menuOptionPicked(_ menuType: WorkMenuType) {
         switch menuType {
         case .orders:
@@ -87,20 +87,20 @@ class WorkersChatViewController: UIViewController, UITableViewDelegate, UITableV
             }), animated: true)
         }
     }
-
+    
     
     //MARK: - Table View Protocol
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messagesArray.count
     }
-      
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WorkerMessagesTVC", for: indexPath) as! WorkerMessagesTableViewCell
         let message = messagesArray[indexPath.row]
         cell.fill(name: message.name, content: message.content, date: "\(message.timeStamp)")
         
         return cell
-      }
+    }
     
     //MARK: - Message button
     @IBAction func typeMessage(_ sender: UIButton) {
@@ -159,8 +159,8 @@ class WorkersChatViewController: UIViewController, UITableViewDelegate, UITableV
 
 
 
-    //MARK: - Out of Class
-    //MARK: - Extensions
+//MARK: - Out of Class
+//MARK: - Extensions
 extension WorkersChatViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.isPresented = true

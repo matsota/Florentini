@@ -83,12 +83,12 @@ class NewProductSetViewController: UIViewController, UINavigationControllerDeleg
         image.delegate = self
         image.sourceType = UIImagePickerController.SourceType.photoLibrary
         image.allowsEditing = false
-
+        
         self.present(image, animated: true){
             //after it is complete
         }
     }
-
+    
     //MARK: - Созданить изображение для товара с помощью камеры телефона
     func makePhoto() {
         if UIImagePickerController.isSourceTypeAvailable(.camera){
@@ -96,7 +96,7 @@ class NewProductSetViewController: UIViewController, UINavigationControllerDeleg
             image.delegate = self
             image.sourceType = UIImagePickerController.SourceType.camera
             image.allowsEditing = false
-
+            
             self.present(image, animated: true){
                 //after it is complete        }
             }
@@ -108,15 +108,15 @@ class NewProductSetViewController: UIViewController, UINavigationControllerDeleg
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
             self.addedPhotoImageView.image = image
-        
+            
         }
         self.dismiss(animated: true, completion: nil)
     }
     
     //MARK: - TEST AREA
-       
-  
-
+    
+    
+    
     //MARK: - Transition Methods
     
     

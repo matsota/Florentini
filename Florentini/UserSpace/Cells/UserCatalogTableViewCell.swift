@@ -8,7 +8,7 @@
 import UIKit
 
 class UserCatalogTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productPriceLabel: UILabel!
@@ -19,22 +19,34 @@ class UserCatalogTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     
     @IBAction func hideDescriptionTapped(_ sender: UIButton) {
-        
+        descriptionView.isHidden = true
     }
     
     @IBAction func addToBasketTapped(_ sender: UIButton) {
         
     }
     
-    func Fill(name: String, price: String, description: String, image: @escaping(UIImageView) -> Void) {
+    //MARK: -  Метод появления описания продукта и кнопки "Скрыть" / "добавить в корзину"
+    func showDescription(){
+        let imageGesture = UITapGestureRecognizer()
+        imageGesture.addTarget(self, action: #selector(imageTapped(_ :)))
+        productImageView.addGestureRecognizer(imageGesture)
+    }
+    
+    @objc func imageTapped(_ gestureRecognizer: UITapGestureRecognizer){
+        descriptionView.isHidden = false
+    }
+    
+    //MARK: - Метод заполнения клетки
+    func fill(name: String, price: String, description: String, image: @escaping(UIImageView) -> Void) {
         productNameLabel.text = name
         productPriceLabel.text = price
         productDescriptionTextView.text = description
@@ -42,5 +54,5 @@ class UserCatalogTableViewCell: UITableViewCell {
         image(productImageView)
         
     }
-
+    
 }

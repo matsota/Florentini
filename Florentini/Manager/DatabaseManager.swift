@@ -10,7 +10,7 @@ import Foundation
 import Firebase
 
 class DatabaseManager {
-
+    
     //MARK: - Системные переменные
     static let shared = DatabaseManager()
     
@@ -18,7 +18,7 @@ class DatabaseManager {
     struct WorkerInfo {
         var name: String
         var position: String
-
+        
         var dictionary: [String:Any]{
             return [
                 DatabaseManager.WorkerInfoCases.name.rawValue: name,
@@ -61,19 +61,19 @@ class DatabaseManager {
         }
     }
     
-
-
+    
+    
 }
 
-    //MARK: - OUT of Class
-    //MARK: - Протокол шаблонов
+//MARK: - OUT of Class
+//MARK: - Протокол шаблонов
 protocol DocumentSerializable {
     init?(dictionary: [String:Any])
 }
 
 
-    //MARK: - Extensions Init
-    //MARK: О сотрудниках
+//MARK: - Extensions Init
+//MARK: О сотрудниках
 extension DatabaseManager.WorkerInfo: DocumentSerializable {
     init?(dictionary: [String : Any]) {
         guard let name = dictionary[DatabaseManager.WorkerInfoCases.name.rawValue] as? String,
@@ -82,7 +82,7 @@ extension DatabaseManager.WorkerInfo: DocumentSerializable {
     }
 }
 
-    //MARK: Про чат
+//MARK: Про чат
 extension DatabaseManager.ChatMessages: DocumentSerializable{
     init?(dictionary: [String: Any]) {
         guard let name = dictionary[DatabaseManager.ChatMessagesCases.name.rawValue] as? String,
@@ -92,8 +92,8 @@ extension DatabaseManager.ChatMessages: DocumentSerializable{
         self.init(name: name, content: content, uid: uid, timeStamp: timeStamp)
     }
 }
-    
-    //MARK: Про Продукт (закачка)
+
+//MARK: Про Продукт (закачка)
 extension DatabaseManager.ProductInfo: DocumentSerializable{
     init?(dictionary: [String: Any]) {
         guard let productName = dictionary[DatabaseManager.ProductCases.productName.rawValue] as? String,
@@ -104,7 +104,7 @@ extension DatabaseManager.ProductInfo: DocumentSerializable{
     }
 }
 
-    //MARK: - Cases Extension
+//MARK: - Cases Extension
 extension DatabaseManager {
     //MARK: Про сотрудников
     enum WorkerInfoCases: String, CaseIterable {

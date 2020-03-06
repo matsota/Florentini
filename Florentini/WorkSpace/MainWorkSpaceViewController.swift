@@ -10,53 +10,53 @@ import UIKit
 
 class MainWorkSpaceViewController: UIViewController {
     
-//MARK: Системные переменные
+    //MARK: Системные переменные
     let transition = SlideInTransition()
     let alert = UIAlertController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
     @IBAction func workerMenuTapped(_ sender: UIButton) {
         
         guard let workMenuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkMenuVC.rawValue) as? WorkMenuViewController else {return}
-            workMenuVC.workMenuTypeTapped = { workMenuType in
-//                NavigationManager.shared.menuOptionPicked(menuType)
-                self.menuOptionPicked(workMenuType)
-            }
-            workMenuVC.modalPresentationStyle = .overCurrentContext
-            workMenuVC.transitioningDelegate = self
-            present(workMenuVC, animated: true)
+        workMenuVC.workMenuTypeTapped = { workMenuType in
+            //                NavigationManager.shared.menuOptionPicked(menuType)
+            self.menuOptionPicked(workMenuType)
         }
+        workMenuVC.modalPresentationStyle = .overCurrentContext
+        workMenuVC.transitioningDelegate = self
+        present(workMenuVC, animated: true)
+    }
     
     
     @IBAction func chatTapped(_ sender: UIButton) {
         chatTransition()
     }
     
-        func menuOptionPicked(_ menuType: WorkMenuType) {
-            switch menuType {
-            case .orders:
-                ordersTransition()
-            case .catalog:
-                catalogTransition()
-            case .profile:
-                profileTransition()
-            case .faq:
-                faqTransition()
-            case .exit:
-                print("signOut")
-                self.present(self.alert.alertSignOut(success: {
-                    self.dismiss(animated: true) { self.exitApp()
-                    }
-                }), animated: true)
-            }
+    func menuOptionPicked(_ menuType: WorkMenuType) {
+        switch menuType {
+        case .orders:
+            ordersTransition()
+        case .catalog:
+            catalogTransition()
+        case .profile:
+            profileTransition()
+        case .faq:
+            faqTransition()
+        case .exit:
+            print("signOut")
+            self.present(self.alert.alertSignOut(success: {
+                self.dismiss(animated: true) { self.exitApp()
+                }
+            }), animated: true)
         }
+    }
     
-//MARK: Методы переходов
+    //MARK: Методы переходов
     //чат
     func chatTransition() {
         print("chat")

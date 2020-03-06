@@ -9,7 +9,7 @@
 import UIKit
 
 class LoginWorkSpaceViewController: UIViewController {
-
+    
     
     
     
@@ -20,7 +20,7 @@ class LoginWorkSpaceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -35,13 +35,13 @@ class LoginWorkSpaceViewController: UIViewController {
         }
         
     }
-
-///Элементы метода signInTapped
-//MARK: Переход в профиль
-        func transitionToMainWorkVC() {
-            let MainWorkSpaceVC = storyboard?.instantiateViewController(identifier: NavigationManager.IDVC.MainWorkSpaceVC.rawValue) as? MainWorkSpaceViewController
-            view.window?.rootViewController = MainWorkSpaceVC
-            view.window?.makeKeyAndVisible()
-        }
-
+    
+    ///Элементы метода signInTapped
+    //MARK: Переход в профиль
+    func transitionToMainWorkVC() {
+        let MainWorkSpaceVC = storyboard?.instantiateViewController(identifier: NavigationManager.IDVC.MainWorkSpaceVC.rawValue) as? MainWorkSpaceViewController
+        view.window?.rootViewController = MainWorkSpaceVC
+        view.window?.makeKeyAndVisible()
+    }
+    
 }

@@ -10,62 +10,62 @@ import UIKit
 
 class AboutUsViewController: UIViewController {
     
-
+    
     //MARK: - Outlets
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var reviewTextField: UITextField!
     @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
-
+    
     //MARK: - Системные переменные
     let transition = SlideInTransition()
     
     //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         //MARK: Keyboard Observer
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
- 
+    
     //MARK: - Меню
     @IBAction func menuTapped(_ sender: UIButton) {
         guard let menuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MenuVC.rawValue) as? MenuViewController else {return}
         menuVC.menuTypeTapped = { menuType in
-//            NavigationManager.shared.menuOptionPicked(menuType)
-                            self.menuOptionPicked(menuType)
+            //            NavigationManager.shared.menuOptionPicked(menuType)
+            self.menuOptionPicked(menuType)
         }
         menuVC.modalPresentationStyle = .overCurrentContext
         menuVC.transitioningDelegate = self
         present(menuVC, animated: true)
     }
-        //Вынести за пределы UI
+    //Вынести за пределы UI
     func menuOptionPicked(_ menuType: MenuType) {
-            switch menuType {
-            case .home:
-                print("website")
-                let homeVC = storyboard?.instantiateInitialViewController()
-                view.window?.rootViewController = homeVC
-                view.window?.makeKeyAndVisible()
-            case .catalog:
-                print("catalog")
-                let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.CatalogVC.rawValue) as? CatalogViewController
-                view.window?.rootViewController = catalogVC
-                view.window?.makeKeyAndVisible()
-            case .feedback:
-                print("feedback")
-                let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? AboutUsViewController
-                view.window?.rootViewController = feedbackVC
-                view.window?.makeKeyAndVisible()
-            case .faq:
-                print("feedback")
-                let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FAQVC.rawValue) as? FAQViewController
-                view.window?.rootViewController = faqVC
-                view.window?.makeKeyAndVisible()
-            case .website:
-                print("website")
-            }
+        switch menuType {
+        case .home:
+            print("website")
+            let homeVC = storyboard?.instantiateInitialViewController()
+            view.window?.rootViewController = homeVC
+            view.window?.makeKeyAndVisible()
+        case .catalog:
+            print("catalog")
+            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.CatalogVC.rawValue) as? CatalogViewController
+            view.window?.rootViewController = catalogVC
+            view.window?.makeKeyAndVisible()
+        case .feedback:
+            print("feedback")
+            let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? AboutUsViewController
+            view.window?.rootViewController = feedbackVC
+            view.window?.makeKeyAndVisible()
+        case .faq:
+            print("feedback")
+            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FAQVC.rawValue) as? FAQViewController
+            view.window?.rootViewController = faqVC
+            view.window?.makeKeyAndVisible()
+        case .website:
+            print("website")
         }
+    }
     
     //MARK: - Отправить отзыв / Переход в рабочую зону
     @IBAction func sendReviewTapped(_ sender: UIButton) {
@@ -98,7 +98,7 @@ class AboutUsViewController: UIViewController {
         
         scrollViewBottomConstraint.constant = 0
         UIView.animate(withDuration: duration.doubleValue) {
-             self.view.layoutIfNeeded()
+            self.view.layoutIfNeeded()
         }
     }
     
@@ -108,15 +108,15 @@ class AboutUsViewController: UIViewController {
     
 }
 
-    //Вынести за пределы UI
-    extension AboutUsViewController: UIViewControllerTransitioningDelegate {
-        func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-            transition.isPresented = true
-            return transition
-        }
-        func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-            transition.isPresented = false
-            return transition
-        }
+//Вынести за пределы UI
+extension AboutUsViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.isPresented = true
+        return transition
     }
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.isPresented = false
+        return transition
+    }
+}
 

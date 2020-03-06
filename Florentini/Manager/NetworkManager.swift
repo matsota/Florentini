@@ -14,8 +14,8 @@ class NetworkManager {
     //MARK: - Системные переменные
     static let shared = NetworkManager()
     let db = Firestore.firestore()
-
-
+    
+    
     //MARK: - Workers Dataload
     func workersInfoLoad (success: @escaping([DatabaseManager.WorkerInfo]) -> Void, failure: @escaping(Error) -> Void) {
         if AuthenticationManager.shared.currentUser?.uid == nil {
@@ -23,18 +23,18 @@ class NetworkManager {
         }else{
             db.collection("workers").document(AuthenticationManager.shared.currentUser!.uid).getDocument { (documentSnapshot, _) in
                 let workerInfo = DatabaseManager.WorkerInfo(dictionary: documentSnapshot!.data()!)
-                    success([workerInfo!])
+                success([workerInfo!])
             }
         }
     }
- 
-
+    
+    
     //MARK: - Получение всех сообщений  для чата сотрудников
     func workersMessagesLoad(success: @escaping([DatabaseManager.ChatMessages]) -> Void, failure: @escaping(Error) -> Void) {
         if AuthenticationManager.shared.currentUser?.uid == nil {
             failure(NetworkManagerError.workerNotSignedIn)
         }else{
-             db.collection("workersMessages").getDocuments(completion: {
+            db.collection("workersMessages").getDocuments(completion: {
                 (querySnapshot, _) in
                 let messages = querySnapshot!.documents.compactMap{DatabaseManager.ChatMessages(dictionary: $0.data())}
                 success(messages)
@@ -46,7 +46,7 @@ class NetworkManager {
     
     
     //MARK: - Отправка сообщения в Чате сотрудников
-
+    
     func sendMessage(name: String, content: String) {
         let newMessage = DatabaseManager.ChatMessages(name: name, content: content, uid: AuthenticationManager.shared.currentUser!.uid, timeStamp: Date())
         var ref: DocumentReference? = nil
@@ -60,7 +60,7 @@ class NetworkManager {
             }
         }
     }
-
+    
     //MARK: - Обновление содержимого Чата
     func chatUpdate(success: @escaping(DatabaseManager.ChatMessages) -> Void) {
         db.collection("workersMessages").whereField(DatabaseManager.ChatMessagesCases.timeStamp.rawValue, isGreaterThan: Date()).addSnapshotListener { (querySnapshot, error) in
@@ -74,13 +74,13 @@ class NetworkManager {
             }
         }
     }
-
     
     
     
     
     
-//MARK: - О продуктах
+    
+    //MARK: - О продуктах
     //MARK: - Метод выгрузки Фотографии продукта из Firebase
     func downLoadProductInfo(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
         if AuthenticationManager.shared.currentUser?.uid == nil {
@@ -98,7 +98,7 @@ class NetworkManager {
     func downLoadImageByURL(url: String, success: @escaping(UIImage) -> Void) {
         if let url = URL(string: url){
             do {
-            let data = try Data(contentsOf: url)
+                let data = try Data(contentsOf: url)
                 guard let image = UIImage(data: data) else {return}
                 success(image)
             }catch let error{
@@ -111,7 +111,7 @@ class NetworkManager {
     func uploadPhoto(image: UIImageView, name: String, progressIndicator: UIProgressView, complition: @escaping() -> Void) {
         progressIndicator.isHidden = false
         guard AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid else {return}
-//        let randomID = UUID.init().uuidString
+        //        let randomID = UUID.init().uuidString
         let uploadRef = Storage.storage().reference(withPath: "imageCollection/\(name)")
         guard let imageData = image.image?.jpegData(compressionQuality: 0.75) else {return}
         let uploadMetadata = StorageMetadata.init()
@@ -142,30 +142,30 @@ class NetworkManager {
             DatabaseManager.ProductCases.productPrice.rawValue: price,
             DatabaseManager.ProductCases.productCategory.rawValue: category,
             DatabaseManager.ProductCases.productDescription.rawValue: description
-        ] as [String: Any]
-           
+            ] as [String: Any]
+        
         db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).document(documentNamedID).setData(imageTemplate, merge: true)
     }
     //MARK: - Метод Загрузки изображения из Галлереи в приложение
     //Врядли этот метод должен быть в НетворкМанаджере
     
-//    //MARK: - Метод Загрузки изображения с Камеры в приложение
-//    Не получается. НО! Врядли этот метод должен быть в НетворкМанаджере
-//    func makePhoto(success: @escaping(UIImagePickerController) -> Void, error: @escaping(Error) -> Void) {
-//        if UIImagePickerController.isSourceTypeAvailable(.camera){
-//            let image = UIImagePickerController()
-//            image.delegate = (self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate)
-//            image.sourceType = UIImagePickerController.SourceType.camera
-//            image.allowsEditing = false
-//
-//            success(image)
-//        }
-//    }
+    //    //MARK: - Метод Загрузки изображения с Камеры в приложение
+    //    Не получается. НО! Врядли этот метод должен быть в НетворкМанаджере
+    //    func makePhoto(success: @escaping(UIImagePickerController) -> Void, error: @escaping(Error) -> Void) {
+    //        if UIImagePickerController.isSourceTypeAvailable(.camera){
+    //            let image = UIImagePickerController()
+    //            image.delegate = (self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate)
+    //            image.sourceType = UIImagePickerController.SourceType.camera
+    //            image.allowsEditing = false
+    //
+    //            success(image)
+    //        }
+    //    }
 }
 
 
-    //MARK: - Out of Class
-    //MARK: - Extensions
+//MARK: - Out of Class
+//MARK: - Extensions
 extension NetworkManager {
     enum NetworkManagerError: Error {
         case workerNotSignedIn

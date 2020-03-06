@@ -20,7 +20,7 @@ class SlideInTransition: NSObject, UIViewControllerAnimatedTransitioning {
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         
         guard let toViewController = transitionContext.viewController(forKey: .to),
-        let fromViewController = transitionContext.viewController(forKey: .from) else {return}
+            let fromViewController = transitionContext.viewController(forKey: .from) else {return}
         let containerView = transitionContext.containerView
         let finalWidth = toViewController.view.bounds.width * 0.65
         let finalHeight = toViewController.view.bounds.height
@@ -61,5 +61,5 @@ class SlideInTransition: NSObject, UIViewControllerAnimatedTransitioning {
         }
     }
     
-
+    
 }

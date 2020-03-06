@@ -11,18 +11,18 @@ import UIKit
 class HomeViewController: UIViewController {
     
     let transition = SlideInTransition()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
-
+    
     @IBAction func menuTapped(_ sender: UIButton) {
         guard let menuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MenuVC.rawValue) as? MenuViewController else {return}
         menuVC.menuTypeTapped = { menuType in
-//            NavigationManager.shared.menuOptionPicked(menuType)
-                            self.menuOptionPicked(menuType)
+            //            NavigationManager.shared.menuOptionPicked(menuType)
+            self.menuOptionPicked(menuType)
         }
         menuVC.modalPresentationStyle = .overCurrentContext
         menuVC.transitioningDelegate = self
@@ -55,12 +55,7 @@ class HomeViewController: UIViewController {
             print("website")
         }
     }
-    
-    
-    
-    
 }
-
 
 extension HomeViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {

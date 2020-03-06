@@ -14,23 +14,23 @@ class WorkersFAQViewController: UIViewController {
     let transition = SlideInTransition()
     let alert = UIAlertController()
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
     @IBAction func workerMenuTapped(_ sender: UIButton) {
         guard let workMenuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkMenuVC.rawValue) as? WorkMenuViewController else {return}
-            workMenuVC.workMenuTypeTapped = { workMenuType in
-                self.menuOptionPicked(workMenuType)
-            }
-            workMenuVC.modalPresentationStyle = .overCurrentContext
-            workMenuVC.transitioningDelegate = self
-            present(workMenuVC, animated: true)
+        workMenuVC.workMenuTypeTapped = { workMenuType in
+            self.menuOptionPicked(workMenuType)
         }
-            
+        workMenuVC.modalPresentationStyle = .overCurrentContext
+        workMenuVC.transitioningDelegate = self
+        present(workMenuVC, animated: true)
+    }
+    
     @IBAction func chatTapped(_ sender: UIButton) {
         chatTransition()
     }
@@ -43,7 +43,7 @@ class WorkersFAQViewController: UIViewController {
         case .profile:
             profileTransition()
         case .faq:
-           faqTransition()
+            faqTransition()
         case .exit:
             print("signOut")
             self.present(self.alert.alertSignOut(success: {
@@ -52,8 +52,8 @@ class WorkersFAQViewController: UIViewController {
             }), animated: true)
         }
     }
-
-//MARK: Методы переходов
+    
+    //MARK: Методы переходов
     //чат
     func chatTransition() {
         print("chat")

@@ -14,24 +14,24 @@ class WorkerCatalogViewController: UIViewController {
     let transition = SlideInTransition()
     let alert = UIAlertController()
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
     @IBAction func workerMenuTapped(_ sender: UIButton) {
         guard let workMenuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkMenuVC.rawValue) as? WorkMenuViewController else {return}
         workMenuVC.workMenuTypeTapped = { workMenuType in
-//            NavigationManager.shared.menuOptionPicked(menuType)
+            //            NavigationManager.shared.menuOptionPicked(menuType)
             self.menuOptionPicked(workMenuType)
         }
         workMenuVC.modalPresentationStyle = .overCurrentContext
         workMenuVC.transitioningDelegate = self
         
         present(workMenuVC, animated: true)
-    
+        
     }
     
     @IBAction func chatTapped(_ sender: UIButton) {
@@ -57,8 +57,8 @@ class WorkerCatalogViewController: UIViewController {
         }
     }
     
-
-//MARK: Методы переходов
+    
+    //MARK: Методы переходов
     //чат
     func chatTransition() {
         print("chat")
@@ -100,7 +100,7 @@ class WorkerCatalogViewController: UIViewController {
         view.window?.rootViewController = exitApp
         view.window?.makeKeyAndVisible()
     }
-
+    
 }
 
 
@@ -110,7 +110,7 @@ extension WorkerCatalogViewController: UIViewControllerTransitioningDelegate {
         transition.isPresented = true
         return transition
     }
-
+    
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.isPresented = false
         return transition

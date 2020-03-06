@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAuth
 
 class WorkerProfileViewController: UIViewController {
-
+    
     
     //MARK: - TextField Outlet
     @IBOutlet weak var newPassword: UITextField!
@@ -19,14 +19,14 @@ class WorkerProfileViewController: UIViewController {
     //MARK: - Системные переменные
     let transition = SlideInTransition()
     let alert = UIAlertController()
-
+    
     //MARK: - Implementation
     var currentWorkerInfo = [DatabaseManager.WorkerInfo]()
-
+    
     //MARK: - ViewDidLoad Method
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         //MARK: - New Product button appearance if admin
         if AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid {
             newProductButton.isHidden = false
@@ -40,7 +40,7 @@ class WorkerProfileViewController: UIViewController {
     @IBAction func workerMenuTapped(_ sender: UIButton) {
         guard let workMenuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkMenuVC.rawValue) as? WorkMenuViewController else {return}
         workMenuVC.workMenuTypeTapped = { workMenuType in
-    //               NavigationManager.shared.menuOptionPicked(menuType)
+            //               NavigationManager.shared.menuOptionPicked(menuType)
             self.menuOptionPicked(workMenuType)
         }
         workMenuVC.modalPresentationStyle = .overCurrentContext
@@ -115,7 +115,7 @@ class WorkerProfileViewController: UIViewController {
         }
     }
     
-
+    
     //MARK: - Transition Methods
     //чат
     func chatTransition() {
@@ -172,8 +172,8 @@ class WorkerProfileViewController: UIViewController {
 }
 
 
-    //MARK: - Out of Class
-    //MARK: - extentions
+//MARK: - Out of Class
+//MARK: - extentions
 extension WorkerProfileViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.isPresented = true
