@@ -14,6 +14,7 @@ class AuthenticationManager {
     
     //MARK: - Системные переменные
     static var shared = AuthenticationManager()
+    let user = Auth.auth().userAccessGroup
     let currentUser = Auth.auth().currentUser
     let uidAdmin = "Q0Lh49RsIrMU8itoNgNJHN3bjmD2"
     

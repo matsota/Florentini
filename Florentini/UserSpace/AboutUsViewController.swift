@@ -26,7 +26,8 @@ class AboutUsViewController: UIViewController {
         //MARK: Keyboard Observer
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardDidShowNotification, object: nil)
+        }
     
     //MARK: - Меню
     @IBAction func menuTapped(_ sender: UIButton) {

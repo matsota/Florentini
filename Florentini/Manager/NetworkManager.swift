@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import FirebaseUI
 
 class NetworkManager {
     
@@ -146,21 +147,26 @@ class NetworkManager {
         
         db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).document(documentNamedID).setData(imageTemplate, merge: true)
     }
-    //MARK: - Метод Загрузки изображения из Галлереи в приложение
-    //Врядли этот метод должен быть в НетворкМанаджере
-    
-    //    //MARK: - Метод Загрузки изображения с Камеры в приложение
-    //    Не получается. НО! Врядли этот метод должен быть в НетворкМанаджере
-    //    func makePhoto(success: @escaping(UIImagePickerController) -> Void, error: @escaping(Error) -> Void) {
-    //        if UIImagePickerController.isSourceTypeAvailable(.camera){
-    //            let image = UIImagePickerController()
-    //            image.delegate = (self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate)
-    //            image.sourceType = UIImagePickerController.SourceType.camera
-    //            image.allowsEditing = false
-    //
-    //            success(image)
-    //        }
-    //    }
+    //MARK: - Метод удаления продукта из базы данных
+    func deleteProduct(name: String){
+        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).document(name).delete() { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+            } else {
+                print("Document successfully removed!")
+            }
+        }
+        
+        let imageRef = Storage.storage().reference().child("\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(name)")
+        imageRef.delete { error in
+          if let error = error {
+            print("error ocured: \(error.localizedDescription)")
+          } else {
+            print ("File deleted successfully")
+          }
+        }
+    }
+
 }
 
 

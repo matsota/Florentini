@@ -7,20 +7,31 @@
 //
 
 import UIKit
+import FirebaseUI
 
 class WorkerCatalogViewController: UIViewController {
+    
+    //MARK: - Outlets
+    @IBOutlet weak var catalogTableView: UITableView!
     
     //MARK: Системные переменные
     let transition = SlideInTransition()
     let alert = UIAlertController()
     
-    
+    //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        //data Implementation
+        NetworkManager.shared.downLoadProductInfo(success: { productInfo in
+            self.productInfo = productInfo
+            self.catalogTableView.reloadData()
+        }) { error in
+            print(error.localizedDescription)
+        }
     }
     
+    //MARK: - Menu button
     @IBAction func workerMenuTapped(_ sender: UIButton) {
         guard let workMenuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkMenuVC.rawValue) as? WorkMenuViewController else {return}
         workMenuVC.workMenuTypeTapped = { workMenuType in
@@ -34,10 +45,14 @@ class WorkerCatalogViewController: UIViewController {
         
     }
     
+    
+    //MARK: - Chat Transition
     @IBAction func chatTapped(_ sender: UIButton) {
         chatTransition()
     }
     
+    
+    //перенести меню в другое место.
     func menuOptionPicked(_ menuType: WorkMenuType) {
         switch menuType {
         case .orders:
@@ -101,9 +116,36 @@ class WorkerCatalogViewController: UIViewController {
         view.window?.makeKeyAndVisible()
     }
     
+    
+    //MARK: - Implementation
+    private var productInfo = [DatabaseManager.ProductInfo]()
+    
 }
 
 
+
+//MARK: - TableView Extention
+extension WorkerCatalogViewController: UITableViewDelegate, UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return productInfo.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = catalogTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.WorkerCatalogTVCell.rawValue, for: indexPath) as! WorkerCatalogTableViewCell
+        
+        cell.showDescription()
+        
+        let get = productInfo[indexPath.row]
+        
+        let storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(get.productName)")
+        cell.fill(name: get.productName, price: get.productPrice, description: get.productDescription) { image in
+            image.sd_setImage(with: storageRef)
+        }
+        return cell
+    }
+}
+
+//MARK: - Transition Extention
 extension WorkerCatalogViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning?
     {

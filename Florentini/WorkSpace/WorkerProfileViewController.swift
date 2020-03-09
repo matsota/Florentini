@@ -27,6 +27,8 @@ class WorkerProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        workerInfoLoad()
+        
         //MARK: - New Product button appearance if admin
         if AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid {
             newProductButton.isHidden = false

@@ -52,8 +52,6 @@ extension UIAlertController {
     }
     
     
-    
-    //MARK: - Authentication Alerts
     //MARK: - Sign Out Method
     func alertSignOut(success: @escaping() -> Void) -> (UIAlertController) {
         let alertSignOut = UIAlertController(title: "Внимание", message: "Подтвердите, что вы нажали на \"Выход\" неслучайно", preferredStyle: .actionSheet)
@@ -118,12 +116,15 @@ extension UIAlertController {
         return alert
     }
     
-    //MARK: - invalidFields
-    func alertSignUpFields() -> (UIAlertController){
-        let alertController = UIAlertController(title: "Внимание!", message: "Необходимо заполнить все поля", preferredStyle: .alert)
-        let action = UIAlertAction(title: "ОК",  style: .default) {(action) in}
-        alertController.addAction(action)
+    //MARK: - Delete Product
+    func alertDeleteProduct(name: String) -> (UIAlertController) {
+        let delete = UIAlertController(title: "Внимание", message: "Подтвердите, что Вы желаете удалить продукт", preferredStyle: .actionSheet)
+        delete.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { _ in
+            NetworkManager.shared.deleteProduct(name: name)
+        }))
+        delete.addAction(UIAlertAction(title: "Отмена", style: .destructive, handler: nil))
         
-        return (alertController)
+        return (delete)
     }
+    
 }

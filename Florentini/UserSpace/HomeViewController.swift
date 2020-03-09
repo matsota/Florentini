@@ -8,14 +8,16 @@
 
 import UIKit
 
+
 class HomeViewController: UIViewController {
     
-    let slideInView = SlideInTransition()
+    let transition = SlideInTransition()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
+        
+        
     }
     
     @IBAction func menuTapped(_ sender: UIButton) {
@@ -59,11 +61,11 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        slideInView.isPresented = true
-        return slideInView
+        transition.isPresented = true
+        return transition
     }
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        slideInView.isPresented = false
-        return slideInView
+        transition.isPresented = false
+        return transition
     }
 }

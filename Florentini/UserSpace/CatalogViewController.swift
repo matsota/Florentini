@@ -12,6 +12,8 @@ import FirebaseUI
 
 class CatalogViewController: UIViewController {
     
+    
+    //MARK: - Outlets
     @IBOutlet weak var catalogTableView: UITableView!
     
     //MARK: - Системные переменные
@@ -83,7 +85,7 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = catalogTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UserCatalogCell.rawValue, for: indexPath) as! UserCatalogTableViewCell
+        let cell = catalogTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UserCatalogTVCell.rawValue, for: indexPath) as! UserCatalogTableViewCell
         
         cell.showDescription()
         

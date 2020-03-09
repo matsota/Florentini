@@ -20,6 +20,7 @@
 		8F2062C323FF747B007C481A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F2062C123FF747B007C481A /* Main.storyboard */; };
 		8F2062C723FF7F75007C481A /* WorkersChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062C623FF7F75007C481A /* WorkersChatViewController.swift */; };
 		8F2062CB23FFA4EF007C481A /* WorkerMessagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062CA23FFA4EF007C481A /* WorkerMessagesTableViewCell.swift */; };
+		8F95742724169DDB00A4EF6E /* WorkerCatalogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F95742624169DDB00A4EF6E /* WorkerCatalogTableViewCell.swift */; };
 		8FA80A9823FD65FA0015C878 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA80A9723FD65FA0015C878 /* NetworkManager.swift */; };
 		8FA80A9A23FD660A0015C878 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA80A9923FD660A0015C878 /* DatabaseManager.swift */; };
 		8FD4E4C123FCD1D800C62FA5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD4E4C023FCD1D800C62FA5 /* AppDelegate.swift */; };
@@ -53,6 +54,7 @@
 		8F2062C223FF747B007C481A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8F2062C623FF7F75007C481A /* WorkersChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkersChatViewController.swift; sourceTree = "<group>"; };
 		8F2062CA23FFA4EF007C481A /* WorkerMessagesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerMessagesTableViewCell.swift; sourceTree = "<group>"; };
+		8F95742624169DDB00A4EF6E /* WorkerCatalogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerCatalogTableViewCell.swift; sourceTree = "<group>"; };
 		8FA80A9723FD65FA0015C878 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		8FA80A9923FD660A0015C878 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		8FD4E4BD23FCD1D800C62FA5 /* Florentini.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Florentini.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				8F2062CA23FFA4EF007C481A /* WorkerMessagesTableViewCell.swift */,
+				8F95742624169DDB00A4EF6E /* WorkerCatalogTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				8F2062B823FF701C007C481A /* WorkerCatalogViewController.swift in Sources */,
 				8FD4E4C123FCD1D800C62FA5 /* AppDelegate.swift in Sources */,
 				8FFDA507240EC1D700A63A02 /* UserCatalogTableViewCell.swift in Sources */,
+				8F95742724169DDB00A4EF6E /* WorkerCatalogTableViewCell.swift in Sources */,
 				8FD4E4C323FCD1D800C62FA5 /* SceneDelegate.swift in Sources */,
 				8FE3F69F24035BF7003001CA /* MenuViewController.swift in Sources */,
 				8F2062AE23FF641C007C481A /* WorkMenuViewController.swift in Sources */,

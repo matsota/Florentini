@@ -9,11 +9,11 @@ import UIKit
 
 class UserCatalogTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var productImageView: UIImageView!
-    @IBOutlet weak var productNameLabel: UILabel!
-    @IBOutlet weak var productPriceLabel: UILabel!
-    @IBOutlet weak var productDescriptionTextView: UITextView!
-    @IBOutlet weak var descriptionView: UIView!
+    @IBOutlet weak private var productImageView: UIImageView!
+    @IBOutlet weak private var productNameLabel: UILabel!
+    @IBOutlet weak private var productPriceLabel: UILabel!
+    @IBOutlet weak private var productDescriptionTextView: UITextView!
+    @IBOutlet weak private var descriptionView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
