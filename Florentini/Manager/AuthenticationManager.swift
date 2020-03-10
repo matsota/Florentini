@@ -14,7 +14,6 @@ class AuthenticationManager {
     
     //MARK: - Системные переменные
     static var shared = AuthenticationManager()
-    let user = Auth.auth().userAccessGroup
     let currentUser = Auth.auth().currentUser
     let uidAdmin = "Q0Lh49RsIrMU8itoNgNJHN3bjmD2"
     
@@ -44,6 +43,20 @@ class AuthenticationManager {
     //            }
     //        }
     //    }
+    
+    //MARK: - Sign In Anonymously
+    func signInAnonymously() {
+        let auth = Auth.auth()
+        
+        auth.signInAnonymously { (result, error) in
+            if let error = error {
+                print ("error: \(error.localizedDescription)")
+                return
+            }
+            let uid = result?.user.uid
+            print("success: \(String(describing: uid))")
+        }
+    }
     
     //MARK: - Метод SignOut
     func signOut() {

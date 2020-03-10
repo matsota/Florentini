@@ -21,7 +21,8 @@ class LoginWorkSpaceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        //exit anonymous user and enter for worker
+//        AuthenticationManager.shared.signOut()
     }
     
     @IBAction func signInTapped(_ sender: UIButton) {

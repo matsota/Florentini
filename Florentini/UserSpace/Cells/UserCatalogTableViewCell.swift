@@ -33,7 +33,7 @@ class UserCatalogTableViewCell: UITableViewCell {
     }
     
     @IBAction func addToBasketTapped(_ sender: UIButton) {
-        
+        NetworkManager.shared.makePreOrder(name: productNameLabel.text!, price: productPriceLabel.text!)
     }
     
     //MARK: -  Метод появления описания продукта и кнопки "Скрыть" / "добавить в корзину"
@@ -56,7 +56,6 @@ class UserCatalogTableViewCell: UITableViewCell {
         productDescriptionTextView.text = description
         
         image(productImageView)
-        
     }
     
 }

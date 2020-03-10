@@ -17,7 +17,8 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        
+        //anonymous user
+        AuthenticationManager.shared.signInAnonymously()
     }
     
     @IBAction func menuTapped(_ sender: UIButton) {
@@ -33,28 +34,29 @@ class HomeViewController: UIViewController {
     func menuOptionPicked(_ menuType: MenuViewController.MenuType) {
         switch menuType {
         case .home:
-            print("website")
             let homeVC = storyboard?.instantiateInitialViewController()
             view.window?.rootViewController = homeVC
             view.window?.makeKeyAndVisible()
         case .catalog:
-            print("catalog")
             let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.CatalogVC.rawValue) as? CatalogViewController
             view.window?.rootViewController = catalogVC
             view.window?.makeKeyAndVisible()
         case .feedback:
-            print("feedback")
             let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? AboutUsViewController
             view.window?.rootViewController = feedbackVC
             view.window?.makeKeyAndVisible()
         case .faq:
-            print("feedback")
             let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FAQVC.rawValue) as? FAQViewController
             view.window?.rootViewController = faqVC
             view.window?.makeKeyAndVisible()
         case .website:
             print("website")
         }
+    }
+    @IBAction func basketTapped(_ sender: UIButton) {
+        let basketVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.BasketVC.rawValue) as? BasketViewController
+        view.window?.rootViewController = basketVC
+        view.window?.makeKeyAndVisible()
     }
     
 }

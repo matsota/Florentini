@@ -61,6 +61,19 @@ class DatabaseManager {
         }
     }
     
+    //MARK: - Шаблон Про Неподтвержденный Продукт
+    struct PreOrder {
+        var productName: String
+        var productPrice: String
+        
+        var dictionary: [String:Any]{
+            return [
+                DatabaseManager.ProductCases.productName.rawValue: productName,
+                DatabaseManager.ProductCases.productPrice.rawValue: productPrice
+            ]
+        }
+    }
+    
     
     
 }
@@ -104,6 +117,15 @@ extension DatabaseManager.ProductInfo: DocumentSerializable{
     }
 }
 
+//MARK: Про Неподтвержденный Продукт (закачка)
+extension DatabaseManager.PreOrder: DocumentSerializable{
+    init?(dictionary: [String: Any]) {
+        guard let productName = dictionary[DatabaseManager.ProductCases.productName.rawValue] as? String,
+            let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? String else {return nil}
+        self.init(productName: productName, productPrice: productPrice)
+    }
+}
+
 //MARK: - Cases Extension
 extension DatabaseManager {
     //MARK: Про сотрудников
@@ -117,8 +139,13 @@ extension DatabaseManager {
         case content
         case uid
         case timeStamp
+        
+        
+        case workers
+        case workersMessages
+        
     }
-    //MARK: Про новый товар
+    //MARK: Про Товар
     enum ProductCases: String, CaseIterable {
         case productName
         case productPrice
@@ -127,6 +154,8 @@ extension DatabaseManager {
         case productImageURL
         
         case imageCollection
+        
+        case preOrder
     }
     
 }

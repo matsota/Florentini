@@ -28,6 +28,7 @@ class NavigationManager: UINavigationController {
         
         case MenuVC
         case BasketVC
+        case BasketTVCell
         
         //for workers
         case LoginWorkSpaceVC
@@ -36,9 +37,10 @@ class NavigationManager: UINavigationController {
         case WorkerProfileVC
         case WorkersFAQVC
         case WorkersChatVC
+        
 
         case WorkMenuVC
-        
+        case WorkerMessagesTVCell
         case WorkerCatalogTVCell
     }
     

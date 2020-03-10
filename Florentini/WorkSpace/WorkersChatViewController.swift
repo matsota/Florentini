@@ -95,7 +95,7 @@ class WorkersChatViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "WorkerMessagesTVC", for: indexPath) as! WorkerMessagesTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.WorkerMessagesTVCell.rawValue, for: indexPath) as! WorkerMessagesTableViewCell
         let message = messagesArray[indexPath.row]
         cell.fill(name: message.name, content: message.content, date: "\(message.timeStamp)")
         
