@@ -22,7 +22,7 @@ class LoginWorkSpaceViewController: UIViewController {
         super.viewDidLoad()
         
         //exit anonymous user and enter for worker
-//        AuthenticationManager.shared.signOut()
+        AuthenticationManager.shared.signOut()
     }
     
     @IBAction func signInTapped(_ sender: UIButton) {

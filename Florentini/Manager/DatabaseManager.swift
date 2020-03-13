@@ -47,7 +47,7 @@ class DatabaseManager {
     //MARK: - Шаблон Про Продукт (закачка)
     struct ProductInfo {
         var productName: String
-        var productPrice: String
+        var productPrice: Int
         var productDescription: String
         var productCategory: String
         
@@ -64,7 +64,7 @@ class DatabaseManager {
     //MARK: - Шаблон Про Неподтвержденный Продукт
     struct PreOrder {
         var productName: String
-        var productPrice: String
+        var productPrice: Int
         
         var dictionary: [String:Any]{
             return [
@@ -110,7 +110,7 @@ extension DatabaseManager.ChatMessages: DocumentSerializable{
 extension DatabaseManager.ProductInfo: DocumentSerializable{
     init?(dictionary: [String: Any]) {
         guard let productName = dictionary[DatabaseManager.ProductCases.productName.rawValue] as? String,
-            let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? String,
+            let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? Int,
             let productDescription = dictionary[DatabaseManager.ProductCases.productDescription.rawValue] as? String,
             let productCategory = dictionary[DatabaseManager.ProductCases.productCategory.rawValue] as? String else {return nil}
         self.init(productName: productName, productPrice: productPrice, productDescription: productDescription, productCategory: productCategory)
@@ -121,7 +121,7 @@ extension DatabaseManager.ProductInfo: DocumentSerializable{
 extension DatabaseManager.PreOrder: DocumentSerializable{
     init?(dictionary: [String: Any]) {
         guard let productName = dictionary[DatabaseManager.ProductCases.productName.rawValue] as? String,
-            let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? String else {return nil}
+            let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? Int else {return nil}
         self.init(productName: productName, productPrice: productPrice)
     }
 }
@@ -156,6 +156,17 @@ extension DatabaseManager {
         case imageCollection
         
         case preOrder
+    }
+    
+    enum ProductCategoriesCases: String, CaseIterable {
+        case none = "Без Категории"
+        case apiece = "Поштучно"
+        case combined = "Комбинация"
+        case bouquet = "Букет"
+        case stockApice = "Акция"
+//        case stockApice = "Акция Поштучно"
+//        case stockBouquet = "Акция Букет"
+
     }
     
 }

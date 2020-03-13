@@ -65,9 +65,9 @@ class WorkerCatalogTableViewCell: UITableViewCell {
     }
     
     //MARK: - Метод заполнения клетки
-    func fill(name: String, price: String, description: String, image: @escaping(UIImageView) -> Void) {
+    func fill(name: String, price: Int, description: String, image: @escaping(UIImageView) -> Void) {
         productNameLabel.text = name
-        productPriceLabel.text = price
+        productPriceLabel.text = "\(price)"
         productDescriptionTextView.text = description
         image(productImageView)
     }

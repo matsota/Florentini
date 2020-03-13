@@ -18,10 +18,13 @@ class NetworkManager {
     
     //MARK: - Workers Dataload
     func workersInfoLoad (success: @escaping([DatabaseManager.WorkerInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        
+        if AuthenticationManager.shared.currentUser?.uid == nil {
+            failure(NetworkManagerError.workerNotSignedIn)
+        }else{
         db.collection(DatabaseManager.ChatMessagesCases.workers.rawValue).document(AuthenticationManager.shared.currentUser!.uid).getDocument { (documentSnapshot, _) in
             guard let workerInfo = DatabaseManager.WorkerInfo(dictionary: documentSnapshot!.data()!) else {return}
             success([workerInfo])
+            }
         }
     }
     
@@ -123,7 +126,7 @@ class NetworkManager {
     }
     
     //MARK: - Метод внесения информации  о товаре в Firebase
-    func imageData(name: String, price: String, category: String, description: String, documentNamedID: String) {
+    func imageData(name: String, price: Int, category: String, description: String, documentNamedID: String) {
         
         let imageTemplate = [
             DatabaseManager.ProductCases.productName.rawValue: name,
@@ -156,7 +159,7 @@ class NetworkManager {
     
     
     //MARK: - Метод Создания Предзаказа
-    func makePreOrder(name: String, price: String) {
+    func makePreOrder(name: String, price: Int) {
         let preOrderInfo = DatabaseManager.PreOrder(productName: name, productPrice: price)
     
         guard AuthenticationManager.shared.currentUser?.uid != nil else {return}
@@ -175,7 +178,7 @@ class NetworkManager {
         }
     }
     //MARK: - Метод удаления продукта из корзины
-    func deletePreOrderProduct(name: String, complition: () -> Void){
+    func deletePreOrderProduct(name: String){
         db.collection(DatabaseManager.ProductCases.preOrder.rawValue).document(AuthenticationManager.shared.currentUser!.uid).collection(DatabaseManager.ProductCases.preOrder.rawValue).document(name).delete()
     }
     

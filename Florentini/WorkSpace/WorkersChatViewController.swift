@@ -51,9 +51,9 @@ class WorkersChatViewController: UIViewController, UITableViewDelegate, UITableV
         //MARK: Подгрузка новых сообщений, что сотрудники оставляли в чате, в процессе пользования приложением.
         NetworkManager.shared.chatUpdate { newMessages in
             self.messagesArray.insert(newMessages, at: 0)
-            DispatchQueue.main.async {
-                self.messageTableView.reloadData()
-            }
+            
+            self.messageTableView.reloadData()
+            
         }
     }
     
@@ -149,6 +149,7 @@ class WorkersChatViewController: UIViewController, UITableViewDelegate, UITableV
         let exitApp = storyboard?.instantiateInitialViewController()
         view.window?.rootViewController = exitApp
         view.window?.makeKeyAndVisible()
+        currentWorkerInfo.removeAll()
     }
     
     //MARK: - Implementation

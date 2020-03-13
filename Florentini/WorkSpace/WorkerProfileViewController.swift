@@ -98,6 +98,8 @@ class WorkerProfileViewController: UIViewController {
     }
     
     
+    
+    //Tyt fail po date. Prihoditsa perezahodit' v app 4tobu slit' starue name&position
     //MARK: - Information About Co-workers Method
     func workerInfoLoad() {
         guard let email = Auth.auth().currentUser?.email else {return}
@@ -106,15 +108,20 @@ class WorkerProfileViewController: UIViewController {
         
         NetworkManager.shared.workersInfoLoad(success: { workerInfo in
             self.currentWorkerInfo = workerInfo
-            self.currentWorkerInfo.forEach { workerInfo in
-                self.nameLabel.text = workerInfo.name
-                self.nameLabel.textColor = .black
-                self.positionLabel.text = workerInfo.position
-                self.positionLabel.textColor = .black
-            }
+//            self.currentWorkerInfo.forEach { workerInfo in
+//                self.nameLabel.text = workerInfo.name
+//                self.positionLabel.text = workerInfo.position
+//            }
+            
         }) { error in
             self.present(self.alert.alertSomeThingGoesWrong(), animated: true)
         }
+//        //Naznachit 4erez eto
+//        self.currentWorkerInfo.map { (info) -> T in
+//             self.nameLabel.text = info.name
+//            self.positionLabel.text = info.position
+//        }
+        
     }
     
     

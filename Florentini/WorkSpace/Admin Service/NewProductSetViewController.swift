@@ -15,7 +15,7 @@ class NewProductSetViewController: UIViewController, UINavigationControllerDeleg
     //MARK: - TextField Outelet
     @IBOutlet weak var photoNameTextField: UITextField!
     @IBOutlet weak var photoPriceTextField: UITextField!
-    @IBOutlet weak var photoCategoryTextField: UITextField!
+    @IBOutlet weak var photoCategoryPickerView: UIPickerView!
     @IBOutlet weak var photoDescriptionTextField: UITextField!
     @IBOutlet weak var progressView: UIProgressView!
     
@@ -67,12 +67,14 @@ class NewProductSetViewController: UIViewController, UINavigationControllerDeleg
     //MARK: - Кнопка загрузки фотографии в Firebase
     @IBAction func uploadTapped(_ sender: UIButton) {
         let name = self.photoNameTextField.text!
-        let price = self.photoPriceTextField.text!
-        let category = self.photoCategoryTextField.text!
+        guard let price = Int(photoPriceTextField.text!) else {return}
+        let category = selectedCategory
         let description = self.photoDescriptionTextField.text!
         
         guard let image = addedPhotoImageView else {return}
+        
         NetworkManager.shared.uploadPhoto(image: image, name: name, progressIndicator: progressView)  {
+            guard let category = category else {return}
             NetworkManager.shared.imageData(name: name, price: price, category: category, description: description, documentNamedID: name)
         }
     }
@@ -119,6 +121,34 @@ class NewProductSetViewController: UIViewController, UINavigationControllerDeleg
     
     //MARK: - Transition Methods
     
+    
+    //MARK: - Private
+    private let cases = DatabaseManager.ProductCategoriesCases.allCases.map{$0.rawValue}
+    private var selectedCategory: String?
+}
+
+
+extension NewProductSetViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+//        if pickerView == photoCategoryPickerView {return DatabaseManager.ProductCategoriesCases.allCases.count}
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+
+        if pickerView == photoCategoryPickerView {return cases[row]}
+        return ""
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView == photoCategoryPickerView {return cases.count}
+        return 0
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == photoCategoryPickerView {
+            selectedCategory = cases[row]
+        }
+    }
     
     
 }

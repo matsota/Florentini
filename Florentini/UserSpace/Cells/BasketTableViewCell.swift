@@ -8,47 +8,48 @@
 
 import UIKit
 
-///
+//MARK: - Custom Protocol
 protocol BasketTableViewCellDelegate: class {
-    func deleteFromBasketTableViewCell(_ cell: BasketTableViewCell)
+    func sliderSelector(_ cell: BasketTableViewCell)
 }
+
 ///
 //protocol BasketTableViewCellDelegate: class {
 //    func basketTableViewCell(_ cell: BasketTableViewCell, didToggleFavorite isFavorite: Bool)
 //}
-class BasketTableViewCell: UITableViewCell {
+///
 
+class BasketTableViewCell: UITableViewCell {
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     
-    
-    @IBAction func deleteProductFromBasket(_ sender: UIButton) {
-        let name = productNameLabel.text!
-        NetworkManager.shared.deletePreOrderProduct(name: name) {
-        }
+    @IBAction func quantitySliderSelector(_ sender: UISlider) {
+        delegate?.sliderSelector(self)
     }
     
-    func fill(name: String, price: String, image: @escaping(UIImageView) -> Void) {
+    func fill(name: String, price: Int, image: @escaping(UIImageView) -> Void) {
         productNameLabel.text = name
-        productPriceLabel.text = price
-        
+        productPriceLabel.text = "\(price) грн"
         image(productImageView)
     }
     
     @IBOutlet weak var productNameLabel: UILabel!
-    @IBOutlet weak private var productPriceLabel: UILabel!
+    @IBOutlet weak var productPriceLabel: UILabel!
     @IBOutlet weak private var productImageView: UIImageView!
+    
+    @IBOutlet weak var quantityLabel: UILabel!
+    @IBOutlet weak var quantitySlider: UISlider!
     
     ///
     weak var delegate: BasketTableViewCellDelegate?
     ///
-    
 }

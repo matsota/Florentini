@@ -33,7 +33,8 @@ class UserCatalogTableViewCell: UITableViewCell {
     }
     
     @IBAction func addToBasketTapped(_ sender: UIButton) {
-        NetworkManager.shared.makePreOrder(name: productNameLabel.text!, price: productPriceLabel.text!)
+        guard let price = Int(productPriceLabel.text!) else {return}
+        NetworkManager.shared.makePreOrder(name: productNameLabel.text!, price: price)
     }
     
     //MARK: -  Метод появления описания продукта и кнопки "Скрыть" / "добавить в корзину"
@@ -50,9 +51,9 @@ class UserCatalogTableViewCell: UITableViewCell {
     }
     
     //MARK: - Метод заполнения клетки
-    func fill(name: String, price: String, description: String, image: @escaping(UIImageView) -> Void) {
+    func fill(name: String, price: Int, description: String, image: @escaping(UIImageView) -> Void) {
         productNameLabel.text = name
-        productPriceLabel.text = price
+        productPriceLabel.text = "\(price)"
         productDescriptionTextView.text = description
         
         image(productImageView)
