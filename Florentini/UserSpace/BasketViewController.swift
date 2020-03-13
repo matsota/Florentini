@@ -44,19 +44,20 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+// - Implementation
         let cell = basketTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.BasketTVCell.rawValue, for: indexPath) as! BasketTableViewCell
-        //init delegat
         cell.delegate = self
-//        cell.tag = indexPath.row
+        cell.tag = indexPath.row
         
-        let get = preOrderArray[indexPath.row]
+        let get = preOrderArray[cell.tag]
         let storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(get.productName)")
+        
         let name = get.productName
         let price = get.productPrice
         let category = get.productCategory
     
         
-        //Fill TablewView & Custom cell properties (slider.maxValue, relying on category)
+// - Fill TablewView & Custom cell properties (slider.maxValue, relying on category)
         cell.fill(name: name, price: price, category: category) { image in
             if category == DatabaseManager.ProductCategoriesCases.apiece.rawValue {
                 cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.hundred.rawValue)
@@ -75,12 +76,12 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
         
         return cell
     }
+    
+// - Cell's method for delete in TableView
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = deleteAction(at: indexPath)
-        
         return UISwipeActionsConfiguration(actions: [delete])
     }
-    
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
         let fetch = self.preOrderArray[indexPath.row]
         let action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, complition) in
@@ -97,6 +98,7 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
 
 
 //MARK: - Custom Protocol extension
+//MARK: Slider
 extension BasketViewController: BasketTableViewCellDelegate {
     func sliderSelector(_ cell: BasketTableViewCell) {
         guard let price = cell.productPrice else {return}
