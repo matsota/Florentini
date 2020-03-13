@@ -65,11 +65,13 @@ class DatabaseManager {
     struct PreOrder {
         var productName: String
         var productPrice: Int
+        var productCategory: String
         
         var dictionary: [String:Any]{
             return [
                 DatabaseManager.ProductCases.productName.rawValue: productName,
-                DatabaseManager.ProductCases.productPrice.rawValue: productPrice
+                DatabaseManager.ProductCases.productPrice.rawValue: productPrice,
+                DatabaseManager.ProductCases.productCategory.rawValue: productCategory
             ]
         }
     }
@@ -121,8 +123,9 @@ extension DatabaseManager.ProductInfo: DocumentSerializable{
 extension DatabaseManager.PreOrder: DocumentSerializable{
     init?(dictionary: [String: Any]) {
         guard let productName = dictionary[DatabaseManager.ProductCases.productName.rawValue] as? String,
-            let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? Int else {return nil}
-        self.init(productName: productName, productPrice: productPrice)
+            let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? Int,
+            let productCategory = dictionary[DatabaseManager.ProductCases.productCategory.rawValue] as? String else {return nil}
+        self.init(productName: productName, productPrice: productPrice, productCategory: productCategory)
     }
 }
 
@@ -166,7 +169,14 @@ extension DatabaseManager {
         case stockApice = "Акция"
 //        case stockApice = "Акция Поштучно"
 //        case stockBouquet = "Акция Букет"
-
+    }
+    enum MaxQuantityByCategoriesCases: Int {
+        case towHundred = 200
+//        case hundredAndHalf = 150
+        case hundred = 100
+//        case halfHundred = 50
+        case five = 5
+        case three = 3
     }
     
 }

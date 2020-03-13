@@ -92,7 +92,7 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource{
         let get = productInfo[indexPath.row]
         
         let storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(get.productName)")
-        cell.fill(name: get.productName, price: get.productPrice, description: get.productDescription) { image in
+        cell.fill(name: get.productName, price: get.productPrice, description: get.productDescription, category: get.productCategory) { image in
             image.sd_setImage(with: storageRef)
         }
         return cell

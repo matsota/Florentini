@@ -159,8 +159,8 @@ class NetworkManager {
     
     
     //MARK: - Метод Создания Предзаказа
-    func makePreOrder(name: String, price: Int) {
-        let preOrderInfo = DatabaseManager.PreOrder(productName: name, productPrice: price)
+    func makePreOrder(name: String, price: Int, category: String) {
+        let preOrderInfo = DatabaseManager.PreOrder(productName: name, productPrice: price, productCategory: category)
     
         guard AuthenticationManager.shared.currentUser?.uid != nil else {return}
         db.collection(DatabaseManager.ProductCases.preOrder.rawValue).document(AuthenticationManager.shared.currentUser!.uid).collection(DatabaseManager.ProductCases.preOrder.rawValue).document(name).setData(preOrderInfo.dictionary)

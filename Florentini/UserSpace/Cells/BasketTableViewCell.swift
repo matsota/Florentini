@@ -21,6 +21,15 @@ protocol BasketTableViewCellDelegate: class {
 
 class BasketTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var productNameLabel: UILabel!
+    @IBOutlet weak var productPriceLabel: UILabel!
+    
+    @IBOutlet weak var quantityLabel: UILabel!
+    @IBOutlet weak var quantitySlider: UISlider!
+    
+    var productPrice: Int?
+    var productCategory: String?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -36,18 +45,16 @@ class BasketTableViewCell: UITableViewCell {
         delegate?.sliderSelector(self)
     }
     
-    func fill(name: String, price: Int, image: @escaping(UIImageView) -> Void) {
+    func fill(name: String, price: Int, category: String, image: @escaping(UIImageView) -> Void) {
         productNameLabel.text = name
-        productPriceLabel.text = "\(price) грн"
+        productPrice = price
+        productCategory = category
         image(productImageView)
     }
     
-    @IBOutlet weak var productNameLabel: UILabel!
-    @IBOutlet weak var productPriceLabel: UILabel!
+
     @IBOutlet weak private var productImageView: UIImageView!
-    
-    @IBOutlet weak var quantityLabel: UILabel!
-    @IBOutlet weak var quantitySlider: UISlider!
+
     
     ///
     weak var delegate: BasketTableViewCellDelegate?

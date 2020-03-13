@@ -14,6 +14,8 @@ class UserCatalogTableViewCell: UITableViewCell {
     @IBOutlet weak private var productPriceLabel: UILabel!
     @IBOutlet weak private var productDescriptionTextView: UITextView!
     @IBOutlet weak private var descriptionView: UIView!
+    private var category: String?
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,7 +36,8 @@ class UserCatalogTableViewCell: UITableViewCell {
     
     @IBAction func addToBasketTapped(_ sender: UIButton) {
         guard let price = Int(productPriceLabel.text!) else {return}
-        NetworkManager.shared.makePreOrder(name: productNameLabel.text!, price: price)
+        guard let category = category else {return}
+        NetworkManager.shared.makePreOrder(name: productNameLabel.text!, price: price, category: category)
     }
     
     //MARK: -  Метод появления описания продукта и кнопки "Скрыть" / "добавить в корзину"
@@ -51,10 +54,11 @@ class UserCatalogTableViewCell: UITableViewCell {
     }
     
     //MARK: - Метод заполнения клетки
-    func fill(name: String, price: Int, description: String, image: @escaping(UIImageView) -> Void) {
+    func fill(name: String, price: Int, description: String, category: String, image: @escaping(UIImageView) -> Void) {
         productNameLabel.text = name
         productPriceLabel.text = "\(price)"
         productDescriptionTextView.text = description
+        self.category = category
         
         image(productImageView)
     }

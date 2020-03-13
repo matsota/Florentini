@@ -34,9 +34,6 @@ class BasketViewController: UIViewController {
     
     //MARK: - Приватные переменные
     var preOrderArray = [DatabaseManager.PreOrder]()
-    
-    //ETO
-        var price = Int()
 }
 
 
@@ -50,28 +47,36 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = basketTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.BasketTVCell.rawValue, for: indexPath) as! BasketTableViewCell
         //init delegat
         cell.delegate = self
+//        cell.tag = indexPath.row
         
         let get = preOrderArray[indexPath.row]
         let storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(get.productName)")
-        
-        cell.fill(name: get.productName, price: get.productPrice) { image in
+        let name = get.productName
+        let price = get.productPrice
+        let category = get.productCategory
+    
+        cell.fill(name: name, price: price, category: category) { image in
+            if category == DatabaseManager.ProductCategoriesCases.apiece.rawValue {
+                cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.hundred.rawValue)
+                cell.quantitySlider.isHidden = false
+            }
+            if category == DatabaseManager.ProductCategoriesCases.bouquet.rawValue {
+                cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.five.rawValue)
+                cell.quantitySlider.isHidden = false
+            }
+            if category == DatabaseManager.ProductCategoriesCases.combined.rawValue {
+                cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.five.rawValue)
+                cell.quantitySlider.isHidden = false
+            }
+            if category == DatabaseManager.ProductCategoriesCases.none.rawValue {
+                cell.quantitySlider.isHidden = true
+            }
+            
+            cell.productPriceLabel.text! = "\(price) грн"
+            cell.quantityLabel.text! = "\(Int(cell.quantitySlider.value)) шт"
             image.sd_setImage(with: storageRef)
         }
         
-        
-        //ETO
-        for _  in preOrderArray.contains(where: get.productPrice.).count {
-            
-        }
-//            пуе {
-//            price += get.productPrice
-//            print(get.productPrice)
-////            orderPriceLabel.text! = "\(price)"
-//        }
-        orderPriceLabel.text! = "\(price)"
-        
-//        //row init for every position
-//        cell.tag = indexPath.row
         return cell
     }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -98,11 +103,8 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
 //MARK: - Custom Protocol extension
 extension BasketViewController: BasketTableViewCellDelegate {
     func sliderSelector(_ cell: BasketTableViewCell) {
-        cell.quantityLabel.text! = "\(Int(cell.quantitySlider.value)) шт."
-        
-        guard let price = Int(cell.productPriceLabel.text!) else {return}
-        cell.productPriceLabel.text = "\(Int(cell.quantitySlider.value) * price) грн"
-        basketTableView.reloadData()
+        guard let price = cell.productPrice else {return}
+        cell.productPriceLabel.text! = "\(Int(cell.quantitySlider.value) * price) грн"
+        cell.quantityLabel.text! = "\(Int(cell.quantitySlider.value)) шт"
     }
-    ///Не обновляет значение cell.productPriceLabel.text, когда слайдер двигаю
 }
