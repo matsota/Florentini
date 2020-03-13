@@ -60,11 +60,14 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
         
         
         //ETO
-        for _ in 0...preOrderArray.count {
-            price += get.productPrice
-            print(get.productPrice)
-//            orderPriceLabel.text! = "\(price)"
+        for _  in preOrderArray.contains(where: get.productPrice.).count {
+            
         }
+//            пуе {
+//            price += get.productPrice
+//            print(get.productPrice)
+////            orderPriceLabel.text! = "\(price)"
+//        }
         orderPriceLabel.text! = "\(price)"
         
 //        //row init for every position
