@@ -55,21 +55,17 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
         let price = get.productPrice
         let category = get.productCategory
     
+        
+        //Fill TablewView & Custom cell properties (slider.maxValue, relying on category)
         cell.fill(name: name, price: price, category: category) { image in
             if category == DatabaseManager.ProductCategoriesCases.apiece.rawValue {
                 cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.hundred.rawValue)
-                cell.quantitySlider.isHidden = false
             }
             if category == DatabaseManager.ProductCategoriesCases.bouquet.rawValue {
                 cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.five.rawValue)
-                cell.quantitySlider.isHidden = false
             }
             if category == DatabaseManager.ProductCategoriesCases.combined.rawValue {
                 cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.five.rawValue)
-                cell.quantitySlider.isHidden = false
-            }
-            if category == DatabaseManager.ProductCategoriesCases.none.rawValue {
-                cell.quantitySlider.isHidden = true
             }
             
             cell.productPriceLabel.text! = "\(price) грн"
