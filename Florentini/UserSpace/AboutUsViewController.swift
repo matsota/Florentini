@@ -90,11 +90,9 @@ class AboutUsViewController: UIViewController {
         guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber, let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
         
         scrollViewBottomConstraint.constant = -keyboardFrameValue.cgRectValue.height
-//        let hieght
-//        scrollView.setContentOffset(CGPoint(x: <#T##CGFloat#>, y: <#T##CGFloat#>), animated: true)  OR
         UIView.animate(withDuration: duration.doubleValue) {
             self.view.layoutIfNeeded()
-//            scrollView.setContentOffset(CGPoint(x: <#T##CGFloat#>, y: <#T##CGFloat#>), animated: false) OR
+            self.scrollView.setContentOffset(CGPoint(x: 0, y: 150), animated: false)
         }
     }
     @objc private func keyboardWillHide(notification: Notification) {

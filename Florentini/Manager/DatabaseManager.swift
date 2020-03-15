@@ -155,10 +155,9 @@ extension DatabaseManager {
         case productCategory
         case productDescription
         case productImageURL
-        
         case imageCollection
-        
         case preOrder
+        case order
     }
     
     enum ProductCategoriesCases: String, CaseIterable {
@@ -177,6 +176,11 @@ extension DatabaseManager {
 //        case halfHundred = 50
         case five = 5
         case three = 3
+    }
+    enum FeedbackTypesCases: String, CaseIterable {
+        case cellphone = "По телефону"
+        case viber = "Viber"
+        case telegram = "Telegram"
     }
     
 }

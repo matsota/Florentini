@@ -30,6 +30,7 @@ class BasketTableViewCell: UITableViewCell {
     var productPrice: Int?
     var productCategory: String?
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -43,6 +44,7 @@ class BasketTableViewCell: UITableViewCell {
     
     @IBAction func quantitySliderSelector(_ sender: UISlider) {
         delegate?.sliderSelector(self)
+        
     }
     
     func fill(name: String, price: Int, category: String, image: @escaping(UIImageView) -> Void) {

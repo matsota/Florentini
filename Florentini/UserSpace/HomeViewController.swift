@@ -50,7 +50,9 @@ class HomeViewController: UIViewController {
             view.window?.rootViewController = faqVC
             view.window?.makeKeyAndVisible()
         case .website:
+            self.dismiss(animated: true, completion: nil)
             print("website")
+            
         }
     }
     @IBAction func basketTapped(_ sender: UIButton) {
