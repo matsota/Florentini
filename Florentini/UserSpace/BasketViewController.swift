@@ -33,6 +33,7 @@ class BasketViewController: UIViewController {
         //
         
         
+        
     }
     
     //MARK: - Выбор Обратной связи
@@ -71,30 +72,31 @@ class BasketViewController: UIViewController {
     @IBAction func confirmTapped(_ sender: UIButton) {
     }
     
-    //MARK: - Private Outlets
-    //MARK: Views
+    //MARK: - Private
+    //MARK: Views Outlets
     @IBOutlet weak private var buttonsView: UIView!
     
     @IBOutlet weak var scrollView: UIScrollView!
-    //MARK: TableView
+    //MARK: TableView Outlets
     @IBOutlet weak private var basketTableView: UITableView!
     
-    //MARK: TextFields
+    //MARK: TextFields Outlets
     @IBOutlet weak private var clientNameTextField: UITextField!
     @IBOutlet weak private var clientPhoeNumberTextField: UITextField!
     @IBOutlet weak private var clientAdressTextField: UITextField!
     @IBOutlet weak private var clientDescriptionTextField: UITextField!
     @IBOutlet weak private var orderPriceLabel: UILabel!
     
-    //MARK: Buttons
+    //MARK: Buttons Outlets
     @IBOutlet weak private var feebackTypeSelectorButton: UIButton!
     @IBOutlet private var feedbackTypeBttnsCellection: [UIButton]!
     
-    //MARK: Constrains
+    //MARK: Constrains Outlets
     @IBOutlet weak private var lowestConstraint: NSLayoutConstraint!
     
     //MARK: - Приватные переменные
     private var selectedFeedbackType: String?
+    private var orderBill: Int?
     
     //MARK: - Приватные методы
     private func hideAndShowButtons(option: String){
@@ -141,6 +143,7 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
         cell.delegate = self
         cell.tag = indexPath.row
         
+        
         let get = preOrderArray[cell.tag]
         let storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(get.productName)")
         
@@ -162,7 +165,6 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
             
             cell.productPriceLabel.text! = "\(price) грн"
             cell.quantityLabel.text! = "\(Int(cell.quantitySlider.value)) шт"
-            
             
             image.sd_setImage(with: storageRef)
         }
@@ -199,17 +201,21 @@ extension BasketViewController: BasketTableViewCellDelegate {
         cell.productPriceLabel.text! = "\(sliderEquantion) грн"
         cell.quantityLabel.text! = "\(sliderValue) шт"
         
+//        let orderBill = cell.quantitySlider.value.isTotallyOrdered(belowOrEqualTo: Float(sliderEquantion))
+        
+//        orderPriceLabel.text = "\(orderBill) грн"
+//        UISlider.selectAll(cell.delegate?.self)
         
         ///ВОТ ТУТ  ###################### ?
 //        cell.wholePrice = +(Int(cell.quantitySlider.value) * price)
 //        self.orderPriceLabel.text! = "\(cell.wholePrice) грн"
         
-        let a = cell.quantitySlider.tag.addingReportingOverflow(cell.tag).partialValue
-        
-        for _ in (a+1)...(a+1){
-            
-            let i = +(cell.quantitySlider.tag.addingReportingOverflow(sliderEquantion).partialValue)
-            self.orderPriceLabel.text = "\(i) грн"
-        }
+//        let a = cell.quantitySlider.tag.addingReportingOverflow(cell.tag).partialValue
+//
+//        for _ in (a+1)...(a+1){
+//
+//            let i = +(cell.quantitySlider.tag.addingReportingOverflow(sliderEquantion).partialValue)
+//            self.orderPriceLabel.text = "\(i) грн"
+//        }
     }
 }
