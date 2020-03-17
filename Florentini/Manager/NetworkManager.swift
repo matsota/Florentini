@@ -176,24 +176,27 @@ class NetworkManager {
     
     //MARK: - Метод отслеживания изменений переменных предзаказа
     func preOrderListener(success: @escaping([DatabaseManager.PreOrderCorrection]) -> Void) {
-//        db.collection(DatabaseManager.ProductCases.preOrder.rawValue).document(AuthenticationManager.shared.currentUser!.uid).collection(DatabaseManager.ProductCases.preOrderCorrection.rawValue).whereField(DatabaseManager.ProductCases.productPrice.rawValue, isEqualTo: Int()).addSnapshotListener { (querySnapshot, error) in
-//            guard let snapshot = querySnapshot else {return}
-//
-//            snapshot.documentChanges.forEach { diff in
-//                if diff.type == .modified {
-//                    guard let newData = DatabaseManager.PreOrderCorrection(dictionary: diff.document.data()) else {return}
-//                    success(newData)
-//                }
-//            }
-//        }
-        guard AuthenticationManager.shared.currentUser?.uid != nil else {return}
-               db.collection(DatabaseManager.ProductCases.preOrder.rawValue).document(AuthenticationManager.shared.currentUser!.uid).collection(DatabaseManager.ProductCases.preOrderCorrection.rawValue).getDocuments { (querySnapshot, error) in
-//                   if let error = error {
-//                       failure (error)
-//                   }
-                   let correctedData = querySnapshot!.documents.compactMap{DatabaseManager.PreOrderCorrection(dictionary: $0.data())}
-                   success(correctedData)
-               }
+       guard AuthenticationManager.shared.currentUser?.uid != nil else {return}
+        db.collection(DatabaseManager.ProductCases.preOrder.rawValue).document(AuthenticationManager.shared.currentUser!.uid).collection(DatabaseManager.ProductCases.preOrderCorrection.rawValue).addSnapshotListener { (querySnapshot, _) in
+            guard let snapshot = querySnapshot else {return}
+
+            snapshot.documentChanges.forEach { diff in
+                if diff.type == .modified {
+                    guard let correctedData = querySnapshot?.documents.compactMap({DatabaseManager.PreOrderCorrection(dictionary: $0.data())}) else {return}
+//                    success(correctedData)
+//                    guard let correctedData = DatabaseManager.PreOrderCorrection(dictionary: diff.document.data()) else {return}
+                    success(correctedData)
+                }
+            }
+        }
+        
+//        db.collection(DatabaseManager.ProductCases.preOrder.rawValue).document(AuthenticationManager.shared.currentUser!.uid).collection(DatabaseManager.ProductCases.preOrderCorrection.rawValue).addL { (querySnapshot, error) in
+////                   if let error = error {
+////                       failure (error)
+////                   }
+//                   let correctedData = querySnapshot!.documents.compactMap{DatabaseManager.PreOrderCorrection(dictionary: $0.data())}
+//                   success(correctedData)
+//               }
     }
     
     //MARK: - Метод Получения информации о предзаказе для Пользователя в Корзину

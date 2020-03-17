@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F0E7BB92421496C004235A7 /* FlorentiniModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F0E7BB72421496C004235A7 /* FlorentiniModel.xcdatamodeld */; };
+		8F0E7BDE24214DAC004235A7 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0E7BDD24214DAC004235A7 /* CoreDataManager.swift */; };
 		8F0EEDF924129A3500948175 /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0EEDF824129A3500948175 /* BasketViewController.swift */; };
 		8F2062A323FEB25A007C481A /* MainWorkSpaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062A223FEB25A007C481A /* MainWorkSpaceViewController.swift */; };
 		8F2062A523FF555F007C481A /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062A423FF555F007C481A /* NavigationManager.swift */; };
@@ -42,6 +44,8 @@
 
 /* Begin PBXFileReference section */
 		684CBB7DD3C972328D14EE25 /* Pods-Florentini.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Florentini.debug.xcconfig"; path = "Target Support Files/Pods-Florentini/Pods-Florentini.debug.xcconfig"; sourceTree = "<group>"; };
+		8F0E7BB82421496C004235A7 /* coreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coreData.xcdatamodel; sourceTree = "<group>"; };
+		8F0E7BDD24214DAC004235A7 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		8F0EEDF824129A3500948175 /* BasketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
 		8F2062A223FEB25A007C481A /* MainWorkSpaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWorkSpaceViewController.swift; sourceTree = "<group>"; };
 		8F2062A423FF555F007C481A /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
@@ -157,6 +161,7 @@
 				8FA80A9923FD660A0015C878 /* DatabaseManager.swift */,
 				8F2062A423FF555F007C481A /* NavigationManager.swift */,
 				8F2062A823FF5F94007C481A /* AuthenticationManager.swift */,
+				8F0E7BDD24214DAC004235A7 /* CoreDataManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -193,6 +198,7 @@
 				8FD4E4CB23FCD1D800C62FA5 /* LaunchScreen.storyboard */,
 				8FD4E4CE23FCD1D800C62FA5 /* Info.plist */,
 				8FD4E4D423FCD2EB00C62FA5 /* GoogleService-Info.plist */,
+				8F0E7BB72421496C004235A7 /* FlorentiniModel.xcdatamodeld */,
 			);
 			path = Florentini;
 			sourceTree = "<group>";
@@ -355,6 +361,7 @@
 				8F2062A323FEB25A007C481A /* MainWorkSpaceViewController.swift in Sources */,
 				8FFEDF262407EC3500D894FD /* NewProductSetViewController.swift in Sources */,
 				8F2062A723FF5ECE007C481A /* LoginWorkSpaceViewController.swift in Sources */,
+				8F0E7BB92421496C004235A7 /* FlorentiniModel.xcdatamodeld in Sources */,
 				8FE3F69924035BE4003001CA /* CatalogViewController.swift in Sources */,
 				8F2062A923FF5F94007C481A /* AuthenticationManager.swift in Sources */,
 				8F0EEDF924129A3500948175 /* BasketViewController.swift in Sources */,
@@ -376,6 +383,7 @@
 				8F2062BA23FF703A007C481A /* WorkerProfileViewController.swift in Sources */,
 				8FD4E4E323FCF01000C62FA5 /* SlideInTransition.swift in Sources */,
 				8F2062A523FF555F007C481A /* NavigationManager.swift in Sources */,
+				8F0E7BDE24214DAC004235A7 /* CoreDataManager.swift in Sources */,
 				8F2062C723FF7F75007C481A /* WorkersChatViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -576,6 +584,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		8F0E7BB72421496C004235A7 /* FlorentiniModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8F0E7BB82421496C004235A7 /* coreData.xcdatamodel */,
+			);
+			currentVersion = 8F0E7BB82421496C004235A7 /* coreData.xcdatamodel */;
+			path = FlorentiniModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 8FD4E4B523FCD1D800C62FA5 /* Project object */;
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseUI
+import CoreData
 
 class BasketViewController: UIViewController {
     
@@ -25,14 +26,16 @@ class BasketViewController: UIViewController {
             self.basketTableView.reloadData()
         }) { (error) in
             print("error: \(error.localizedDescription)")
+            
         }
         
         //MARK: Keyboard Observer
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         //
-    
-               
+        
+        
+        
     }
     var orderBill: Int?
     
@@ -163,11 +166,13 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.five.rawValue)
             }
             
-            cell.productPriceLabel.text! = "\(price) грн"
-            cell.quantityLabel.text! = "\(Int(cell.quantitySlider.value)) шт"
             
+//            cell.productPriceLabel.text! = "\(price) грн"
+//            cell.quantityLabel.text! = "\(Int(cell.quantitySlider.value)) шт"
+//
             image.sd_setImage(with: storageRef)
         }
+        
         return cell
     }
     
@@ -203,13 +208,16 @@ extension BasketViewController: BasketTableViewCellDelegate {
         
         NetworkManager.shared.preOrderCorrection(name: name, price: sliderEquantion, category: category)
         
-        NetworkManager.shared.preOrderListener { (correction) in
-            self.orderBill = correction.map({$0.productPrice}).reduce(0, +)
-//            self.orderBill! += correction.compactMap({$0.productPrice}).reduce(0, +)
+        DispatchQueue.main.async {
+            NetworkManager.shared.preOrderListener { (correction) in
+                self.orderBill = correction.map({$0.productPrice}).reduce(0, +)
+            }
         }
-//        test.forEach { (prices) in
-//            orderBill = prices.dictionary.values.map({$0 as! Int}).reduce(0, +)
-//        }
+        
+        
+        //        test.forEach { (prices) in
+        //            orderBill = prices.dictionary.values.map({$0 as! Int}).reduce(0, +)
+        //        }
         cell.productPriceLabel.text! = "\(sliderEquantion) грн"
         cell.quantityLabel.text! = "\(sliderValue) шт"
         

@@ -54,6 +54,10 @@ class BasketTableViewCell: UITableViewCell {
         productName = name
         productPrice = price
         productCategory = category
+        
+        productPriceLabel.text! = "\(price) грн"
+        quantityLabel.text! = "\(Int(quantitySlider.value)) шт"
+        
         image(productImageView)
     }
     
