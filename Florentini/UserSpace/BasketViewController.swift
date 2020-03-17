@@ -31,10 +31,10 @@ class BasketViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         //
-        
-        
-        
+    
+               
     }
+    var orderBill: Int?
     
     //MARK: - Выбор Обратной связи
     @IBAction func feedbackTypeSelectorTapped(_ sender: UIButton) {
@@ -96,8 +96,8 @@ class BasketViewController: UIViewController {
     
     //MARK: - Приватные переменные
     private var selectedFeedbackType: String?
-    private var orderBill: Int?
     
+    var test = [DatabaseManager.PreOrderCorrection]()
     //MARK: - Приватные методы
     private func hideAndShowButtons(option: String){
         selectedFeedbackType = option
@@ -194,28 +194,25 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
 //MARK: Slider
 extension BasketViewController: BasketTableViewCellDelegate {
     func sliderSelector(_ cell: BasketTableViewCell) {
+        guard let name = cell.productName else {return}
         guard let price = cell.productPrice else {return}
+        guard let category = cell.productCategory else {return}
+        
         let sliderEquantion = Int(cell.quantitySlider.value) * price
         let sliderValue = Int(cell.quantitySlider.value)
         
+        NetworkManager.shared.preOrderCorrection(name: name, price: sliderEquantion, category: category)
+        
+        NetworkManager.shared.preOrderListener { (correction) in
+            self.orderBill = correction.map({$0.productPrice}).reduce(0, +)
+//            self.orderBill! += correction.compactMap({$0.productPrice}).reduce(0, +)
+        }
+//        test.forEach { (prices) in
+//            orderBill = prices.dictionary.values.map({$0 as! Int}).reduce(0, +)
+//        }
         cell.productPriceLabel.text! = "\(sliderEquantion) грн"
         cell.quantityLabel.text! = "\(sliderValue) шт"
         
-//        let orderBill = cell.quantitySlider.value.isTotallyOrdered(belowOrEqualTo: Float(sliderEquantion))
-        
-//        orderPriceLabel.text = "\(orderBill) грн"
-//        UISlider.selectAll(cell.delegate?.self)
-        
-        ///ВОТ ТУТ  ###################### ?
-//        cell.wholePrice = +(Int(cell.quantitySlider.value) * price)
-//        self.orderPriceLabel.text! = "\(cell.wholePrice) грн"
-        
-//        let a = cell.quantitySlider.tag.addingReportingOverflow(cell.tag).partialValue
-//
-//        for _ in (a+1)...(a+1){
-//
-//            let i = +(cell.quantitySlider.tag.addingReportingOverflow(sliderEquantion).partialValue)
-//            self.orderPriceLabel.text = "\(i) грн"
-//        }
+        orderPriceLabel.text = "\(orderBill as Any) грн"
     }
 }

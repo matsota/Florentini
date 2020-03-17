@@ -77,6 +77,18 @@ class DatabaseManager {
     }
     
     
+    //MARK: - Шаблон Про Неподтвержденный Продукт
+       struct PreOrderCorrection {
+
+           var productPrice: Int
+           
+           var dictionary: [String:Any]{
+               return [
+                   DatabaseManager.ProductCases.productPrice.rawValue: productPrice,
+               ]
+           }
+       }
+    
     
 }
 
@@ -129,6 +141,14 @@ extension DatabaseManager.PreOrder: DocumentSerializable{
     }
 }
 
+//MARK: Про Неподтвержденный Продукт (закачка)
+extension DatabaseManager.PreOrderCorrection: DocumentSerializable{
+    init?(dictionary: [String: Any]) {
+        guard let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? Int else {return nil}
+        self.init(productPrice: productPrice)
+    }
+}
+
 //MARK: - Cases Extension
 extension DatabaseManager {
     //MARK: Про сотрудников
@@ -157,6 +177,7 @@ extension DatabaseManager {
         case productImageURL
         case imageCollection
         case preOrder
+        case preOrderCorrection
         case order
     }
     

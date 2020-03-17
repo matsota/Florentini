@@ -27,6 +27,8 @@ class BasketTableViewCell: UITableViewCell {
     @IBOutlet weak var quantityLabel: UILabel!
     @IBOutlet weak var quantitySlider: UISlider!
     
+    
+    var productName: String?
     var productPrice: Int?
     var productCategory: String?
     
@@ -49,6 +51,7 @@ class BasketTableViewCell: UITableViewCell {
     
     func fill(name: String, price: Int, category: String, image: @escaping(UIImageView) -> Void) {
         productNameLabel.text = name
+        productName = name
         productPrice = price
         productCategory = category
         image(productImageView)

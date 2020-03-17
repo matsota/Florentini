@@ -75,7 +75,7 @@ class NewProductSetViewController: UIViewController, UINavigationControllerDeleg
         
         NetworkManager.shared.uploadPhoto(image: image, name: name, progressIndicator: progressView)  {
             guard let category = category else {return}
-            NetworkManager.shared.imageData(name: name, price: price, category: category, description: description, documentNamedID: name)
+            NetworkManager.shared.setProductDescription(name: name, price: price, category: category, description: description, documentNamedID: name)
         }
     }
     
