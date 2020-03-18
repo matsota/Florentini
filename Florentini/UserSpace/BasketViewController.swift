@@ -8,7 +8,7 @@
 
 import UIKit
 import FirebaseUI
-import CoreData
+
 
 class BasketViewController: UIViewController {
     
@@ -16,6 +16,8 @@ class BasketViewController: UIViewController {
     
     //MARK: - var & let
     var preOrderArray = [DatabaseManager.PreOrder]()
+    var orderBill = Int()
+    var orderBillArray = [Int]()
     
     //MARK: - Overrides
     //MARK: ViewDidLoad
@@ -37,7 +39,7 @@ class BasketViewController: UIViewController {
         
         
     }
-    var orderBill: Int?
+    
     
     //MARK: - Выбор Обратной связи
     @IBAction func feedbackTypeSelectorTapped(_ sender: UIButton) {
@@ -154,6 +156,8 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
         let price = get.productPrice
         let category = get.productCategory
         
+        CoreDataManager.shared.savePrice(value: price)
+        
         // - Fill TablewView & Custom cell properties (slider.maxValue, relying on category)
         cell.fill(name: name, price: price, category: category) { image in
             if category == DatabaseManager.ProductCategoriesCases.apiece.rawValue {
@@ -165,11 +169,6 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
             if category == DatabaseManager.ProductCategoriesCases.combined.rawValue {
                 cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.five.rawValue)
             }
-            
-            
-//            cell.productPriceLabel.text! = "\(price) грн"
-//            cell.quantityLabel.text! = "\(Int(cell.quantitySlider.value)) шт"
-//
             image.sd_setImage(with: storageRef)
         }
         
@@ -199,25 +198,20 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
 //MARK: Slider
 extension BasketViewController: BasketTableViewCellDelegate {
     func sliderSelector(_ cell: BasketTableViewCell) {
-        guard let name = cell.productName else {return}
+//        guard let name = cell.productName else {return}
         guard let price = cell.productPrice else {return}
-        guard let category = cell.productCategory else {return}
+//        guard let category = cell.productCategory else {return}
         
         let sliderEquantion = Int(cell.quantitySlider.value) * price
         let sliderValue = Int(cell.quantitySlider.value)
         
-        NetworkManager.shared.preOrderCorrection(name: name, price: sliderEquantion, category: category)
+//        NetworkManager.shared.preOrderCorrection(name: name, price: sliderEquantion, category: category)
         
-        DispatchQueue.main.async {
-            NetworkManager.shared.preOrderListener { (correction) in
-                self.orderBill = correction.map({$0.productPrice}).reduce(0, +)
-            }
+        
+        CoreDataManager.shared.fetchPrices { (price) -> (Void) in
+            self.orderBill = sliderValue * Int(price.map({$0.productPrice}).reduce(0, +))
         }
         
-        
-        //        test.forEach { (prices) in
-        //            orderBill = prices.dictionary.values.map({$0 as! Int}).reduce(0, +)
-        //        }
         cell.productPriceLabel.text! = "\(sliderEquantion) грн"
         cell.quantityLabel.text! = "\(sliderValue) шт"
         

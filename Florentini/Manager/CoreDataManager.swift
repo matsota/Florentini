@@ -11,6 +11,7 @@ import CoreData
 
 class CoreDataManager {
     
+    static let shared = CoreDataManager()
     
     func savePrice(value: Int) {
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
@@ -28,8 +29,23 @@ class CoreDataManager {
         }
     }
     
+//    func delPrice(value: Int) {
+//        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+//            let context = appDelegate.persistentContainer.viewContext
+//
+//            guard let entityDescription = NSEntityDescription.entity(forEntityName: "FlorentiniEntity", in: context) else {return}
+//
+//            let newValue = NSManagedObject(entity: entityDescription, insertInto: context)
+//            newValue.setValue(value, forKey: DatabaseManager.ProductCases.productPrice.rawValue)
+//            do {
+//                try context.delete(.self())
+//            } catch {
+//                print("CoreData Saving Error")
+//            }
+//        }
+//    }
     
-    func fetchPrices() {
+    func fetchPrices(success: @escaping([FlorentiniEntity]) -> (Void)) {
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             let context = appDelegate.persistentContainer.viewContext
             
@@ -38,11 +54,12 @@ class CoreDataManager {
             do {
                 let results = try context.fetch(fetchRequest)
                 
-                for result in results {
-                    if let productPrice = Int(result.productPrice) {
-                        print(productPrice)
-                    }
-                }
+                success(results)
+//                for result in results {
+////                    let productPrice = Int(result.productPrice)
+////                    print(productPrice)
+//                    
+//                }
             } catch {
                 print("CoreData Fetch Error")
             }
