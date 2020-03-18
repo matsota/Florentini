@@ -141,7 +141,7 @@ extension DatabaseManager.PreOrder: DocumentSerializable{
     }
 }
 
-//MARK: Про Неподтвержденный Продукт (закачка)
+//MARK: Про Неподтвержденный Продукт (коррекция)
 extension DatabaseManager.PreOrderCorrection: DocumentSerializable{
     init?(dictionary: [String: Any]) {
         guard let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? Int else {return nil}
