@@ -3,7 +3,13 @@
     <entity name="FlorentiniEntity" representedClassName="FlorentiniEntity" syncable="YES" codeGenerationType="class">
         <attribute name="productPrice" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
+    <entity name="PreOrderEntity" representedClassName="PreOrderEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="productDescription" optional="YES" attributeType="String"/>
+        <attribute name="productName" optional="YES" attributeType="String"/>
+        <attribute name="productPrice" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
     <elements>
         <element name="FlorentiniEntity" positionX="-63" positionY="-18" width="128" height="58"/>
+        <element name="PreOrderEntity" positionX="-54" positionY="0" width="128" height="88"/>
     </elements>
 </model>
