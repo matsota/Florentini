@@ -29,7 +29,7 @@ class BasketTableViewCell: UITableViewCell {
     
     
     var productName: String?
-    var productPrice: Int?
+    var productPrice: Int64?
     var productCategory: String?
     
     
@@ -46,19 +46,21 @@ class BasketTableViewCell: UITableViewCell {
     
     @IBAction func quantitySliderSelector(_ sender: UISlider) {
         delegate?.sliderSelector(self)
-        
     }
     
-    func fill(name: String, price: Int, category: String, image: @escaping(UIImageView) -> Void) {
+    func fill(name: String, price: Int64, category: String, slider: Int64) {
         productNameLabel.text = name
         productName = name
         productPrice = price
         productCategory = category
         
+        quantitySlider.value = Float(slider)
         productPriceLabel.text! = "\(price) грн"
-        quantityLabel.text! = "\(Int(quantitySlider.value)) шт"
+        quantityLabel.text! = "\(Int64(quantitySlider.value)) шт"
         
-        image(productImageView)
+//        image(productImageView) + , image: @escaping(UIImageView) -> Void
+        
+//        productImageView.image = UIImage(data: data as Data) + , data: Data
     }
     
 

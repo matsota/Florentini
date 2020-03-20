@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseUI
+import CoreData
 
 
 class BasketViewController: UIViewController {
@@ -15,31 +16,26 @@ class BasketViewController: UIViewController {
     //MARK: Outlets
     
     //MARK: - var & let
-    var preOrderArray = [DatabaseManager.PreOrder]()
-    var orderBill = Int()
-    var orderBillArray = [Int]()
-    
+    var preOrder = [PreOrderEntity]()
     //MARK: - Overrides
     //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        NetworkManager.shared.getPreOrder(success: { (preOrder) in
-            self.preOrderArray = preOrder
+        
+        CoreDataManager.shared.fetchPreOrder { (preOrderEntity) -> (Void) in
+            self.preOrder = preOrderEntity
             self.basketTableView.reloadData()
-        }) { (error) in
-            print("error: \(error.localizedDescription)")
-            
+            print(self.preOrder)
         }
         
         //MARK: Keyboard Observer
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        //
-        
-        
-        
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
     
     //MARK: - Выбор Обратной связи
     @IBAction func feedbackTypeSelectorTapped(_ sender: UIButton) {
@@ -102,7 +98,6 @@ class BasketViewController: UIViewController {
     //MARK: - Приватные переменные
     private var selectedFeedbackType: String?
     
-    var test = [DatabaseManager.PreOrderCorrection]()
     //MARK: - Приватные методы
     private func hideAndShowButtons(option: String){
         selectedFeedbackType = option
@@ -114,7 +109,6 @@ class BasketViewController: UIViewController {
         }
         feebackTypeSelectorButton.titleLabel?.text = option
     }
-    
     
     //MARK: - Movement constrains for keyboard
     @objc private func keyboardWillShow(notification: Notification) {
@@ -139,7 +133,7 @@ class BasketViewController: UIViewController {
 //MARK: - Table View extension
 extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return preOrderArray.count
+        return preOrder.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -147,74 +141,55 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = basketTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.BasketTVCell.rawValue, for: indexPath) as! BasketTableViewCell
         cell.delegate = self
         cell.tag = indexPath.row
+        let fetch = preOrder[cell.tag]
+        let name = fetch.value(forKey: DatabaseManager.ProductCases.productName.rawValue) as! String
+        let category = fetch.value(forKey: DatabaseManager.ProductCases.productCategory.rawValue) as! String
+        let price = fetch.value(forKey: DatabaseManager.ProductCases.productPrice.rawValue) as! Int64
+        let sliderValue = fetch.value(forKey: DatabaseManager.ProductCases.productQuantity.rawValue) as! Int64
         
-        
-        let get = preOrderArray[cell.tag]
-        let storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(get.productName)")
-        
-        let name = get.productName
-        let price = get.productPrice
-        let category = get.productCategory
-        
-        CoreDataManager.shared.savePrice(value: price)
-        
-        // - Fill TablewView & Custom cell properties (slider.maxValue, relying on category)
-        cell.fill(name: name, price: price, category: category) { image in
-            if category == DatabaseManager.ProductCategoriesCases.apiece.rawValue {
-                cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.hundred.rawValue)
-            }
-            if category == DatabaseManager.ProductCategoriesCases.bouquet.rawValue {
-                cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.five.rawValue)
-            }
-            if category == DatabaseManager.ProductCategoriesCases.combined.rawValue {
-                cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.five.rawValue)
-            }
-            image.sd_setImage(with: storageRef)
-        }
-        
+        cell.fill(name: name , price: price , category: category, slider: sliderValue)
         return cell
     }
     
     // - Cell's method for delete in TableView
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let delete = deleteAction(at: indexPath)
-        return UISwipeActionsConfiguration(actions: [delete])
-    }
-    func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
-        let fetch = self.preOrderArray[indexPath.row]
-        let action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, complition) in
-            NetworkManager.shared.deletePreOrderProduct(name: fetch.productName)
-            self.preOrderArray.remove(at: indexPath.row)
-            self.basketTableView.deleteRows(at: [indexPath], with: .automatic)
-            complition(true)
+        func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+            let delete = deleteAction(at: indexPath)
+            return UISwipeActionsConfiguration(actions: [delete])
         }
-        action.backgroundColor = .red
-        return action
-    }
+        func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
+            let fetch = preOrder[indexPath.row]
+            let name = fetch.value(forKey: DatabaseManager.ProductCases.productName.rawValue) as! String
+            let category = fetch.value(forKey: DatabaseManager.ProductCases.productCategory.rawValue) as! String
+            let price = fetch.value(forKey: DatabaseManager.ProductCases.productPrice.rawValue) as! Int64
+            let sliderValue = fetch.value(forKey: DatabaseManager.ProductCases.productQuantity.rawValue) as! Int64
+            
+            let action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, complition) in
+                CoreDataManager.shared.deleteFromCart(name: name, category: category, price: price, quantity: sliderValue)
+    
+                self.preOrder.remove(at: indexPath.row)
+                self.basketTableView.deleteRows(at: [indexPath], with: .automatic)
+                complition(true)
+            }
+            action.backgroundColor = .red
+            return action
+        }
 }
 
 
 //MARK: - Custom Protocol extension
 //MARK: Slider
 extension BasketViewController: BasketTableViewCellDelegate {
+    //slider did change
     func sliderSelector(_ cell: BasketTableViewCell) {
-//        guard let name = cell.productName else {return}
         guard let price = cell.productPrice else {return}
-//        guard let category = cell.productCategory else {return}
         
-        let sliderEquantion = Int(cell.quantitySlider.value) * price
+        let sliderEquantion = Int64(cell.quantitySlider.value) * price
         let sliderValue = Int(cell.quantitySlider.value)
         
-//        NetworkManager.shared.preOrderCorrection(name: name, price: sliderEquantion, category: category)
-        
-        
-        CoreDataManager.shared.fetchPrices { (price) -> (Void) in
-            self.orderBill = sliderValue * Int(price.map({$0.productPrice}).reduce(0, +))
-        }
+//        self.orderBill = sliderValue * Int(price.map({$0.productPrice}).reduce(0, +))
         
         cell.productPriceLabel.text! = "\(sliderEquantion) грн"
         cell.quantityLabel.text! = "\(sliderValue) шт"
         
-        orderPriceLabel.text = "\(orderBill as Any) грн"
     }
 }

@@ -86,7 +86,7 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = catalogTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UserCatalogTVCell.rawValue, for: indexPath) as! UserCatalogTableViewCell
-        
+        cell.delegate = self
         cell.showDescription()
         
         let get = productInfo[indexPath.row]
@@ -109,6 +109,16 @@ extension CatalogViewController: UIViewControllerTransitioningDelegate {
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.isPresented = false
         return transition
+    }
+}
+
+extension CatalogViewController: UserCatalogTableViewCellDelegate {
+    func addToCart(_ cell: UserCatalogTableViewCell) {
+        guard let name = cell.productNameLabel.text, let category = cell.category, let price = Int64(cell.productPriceLabel.text!) else {return}
+//        let preOrder = PreOrderEntity(context: PersistenceService.context)
+        CoreDataManager.shared.saveForCart(name: name, category: category, price: price, quantity: 1) {
+            
+        }
     }
 }
 

@@ -168,17 +168,24 @@ extension DatabaseManager {
         case workersMessages
         
     }
+    
+    //MARK: Про Пользователя
+    enum UserCases: String, CaseIterable {
+        case userUID
+    }
+    
     //MARK: Про Товар
     enum ProductCases: String, CaseIterable {
         case productName
         case productPrice
+        case productQuantity
         case productCategory
         case productDescription
         case productImageURL
         case imageCollection
         case preOrder
         case preOrderCorrection
-        case order
+        case cart
     }
     
     enum ProductCategoriesCases: String, CaseIterable {

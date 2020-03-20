@@ -7,14 +7,20 @@
 
 import UIKit
 
+
+//MARK: - Custom Protocol
+protocol UserCatalogTableViewCellDelegate: class {
+    func addToCart(_ cell: UserCatalogTableViewCell)
+}
+
 class UserCatalogTableViewCell: UITableViewCell {
     
     @IBOutlet weak private var productImageView: UIImageView!
-    @IBOutlet weak private var productNameLabel: UILabel!
-    @IBOutlet weak private var productPriceLabel: UILabel!
+    @IBOutlet weak var productNameLabel: UILabel!
+    @IBOutlet weak var productPriceLabel: UILabel!
     @IBOutlet weak private var productDescriptionTextView: UITextView!
     @IBOutlet weak private var descriptionView: UIView!
-    private var category: String?
+    var category: String?
     
     
     override func awakeFromNib() {
@@ -35,9 +41,7 @@ class UserCatalogTableViewCell: UITableViewCell {
     }
     
     @IBAction func addToBasketTapped(_ sender: UIButton) {
-        guard let price = Int(productPriceLabel.text!) else {return}
-        guard let category = category else {return}
-        NetworkManager.shared.makePreOrder(name: productNameLabel.text!, price: price, category: category)
+        delegate?.addToCart(self)
     }
     
     //MARK: -  Метод появления описания продукта и кнопки "Скрыть" / "добавить в корзину"
@@ -62,5 +66,10 @@ class UserCatalogTableViewCell: UITableViewCell {
         
         image(productImageView)
     }
+    
+    
+    ///
+    weak var delegate: UserCatalogTableViewCellDelegate?
+    ///
     
 }
