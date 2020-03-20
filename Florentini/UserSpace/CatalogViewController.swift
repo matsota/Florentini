@@ -115,10 +115,10 @@ extension CatalogViewController: UIViewControllerTransitioningDelegate {
 extension CatalogViewController: UserCatalogTableViewCellDelegate {
     func addToCart(_ cell: UserCatalogTableViewCell) {
         guard let name = cell.productNameLabel.text, let category = cell.category, let price = Int64(cell.productPriceLabel.text!) else {return}
-//        let preOrder = PreOrderEntity(context: PersistenceService.context)
-        CoreDataManager.shared.saveForCart(name: name, category: category, price: price, quantity: 1) {
-            
-        }
+        CoreDataManager.shared.saveForCart(name: name, category: category, price: price, quantity: 1)
+        let image = cell.productImageView.image
+        let imageData: NSData = image!.pngData()! as NSData
+        UserDefaults.standard.set(imageData, forKey: name)
     }
 }
 

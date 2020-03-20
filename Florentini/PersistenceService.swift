@@ -21,7 +21,7 @@ class PersistenceService {
         let container = NSPersistentContainer(name: "FlorentiniModel")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+                fatalError("Unresolved error \(error), \(error.userInfo). IN: static var persistentContainer")
             }
         })
         return container
@@ -33,10 +33,9 @@ class PersistenceService {
         if context.hasChanges {
             do {
                 try context.save()
-                print("SAVED BABY")
             } catch {
                 let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo). IN: static func saveContext")
             }
         }
     }

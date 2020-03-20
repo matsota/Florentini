@@ -48,19 +48,16 @@ class BasketTableViewCell: UITableViewCell {
         delegate?.sliderSelector(self)
     }
     
-    func fill(name: String, price: Int64, category: String, slider: Int64) {
+    func fill(name: String, price: Int64, slider: Int64, imageData: NSData) {
         productNameLabel.text = name
         productName = name
         productPrice = price
-        productCategory = category
         
         quantitySlider.value = Float(slider)
         productPriceLabel.text! = "\(price) грн"
         quantityLabel.text! = "\(Int64(quantitySlider.value)) шт"
         
-//        image(productImageView) + , image: @escaping(UIImageView) -> Void
-        
-//        productImageView.image = UIImage(data: data as Data) + , data: Data
+        productImageView.image = UIImage(data: imageData as Data)
     }
     
 

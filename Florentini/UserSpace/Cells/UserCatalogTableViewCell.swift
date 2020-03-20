@@ -15,7 +15,7 @@ protocol UserCatalogTableViewCellDelegate: class {
 
 class UserCatalogTableViewCell: UITableViewCell {
     
-    @IBOutlet weak private var productImageView: UIImageView!
+    @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productPriceLabel: UILabel!
     @IBOutlet weak private var productDescriptionTextView: UITextView!

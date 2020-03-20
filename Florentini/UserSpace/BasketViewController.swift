@@ -16,6 +16,7 @@ class BasketViewController: UIViewController {
     //MARK: Outlets
     
     //MARK: - var & let
+    var orderBill = Int64()
     var preOrder = [PreOrderEntity]()
     //MARK: - Overrides
     //MARK: ViewDidLoad
@@ -43,29 +44,13 @@ class BasketViewController: UIViewController {
     }
     @IBAction func feedbackTypeTapped(_ sender: UIButton) {
         guard let title = sender.currentTitle, let feedbackType = DatabaseManager.FeedbackTypesCases(rawValue: title) else {return}
-        
         switch feedbackType {
         case .cellphone:
             hideAndShowButtons(option: DatabaseManager.FeedbackTypesCases.cellphone.rawValue)
-            
-            //            selectedFeedbackType = DatabaseManager.FeedbackTypesCases.cellphone.rawValue
-            //
-            //            feebackTypeSelectorButton.titleLabel?.text = DatabaseManager.FeedbackTypesCases.cellphone.rawValue
-            print(selectedFeedbackType!)
         case .viber:
             hideAndShowButtons(option: DatabaseManager.FeedbackTypesCases.viber.rawValue)
-            
-            //            selectedFeedbackType = DatabaseManager.FeedbackTypesCases.viber.rawValue
-            //
-            //            feebackTypeSelectorButton.titleLabel?.text = DatabaseManager.FeedbackTypesCases.viber.rawValue
-            print(selectedFeedbackType!)
         case .telegram:
             hideAndShowButtons(option: DatabaseManager.FeedbackTypesCases.telegram.rawValue)
-            
-            //            selectedFeedbackType = DatabaseManager.FeedbackTypesCases.telegram.rawValue
-            //
-            //            feebackTypeSelectorButton.titleLabel?.text = DatabaseManager.FeedbackTypesCases.telegram.rawValue
-            print(selectedFeedbackType!)
         }
     }
     
@@ -142,37 +127,51 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
         cell.delegate = self
         cell.tag = indexPath.row
         let fetch = preOrder[cell.tag]
+        //from coreData
+        let name = fetch.value(forKey: DatabaseManager.ProductCases.productName.rawValue) as! String
+        let category = fetch.value(forKey: DatabaseManager.ProductCases.productCategory.rawValue) as! String
+        let price = fetch.value(forKey: DatabaseManager.ProductCases.productPrice.rawValue) as! Int64
+        let sliderValue = fetch.value(forKey: DatabaseManager.ProductCases.productQuantity.rawValue) as! Int64
+        let imageData = UserDefaults.standard.object(forKey: name) as! NSData
+        
+        //maxValue correction of sliders in each cell
+        if category == DatabaseManager.ProductCategoriesCases.apiece.rawValue {
+            cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.hundred.rawValue)
+        }
+        if category == DatabaseManager.ProductCategoriesCases.bouquet.rawValue {
+            cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.five.rawValue)
+        }
+        if category == DatabaseManager.ProductCategoriesCases.combined.rawValue {
+            cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.five.rawValue)
+        }
+        //
+        cell.fill (name: name , price: price, slider: sliderValue, imageData: imageData)
+        
+        return cell
+    }
+    
+    // - Cell's method for delete in TableView
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = deleteAction(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [delete])
+    }
+    func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
+        let fetch = preOrder[indexPath.row]
         let name = fetch.value(forKey: DatabaseManager.ProductCases.productName.rawValue) as! String
         let category = fetch.value(forKey: DatabaseManager.ProductCases.productCategory.rawValue) as! String
         let price = fetch.value(forKey: DatabaseManager.ProductCases.productPrice.rawValue) as! Int64
         let sliderValue = fetch.value(forKey: DatabaseManager.ProductCases.productQuantity.rawValue) as! Int64
         
-        cell.fill(name: name , price: price , category: category, slider: sliderValue)
-        return cell
-    }
-    
-    // - Cell's method for delete in TableView
-        func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-            let delete = deleteAction(at: indexPath)
-            return UISwipeActionsConfiguration(actions: [delete])
-        }
-        func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
-            let fetch = preOrder[indexPath.row]
-            let name = fetch.value(forKey: DatabaseManager.ProductCases.productName.rawValue) as! String
-            let category = fetch.value(forKey: DatabaseManager.ProductCases.productCategory.rawValue) as! String
-            let price = fetch.value(forKey: DatabaseManager.ProductCases.productPrice.rawValue) as! Int64
-            let sliderValue = fetch.value(forKey: DatabaseManager.ProductCases.productQuantity.rawValue) as! Int64
+        let action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, complition) in
+            CoreDataManager.shared.deleteFromCart(name: name, category: category, price: price, quantity: sliderValue)
             
-            let action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, complition) in
-                CoreDataManager.shared.deleteFromCart(name: name, category: category, price: price, quantity: sliderValue)
-    
-                self.preOrder.remove(at: indexPath.row)
-                self.basketTableView.deleteRows(at: [indexPath], with: .automatic)
-                complition(true)
-            }
-            action.backgroundColor = .red
-            return action
+            self.preOrder.remove(at: indexPath.row)
+            self.basketTableView.deleteRows(at: [indexPath], with: .automatic)
+            complition(true)
         }
+        action.backgroundColor = .red
+        return action
+    }
 }
 
 
@@ -182,11 +181,19 @@ extension BasketViewController: BasketTableViewCellDelegate {
     //slider did change
     func sliderSelector(_ cell: BasketTableViewCell) {
         guard let price = cell.productPrice else {return}
+        guard let name = cell.productName else {return}
+        guard let fetch = try! PersistenceService.context.fetch(PreOrderEntity.fetchRequest()) as? [PreOrderEntity] else {return}
         
         let sliderEquantion = Int64(cell.quantitySlider.value) * price
-        let sliderValue = Int(cell.quantitySlider.value)
+        let sliderValue = Int64(cell.quantitySlider.value)
         
-//        self.orderBill = sliderValue * Int(price.map({$0.productPrice}).reduce(0, +))
+        CoreDataManager.shared.updateCart(name: name, quantity: sliderValue)
+        
+        
+        
+        self.orderBill = fetch.map({$0.productPrice * $0.productQuantity}).reduce(0, +)
+        
+        self.orderPriceLabel.text = "\(self.orderBill) грн"
         
         cell.productPriceLabel.text! = "\(sliderEquantion) грн"
         cell.quantityLabel.text! = "\(sliderValue) шт"
