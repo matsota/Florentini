@@ -43,38 +43,42 @@ class CatalogViewController: UIViewController {
     @IBAction func categorySelected(_ sender: DesignButton) {
         guard let title = sender.currentTitle, let categories = DatabaseManager.ProductCategoriesCases(rawValue: title) else {return}
         switch categories {
-        
+            
         case .apiece:
             hideAndShowButtons(option: DatabaseManager.ProductCategoriesCases.apiece.rawValue)
             NetworkManager.shared.downLoadApiece(success: { productInfo in
-                    self.productInfo = productInfo
-                    self.catalogTableView.reloadData()
-                }) { error in
-                    print(error.localizedDescription)
+                self.productInfo = productInfo
+                self.filterButton.isHidden = false
+                self.catalogTableView.reloadData()
+            }) { error in
+                print(error.localizedDescription)
             }
         case .gift:
             hideAndShowButtons(option: DatabaseManager.ProductCategoriesCases.gift.rawValue)
             NetworkManager.shared.downLoadGift(success: { productInfo in
-                    self.productInfo = productInfo
-                    self.catalogTableView.reloadData()
-                }) { error in
-                    print(error.localizedDescription)
+                self.productInfo = productInfo
+                self.filterButton.isHidden = false
+                self.catalogTableView.reloadData()
+            }) { error in
+                print(error.localizedDescription)
             }
         case .bouquet:
             hideAndShowButtons(option: DatabaseManager.ProductCategoriesCases.bouquet.rawValue)
             NetworkManager.shared.downLoadBouquet(success: { productInfo in
-                    self.productInfo = productInfo
-                    self.catalogTableView.reloadData()
-                }) { error in
-                    print(error.localizedDescription)
+                self.productInfo = productInfo
+                self.filterButton.isHidden = false
+                self.catalogTableView.reloadData()
+            }) { error in
+                print(error.localizedDescription)
             }
         case .stock:
             hideAndShowButtons(option: DatabaseManager.ProductCategoriesCases.stock.rawValue)
             NetworkManager.shared.downLoadStock(success: { productInfo in
-                    self.productInfo = productInfo
-                    self.catalogTableView.reloadData()
-                }) { error in
-                    print(error.localizedDescription)
+                self.productInfo = productInfo
+                self.filterButton.isHidden = false
+                self.catalogTableView.reloadData()
+            }) { error in
+                print(error.localizedDescription)
             }
         }
     }
@@ -135,14 +139,6 @@ class CatalogViewController: UIViewController {
     @IBOutlet weak var filterButton: DesignButton!
     
     
-    //MARK: Constraints
-    @IBOutlet weak private var filterButtonLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak private var filterButtonTrailingConstraint: NSLayoutConstraint!
-    @IBOutlet weak private var filterButtonHeightConstraint: NSLayoutConstraint!
-    
-    @IBOutlet weak private var buttonsRegularHeightConstraint: NSLayoutConstraint!
-    
-    
     //MARK: - Приватные методы
     private func hideAndShowButtons(option: String){
         selectedCategory = option
@@ -150,17 +146,12 @@ class CatalogViewController: UIViewController {
             if buttons.isHidden == true {
                 UIView.animate(withDuration: 0.2) {
                     buttons.isHidden = false
-                    self.filterButtonLeadingConstraint.constant = 0
-                    self.filterButtonTrailingConstraint.constant = 0
-                    self.filterButtonHeightConstraint.constant = self.buttonsRegularHeightConstraint.constant
+                    self.filterButton.isHidden = !self.buttonsView.isHidden
                     self.buttonsView.layoutIfNeeded()
                 }
             }else{
                 UIView.animate(withDuration: 0.2) {
                     buttons.isHidden = true
-                    self.filterButtonLeadingConstraint.constant = 14
-                    self.filterButtonTrailingConstraint.constant = 14
-                    self.filterButtonHeightConstraint.constant = self.buttonsRegularHeightConstraint.constant * 2
                     self.buttonsView.layoutIfNeeded()
                 }
             }

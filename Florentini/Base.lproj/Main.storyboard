@@ -195,7 +195,7 @@
                                 </subviews>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Q7O-KL-dmB">
-                                <rect key="frame" x="186" y="188" width="214" height="625"/>
+                                <rect key="frame" x="100" y="188" width="214" height="501"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="214" id="PB8-2Z-2OE"/>
@@ -319,14 +319,11 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bu3-yD-0qW">
-                                <rect key="frame" x="14" y="188" width="158" height="611"/>
+                                <rect key="frame" x="14" y="703" width="386" height="96"/>
                                 <subviews>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lW2-HZ-atK" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="187.5" width="158" height="30"/>
+                                        <rect key="frame" x="14" y="14" width="172" height="27"/>
                                         <color key="backgroundColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="PJ2-fd-tg5"/>
-                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="Букеты">
                                             <color key="titleColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -350,7 +347,7 @@
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LVP-pU-0UJ" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="231.5" width="158" height="30"/>
+                                        <rect key="frame" x="14" y="55" width="172" height="27"/>
                                         <color key="backgroundColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="Поштучно">
@@ -375,11 +372,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DJA-sM-WBK" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="275.5" width="118" height="60"/>
+                                        <rect key="frame" x="96.5" y="24" width="193" height="48"/>
                                         <color key="backgroundColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="A69-qY-ApF"/>
-                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal" title="Фильтр">
                                             <color key="titleColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -406,7 +400,7 @@
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n5Z-Di-qKa" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="349.5" width="158" height="30"/>
+                                        <rect key="frame" x="200" y="14" width="172" height="27"/>
                                         <color key="backgroundColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="Подарки">
@@ -431,7 +425,7 @@
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TCY-BY-pXn" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="393.5" width="158" height="30"/>
+                                        <rect key="frame" x="200" y="55" width="172" height="27"/>
                                         <color key="backgroundColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="Акции">
@@ -458,25 +452,27 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstItem="LVP-pU-0UJ" firstAttribute="leading" secondItem="Bu3-yD-0qW" secondAttribute="leading" id="404-co-IPE"/>
-                                    <constraint firstItem="DJA-sM-WBK" firstAttribute="centerX" secondItem="Bu3-yD-0qW" secondAttribute="centerX" id="4f8-Ho-anu"/>
-                                    <constraint firstAttribute="trailing" secondItem="lW2-HZ-atK" secondAttribute="trailing" id="GHj-0V-udf"/>
-                                    <constraint firstItem="LVP-pU-0UJ" firstAttribute="height" secondItem="lW2-HZ-atK" secondAttribute="height" id="KcS-f1-HbT"/>
-                                    <constraint firstItem="DJA-sM-WBK" firstAttribute="centerY" secondItem="Bu3-yD-0qW" secondAttribute="centerY" id="L8F-jn-CqS"/>
-                                    <constraint firstItem="TCY-BY-pXn" firstAttribute="top" secondItem="n5Z-Di-qKa" secondAttribute="bottom" constant="14" id="LVg-4N-EAU"/>
-                                    <constraint firstItem="DJA-sM-WBK" firstAttribute="top" secondItem="LVP-pU-0UJ" secondAttribute="bottom" constant="14" id="ONU-qb-gHT"/>
-                                    <constraint firstItem="n5Z-Di-qKa" firstAttribute="height" secondItem="lW2-HZ-atK" secondAttribute="height" id="Tw5-IM-jNV"/>
-                                    <constraint firstAttribute="trailing" secondItem="n5Z-Di-qKa" secondAttribute="trailing" id="ZKp-c9-MCb"/>
-                                    <constraint firstItem="DJA-sM-WBK" firstAttribute="leading" secondItem="Bu3-yD-0qW" secondAttribute="leading" constant="20" id="aQT-zG-3uo"/>
-                                    <constraint firstItem="n5Z-Di-qKa" firstAttribute="leading" secondItem="Bu3-yD-0qW" secondAttribute="leading" id="cCj-lZ-RcG"/>
-                                    <constraint firstAttribute="trailing" secondItem="TCY-BY-pXn" secondAttribute="trailing" id="cox-nF-NGG"/>
-                                    <constraint firstAttribute="trailing" secondItem="LVP-pU-0UJ" secondAttribute="trailing" id="icK-RO-XZJ"/>
-                                    <constraint firstItem="LVP-pU-0UJ" firstAttribute="top" secondItem="lW2-HZ-atK" secondAttribute="bottom" constant="14" id="kXS-kX-3zN"/>
-                                    <constraint firstItem="TCY-BY-pXn" firstAttribute="height" secondItem="lW2-HZ-atK" secondAttribute="height" id="ndv-vk-G9f"/>
-                                    <constraint firstAttribute="trailing" secondItem="DJA-sM-WBK" secondAttribute="trailing" constant="20" id="r46-en-vlZ"/>
-                                    <constraint firstItem="n5Z-Di-qKa" firstAttribute="top" secondItem="DJA-sM-WBK" secondAttribute="bottom" constant="14" id="swd-Ad-F84"/>
-                                    <constraint firstItem="TCY-BY-pXn" firstAttribute="leading" secondItem="Bu3-yD-0qW" secondAttribute="leading" id="upb-s3-fte"/>
-                                    <constraint firstItem="lW2-HZ-atK" firstAttribute="leading" secondItem="Bu3-yD-0qW" secondAttribute="leading" id="uzj-tD-naG"/>
+                                    <constraint firstAttribute="bottom" secondItem="TCY-BY-pXn" secondAttribute="bottom" constant="14" id="2LO-t8-P4k"/>
+                                    <constraint firstItem="TCY-BY-pXn" firstAttribute="height" secondItem="lW2-HZ-atK" secondAttribute="height" id="4un-6H-Tgx"/>
+                                    <constraint firstItem="DJA-sM-WBK" firstAttribute="width" secondItem="Bu3-yD-0qW" secondAttribute="width" multiplier="0.5" id="BVE-UR-NWF"/>
+                                    <constraint firstItem="n5Z-Di-qKa" firstAttribute="width" secondItem="lW2-HZ-atK" secondAttribute="width" id="CEC-fh-8uL"/>
+                                    <constraint firstItem="lW2-HZ-atK" firstAttribute="leading" secondItem="Bu3-yD-0qW" secondAttribute="leading" constant="14" id="CXp-Bb-tt9"/>
+                                    <constraint firstItem="LVP-pU-0UJ" firstAttribute="top" secondItem="lW2-HZ-atK" secondAttribute="bottom" constant="14" id="I61-sp-hdh"/>
+                                    <constraint firstItem="n5Z-Di-qKa" firstAttribute="leading" secondItem="lW2-HZ-atK" secondAttribute="trailing" constant="14" id="KF0-AC-zoQ"/>
+                                    <constraint firstItem="TCY-BY-pXn" firstAttribute="top" secondItem="n5Z-Di-qKa" secondAttribute="bottom" constant="14" id="LKZ-cr-Gpd"/>
+                                    <constraint firstItem="DJA-sM-WBK" firstAttribute="centerY" secondItem="Bu3-yD-0qW" secondAttribute="centerY" id="M1B-Eu-dR2"/>
+                                    <constraint firstItem="n5Z-Di-qKa" firstAttribute="height" secondItem="lW2-HZ-atK" secondAttribute="height" id="NsS-4A-mRT"/>
+                                    <constraint firstAttribute="trailing" secondItem="n5Z-Di-qKa" secondAttribute="trailing" constant="14" id="O3H-XN-Ud6"/>
+                                    <constraint firstItem="DJA-sM-WBK" firstAttribute="height" secondItem="Bu3-yD-0qW" secondAttribute="height" multiplier="0.5" id="Q8f-Cm-jVJ"/>
+                                    <constraint firstItem="LVP-pU-0UJ" firstAttribute="leading" secondItem="Bu3-yD-0qW" secondAttribute="leading" constant="14" id="Qwg-eo-DcU"/>
+                                    <constraint firstAttribute="bottom" secondItem="LVP-pU-0UJ" secondAttribute="bottom" constant="14" id="UWs-2b-HLK"/>
+                                    <constraint firstAttribute="trailing" secondItem="TCY-BY-pXn" secondAttribute="trailing" constant="14" id="bhj-jx-ukp"/>
+                                    <constraint firstItem="TCY-BY-pXn" firstAttribute="width" secondItem="lW2-HZ-atK" secondAttribute="width" id="clD-IV-mRQ"/>
+                                    <constraint firstItem="LVP-pU-0UJ" firstAttribute="width" secondItem="lW2-HZ-atK" secondAttribute="width" id="lyi-Br-lUY"/>
+                                    <constraint firstItem="lW2-HZ-atK" firstAttribute="top" secondItem="Bu3-yD-0qW" secondAttribute="top" constant="14" id="mtA-IG-dT8"/>
+                                    <constraint firstItem="n5Z-Di-qKa" firstAttribute="top" secondItem="Bu3-yD-0qW" secondAttribute="top" constant="14" id="q3L-ex-iRx"/>
+                                    <constraint firstItem="LVP-pU-0UJ" firstAttribute="height" secondItem="lW2-HZ-atK" secondAttribute="height" id="qUs-Sv-djO"/>
+                                    <constraint firstItem="DJA-sM-WBK" firstAttribute="centerX" secondItem="Bu3-yD-0qW" secondAttribute="centerX" id="tEL-15-dRA"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -485,26 +481,21 @@
                             <constraint firstItem="J9s-TL-xV2" firstAttribute="top" secondItem="bLH-hn-wea" secondAttribute="top" id="3Xa-py-tfU"/>
                             <constraint firstItem="J9s-TL-xV2" firstAttribute="leading" secondItem="bLH-hn-wea" secondAttribute="leading" constant="14" id="9Qz-Vd-oNF"/>
                             <constraint firstItem="J9s-TL-xV2" firstAttribute="trailing" secondItem="bLH-hn-wea" secondAttribute="trailing" constant="-14" id="AfV-0h-x9Q"/>
-                            <constraint firstItem="Bu3-yD-0qW" firstAttribute="top" secondItem="J9s-TL-xV2" secondAttribute="bottom" constant="14" id="H20-CB-mrw"/>
                             <constraint firstItem="Q7O-KL-dmB" firstAttribute="top" secondItem="J9s-TL-xV2" secondAttribute="bottom" constant="14" id="Jsd-gX-tlb"/>
-                            <constraint firstItem="Q7O-KL-dmB" firstAttribute="leading" secondItem="Bu3-yD-0qW" secondAttribute="trailing" constant="14" id="f3J-J7-ar4"/>
-                            <constraint firstItem="bLH-hn-wea" firstAttribute="trailing" secondItem="Q7O-KL-dmB" secondAttribute="trailing" constant="14" id="f4I-0H-VXD"/>
-                            <constraint firstItem="bLH-hn-wea" firstAttribute="bottom" secondItem="Bu3-yD-0qW" secondAttribute="bottom" constant="14" id="iFe-Vk-Q2Y"/>
-                            <constraint firstItem="Bu3-yD-0qW" firstAttribute="leading" secondItem="bLH-hn-wea" secondAttribute="leading" constant="14" id="s8e-Zz-YYY"/>
-                            <constraint firstItem="bLH-hn-wea" firstAttribute="bottom" secondItem="Q7O-KL-dmB" secondAttribute="bottom" id="x2t-83-bns"/>
+                            <constraint firstItem="bLH-hn-wea" firstAttribute="trailing" secondItem="Bu3-yD-0qW" secondAttribute="trailing" constant="14" id="LJ6-VS-bOn"/>
+                            <constraint firstItem="bLH-hn-wea" firstAttribute="bottom" secondItem="Bu3-yD-0qW" secondAttribute="bottom" constant="14" id="MxT-bz-VqH"/>
+                            <constraint firstItem="Q7O-KL-dmB" firstAttribute="centerX" secondItem="bLH-hn-wea" secondAttribute="centerX" id="Xd6-al-VkN"/>
+                            <constraint firstItem="Bu3-yD-0qW" firstAttribute="top" secondItem="Q7O-KL-dmB" secondAttribute="bottom" constant="14" id="ZRh-FO-OAh"/>
+                            <constraint firstItem="Bu3-yD-0qW" firstAttribute="leading" secondItem="bLH-hn-wea" secondAttribute="leading" constant="14" id="jiN-CB-ph6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bLH-hn-wea"/>
                     </view>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="buttonsRegularHeightConstraint" destination="PJ2-fd-tg5" id="AhK-Da-Kiz"/>
                         <outlet property="buttonsView" destination="Bu3-yD-0qW" id="xH8-CF-oI3"/>
                         <outlet property="catalogTableView" destination="Q7O-KL-dmB" id="krl-HY-Y7C"/>
                         <outlet property="filterButton" destination="DJA-sM-WBK" id="QaM-mW-Vl5"/>
-                        <outlet property="filterButtonHeightConstraint" destination="A69-qY-ApF" id="LqF-Ck-9KB"/>
-                        <outlet property="filterButtonLeadingConstraint" destination="aQT-zG-3uo" id="el9-X9-yT5"/>
-                        <outlet property="filterButtonTrailingConstraint" destination="r46-en-vlZ" id="9hy-pz-f03"/>
                         <outletCollection property="allFilterButtonsCollection" destination="lW2-HZ-atK" collectionClass="NSMutableArray" id="9AX-U4-RH3"/>
                         <outletCollection property="allFilterButtonsCollection" destination="LVP-pU-0UJ" collectionClass="NSMutableArray" id="9i1-0w-gNc"/>
                         <outletCollection property="allFilterButtonsCollection" destination="n5Z-Di-qKa" collectionClass="NSMutableArray" id="Uwm-2m-gzC"/>
