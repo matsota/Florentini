@@ -163,15 +163,9 @@ extension DatabaseManager {
         case uid
         case timeStamp
         
-        
         case workers
         case workersMessages
         
-    }
-    
-    //MARK: Про Пользователя
-    enum UserCases: String, CaseIterable {
-        case userUID
     }
     
     //MARK: Про Товар
@@ -189,14 +183,17 @@ extension DatabaseManager {
     }
     
     enum ProductCategoriesCases: String, CaseIterable {
-        case none = "Без Категории"
         case apiece = "Поштучно"
-        case combined = "Комбинация"
-        case bouquet = "Букет"
-        case stockApice = "Акция"
+        case gift = "Подарки"
+        case bouquet = "Букеты"
+        case stock = "Акции"
 //        case stockApice = "Акция Поштучно"
 //        case stockBouquet = "Акция Букет"
     }
+    
+    enum NonCategory: String, CaseIterable {
+            case none = "Без Категории"
+        }
     enum MaxQuantityByCategoriesCases: Int {
         case towHundred = 200
 //        case hundredAndHalf = 150

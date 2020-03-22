@@ -10,6 +10,7 @@
 		8F0E7BB92421496C004235A7 /* FlorentiniModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F0E7BB72421496C004235A7 /* FlorentiniModel.xcdatamodeld */; };
 		8F0E7BDE24214DAC004235A7 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0E7BDD24214DAC004235A7 /* CoreDataManager.swift */; };
 		8F0EEDF924129A3500948175 /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0EEDF824129A3500948175 /* BasketViewController.swift */; };
+		8F1778232427E19E00164C0D /* IBDesignable + Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1778222427E19E00164C0D /* IBDesignable + Buttons.swift */; };
 		8F2062A323FEB25A007C481A /* MainWorkSpaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062A223FEB25A007C481A /* MainWorkSpaceViewController.swift */; };
 		8F2062A523FF555F007C481A /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062A423FF555F007C481A /* NavigationManager.swift */; };
 		8F2062A723FF5ECE007C481A /* LoginWorkSpaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062A623FF5ECE007C481A /* LoginWorkSpaceViewController.swift */; };
@@ -50,6 +51,7 @@
 		8F0E7BB82421496C004235A7 /* coreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coreData.xcdatamodel; sourceTree = "<group>"; };
 		8F0E7BDD24214DAC004235A7 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		8F0EEDF824129A3500948175 /* BasketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
+		8F1778222427E19E00164C0D /* IBDesignable + Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IBDesignable + Buttons.swift"; sourceTree = "<group>"; };
 		8F2062A223FEB25A007C481A /* MainWorkSpaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWorkSpaceViewController.swift; sourceTree = "<group>"; };
 		8F2062A423FF555F007C481A /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		8F2062A623FF5ECE007C481A /* LoginWorkSpaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWorkSpaceViewController.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 			children = (
 				8F2062AB23FF6292007C481A /* UIAlertController + Custom.swift */,
 				8FD4E4E223FCF01000C62FA5 /* SlideInTransition.swift */,
+				8F1778222427E19E00164C0D /* IBDesignable + Buttons.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				8FFEDF262407EC3500D894FD /* NewProductSetViewController.swift in Sources */,
 				8F2062A723FF5ECE007C481A /* LoginWorkSpaceViewController.swift in Sources */,
 				8F0E7BB92421496C004235A7 /* FlorentiniModel.xcdatamodeld in Sources */,
+				8F1778232427E19E00164C0D /* IBDesignable + Buttons.swift in Sources */,
 				8F701E552425235500DA37EF /* PreOrderEntity+CoreDataClass.swift in Sources */,
 				8FE3F69924035BE4003001CA /* CatalogViewController.swift in Sources */,
 				8F2062A923FF5F94007C481A /* AuthenticationManager.swift in Sources */,

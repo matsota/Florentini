@@ -73,9 +73,41 @@ class NetworkManager {
     
     
     //MARK: - О продуктах
-    //MARK: - Метод выгрузки Фотографии продукта из Firebase
+    //MARK: - Метод выгрузки Информации о продукте продукта из Firebase
     func downLoadProductInfo(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
         db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).getDocuments(completion: {
+            (querySnapshot, _) in
+            let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
+            success(productInfo)
+        })
+    }
+    
+    func downLoadBouquet(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).whereField(DatabaseManager.ProductCases.productCategory.rawValue, isEqualTo: DatabaseManager.ProductCategoriesCases.bouquet.rawValue).getDocuments(completion: {
+            (querySnapshot, _) in
+            let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
+            success(productInfo)
+        })
+    }
+    
+    func downLoadApiece(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).whereField(DatabaseManager.ProductCases.productCategory.rawValue, isEqualTo: DatabaseManager.ProductCategoriesCases.apiece.rawValue).getDocuments(completion: {
+            (querySnapshot, _) in
+            let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
+            success(productInfo)
+        })
+    }
+    
+    func downLoadStock(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).whereField(DatabaseManager.ProductCases.productCategory.rawValue, isEqualTo: DatabaseManager.ProductCategoriesCases.stock.rawValue).getDocuments(completion: {
+            (querySnapshot, _) in
+            let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
+            success(productInfo)
+        })
+    }
+    
+    func downLoadGift(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).whereField(DatabaseManager.ProductCases.productCategory.rawValue, isEqualTo: DatabaseManager.ProductCategoriesCases.gift.rawValue).getDocuments(completion: {
             (querySnapshot, _) in
             let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
             success(productInfo)
@@ -156,81 +188,7 @@ class NetworkManager {
             }
         }
     }
-    
-    
-//    //MARK: - Метод Создания Предзаказа
-//    func makePreOrder(name: String, price: Int, category: String) {
-//        let preOrderInfo = DatabaseManager.PreOrder(productName: name, productPrice: price, productCategory: category)
-//    
-//        guard AuthenticationManager.shared.currentUser?.uid != nil else {return}
-//        db.collection(DatabaseManager.ProductCases.preOrder.rawValue).document(AuthenticationManager.shared.currentUser!.uid).collection(DatabaseManager.ProductCases.preOrder.rawValue).document(name).setData(preOrderInfo.dictionary)
-//    }
-    
-//    //MARK: - Метод Корректировки Предзаказа
-//    func preOrderCorrection(name: String, price: Int, category: String) {
-//        let preOrderInfo = DatabaseManager.PreOrderCorrection(productPrice: price)
-//
-//        guard AuthenticationManager.shared.currentUser?.uid != nil else {return}
-//        db.collection(DatabaseManager.ProductCases.preOrder.rawValue).document(AuthenticationManager.shared.currentUser!.uid).collection(DatabaseManager.ProductCases.preOrderCorrection.rawValue).document(name).setData(preOrderInfo.dictionary)
-//    }
-    
-//    //MARK: - Метод отслеживания изменений переменных предзаказа
-//    func preOrderListener(success: @escaping([DatabaseManager.PreOrderCorrection]) -> Void) {
-//       guard AuthenticationManager.shared.currentUser?.uid != nil else {return}
-//        db.collection(DatabaseManager.ProductCases.preOrder.rawValue).document(AuthenticationManager.shared.currentUser!.uid).collection(DatabaseManager.ProductCases.preOrderCorrection.rawValue).addSnapshotListener { (querySnapshot, _) in
-//            guard let snapshot = querySnapshot else {return}
-//
-//            snapshot.documentChanges.forEach { diff in
-//                if diff.type == .modified {
-//                    guard let correctedData = querySnapshot?.documents.compactMap({DatabaseManager.PreOrderCorrection(dictionary: $0.data())}) else {return}
-////                    success(correctedData)
-////                    guard let correctedData = DatabaseManager.PreOrderCorrection(dictionary: diff.document.data()) else {return}
-//                    success(correctedData)
-//                }
-//            }
-//        }
-//
-////        db.collection(DatabaseManager.ProductCases.preOrder.rawValue).document(AuthenticationManager.shared.currentUser!.uid).collection(DatabaseManager.ProductCases.preOrderCorrection.rawValue).addL { (querySnapshot, error) in
-//////                   if let error = error {
-//////                       failure (error)
-//////                   }
-////                   let correctedData = querySnapshot!.documents.compactMap{DatabaseManager.PreOrderCorrection(dictionary: $0.data())}
-////                   success(correctedData)
-////               }
-//    }
-    
-//    //MARK: - Метод Получения информации о предзаказе для Пользователя в Корзину
-//    func getPreOrder(success: @escaping([DatabaseManager.PreOrder]) -> Void, failure: @escaping(Error) -> Void) {
-//        guard AuthenticationManager.shared.currentUser?.uid != nil else {return}
-//        db.collection(DatabaseManager.ProductCases.preOrder.rawValue).document(AuthenticationManager.shared.currentUser!.uid).collection(DatabaseManager.ProductCases.preOrder.rawValue).getDocuments { (querySnapshot, error) in
-//            if let error = error {
-//                failure (error)
-//            }
-//            let preOrder = querySnapshot!.documents.compactMap{DatabaseManager.PreOrder(dictionary: $0.data())}
-//            success(preOrder)
-//        }
-//    }
-//    //MARK: - Метод удаления продукта из корзины
-//    func deletePreOrderProduct(name: String){
-//        db.collection(DatabaseManager.ProductCases.preOrder.rawValue).document(AuthenticationManager.shared.currentUser!.uid).collection(DatabaseManager.ProductCases.preOrder.rawValue).document(name).delete()
-//    }
-//
-//    func updatePreOrder(name: String, success: @escaping(DatabaseManager.PreOrder) -> Void) {
-//        guard let user = AuthenticationManager.shared.currentUser?.uid else {return}
-//        db.collection(DatabaseManager.ProductCases.preOrder.rawValue).document(user).collection(DatabaseManager.ProductCases.preOrder.rawValue).whereField(DatabaseManager.ProductCases.productName.rawValue, isEqualTo: name).addSnapshotListener { (querySnapshot, error) in
-//            guard let snapshot = querySnapshot else {return}
-//
-//            snapshot.documentChanges.forEach { diff in
-//                if diff.type == .removed {
-//                    guard let removed = DatabaseManager.PreOrder(dictionary: diff.document.data()) else {return}
-//                    success(removed)
-//                }
-//            }
-//        }
-//    }
-    
 }
-
 
 //MARK: - Out of Class
 //MARK: - Extensions

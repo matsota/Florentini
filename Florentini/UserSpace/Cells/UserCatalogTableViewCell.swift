@@ -18,7 +18,7 @@ class UserCatalogTableViewCell: UITableViewCell {
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productPriceLabel: UILabel!
-    @IBOutlet weak private var productDescriptionTextView: UITextView!
+    @IBOutlet weak private var productDescriptionLabel: UILabel!
     @IBOutlet weak private var descriptionView: UIView!
     var category: String?
     
@@ -61,7 +61,7 @@ class UserCatalogTableViewCell: UITableViewCell {
     func fill(name: String, price: Int, description: String, category: String, image: @escaping(UIImageView) -> Void) {
         productNameLabel.text = name
         productPriceLabel.text = "\(price)"
-        productDescriptionTextView.text = description
+        productDescriptionLabel.text = description
         self.category = category
         
         image(productImageView)

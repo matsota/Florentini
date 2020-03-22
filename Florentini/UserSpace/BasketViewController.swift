@@ -62,7 +62,7 @@ class BasketViewController: UIViewController {
     //MARK: Views Outlets
     @IBOutlet weak private var buttonsView: UIView!
     
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak private var scrollView: UIScrollView!
     //MARK: TableView Outlets
     @IBOutlet weak private var basketTableView: UITableView!
     
@@ -92,7 +92,7 @@ class BasketViewController: UIViewController {
                 self.buttonsView.layoutIfNeeded()
             }
         }
-        feebackTypeSelectorButton.titleLabel?.text = option
+        feebackTypeSelectorButton.setTitle(option, for: .normal)
     }
     
     //MARK: - Movement constrains for keyboard
@@ -141,9 +141,6 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
         if category == DatabaseManager.ProductCategoriesCases.bouquet.rawValue {
             cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.five.rawValue)
         }
-        if category == DatabaseManager.ProductCategoriesCases.combined.rawValue {
-            cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.five.rawValue)
-        }
         //
         cell.fill (name: name , price: price, slider: sliderValue, imageData: imageData)
         
@@ -156,7 +153,6 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
         return UISwipeActionsConfiguration(actions: [delete])
     }
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
-        
         let action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, complition) in
             CoreDataManager.shared.deleteFromCart(deleteWhere: self.preOrder, at: indexPath)
             self.preOrder.remove(at: indexPath.row)
@@ -182,8 +178,6 @@ extension BasketViewController: BasketTableViewCellDelegate {
         let sliderValue = Int64(cell.quantitySlider.value)
         
         CoreDataManager.shared.updateCart(name: name, quantity: sliderValue)
-        
-        
         
         self.orderBill = fetch.map({$0.productPrice * $0.productQuantity}).reduce(0, +)
         
