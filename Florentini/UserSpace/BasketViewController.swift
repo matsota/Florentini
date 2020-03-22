@@ -156,15 +156,9 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
         return UISwipeActionsConfiguration(actions: [delete])
     }
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
-        let fetch = preOrder[indexPath.row]
-        let name = fetch.value(forKey: DatabaseManager.ProductCases.productName.rawValue) as! String
-        let category = fetch.value(forKey: DatabaseManager.ProductCases.productCategory.rawValue) as! String
-        let price = fetch.value(forKey: DatabaseManager.ProductCases.productPrice.rawValue) as! Int64
-        let sliderValue = fetch.value(forKey: DatabaseManager.ProductCases.productQuantity.rawValue) as! Int64
         
         let action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, complition) in
-            CoreDataManager.shared.deleteFromCart(name: name, category: category, price: price, quantity: sliderValue)
-            
+            CoreDataManager.shared.deleteFromCart(deleteWhere: self.preOrder, at: indexPath)
             self.preOrder.remove(at: indexPath.row)
             self.basketTableView.deleteRows(at: [indexPath], with: .automatic)
             complition(true)

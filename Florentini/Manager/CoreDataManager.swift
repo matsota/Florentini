@@ -35,7 +35,6 @@ class CoreDataManager {
                 }
             }
         }
-//        PersistenceService.saveContext()
     }
     
     //MARK: - Custom Core Data Saving support
@@ -50,57 +49,15 @@ class CoreDataManager {
         
     }
     
-    
-    func deleteFromCart(name: String, category: String, price: Int64, quantity: Int64) {
-        //        let context = PreOrderEntity(context: PersistenceService.context)
-        //            context.productCategory = category
-        //            context.productPrice = price
-        //            context.productQuantity = quantity
+    func deleteFromCart(deleteWhere: [NSManagedObject], at indexPath: IndexPath) {
+        let certainPosition = indexPath.row
         
+        PersistenceService.context.delete(deleteWhere[certainPosition])
         do {
-            //                PersistenceService.context.delete(preOrder.)
-            //                PersistenceService.context.delete(category)
-            //                PersistenceService.context.delete(price)
-            //                PersistenceService.context.delete(quantity)
             try PersistenceService.context.save()
         } catch {
             print("CoreData Saving Error")
         }
     }
-    //
-    //    func deleteFromCart(quantity: Int) {
-    //        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-    //            let context = appDelegate.persistentContainer.viewContext
-    //            guard let entityDescription = NSEntityDescription.entity(forEntityName: "PreOrderEntity", in: context) else {return}
-    //            let newQuantity = NSManagedObject(entity: entityDescription, insertInto: context)
-    //
-    //            do {
-    //                context.delete(newQuantity)
-    //                try context.save()
-    //            } catch {
-    //                print("CoreData Saving Error")
-    //
-    //            }
-    //        }
-    //    }
-    
-    //    func deleteCartByUID(quantity: Int) {
-    //        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-    //            let context = appDelegate.persistentContainer.viewContext
-    //            guard let entityDescription = NSEntityDescription.entity(forEntityName: "PreOrderEntity", in: context) else {return}
-    //            let newQuantity = NSManagedObject(entity: entityDescription, insertInto: context)
-    //
-    //            newQuantity.setValue(quantity, forKey: DatabaseManager.ProductCases.productQuantity.rawValue)
-    //            context.delete(newQuantity)
-    //            if context.hasChanges{
-    //                do {
-    //                    try context.save()
-    //                } catch {
-    //                    print("CoreData Saving Error")
-    //                }
-    //            }
-    //        }
-    //    }
-    
     
 }
