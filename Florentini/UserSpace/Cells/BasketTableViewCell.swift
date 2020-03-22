@@ -8,17 +8,6 @@
 
 import UIKit
 
-//MARK: - Custom Protocol
-protocol BasketTableViewCellDelegate: class {
-    func sliderSelector(_ cell: BasketTableViewCell)
-}
-
-///
-//protocol BasketTableViewCellDelegate: class {
-//    func basketTableViewCell(_ cell: BasketTableViewCell, didToggleFavorite isFavorite: Bool)
-//}
-///
-
 class BasketTableViewCell: UITableViewCell {
     
     @IBOutlet weak var productNameLabel: UILabel!
@@ -45,7 +34,7 @@ class BasketTableViewCell: UITableViewCell {
     }
     
     @IBAction func quantitySliderSelector(_ sender: UISlider) {
-        delegate?.sliderSelector(self)
+        delegate?.sliderValue(self)
     }
     
     func fill(name: String, price: Int64, slider: Int64, imageData: NSData) {

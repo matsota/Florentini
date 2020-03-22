@@ -7,12 +7,6 @@
 
 import UIKit
 
-
-//MARK: - Custom Protocol
-protocol UserCatalogTableViewCellDelegate: class {
-    func addToCart(_ cell: UserCatalogTableViewCell)
-}
-
 class UserCatalogTableViewCell: UITableViewCell {
     
     @IBOutlet weak var productImageView: UIImageView!

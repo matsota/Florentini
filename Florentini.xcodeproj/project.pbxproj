@@ -41,6 +41,9 @@
 		8FE3F69924035BE4003001CA /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F69624035BE4003001CA /* CatalogViewController.swift */; };
 		8FE3F69D24035BED003001CA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F69B24035BED003001CA /* HomeViewController.swift */; };
 		8FE3F69F24035BF7003001CA /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F69E24035BF6003001CA /* MenuViewController.swift */; };
+		8FFD7CAA242818A9008FE8F6 /* CellManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD7CA9242818A9008FE8F6 /* CellManager.swift */; };
+		8FFD7CAC24281940008FE8F6 /* SwitchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD7CAB24281940008FE8F6 /* SwitchManager.swift */; };
+		8FFD7CB1242826BB008FE8F6 /* UserCatalogViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD7CB0242826BB008FE8F6 /* UserCatalogViewControllerDelegate.swift */; };
 		8FFDA507240EC1D700A63A02 /* UserCatalogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFDA506240EC1D700A63A02 /* UserCatalogTableViewCell.swift */; };
 		8FFEDF262407EC3500D894FD /* NewProductSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFEDF252407EC3500D894FD /* NewProductSetViewController.swift */; };
 		E86CADEFD3FB618B8C6FB2C4 /* Pods_Florentini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6A7F0BFE6E9D9665F2F01FE /* Pods_Florentini.framework */; };
@@ -84,6 +87,9 @@
 		8FE3F69624035BE4003001CA /* CatalogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		8FE3F69B24035BED003001CA /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8FE3F69E24035BF6003001CA /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		8FFD7CA9242818A9008FE8F6 /* CellManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellManager.swift; sourceTree = "<group>"; };
+		8FFD7CAB24281940008FE8F6 /* SwitchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchManager.swift; sourceTree = "<group>"; };
+		8FFD7CB0242826BB008FE8F6 /* UserCatalogViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCatalogViewControllerDelegate.swift; sourceTree = "<group>"; };
 		8FFDA506240EC1D700A63A02 /* UserCatalogTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCatalogTableViewCell.swift; sourceTree = "<group>"; };
 		8FFEDF252407EC3500D894FD /* NewProductSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProductSetViewController.swift; sourceTree = "<group>"; };
 		D6A7F0BFE6E9D9665F2F01FE /* Pods_Florentini.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Florentini.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -166,11 +172,12 @@
 		8FA80A9623FD65E70015C878 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				8FFD7CA82428189B008FE8F6 /* Protocols */,
+				8F0E7BDD24214DAC004235A7 /* CoreDataManager.swift */,
 				8FA80A9723FD65FA0015C878 /* NetworkManager.swift */,
 				8FA80A9923FD660A0015C878 /* DatabaseManager.swift */,
 				8F2062A423FF555F007C481A /* NavigationManager.swift */,
 				8F2062A823FF5F94007C481A /* AuthenticationManager.swift */,
-				8F0E7BDD24214DAC004235A7 /* CoreDataManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -196,8 +203,7 @@
 		8FD4E4BF23FCD1D800C62FA5 /* Florentini */ = {
 			isa = PBXGroup;
 			children = (
-				8F701E532425235400DA37EF /* PreOrderEntity+CoreDataClass.swift */,
-				8F701E542425235500DA37EF /* PreOrderEntity+CoreDataProperties.swift */,
+				8FFD7CAD24281A0F008FE8F6 /* CoreData */,
 				8F701E2D2425065400DA37EF /* PersistenceService.swift */,
 				8FD4E4C023FCD1D800C62FA5 /* AppDelegate.swift */,
 				8FD4E4C223FCD1D800C62FA5 /* SceneDelegate.swift */,
@@ -235,6 +241,25 @@
 				8FE3F69E24035BF6003001CA /* MenuViewController.swift */,
 			);
 			path = Menu;
+			sourceTree = "<group>";
+		};
+		8FFD7CA82428189B008FE8F6 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				8FFD7CA9242818A9008FE8F6 /* CellManager.swift */,
+				8FFD7CAB24281940008FE8F6 /* SwitchManager.swift */,
+				8FFD7CB0242826BB008FE8F6 /* UserCatalogViewControllerDelegate.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		8FFD7CAD24281A0F008FE8F6 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				8F701E532425235400DA37EF /* PreOrderEntity+CoreDataClass.swift */,
+				8F701E542425235500DA37EF /* PreOrderEntity+CoreDataProperties.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		8FFEDF272407F39000D894FD /* Admin Service */ = {
@@ -380,6 +405,7 @@
 				8F2062A923FF5F94007C481A /* AuthenticationManager.swift in Sources */,
 				8F0EEDF924129A3500948175 /* BasketViewController.swift in Sources */,
 				8FE3F69D24035BED003001CA /* HomeViewController.swift in Sources */,
+				8FFD7CAC24281940008FE8F6 /* SwitchManager.swift in Sources */,
 				8FA80A9A23FD660A0015C878 /* DatabaseManager.swift in Sources */,
 				8F2062AC23FF6292007C481A /* UIAlertController + Custom.swift in Sources */,
 				8FA80A9823FD65FA0015C878 /* NetworkManager.swift in Sources */,
@@ -398,8 +424,10 @@
 				8FD4E4E323FCF01000C62FA5 /* SlideInTransition.swift in Sources */,
 				8F2062A523FF555F007C481A /* NavigationManager.swift in Sources */,
 				8F0E7BDE24214DAC004235A7 /* CoreDataManager.swift in Sources */,
+				8FFD7CB1242826BB008FE8F6 /* UserCatalogViewControllerDelegate.swift in Sources */,
 				8F701E562425235500DA37EF /* PreOrderEntity+CoreDataProperties.swift in Sources */,
 				8F2062C723FF7F75007C481A /* WorkersChatViewController.swift in Sources */,
+				8FFD7CAA242818A9008FE8F6 /* CellManager.swift in Sources */,
 				8F701E2E2425065400DA37EF /* PersistenceService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -169,7 +169,7 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
 //MARK: Slider
 extension BasketViewController: BasketTableViewCellDelegate {
     //slider did change
-    func sliderSelector(_ cell: BasketTableViewCell) {
+    func sliderValue(_ cell: BasketTableViewCell) {
         guard let price = cell.productPrice else {return}
         guard let name = cell.productName else {return}
         guard let fetch = try! PersistenceService.context.fetch(PreOrderEntity.fetchRequest()) as? [PreOrderEntity] else {return}

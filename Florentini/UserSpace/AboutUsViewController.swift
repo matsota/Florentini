@@ -78,6 +78,8 @@ class AboutUsViewController: UIViewController {
             view.window?.rootViewController = loginWorkSpaceVC
             view.window?.makeKeyAndVisible()
             
+            //exit anonymous user and enter for worker
+            AuthenticationManager.shared.signOut()
         }else if name == "" || review == "" {
             
         }else{

@@ -11,7 +11,7 @@ import UIKit
 import Firebase
 
 class NewProductSetViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-    let db = Firestore.firestore()
+    
     //MARK: - TextField Outelet
     @IBOutlet weak var photoNameTextField: UITextField!
     @IBOutlet weak var photoPriceTextField: UITextField!
