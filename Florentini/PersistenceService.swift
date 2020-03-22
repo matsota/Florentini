@@ -33,6 +33,7 @@ class PersistenceService {
         if context.hasChanges {
             do {
                 try context.save()
+                print("Persistant SAVED")
             } catch {
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo). IN: static func saveContext")

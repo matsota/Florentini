@@ -22,6 +22,7 @@ class CoreDataManager {
         preOrder.productPrice = price
         preOrder.productQuantity = quantity
         PersistenceService.saveContext()
+        print("savedForCart")
     }
     
     //MARK: - Обновление количества продукта к Заказу
