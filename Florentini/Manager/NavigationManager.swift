@@ -6,6 +6,7 @@
 //  Copyright © 2020 Andrew Matsota. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 class NavigationManager: UINavigationController {
@@ -59,6 +60,8 @@ class NavigationManager: UINavigationController {
     //
     //
     
+
+   
 }
 
 extension UINavigationController {
@@ -76,12 +79,12 @@ extension UINavigationController {
             view.window?.makeKeyAndVisible()
         case .feedback:
             print("feedback")
-            let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? AboutUsViewController
+            let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? UserAboutUsViewController
             view.window?.rootViewController = feedbackVC
             view.window?.makeKeyAndVisible()
         case .faq:
             print("feedback")
-            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FAQVC.rawValue) as? FAQViewController
+            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FAQVC.rawValue) as? UserFAQViewController
             view.window?.rootViewController = faqVC
             view.window?.makeKeyAndVisible()
         case .website:
@@ -90,6 +93,7 @@ extension UINavigationController {
     }
     
 }
+
 
 //
 //

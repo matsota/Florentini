@@ -10,15 +10,11 @@ import Foundation
 
 //MARK: - FAQViewController
 protocol FAQMenuOptionsDelegate: class {
-    func transitionSelector(_ class: FAQViewController)
+    func transitionSelector(_ class: UserFAQViewController)
 }
 
-//MARK: - HomeViewController
-protocol HomeMenuOptionsDelegate: class {
-    func transitionSelector(_ class: HomeViewController)
-}
 
 //MARK: - AboutUsViewController
 protocol AboutUsMenuOptionsDelegate: class {
-    func transitionSelector(_ class: AboutUsViewController)
+    func transitionSelector(_ class: UserAboutUsViewController)
 }

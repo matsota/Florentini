@@ -45,7 +45,7 @@ class CatalogViewController: UIViewController {
         delegate?.filtrationProductsByCategory(self, sender)
     }
     
-    //MARK: - Menu НАДО ПЕРЕНЕСТИ ЕГО ИЗ UI
+    //MARK: - Нажатие кнопки Меню
     @IBAction func menuTapped(_ sender: UIButton) {
         guard let menuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MenuVC.rawValue) as? MenuViewController else {return}
         menuVC.menuTypeTapped = { menuType in
@@ -70,7 +70,15 @@ class CatalogViewController: UIViewController {
     @IBOutlet weak private var filterButton: DesignButton!
 }
 
-//MARK: - TableView Extention
+
+
+
+
+
+
+
+
+//MARK: - extention by TableView
 extension CatalogViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return productInfo.count
@@ -91,7 +99,7 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource{
     }
 }
 
-//MARK: - UIViewControllerTransitioningDelegate extention
+//MARK: - extention by  UIVC-TransitioningDelegate
 extension CatalogViewController: UIViewControllerTransitioningDelegate {
     //MARK: For slider menu
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
@@ -104,7 +112,7 @@ extension CatalogViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
-//MARK: - UserCatalogTableViewCellDelegate extention
+//MARK: - extention by UserCatalog-TVC-Delegate
 extension CatalogViewController: UserCatalogTableViewCellDelegate {
     //MARK: Adding to user's Cart
     func addToCart(_ cell: UserCatalogTableViewCell) {
@@ -117,7 +125,7 @@ extension CatalogViewController: UserCatalogTableViewCellDelegate {
 }
 
 
-//MARK: - CatalogViewControllerDelegate extention
+//MARK: - extention by Catalog-VC-Delegate
 extension CatalogViewController: UserCatalogViewControllerDelegate {
     //MARK: Метод появление/сокрытия Категорий для дальнейшей фильтрации продукции
     func hideAndShowCategories(option: String) {
@@ -194,11 +202,11 @@ extension CatalogViewController: UserCatalogViewControllerDelegate {
             view.window?.rootViewController = catalogVC
             view.window?.makeKeyAndVisible()
         case .feedback:
-            let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? AboutUsViewController
+            let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? UserAboutUsViewController
             view.window?.rootViewController = feedbackVC
             view.window?.makeKeyAndVisible()
         case .faq:
-            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FAQVC.rawValue) as? FAQViewController
+            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FAQVC.rawValue) as? UserFAQViewController
             view.window?.rootViewController = faqVC
             view.window?.makeKeyAndVisible()
         case .website:

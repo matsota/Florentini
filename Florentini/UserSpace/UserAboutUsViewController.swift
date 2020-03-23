@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AboutUsViewController: UIViewController {
+class UserAboutUsViewController: UIViewController {
     
     
     //MARK: - Outlets
@@ -23,49 +23,22 @@ class AboutUsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        delegate = self as UserAboutUsViewControllerDelegate
         //MARK: Keyboard Observer
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardDidShowNotification, object: nil)
         }
     
-    //MARK: - Меню
+    //MARK: - Нажатие кнопки Меню
     @IBAction func menuTapped(_ sender: UIButton) {
         guard let menuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MenuVC.rawValue) as? MenuViewController else {return}
         menuVC.menuTypeTapped = { menuType in
-            //            NavigationManager.shared.menuOptionPicked(menuType)
-            self.menuOptionPicked(menuType)
+            self.delegate?.transitionByMenu(self, menuType)
         }
         menuVC.modalPresentationStyle = .overCurrentContext
         menuVC.transitioningDelegate = self
         present(menuVC, animated: true)
-    }
-    //Вынести за пределы UI
-    func menuOptionPicked(_ menuType: MenuViewController.MenuType) {
-        switch menuType {
-        case .home:
-            print("website")
-            let homeVC = storyboard?.instantiateInitialViewController()
-            view.window?.rootViewController = homeVC
-            view.window?.makeKeyAndVisible()
-        case .catalog:
-            print("catalog")
-            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.CatalogVC.rawValue) as? CatalogViewController
-            view.window?.rootViewController = catalogVC
-            view.window?.makeKeyAndVisible()
-        case .feedback:
-            print("feedback")
-            let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? AboutUsViewController
-            view.window?.rootViewController = feedbackVC
-            view.window?.makeKeyAndVisible()
-        case .faq:
-            print("feedback")
-            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FAQVC.rawValue) as? FAQViewController
-            view.window?.rootViewController = faqVC
-            view.window?.makeKeyAndVisible()
-        case .website:
-            print("website")
-        }
     }
     
     //MARK: - Отправить отзыв / Переход в рабочую зону
@@ -107,14 +80,20 @@ class AboutUsViewController: UIViewController {
     }
     
     //MARK: - Приватные системные переменные
+    weak private var delegate: UserAboutUsViewControllerDelegate?
+    
     private let secretCode = "/WorkSpace"
     private let secretCode2 = "Go/"
     
     @IBOutlet weak private var scrollView: UIScrollView!
 }
 
-//Вынести за пределы UI
-extension AboutUsViewController: UIViewControllerTransitioningDelegate {
+
+
+
+//MARK: - Extensions
+//MARK: extensions by UIVC-bTransitioningDelegate
+extension UserAboutUsViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.isPresented = true
         return transition
@@ -125,3 +104,32 @@ extension AboutUsViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
+//MARK: extention by UserHome-VC-Delegate
+extension UserAboutUsViewController: UserAboutUsViewControllerDelegate {
+
+    //MARK: Метод перехода в другой ViewController
+    func transitionByMenu(_ class: UserAboutUsViewController, _ menuType: MenuViewController.MenuType) {
+        switch menuType {
+        case .home:
+            let homeVC = storyboard?.instantiateInitialViewController()
+            view.window?.rootViewController = homeVC
+            view.window?.makeKeyAndVisible()
+        case .catalog:
+            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.CatalogVC.rawValue) as? CatalogViewController
+            view.window?.rootViewController = catalogVC
+            view.window?.makeKeyAndVisible()
+        case .feedback:
+            let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? UserAboutUsViewController
+            view.window?.rootViewController = feedbackVC
+            view.window?.makeKeyAndVisible()
+        case .faq:
+            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FAQVC.rawValue) as? UserFAQViewController
+            view.window?.rootViewController = faqVC
+            view.window?.makeKeyAndVisible()
+        case .website:
+            self.dismiss(animated: true, completion: nil)
+            print("website")
+        }
+    }
+    
+}

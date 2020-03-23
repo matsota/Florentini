@@ -8,14 +8,15 @@
 
 import UIKit
 
-class FAQViewController: UIViewController {
+class UserFAQViewController: UIViewController {
     
-    let transition = SlideInTransition()
     
+    //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        delegate = self as UserFAQViewControllerDelegate
     }
+    
     
     @IBAction func showHidePaymentProcessTapped(_ sender: UIButton) {
         paymentProcessDescriptionLabel.isHidden = !paymentProcessDescriptionLabel.isHidden
@@ -34,55 +35,41 @@ class FAQViewController: UIViewController {
         feedbackDescriptionLabel.isHidden = !feedbackDescriptionLabel.isHidden
     }
     
-    
-    //Вынести из UI
+    //MARK: - Нажатие кнопки Меню
     @IBAction func menuTapped(_ sender: UIButton) {
         guard let menuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MenuVC.rawValue) as? MenuViewController else {return}
         menuVC.menuTypeTapped = { menuType in
-            //            NavigationManager.shared.menuOptionPicked(menuType)
-            self.menuOptionPicked(menuType)
+            self.delegate?.transitionByMenu(self, menuType)
         }
         menuVC.modalPresentationStyle = .overCurrentContext
         menuVC.transitioningDelegate = self
         present(menuVC, animated: true)
     }
-    func menuOptionPicked(_ menuType: MenuViewController.MenuType) {
-        switch menuType {
-        case .home:
-            print("website")
-            let homeVC = storyboard?.instantiateInitialViewController()
-            view.window?.rootViewController = homeVC
-            view.window?.makeKeyAndVisible()
-        case .catalog:
-            print("catalog")
-            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.CatalogVC.rawValue) as? CatalogViewController
-            view.window?.rootViewController = catalogVC
-            view.window?.makeKeyAndVisible()
-        case .feedback:
-            print("feedback")
-            let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? AboutUsViewController
-            view.window?.rootViewController = feedbackVC
-            view.window?.makeKeyAndVisible()
-        case .faq:
-            print("feedback")
-            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FAQVC.rawValue) as? FAQViewController
-            view.window?.rootViewController = faqVC
-            view.window?.makeKeyAndVisible()
-        case .website:
-            print("website")
-        }
-    }
     
+    //MARK: - Private
+    weak private var delegate: UserFAQViewControllerDelegate?
+    private let transition = SlideInTransition()
     
-    //MARK: - Private Outlets for FAQ
+    //MARK: Label Outlets
     @IBOutlet weak private var paymentProcessDescriptionLabel: UILabel!
     @IBOutlet weak private var paymentOptionsDescriptionStackView: UIStackView!
     @IBOutlet weak private var deliveryProcessDescriptionStackView: UIStackView!
     @IBOutlet weak private var feedbackDescriptionLabel: UILabel!
+    
+    
 }
 
 
-extension FAQViewController: UIViewControllerTransitioningDelegate {
+
+
+
+
+
+
+
+//MARK: - Extensions
+//MARK: extensions by UIVC-bTransitioningDelegate
+extension UserFAQViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.isPresented = true
         return transition
@@ -93,3 +80,30 @@ extension FAQViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
+//MARK: extention by UserHome-VC-Delegate
+extension UserFAQViewController: UserFAQViewControllerDelegate {
+    //MARK: Метод перехода в другой ViewController
+    func transitionByMenu(_ class: UserFAQViewController, _ menuType: MenuViewController.MenuType) {
+        switch menuType {
+        case .home:
+            let homeVC = storyboard?.instantiateInitialViewController()
+            view.window?.rootViewController = homeVC
+            view.window?.makeKeyAndVisible()
+        case .catalog:
+            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.CatalogVC.rawValue) as? CatalogViewController
+            view.window?.rootViewController = catalogVC
+            view.window?.makeKeyAndVisible()
+        case .feedback:
+            let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? UserAboutUsViewController
+            view.window?.rootViewController = feedbackVC
+            view.window?.makeKeyAndVisible()
+        case .faq:
+            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FAQVC.rawValue) as? UserFAQViewController
+            view.window?.rootViewController = faqVC
+            view.window?.makeKeyAndVisible()
+        case .website:
+            self.dismiss(animated: true, completion: nil)
+            print("website")
+        }
+    }
+}

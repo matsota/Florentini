@@ -11,7 +11,7 @@ import FirebaseUI
 import CoreData
 
 
-class BasketViewController: UIViewController {
+class UserBasketViewController: UIViewController {
     
     //MARK: Outlets
     
@@ -22,6 +22,8 @@ class BasketViewController: UIViewController {
     //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        delegate = self as UserBasketViewControllerDelegate
         
         CoreDataManager.shared.fetchPreOrder { (preOrderEntity) -> (Void) in
             self.preOrder = preOrderEntity
@@ -35,30 +37,28 @@ class BasketViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+       super.viewWillAppear(animated)
     }
     
-    //MARK: - Выбор Обратной связи
-    @IBAction func feedbackTypeSelectorTapped(_ sender: UIButton) {
-        hideAndShowButtons(option: DatabaseManager.FeedbackTypesCases.cellphone.rawValue)
+    //MARK: - Нажатие кнопки Обратной связи
+    @IBAction func feedbackTypeSelectorTapped(_ sender: DesignButton) {
+        hideAndShowFeedbackOptionButtons(option: DatabaseManager.FeedbackTypesCases.cellphone.rawValue)
     }
-    @IBAction func feedbackTypeTapped(_ sender: UIButton) {
-        guard let title = sender.currentTitle, let feedbackType = DatabaseManager.FeedbackTypesCases(rawValue: title) else {return}
-        switch feedbackType {
-        case .cellphone:
-            hideAndShowButtons(option: DatabaseManager.FeedbackTypesCases.cellphone.rawValue)
-        case .viber:
-            hideAndShowButtons(option: DatabaseManager.FeedbackTypesCases.viber.rawValue)
-        case .telegram:
-            hideAndShowButtons(option: DatabaseManager.FeedbackTypesCases.telegram.rawValue)
-        }
+
+    @IBAction func feedbackTypeTapped(_ sender: DesignButton) {
+        delegate?.choosingFeedbackOption (self, sender)
     }
     
     //MARK: - Подтвреждение заказа
     @IBAction func confirmTapped(_ sender: UIButton) {
     }
     
+    
     //MARK: - Private
+    //MARK: - Приватные переменные
+    private var selectedFeedbackType: String?
+    weak private var delegate: UserBasketViewControllerDelegate?
+    
     //MARK: Views Outlets
     @IBOutlet weak private var buttonsView: UIView!
     
@@ -80,11 +80,9 @@ class BasketViewController: UIViewController {
     //MARK: Constrains Outlets
     @IBOutlet weak private var lowestConstraint: NSLayoutConstraint!
     
-    //MARK: - Приватные переменные
-    private var selectedFeedbackType: String?
     
     //MARK: - Приватные методы
-    private func hideAndShowButtons(option: String){
+    private func hideAndShowFeedbackOptionButtons(option: String){
         selectedFeedbackType = option
         feedbackTypeBttnsCellection.forEach { (buttons) in
             UIView.animate(withDuration: 0.2) {
@@ -116,7 +114,7 @@ class BasketViewController: UIViewController {
 
 
 //MARK: - Table View extension
-extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
+extension UserBasketViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return preOrder.count
     }
@@ -167,7 +165,7 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
 
 //MARK: - Custom Protocol extension
 //MARK: Slider
-extension BasketViewController: BasketTableViewCellDelegate {
+extension UserBasketViewController: BasketTableViewCellDelegate {
     //slider did change
     func sliderValue(_ cell: BasketTableViewCell) {
         guard let price = cell.productPrice else {return}
@@ -186,5 +184,20 @@ extension BasketViewController: BasketTableViewCellDelegate {
         cell.productPriceLabel.text! = "\(sliderEquantion) грн"
         cell.quantityLabel.text! = "\(sliderValue) шт"
         
+    }
+}
+
+
+extension UserBasketViewController: UserBasketViewControllerDelegate {
+    func choosingFeedbackOption (_ class: UserBasketViewController, _ sender: DesignButton) {
+        guard let title = sender.currentTitle, let feedbackType = DatabaseManager.FeedbackTypesCases(rawValue: title) else {return}
+        switch feedbackType {
+        case .cellphone:
+            hideAndShowFeedbackOptionButtons(option: DatabaseManager.FeedbackTypesCases.cellphone.rawValue)
+        case .viber:
+            hideAndShowFeedbackOptionButtons(option: DatabaseManager.FeedbackTypesCases.viber.rawValue)
+        case .telegram:
+            hideAndShowFeedbackOptionButtons(option: DatabaseManager.FeedbackTypesCases.telegram.rawValue)
+        }
     }
 }
