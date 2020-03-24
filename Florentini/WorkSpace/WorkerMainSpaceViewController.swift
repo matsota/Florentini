@@ -68,6 +68,7 @@ class WorkerMainSpaceViewController: UIViewController {
         view.window?.rootViewController = workersChatVC
         view.window?.makeKeyAndVisible()
     }
+     
     
     func exitApp() {
         let exitApp = storyboard?.instantiateInitialViewController()
