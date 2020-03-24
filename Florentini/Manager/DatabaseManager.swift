@@ -36,10 +36,10 @@ class DatabaseManager {
         
         var dictionary: [String:Any] {
             return [
-                DatabaseManager.ChatMessagesCases.name.rawValue: name,
-                DatabaseManager.ChatMessagesCases.content.rawValue: content,
-                DatabaseManager.ChatMessagesCases.uid.rawValue: uid,
-                DatabaseManager.ChatMessagesCases.timeStamp.rawValue: timeStamp
+                DatabaseManager.MessagesCases.name.rawValue: name,
+                DatabaseManager.MessagesCases.content.rawValue: content,
+                DatabaseManager.MessagesCases.uid.rawValue: uid,
+                DatabaseManager.MessagesCases.timeStamp.rawValue: timeStamp
             ]
         }
     }
@@ -112,10 +112,10 @@ extension DatabaseManager.WorkerInfo: DocumentSerializable {
 //MARK: Про чат
 extension DatabaseManager.ChatMessages: DocumentSerializable{
     init?(dictionary: [String: Any]) {
-        guard let name = dictionary[DatabaseManager.ChatMessagesCases.name.rawValue] as? String,
-            let content = dictionary[DatabaseManager.ChatMessagesCases.content.rawValue] as? String,
-            let uid = dictionary[DatabaseManager.ChatMessagesCases.uid.rawValue] as? String,
-            let timeStamp = (dictionary[DatabaseManager.ChatMessagesCases.timeStamp.rawValue] as? Timestamp)?.dateValue() else {return nil}
+        guard let name = dictionary[DatabaseManager.MessagesCases.name.rawValue] as? String,
+            let content = dictionary[DatabaseManager.MessagesCases.content.rawValue] as? String,
+            let uid = dictionary[DatabaseManager.MessagesCases.uid.rawValue] as? String,
+            let timeStamp = (dictionary[DatabaseManager.MessagesCases.timeStamp.rawValue] as? Timestamp)?.dateValue() else {return nil}
         self.init(name: name, content: content, uid: uid, timeStamp: timeStamp)
     }
 }
@@ -156,15 +156,15 @@ extension DatabaseManager {
         case name
         case position
     }
-    //MARK: Про чат
-    enum ChatMessagesCases: String, CaseIterable {
+    //MARK: Про Сообщения
+    enum MessagesCases: String, CaseIterable {
         case name
         case content
         case uid
         case timeStamp
-        
         case workers
         case workersMessages
+        case review
         
     }
     

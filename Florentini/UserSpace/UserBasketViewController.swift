@@ -1,5 +1,5 @@
 //
-//  BasketViewController.swift
+//  UserBasketViewController.swift
 //  Florentini
 //
 //  Created by Andrew Matsota on 06.03.2020.
@@ -12,18 +12,14 @@ import CoreData
 
 
 class UserBasketViewController: UIViewController {
-    
-    //MARK: Outlets
-    
-    //MARK: - var & let
-    var orderBill = Int64()
-    var preOrder = [PreOrderEntity]()
+
     //MARK: - Overrides
     //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        delegate = self as UserBasketViewControllerDelegate
+        selectingFeedbackDelegate = self as SelectionByButtonCollectionDelegate
+        prepareForFeedbackSelectionDelegate = self as PrepareForSelectionMethodDelegate
         
         CoreDataManager.shared.fetchPreOrder { (preOrderEntity) -> (Void) in
             self.preOrder = preOrderEntity
@@ -31,22 +27,18 @@ class UserBasketViewController: UIViewController {
             print(self.preOrder)
         }
         
-        //MARK: Keyboard Observer
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-       super.viewWillAppear(animated)
-    }
-    
     //MARK: - Нажатие кнопки Обратной связи
     @IBAction func feedbackTypeSelectorTapped(_ sender: DesignButton) {
-        hideAndShowFeedbackOptionButtons(option: DatabaseManager.FeedbackTypesCases.cellphone.rawValue)
+        guard let sender = sender.titleLabel!.text else {return}
+        prepareForFeedbackSelectionDelegate?.showOptionsMethod(option: sender)
     }
 
     @IBAction func feedbackTypeTapped(_ sender: DesignButton) {
-        delegate?.choosingFeedbackOption (self, sender)
+        selectingFeedbackDelegate?.selectionMethod(self, sender)
     }
     
     //MARK: - Подтвреждение заказа
@@ -54,49 +46,12 @@ class UserBasketViewController: UIViewController {
     }
     
     
-    //MARK: - Private
-    //MARK: - Приватные переменные
-    private var selectedFeedbackType: String?
-    weak private var delegate: UserBasketViewControllerDelegate?
+    //MARK: - Private:
     
-    //MARK: Views Outlets
-    @IBOutlet weak private var buttonsView: UIView!
-    
-    @IBOutlet weak private var scrollView: UIScrollView!
-    //MARK: TableView Outlets
-    @IBOutlet weak private var basketTableView: UITableView!
-    
-    //MARK: TextFields Outlets
-    @IBOutlet weak private var clientNameTextField: UITextField!
-    @IBOutlet weak private var clientPhoeNumberTextField: UITextField!
-    @IBOutlet weak private var clientAdressTextField: UITextField!
-    @IBOutlet weak private var clientDescriptionTextField: UITextField!
-    @IBOutlet weak private var orderPriceLabel: UILabel!
-    
-    //MARK: Buttons Outlets
-    @IBOutlet weak private var feebackTypeSelectorButton: UIButton!
-    @IBOutlet private var feedbackTypeBttnsCellection: [UIButton]!
-    
-    //MARK: Constrains Outlets
-    @IBOutlet weak private var lowestConstraint: NSLayoutConstraint!
-    
-    
-    //MARK: - Приватные методы
-    private func hideAndShowFeedbackOptionButtons(option: String){
-        selectedFeedbackType = option
-        feedbackTypeBttnsCellection.forEach { (buttons) in
-            UIView.animate(withDuration: 0.2) {
-                buttons.isHidden = !buttons.isHidden
-                self.buttonsView.layoutIfNeeded()
-            }
-        }
-        feebackTypeSelectorButton.setTitle(option, for: .normal)
-    }
-    
-    //MARK: - Movement constrains for keyboard
+    //MARK: - Methods
+    //MARK: Смещение constrains при появлении клавиатуры
     @objc private func keyboardWillShow(notification: Notification) {
         guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber, let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
-        
         lowestConstraint.constant = keyboardFrameValue.cgRectValue.height * 0.9
         UIView.animate(withDuration: duration.doubleValue) {
             self.view.layoutIfNeeded()
@@ -104,24 +59,57 @@ class UserBasketViewController: UIViewController {
     }
     @objc private func keyboardWillHide(notification: Notification) {
         guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber else {return}
-        
         lowestConstraint.constant = 14
         UIView.animate(withDuration: duration.doubleValue) {
             self.view.layoutIfNeeded()
         }
     }
+    
+    
+    //MARK: - Implementation
+    
+    private var selectedFeedbackType: String?
+    private var orderBill = Int64()
+    private var preOrder = [PreOrderEntity]()
+    //delegates
+    private weak var selectingFeedbackDelegate: SelectionByButtonCollectionDelegate?
+    private weak var prepareForFeedbackSelectionDelegate: PrepareForSelectionMethodDelegate?
+    
+    //MARK: Views Outlets
+    @IBOutlet private weak var buttonsView: UIView!
+    
+    @IBOutlet private weak var scrollView: UIScrollView!
+    //MARK: TableView Outlets
+    @IBOutlet private weak var basketTableView: UITableView!
+    
+    //MARK: TextFields Outlets
+    @IBOutlet private weak var clientNameTextField: UITextField!
+    @IBOutlet private weak var clientPhoeNumberTextField: UITextField!
+    @IBOutlet private weak var clientAdressTextField: UITextField!
+    @IBOutlet private weak var clientDescriptionTextField: UITextField!
+    @IBOutlet private weak var orderPriceLabel: UILabel!
+    
+    //MARK: Buttons Outlets
+    @IBOutlet private var feedbackTypeBttnsCellection: [UIButton]!
+    @IBOutlet private weak var feebackTypeSelectorButton: UIButton!
+
+    
+    //MARK: Constrains Outlets
+    @IBOutlet private weak var lowestConstraint: NSLayoutConstraint!
+
 }
 
 
 //MARK: - Table View extension
 extension UserBasketViewController: UITableViewDataSource, UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return preOrder.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // - Implementation
-        let cell = basketTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.BasketTVCell.rawValue, for: indexPath) as! BasketTableViewCell
+        let cell = basketTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.BasketTVCell.rawValue, for: indexPath) as! UserBasketTableViewCell
         cell.delegate = self
         cell.tag = indexPath.row
         let fetch = preOrder[cell.tag]
@@ -160,14 +148,16 @@ extension UserBasketViewController: UITableViewDataSource, UITableViewDelegate {
         action.backgroundColor = .red
         return action
     }
+    
 }
 
 
 //MARK: - Custom Protocol extension
-//MARK: Slider
-extension UserBasketViewController: BasketTableViewCellDelegate {
-    //slider did change
-    func sliderValue(_ cell: BasketTableViewCell) {
+
+//MARK: Прокрутка слайдера для выбора количества + Метод (Изменение конечной стоимости продукта в зависимости от выбранного количества)
+extension UserBasketViewController: UserBasketTableViewCellDelegate {
+    
+    func sliderValue(_ cell: UserBasketTableViewCell) {
         guard let price = cell.productPrice else {return}
         guard let name = cell.productName else {return}
         guard let fetch = try! PersistenceService.context.fetch(PreOrderEntity.fetchRequest()) as? [PreOrderEntity] else {return}
@@ -175,29 +165,47 @@ extension UserBasketViewController: BasketTableViewCellDelegate {
         let sliderEquantion = Int64(cell.quantitySlider.value) * price
         let sliderValue = Int64(cell.quantitySlider.value)
         
-        CoreDataManager.shared.updateCart(name: name, quantity: sliderValue)
-        
-        self.orderBill = fetch.map({$0.productPrice * $0.productQuantity}).reduce(0, +)
-        
-        self.orderPriceLabel.text = "\(self.orderBill) грн"
-        
         cell.productPriceLabel.text! = "\(sliderEquantion) грн"
         cell.quantityLabel.text! = "\(sliderValue) шт"
         
+        CoreDataManager.shared.updateCart(name: name, quantity: sliderValue)
+        self.orderBill = fetch.map({$0.productPrice * $0.productQuantity}).reduce(0, +)
+        self.orderPriceLabel.text = "\(self.orderBill) грн"
     }
+    
 }
 
-
-extension UserBasketViewController: UserBasketViewControllerDelegate {
-    func choosingFeedbackOption (_ class: UserBasketViewController, _ sender: DesignButton) {
+//MARK: Появление вариантов обратной связи
+extension UserBasketViewController: SelectionByButtonCollectionDelegate {
+    
+    func selectionMethod(_ class: UIViewController, _ sender: UIButton) {
         guard let title = sender.currentTitle, let feedbackType = DatabaseManager.FeedbackTypesCases(rawValue: title) else {return}
         switch feedbackType {
         case .cellphone:
-            hideAndShowFeedbackOptionButtons(option: DatabaseManager.FeedbackTypesCases.cellphone.rawValue)
+            prepareForFeedbackSelectionDelegate?.showOptionsMethod(option: DatabaseManager.FeedbackTypesCases.cellphone.rawValue)
         case .viber:
-            hideAndShowFeedbackOptionButtons(option: DatabaseManager.FeedbackTypesCases.viber.rawValue)
+            prepareForFeedbackSelectionDelegate?.showOptionsMethod(option: DatabaseManager.FeedbackTypesCases.viber.rawValue)
         case .telegram:
-            hideAndShowFeedbackOptionButtons(option: DatabaseManager.FeedbackTypesCases.telegram.rawValue)
+            prepareForFeedbackSelectionDelegate?.showOptionsMethod(option: DatabaseManager.FeedbackTypesCases.telegram.rawValue)
         }
     }
+    
 }
+
+//MARK: Выбор способа обратной связи
+extension UserBasketViewController: PrepareForSelectionMethodDelegate {
+    
+    func showOptionsMethod(option: String) {
+        selectedFeedbackType = option
+        feedbackTypeBttnsCellection.forEach { (buttons) in
+            UIView.animate(withDuration: 0.2) {
+                buttons.isHidden = !buttons.isHidden
+                self.buttonsView.layoutIfNeeded()
+            }
+        }
+        feebackTypeSelectorButton.setTitle(option, for: .normal)
+    }
+    
+}
+
+

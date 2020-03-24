@@ -65,7 +65,7 @@ class NavigationManager: UINavigationController {
 }
 
 extension UINavigationController {
-    func menuOptionPicked(_ menuType: MenuViewController.MenuType) {
+    func menuOptionPicked(_ menuType: UserSlidingMenuVC.MenuType) {
         switch menuType {
         case .home:
             print("website")
@@ -74,7 +74,7 @@ extension UINavigationController {
             view.window?.makeKeyAndVisible()
         case .catalog:
             print("catalog")
-            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.CatalogVC.rawValue) as? CatalogViewController
+            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.CatalogVC.rawValue) as? UserCatalogViewController
             view.window?.rootViewController = catalogVC
             view.window?.makeKeyAndVisible()
         case .feedback:

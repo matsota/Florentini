@@ -138,10 +138,10 @@
             </objects>
             <point key="canvasLocation" x="1093" y="475"/>
         </scene>
-        <!--Catalog View Controller-->
+        <!--User Catalog View Controller-->
         <scene sceneID="TSk-nu-oMd">
             <objects>
-                <viewController storyboardIdentifier="CatalogVC" modalPresentationStyle="fullScreen" id="OQi-JB-ueU" customClass="CatalogViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CatalogVC" modalPresentationStyle="fullScreen" id="OQi-JB-ueU" customClass="UserCatalogViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Nad-HM-jQC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -195,21 +195,18 @@
                                 </subviews>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Q7O-KL-dmB">
-                                <rect key="frame" x="100" y="188" width="214" height="501"/>
+                                <rect key="frame" x="50" y="188" width="314" height="501"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="214" id="PB8-2Z-2OE"/>
-                                </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserCatalogTVCell" id="YJ6-Nq-sW7" customClass="UserCatalogTableViewCell" customModule="Florentini" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="214" height="214"/>
+                                        <rect key="frame" x="0.0" y="28" width="314" height="214"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YJ6-Nq-sW7" id="aEE-GD-3rs">
-                                            <rect key="frame" x="0.0" y="0.0" width="214" height="214"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="314" height="214"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="t8H-IR-af9">
-                                                    <rect key="frame" x="7" y="7" width="200" height="200"/>
+                                                    <rect key="frame" x="7" y="7" width="300" height="200"/>
                                                     <gestureRecognizers/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="200" id="0bl-9P-dKa"/>
@@ -220,19 +217,19 @@
                                                     </connections>
                                                 </imageView>
                                                 <view hidden="YES" alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eu3-gW-bse">
-                                                    <rect key="frame" x="7" y="7" width="200" height="200"/>
+                                                    <rect key="frame" x="7" y="7" width="300" height="200"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1O9-nD-PNp">
-                                                            <rect key="frame" x="0.0" y="0.0" width="200" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="30"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V4T-Os-G7q">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="154" height="30"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="231" height="30"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                     <color key="textColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ro8-OA-gK6">
-                                                                    <rect key="frame" x="154" y="0.0" width="46" height="30"/>
+                                                                    <rect key="frame" x="231" y="0.0" width="69" height="30"/>
                                                                     <color key="tintColor" red="0.92133218049999999" green="0.0" blue="0.017248915649999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                     <state key="normal" image="clear.fill" catalog="system">
                                                                         <color key="titleColor" red="0.92133218049999999" green="0.0" blue="0.017248915649999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -247,22 +244,22 @@
                                                             </constraints>
                                                         </stackView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Описание" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qbj-Ym-HNk">
-                                                            <rect key="frame" x="0.0" y="34" width="200" height="134"/>
+                                                            <rect key="frame" x="0.0" y="34" width="300" height="134"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <color key="textColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gT0-p1-rA5">
-                                                            <rect key="frame" x="0.0" y="172" width="200" height="28"/>
+                                                            <rect key="frame" x="0.0" y="172" width="300" height="28"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="грн" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1oK-t3-R0G">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="28"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="28"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                     <color key="textColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iwu-aA-rkG">
-                                                                    <rect key="frame" x="100" y="0.0" width="100" height="28"/>
+                                                                    <rect key="frame" x="150" y="0.0" width="150" height="28"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                     <state key="normal" title="В Корзину">
                                                                         <color key="titleColor" red="0.078998994040000006" green="0.2089673212" blue="0.82699963440000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -343,7 +340,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="categorySelected:" destination="OQi-JB-ueU" eventType="touchUpInside" id="t3a-op-4oZ"/>
+                                            <action selector="categorySelection:" destination="OQi-JB-ueU" eventType="touchUpInside" id="t3a-op-4oZ"/>
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LVP-pU-0UJ" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
@@ -368,7 +365,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="categorySelected:" destination="OQi-JB-ueU" eventType="touchUpInside" id="bwZ-nh-xQm"/>
+                                            <action selector="categorySelection:" destination="OQi-JB-ueU" eventType="touchUpInside" id="bwZ-nh-xQm"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DJA-sM-WBK" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
@@ -421,7 +418,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="categorySelected:" destination="OQi-JB-ueU" eventType="touchUpInside" id="dLa-F6-8Li"/>
+                                            <action selector="categorySelection:" destination="OQi-JB-ueU" eventType="touchUpInside" id="dLa-F6-8Li"/>
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TCY-BY-pXn" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
@@ -446,7 +443,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="categorySelected:" destination="OQi-JB-ueU" eventType="touchUpInside" id="g6t-Qj-mlB"/>
+                                            <action selector="categorySelection:" destination="OQi-JB-ueU" eventType="touchUpInside" id="g6t-Qj-mlB"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -481,10 +478,12 @@
                             <constraint firstItem="J9s-TL-xV2" firstAttribute="top" secondItem="bLH-hn-wea" secondAttribute="top" id="3Xa-py-tfU"/>
                             <constraint firstItem="J9s-TL-xV2" firstAttribute="leading" secondItem="bLH-hn-wea" secondAttribute="leading" constant="14" id="9Qz-Vd-oNF"/>
                             <constraint firstItem="J9s-TL-xV2" firstAttribute="trailing" secondItem="bLH-hn-wea" secondAttribute="trailing" constant="-14" id="AfV-0h-x9Q"/>
+                            <constraint firstItem="Q7O-KL-dmB" firstAttribute="leading" secondItem="bLH-hn-wea" secondAttribute="leading" constant="50" id="Imr-od-LkF"/>
                             <constraint firstItem="Q7O-KL-dmB" firstAttribute="top" secondItem="J9s-TL-xV2" secondAttribute="bottom" constant="14" id="Jsd-gX-tlb"/>
                             <constraint firstItem="bLH-hn-wea" firstAttribute="trailing" secondItem="Bu3-yD-0qW" secondAttribute="trailing" constant="14" id="LJ6-VS-bOn"/>
                             <constraint firstItem="bLH-hn-wea" firstAttribute="bottom" secondItem="Bu3-yD-0qW" secondAttribute="bottom" constant="14" id="MxT-bz-VqH"/>
                             <constraint firstItem="Q7O-KL-dmB" firstAttribute="centerX" secondItem="bLH-hn-wea" secondAttribute="centerX" id="Xd6-al-VkN"/>
+                            <constraint firstItem="bLH-hn-wea" firstAttribute="trailing" secondItem="Q7O-KL-dmB" secondAttribute="trailing" constant="50" id="Yob-8s-AhJ"/>
                             <constraint firstItem="Bu3-yD-0qW" firstAttribute="top" secondItem="Q7O-KL-dmB" secondAttribute="bottom" constant="14" id="ZRh-FO-OAh"/>
                             <constraint firstItem="Bu3-yD-0qW" firstAttribute="leading" secondItem="bLH-hn-wea" secondAttribute="leading" constant="14" id="jiN-CB-ph6"/>
                         </constraints>
@@ -1192,7 +1191,7 @@
                                 <rect key="frame" x="14" y="104" width="386" height="362.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="BasketTVCell" rowHeight="99" id="m0l-Mn-c15" customClass="BasketTableViewCell" customModule="Florentini" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="BasketTVCell" rowHeight="99" id="m0l-Mn-c15" customClass="UserBasketTableViewCell" customModule="Florentini" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="386" height="99"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="m0l-Mn-c15" id="fvt-59-kZQ">
@@ -1528,10 +1527,10 @@
             </objects>
             <point key="canvasLocation" x="2031.8840579710147" y="-275.22321428571428"/>
         </scene>
-        <!--Menu View Controller-->
+        <!--User Sliding MenuVC-->
         <scene sceneID="6h2-J8-4nd">
             <objects>
-                <tableViewController storyboardIdentifier="MenuVC" modalPresentationStyle="fullScreen" id="S0h-Bb-ihA" customClass="MenuViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="MenuVC" modalPresentationStyle="fullScreen" id="S0h-Bb-ihA" customClass="UserSlidingMenuVC" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="NBv-lJ-Bfg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1758,10 +1757,10 @@
             </objects>
             <point key="canvasLocation" x="288" y="475"/>
         </scene>
-        <!--Work Menu View Controller-->
+        <!--Worker Sliding MenuVC-->
         <scene sceneID="Wd6-B4-ksU">
             <objects>
-                <tableViewController storyboardIdentifier="WorkMenuVC" modalPresentationStyle="fullScreen" id="Tjg-yo-FXI" customClass="WorkMenuViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="WorkMenuVC" modalPresentationStyle="fullScreen" id="Tjg-yo-FXI" customClass="WorkerSlidingMenuVC" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="ITj-vP-oCL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1986,7 +1985,7 @@
         <!--Item-->
         <scene sceneID="e15-Bd-Pwv">
             <objects>
-                <viewController storyboardIdentifier="MainWorkSpaceVC" id="ptH-jO-Y9i" customClass="MainWorkSpaceViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainWorkSpaceVC" id="ptH-jO-Y9i" customClass="WorkerMainSpaceViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="x6z-sv-MIK">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

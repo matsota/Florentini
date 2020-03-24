@@ -96,7 +96,7 @@ extension UIAlertController {
         alertMessage.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
         alertMessage.addAction(UIAlertAction(title: "Отправить", style: .default, handler: { (action: UIAlertAction) in
             if let content = alertMessage.textFields?.first?.text {
-                NetworkManager.shared.sendMessage(name: name, content: content)
+                NetworkManager.shared.newChatMessage(name: name, content: content)
             }
         }))
         return alertMessage

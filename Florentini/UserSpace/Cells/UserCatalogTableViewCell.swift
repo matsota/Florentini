@@ -9,31 +9,40 @@ import UIKit
 
 class UserCatalogTableViewCell: UITableViewCell {
     
+    //MARK: - Implementation
+    var category: String?
+    //delegate
+    weak var delegate: UserCatalogTableViewCellDelegate?
+    
+    //MARK: View
+    @IBOutlet weak var descriptionView: UIView!
+    
+    //MARK: ImageView
     @IBOutlet weak var productImageView: UIImageView!
+    
+    //MARK: Label
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productPriceLabel: UILabel!
-    @IBOutlet weak private var productDescriptionLabel: UILabel!
-    @IBOutlet weak private var descriptionView: UIView!
-    var category: String?
+    @IBOutlet weak var productDescriptionLabel: UILabel!
+
     
-    
+    //MARK: Override
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
     }
     
+    
+    //MARK: - Спрятать описание продукта
     @IBAction func hideDescriptionTapped(_ sender: UIButton) {
         UIView.animate(withDuration: 0.3) {
             self.descriptionView.isHidden = true
         }
     }
     
+    //MARK: - Добавление в Корзину
     @IBAction func addToBasketTapped(_ sender: UIButton) {
         delegate?.addToCart(self)
     }
@@ -44,14 +53,13 @@ class UserCatalogTableViewCell: UITableViewCell {
         imageGesture.addTarget(self, action: #selector(imageTapped(_ :)))
         productImageView.addGestureRecognizer(imageGesture)
     }
-    
     @objc func imageTapped(_ gestureRecognizer: UITapGestureRecognizer){
         UIView.animate(withDuration: 0.3) {
             self.descriptionView.isHidden = false
         }
     }
     
-    //MARK: - Метод заполнения клетки
+    //MARK: - Заполнение Таблицы
     func fill(name: String, price: Int, description: String, category: String, image: @escaping(UIImageView) -> Void) {
         productNameLabel.text = name
         productPriceLabel.text = "\(price)"
@@ -60,10 +68,5 @@ class UserCatalogTableViewCell: UITableViewCell {
         
         image(productImageView)
     }
-    
-    
-    ///
-    weak var delegate: UserCatalogTableViewCellDelegate?
-    ///
     
 }

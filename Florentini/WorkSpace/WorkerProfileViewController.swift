@@ -17,7 +17,7 @@ class WorkerProfileViewController: UIViewController {
     @IBOutlet weak var reNewPassword: UITextField!
     
     //MARK: - Системные переменные
-    let transition = SlideInTransition()
+    let transition = SlideInTransitionMenu()
     let alert = UIAlertController()
     
     //MARK: - Implementation
@@ -40,7 +40,7 @@ class WorkerProfileViewController: UIViewController {
     }
     //MARK: - Menu Button
     @IBAction func workerMenuTapped(_ sender: UIButton) {
-        guard let workMenuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkMenuVC.rawValue) as? WorkMenuViewController else {return}
+        guard let workMenuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkMenuVC.rawValue) as? WorkerSlidingMenuVC else {return}
         workMenuVC.workMenuTypeTapped = { workMenuType in
             //               NavigationManager.shared.menuOptionPicked(menuType)
             self.menuOptionPicked(workMenuType)
@@ -50,16 +50,25 @@ class WorkerProfileViewController: UIViewController {
         present(workMenuVC, animated: true)
     }
     //menu method
-    func menuOptionPicked(_ menuType: WorkMenuType) {
+    func menuOptionPicked(_ menuType: WorkerSlidingMenuVC.WorkMenuType) {
         switch menuType {
         case .orders:
-            ordersTransition()
+            let ordersVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MainWorkSpaceVC.rawValue) as? WorkerMainSpaceViewController
+            view.window?.rootViewController = ordersVC
+            view.window?.makeKeyAndVisible()
         case .catalog:
-            catalogTransition()
+            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkerCatalogVC.rawValue) as? WorkerCatalogViewController
+            view.window?.rootViewController = catalogVC
+            view.window?.makeKeyAndVisible()
         case .profile:
-            profileTransition()
+            let profileVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkerProfileVC.rawValue) as? WorkerProfileViewController
+            view.window?.rootViewController = profileVC
+            view.window?.makeKeyAndVisible()
         case .faq:
-            faqTransition()
+            print("feedback")
+            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkersFAQVC.rawValue) as? WorkersFAQViewController
+            view.window?.rootViewController = faqVC
+            view.window?.makeKeyAndVisible()
         case .exit:
             print("signOut")
             self.present(self.alert.alertSignOut(success: {
@@ -133,35 +142,8 @@ class WorkerProfileViewController: UIViewController {
         view.window?.rootViewController = workersChatVC
         view.window?.makeKeyAndVisible()
     }
-    //заказы
-    func ordersTransition() {
-        print("orders")
-        let ordersVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MainWorkSpaceVC.rawValue) as? MainWorkSpaceViewController
-        view.window?.rootViewController = ordersVC
-        view.window?.makeKeyAndVisible()
-    }
-    //каталог
-    func catalogTransition() {
-        print("catalog")
-        let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkerCatalogVC.rawValue) as? WorkerCatalogViewController
-        view.window?.rootViewController = catalogVC
-        view.window?.makeKeyAndVisible()
-    }
-    //профиль
-    func profileTransition() {
-        print("profile")
-        let profileVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkerProfileVC.rawValue) as? WorkerProfileViewController
-        view.window?.rootViewController = profileVC
-        view.window?.makeKeyAndVisible()
-    }
-    //часто задаваемые вопросы
-    func faqTransition() {
-        print("feedback")
-        let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkersFAQVC.rawValue) as? WorkersFAQViewController
-        view.window?.rootViewController = faqVC
-        view.window?.makeKeyAndVisible()
-    }
-    //выход
+
+    
     func exitApp() {
         let exitApp = storyboard?.instantiateInitialViewController()
         view.window?.rootViewController = exitApp

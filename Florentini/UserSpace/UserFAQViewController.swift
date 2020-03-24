@@ -1,5 +1,5 @@
 //
-//  CatalogViewController.swift
+//  UserFAQViewController.swift
 //  Florentini
 //
 //  Created by Andrew Matsota on 19.02.2020.
@@ -10,11 +10,13 @@ import UIKit
 
 class UserFAQViewController: UIViewController {
     
-    
     //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        delegate = self as UserFAQViewControllerDelegate
+        
+        prepareForTransitionDelegate = self as PrepareForUserSIMTransitionDelegate
+        transitionByMenuDelegate = self as UserSlideInMenuTransitionDelegate
+        
     }
     
     
@@ -37,24 +39,27 @@ class UserFAQViewController: UIViewController {
     
     //MARK: - Нажатие кнопки Меню
     @IBAction func menuTapped(_ sender: UIButton) {
-        guard let menuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MenuVC.rawValue) as? MenuViewController else {return}
-        menuVC.menuTypeTapped = { menuType in
-            self.delegate?.transitionByMenu(self, menuType)
-        }
-        menuVC.modalPresentationStyle = .overCurrentContext
-        menuVC.transitioningDelegate = self
-        present(menuVC, animated: true)
+        prepareForTransitionDelegate?.showSlideInMethod(sender)
     }
     
     //MARK: - Private
-    weak private var delegate: UserFAQViewControllerDelegate?
-    private let transition = SlideInTransition()
+    
+    //MARK: - Methods
+    
+    
+    
+    //MARK: - Implementation
+    private let slidingMenu = SlideInTransitionMenu()
+    //delegates
+    private weak var prepareForTransitionDelegate: PrepareForUserSIMTransitionDelegate?
+    private weak var transitionByMenuDelegate: UserSlideInMenuTransitionDelegate?
+   
     
     //MARK: Label Outlets
-    @IBOutlet weak private var paymentProcessDescriptionLabel: UILabel!
-    @IBOutlet weak private var paymentOptionsDescriptionStackView: UIStackView!
-    @IBOutlet weak private var deliveryProcessDescriptionStackView: UIStackView!
-    @IBOutlet weak private var feedbackDescriptionLabel: UILabel!
+    @IBOutlet private weak var paymentProcessDescriptionLabel: UILabel!
+    @IBOutlet private weak var paymentOptionsDescriptionStackView: UIStackView!
+    @IBOutlet private weak var deliveryProcessDescriptionStackView: UIStackView!
+    @IBOutlet private weak var feedbackDescriptionLabel: UILabel!
     
     
 }
@@ -68,29 +73,47 @@ class UserFAQViewController: UIViewController {
 
 
 //MARK: - Extensions
-//MARK: extensions by UIVC-bTransitioningDelegate
+//MARK: - Появление SlidingMenu
 extension UserFAQViewController: UIViewControllerTransitioningDelegate {
+    
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.isPresented = true
-        return transition
+        slidingMenu.isPresented = true
+        return slidingMenu
     }
+    
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.isPresented = false
-        return transition
+        slidingMenu.isPresented = false
+        return slidingMenu
     }
+    
 }
 
-//MARK: extention by UserHome-VC-Delegate
-extension UserFAQViewController: UserFAQViewControllerDelegate {
-    //MARK: Метод перехода в другой ViewController
-    func transitionByMenu(_ class: UserFAQViewController, _ menuType: MenuViewController.MenuType) {
+//MARK: - Подготовка к переходу между ViewController'ами
+extension UserFAQViewController: PrepareForUserSIMTransitionDelegate {
+    
+    func showSlideInMethod(_ sender: UIButton) {
+        guard let menuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MenuVC.rawValue) as? UserSlidingMenuVC else {return}
+        menuVC.menuTypeTapped = { menuType in
+            self.transitionByMenuDelegate?.transitionMethod(self, menuType)
+        }
+        menuVC.modalPresentationStyle = .overCurrentContext
+        menuVC.transitioningDelegate = self
+        present(menuVC, animated: true)
+    }
+  
+}
+
+//MARK: - Переход между ViewController'ами
+extension UserFAQViewController: UserSlideInMenuTransitionDelegate {
+    
+    func transitionMethod(_ class: UIViewController, _ menuType: UserSlidingMenuVC.MenuType) {
         switch menuType {
         case .home:
             let homeVC = storyboard?.instantiateInitialViewController()
             view.window?.rootViewController = homeVC
             view.window?.makeKeyAndVisible()
         case .catalog:
-            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.CatalogVC.rawValue) as? CatalogViewController
+            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.CatalogVC.rawValue) as? UserCatalogViewController
             view.window?.rootViewController = catalogVC
             view.window?.makeKeyAndVisible()
         case .feedback:
@@ -106,4 +129,5 @@ extension UserFAQViewController: UserFAQViewControllerDelegate {
             print("website")
         }
     }
+
 }

@@ -38,7 +38,7 @@ class LoginWorkSpaceViewController: UIViewController {
     ///Элементы метода signInTapped
     //MARK: Переход в профиль
     func transitionToMainWorkVC() {
-        let MainWorkSpaceVC = storyboard?.instantiateViewController(identifier: NavigationManager.IDVC.MainWorkSpaceVC.rawValue) as? MainWorkSpaceViewController
+        let MainWorkSpaceVC = storyboard?.instantiateViewController(identifier: NavigationManager.IDVC.MainWorkSpaceVC.rawValue) as? WorkerMainSpaceViewController
         view.window?.rootViewController = MainWorkSpaceVC
         view.window?.makeKeyAndVisible()
     }
