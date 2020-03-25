@@ -26,6 +26,16 @@ class UserCatalogViewController: UIViewController {
         
     }
     
+    //MARK: - Нажатие кнопки Меню
+    @IBAction func menuTapped(_ sender: UIButton) {
+        showUsersSlideInMethod()
+    }
+    
+    //MARK: - Нажатие кнопки Cart
+    @IBAction func cartTapped(_ sender: UIButton) {
+        transitionToUsersCart()
+    }
+    
     //MARK: - Появление вариантров выбора для фильтра
     @IBAction func filterTapped(_ sender: DesignButton) {
         guard let sender = sender.titleLabel!.text else {return}
@@ -36,12 +46,7 @@ class UserCatalogViewController: UIViewController {
     @IBAction func categorySelection(_ sender: DesignButton) {
         selectionMethod(self, sender)
     }
-    
-    //MARK: - Нажатие кнопки Меню
-    @IBAction func menuTapped(_ sender: UIButton) {
-        showUsersSlideInMethod(sender)
-    }
-    
+
     //MARK: - Private
     
     //MARK: - Methods

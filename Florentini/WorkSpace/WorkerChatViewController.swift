@@ -44,7 +44,7 @@ class WorkerChatViewController: UIViewController {
     
     //MARK: - Menu Button
     @IBAction func workerMenuTapped(_ sender: UIButton) {
-        showWorkerSlideInMethod(sender)
+        showWorkerSlideInMethod()
     }
     
     //MARK: - Message button

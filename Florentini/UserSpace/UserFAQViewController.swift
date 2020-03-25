@@ -37,7 +37,7 @@ class UserFAQViewController: UIViewController {
     
     //MARK: - Нажатие кнопки Меню
     @IBAction func menuTapped(_ sender: UIButton) {
-        showUsersSlideInMethod(sender)
+        showUsersSlideInMethod()
     }
     
     //MARK: - Private

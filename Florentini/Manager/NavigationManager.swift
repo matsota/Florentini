@@ -27,8 +27,8 @@ class NavigationManager {
         
         case MenuVC
         
-        case CartVC
-        case CartTVCell
+        case UsersCartVC
+        case UsersCartTVCell
         
         case UserHomeTVCell
         

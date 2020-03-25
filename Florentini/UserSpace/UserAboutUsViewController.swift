@@ -22,7 +22,7 @@ class UserAboutUsViewController: UIViewController {
     
     //MARK: - Нажатие кнопки Меню
     @IBAction func menuTapped(_ sender: UIButton) {
-        showUsersSlideInMethod(sender)
+        showUsersSlideInMethod()
     }
     
     //MARK: - Отправить отзыв / Переход в рабочую зону

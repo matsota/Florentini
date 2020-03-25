@@ -26,13 +26,13 @@ class WorkerCatalogViewController: UIViewController {
     
     //MARK: - Menu button
     @IBAction func workerMenuTapped(_ sender: UIButton) {
-        showWorkerSlideInMethod(sender)
+        showWorkerSlideInMethod()
     }
     
     
     //MARK: - Chat Transition
     @IBAction func chatTapped(_ sender: UIButton) {
-        transitionToWorkerChat(sender)
+        transitionToWorkerChat()
     }
     
     

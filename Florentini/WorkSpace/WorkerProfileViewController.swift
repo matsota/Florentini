@@ -21,12 +21,12 @@ class WorkerProfileViewController: UIViewController {
     
     //MARK: - Menu Button
     @IBAction func workerMenuTapped(_ sender: UIButton) {
-        showWorkerSlideInMethod(sender)
+        showWorkerSlideInMethod()
     }
     
     //MARK: - Open Chat Button
     @IBAction func chatTapped(_ sender: UIButton) {
-        transitionToWorkerChat(sender)
+        transitionToWorkerChat()
     }
     
     //MARK: - Add New Product Button

@@ -26,7 +26,19 @@ class UserCartViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        if preOrder.count == 0 {
+            tableCountZeroView.isHidden = false
+        }else{
+            tableCountZeroView.isHidden = true
+        }
     }
+    
+    //MARK: -
+    @IBAction func menuTapped(_ sender: UIButton) {
+        showUsersSlideInMethod()
+    }
+    
     
     //MARK: - Нажатие кнопки Обратной связи
     @IBAction func feedbackTypeSelectorTapped(_ sender: DesignButton) {
@@ -40,7 +52,19 @@ class UserCartViewController: UIViewController {
     
     //MARK: - Подтвреждение заказа
     @IBAction func confirmTapped(_ sender: UIButton) {
+        
+        let totalPrice = orderBill
+        let name = clientNameTextField.text!
+        let adress = clientAdressTextField.text!
+        let cellphone = clientCellPhoneTextField.text!
+        let feedbackOption = selectedFeedbackType!
+        let mark = clientDescriptionTextField.text!
+        
+        
+        NetworkManager.shared.sendOrder(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, productDictionary: preOrder)
     }
+    
+
     
     
     //MARK: - Private:
@@ -64,13 +88,15 @@ class UserCartViewController: UIViewController {
     
     
     //MARK: - Implementation
+    private let slidingMenu = SlideInTransitionMenu()
+    private var preOrder = [PreOrderEntity]()
     
     private var selectedFeedbackType: String?
     private var orderBill = Int64()
-    private var preOrder = [PreOrderEntity]()
     
     //MARK: Views Outlets
     @IBOutlet private weak var buttonsView: UIView!
+    @IBOutlet weak var tableCountZeroView: UIView!
     
     @IBOutlet private weak var scrollView: UIScrollView!
     //MARK: TableView Outlets
@@ -78,7 +104,7 @@ class UserCartViewController: UIViewController {
     
     //MARK: TextFields Outlets
     @IBOutlet private weak var clientNameTextField: UITextField!
-    @IBOutlet private weak var clientPhoeNumberTextField: UITextField!
+    @IBOutlet private weak var clientCellPhoneTextField: UITextField!
     @IBOutlet private weak var clientAdressTextField: UITextField!
     @IBOutlet private weak var clientDescriptionTextField: UITextField!
     @IBOutlet private weak var orderPriceLabel: UILabel!
@@ -94,7 +120,28 @@ class UserCartViewController: UIViewController {
 }
 
 
-//MARK: - Table View extension
+
+
+
+
+
+
+
+//MARK: - Extention HomeViewControllerr
+//MARK: extention by UIVC-TransitioningDelegate
+extension UserCartViewController: UIViewControllerTransitioningDelegate {
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        slidingMenu.isPresented = true
+        return slidingMenu
+    }
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        slidingMenu.isPresented = false
+        return slidingMenu
+    }
+    
+}
+//MARK: - by Table View
 extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -103,7 +150,7 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // - Implementation
-        let cell = basketTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.CartTVCell.rawValue, for: indexPath) as! UserCartTableViewCell
+        let cell = basketTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UsersCartTVCell.rawValue, for: indexPath) as! UserCartTableViewCell
         cell.delegate = self
         cell.tag = indexPath.row
         let fetch = preOrder[cell.tag]
@@ -113,6 +160,7 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
         let price = fetch.value(forKey: DatabaseManager.ProductCases.productPrice.rawValue) as! Int64
         let sliderValue = fetch.value(forKey: DatabaseManager.ProductCases.productQuantity.rawValue) as! Int64
         let imageData = UserDefaults.standard.object(forKey: name) as! NSData
+        
         
         //maxValue correction of sliders in each cell
         if category == DatabaseManager.ProductCategoriesCases.apiece.rawValue {
@@ -146,7 +194,7 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 
-//MARK: - Custom Protocol extension
+//MARK: -
 
 //MARK: Прокрутка слайдера для выбора количества + Метод (Изменение конечной стоимости продукта в зависимости от выбранного количества)
 extension UserCartViewController: UserCartTableViewCellDelegate {

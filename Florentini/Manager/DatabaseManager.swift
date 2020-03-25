@@ -62,7 +62,30 @@ class DatabaseManager {
     }
     
     //MARK: - Шаблон Про Неподтвержденный Продукт
-    struct PreOrder {
+    struct Order {
+        var totalPrice: Int64
+        var name: String
+        var adress: String
+        var cellphone: String
+        var feedbackOption: String
+        var mark: String
+        var productDescription: [PreOrderEntity]
+        
+        var dictionary: [String:Any]{
+            return [
+                DatabaseManager.UsersInfoCases.totalPrice.rawValue: totalPrice,
+                DatabaseManager.UsersInfoCases.name.rawValue: name,
+                DatabaseManager.UsersInfoCases.adress.rawValue: adress,
+                DatabaseManager.UsersInfoCases.cellphone.rawValue: cellphone,
+                DatabaseManager.UsersInfoCases.feedbackOption.rawValue: feedbackOption,
+                DatabaseManager.UsersInfoCases.mark.rawValue: mark,
+                DatabaseManager.ProductCases.productDescription.rawValue: productDescription
+            ]
+        }
+    }
+    
+    //MARK: - Шаблон Про Продукт (закачка)
+    struct OrderDescription {
         var productName: String
         var productPrice: Int
         var productCategory: String
@@ -75,20 +98,6 @@ class DatabaseManager {
             ]
         }
     }
-    
-    
-    //MARK: - Шаблон Про Неподтвержденный Продукт
-       struct PreOrderCorrection {
-
-           var productPrice: Int
-           
-           var dictionary: [String:Any]{
-               return [
-                   DatabaseManager.ProductCases.productPrice.rawValue: productPrice,
-               ]
-           }
-       }
-    
     
 }
 
@@ -110,7 +119,7 @@ extension DatabaseManager.WorkerInfo: DocumentSerializable {
 }
 
 //MARK: Про чат
-extension DatabaseManager.ChatMessages: DocumentSerializable{
+extension DatabaseManager.ChatMessages: DocumentSerializable {
     init?(dictionary: [String: Any]) {
         guard let name = dictionary[DatabaseManager.MessagesCases.name.rawValue] as? String,
             let content = dictionary[DatabaseManager.MessagesCases.content.rawValue] as? String,
@@ -120,8 +129,8 @@ extension DatabaseManager.ChatMessages: DocumentSerializable{
     }
 }
 
-//MARK: Про Продукт (закачка)
-extension DatabaseManager.ProductInfo: DocumentSerializable{
+//MARK: Про Продукт
+extension DatabaseManager.ProductInfo: DocumentSerializable {
     init?(dictionary: [String: Any]) {
         guard let productName = dictionary[DatabaseManager.ProductCases.productName.rawValue] as? String,
             let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? Int,
@@ -131,21 +140,25 @@ extension DatabaseManager.ProductInfo: DocumentSerializable{
     }
 }
 
-//MARK: Про Неподтвержденный Продукт (закачка)
-extension DatabaseManager.PreOrder: DocumentSerializable{
+//MARK: Про Заказ
+extension DatabaseManager.Order: DocumentSerializable {
+    init?(dictionary: [String: Any]) {
+        guard let totalPrice = dictionary[DatabaseManager.UsersInfoCases.totalPrice.rawValue] as? Int64,
+            let userName = dictionary[DatabaseManager.UsersInfoCases.name.rawValue] as? String,
+            let userAdress = dictionary[DatabaseManager.UsersInfoCases.adress.rawValue] as? String,
+            let userCellphone = dictionary[DatabaseManager.UsersInfoCases.cellphone.rawValue] as? String,
+            let feedbackOption = dictionary[DatabaseManager.UsersInfoCases.feedbackOption.rawValue] as? String,
+            let userMark = dictionary[DatabaseManager.UsersInfoCases.mark.rawValue] as? String,
+            let productDescription = dictionary[DatabaseManager.ProductCases.productDescription.rawValue] as? [PreOrderEntity] else {return nil}
+        self.init(totalPrice: totalPrice, name: userName, adress: userAdress, cellphone: userCellphone, feedbackOption: feedbackOption, mark: userMark, productDescription: productDescription)
+    }
+}
+extension DatabaseManager.OrderDescription: DocumentSerializable {
     init?(dictionary: [String: Any]) {
         guard let productName = dictionary[DatabaseManager.ProductCases.productName.rawValue] as? String,
             let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? Int,
             let productCategory = dictionary[DatabaseManager.ProductCases.productCategory.rawValue] as? String else {return nil}
         self.init(productName: productName, productPrice: productPrice, productCategory: productCategory)
-    }
-}
-
-//MARK: Про Неподтвержденный Продукт (коррекция)
-extension DatabaseManager.PreOrderCorrection: DocumentSerializable{
-    init?(dictionary: [String: Any]) {
-        guard let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? Int else {return nil}
-        self.init(productPrice: productPrice)
     }
 }
 
@@ -159,6 +172,17 @@ extension DatabaseManager {
         case `operator`
         case delivery
     }
+    
+    //MARK: Про пользоватей
+    enum UsersInfoCases: String, CaseIterable {
+        case totalPrice
+        case name
+        case adress
+        case cellphone
+        case feedbackOption
+        case mark
+    }
+    
     //MARK: Про Сообщения
     enum MessagesCases: String, CaseIterable {
         case name
@@ -180,8 +204,7 @@ extension DatabaseManager {
         case productDescription
         case productImageURL
         case imageCollection
-        case preOrder
-        case preOrderCorrection
+        case orders
         case cart
     }
     
@@ -190,18 +213,18 @@ extension DatabaseManager {
         case gift = "Подарки"
         case bouquet = "Букеты"
         case stock = "Акции"
-//        case stockApice = "Акция Поштучно"
-//        case stockBouquet = "Акция Букет"
+        //        case stockApice = "Акция Поштучно"
+        //        case stockBouquet = "Акция Букет"
     }
     
     enum NonCategory: String, CaseIterable {
-            case none = "Без Категории"
-        }
+        case none = "Без Категории"
+    }
     enum MaxQuantityByCategoriesCases: Int {
         case towHundred = 200
-//        case hundredAndHalf = 150
+        //        case hundredAndHalf = 150
         case hundred = 100
-//        case halfHundred = 50
+        //        case halfHundred = 50
         case five = 5
         case three = 3
     }

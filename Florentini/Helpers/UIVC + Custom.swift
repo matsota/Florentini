@@ -36,7 +36,7 @@ extension UIViewController {
 extension UIViewController {
     
     //MARK: Появление Меню перехода
-    func showUsersSlideInMethod(_ sender: UIButton) {
+    func showUsersSlideInMethod() {
         guard let menuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MenuVC.rawValue) as? UserSlidingMenuVC else {return}
         menuVC.menuTypeTapped = { menuType in
             self.userTransitionBySlidingVC(self, menuType)
@@ -52,23 +52,23 @@ extension UIViewController {
         case .home:
             let homeVC = storyboard?.instantiateInitialViewController()
             view.window?.rootViewController = homeVC
-            view.window?.makeKeyAndVisible()
         case .catalog:
             let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.CatalogVC.rawValue) as? UserCatalogViewController
             view.window?.rootViewController = catalogVC
-            view.window?.makeKeyAndVisible()
         case .feedback:
             let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? UserAboutUsViewController
             view.window?.rootViewController = feedbackVC
-            view.window?.makeKeyAndVisible()
         case .faq:
             let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FAQVC.rawValue) as? UserFAQViewController
             view.window?.rootViewController = faqVC
-            view.window?.makeKeyAndVisible()
         case .website:
             self.dismiss(animated: true, completion: nil)
-            print("website")
         }
+    }
+    func transitionToUsersCart() {
+        let usersCartVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.UsersCartVC.rawValue) as? UserCartViewController
+        view.window?.rootViewController = usersCartVC
+        view.window?.makeKeyAndVisible()
     }
     
 }
@@ -82,7 +82,7 @@ extension UIViewController {
 extension UIViewController {
     
     //MARK: Появление Меню перехода
-    func showWorkerSlideInMethod(_ sender: UIButton) {
+    func showWorkerSlideInMethod() {
         guard let menuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkMenuVC.rawValue) as? WorkerSlidingMenuVC else {return}
         menuVC.workMenuTypeTapped = { workMenuType in
             self.workerTransitionBySlidingVC(self, workMenuType)
@@ -120,7 +120,7 @@ extension UIViewController {
     }
     
     //MARK: Переход в Чат
-    func transitionToWorkerChat(_ sender: UIButton) {
+    func transitionToWorkerChat() {
         let workersChatVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkersChatVC.rawValue) as? WorkerChatViewController
         view.window?.rootViewController = workersChatVC
         view.window?.makeKeyAndVisible()

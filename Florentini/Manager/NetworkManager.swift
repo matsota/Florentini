@@ -150,6 +150,27 @@ class NetworkManager {
         }
     }
     
+    func sendOrder(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, productDictionary: [PreOrderEntity]) {
+        let newOrder = DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, productDescription: productDictionary)
+
+        db.collection(DatabaseManager.ProductCases.orders.rawValue).addDocument(data: newOrder.dictionary) {
+            error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+            }else{
+                print("Order Completed")
+            }
+        }
+//
+//
+//        Миколы Бажана 26/1 044 465 72 64
+//
+//
+//        Арава
+//
+//
+    }
+    
     //MARK: - О Сотрудниках:
     //MARK: - Workers Dataload
     func workersInfoLoad (success: @escaping([DatabaseManager.WorkerInfo]) -> Void, failure: @escaping(Error) -> Void) {

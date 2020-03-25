@@ -20,8 +20,14 @@ class UserHomeViewController: UIViewController {
     
     //MARK: - Нажатие кнопки Меню
     @IBAction func menuTapped(_ sender: UIButton) {
-        showUsersSlideInMethod(sender)
+        showUsersSlideInMethod()
     }
+    
+    //MARK: - Нажатие кнопки Cart
+    @IBAction func cartTapped(_ sender: UIButton) {
+        transitionToUsersCart()
+    }
+    
     
     //MARK: - Private
     
@@ -29,7 +35,6 @@ class UserHomeViewController: UIViewController {
     
     
     //MARK: - Implementation
-    
     private let slidingMenu = SlideInTransitionMenu()
     
     

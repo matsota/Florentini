@@ -22,12 +22,12 @@ class WorkerFAQViewController: UIViewController {
     
     //MARK: - Transition Menu tapped
     @IBAction func workerMenuTapped(_ sender: UIButton) {
-        showWorkerSlideInMethod(sender)
+        showWorkerSlideInMethod()
     }
     
     //MARK: - Chat Transition tapped
     @IBAction func chatTapped(_ sender: UIButton) {
-        transitionToWorkerChat(sender)
+        transitionToWorkerChat()
     }
 
     

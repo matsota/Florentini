@@ -219,9 +219,9 @@
 				8F67FAE4240ADE4E006EED49 /* Cells */,
 				8FE3F69B24035BED003001CA /* UserHomeViewController.swift */,
 				8FE3F69624035BE4003001CA /* UserCatalogViewController.swift */,
+				8F0EEDF824129A3500948175 /* UserCartViewController.swift */,
 				8FE3F69524035BE4003001CA /* UserAboutUsViewController.swift */,
 				8FE3F69424035BE3003001CA /* UserFAQViewController.swift */,
-				8F0EEDF824129A3500948175 /* UserCartViewController.swift */,
 			);
 			path = UserSpace;
 			sourceTree = "<group>";
