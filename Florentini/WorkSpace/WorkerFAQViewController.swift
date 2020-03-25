@@ -1,16 +1,20 @@
 //
-//  WorkerMainSpaceViewController.swift
+//  WorkersFAQViewController.swift
 //  Florentini
 //
-//  Created by Andrew Matsota on 20.02.2020.
+//  Created by Andrew Matsota on 21.02.2020.
 //  Copyright © 2020 Andrew Matsota. All rights reserved.
 //
 
 import UIKit
 
-class WorkerMainSpaceViewController: UIViewController {
-
-    //MARK: - Override
+class WorkerFAQViewController: UIViewController {
+    
+    //MARK: Системные переменные
+    private let slidingMenu = SlideInTransitionMenu()
+    let alert = UIAlertController()
+    
+    //MARK: Overrides
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,16 +29,13 @@ class WorkerMainSpaceViewController: UIViewController {
     @IBAction func chatTapped(_ sender: UIButton) {
         transitionToWorkerChat(sender)
     }
+
     
     //MARK: - Private:
     
     //MARK: - Methods
     
-    
     //MARK: - Implementation
-    private let slidingMenu = SlideInTransitionMenu()
-    private let alert = UIAlertController()
-    
 }
 
 
@@ -45,15 +46,16 @@ class WorkerMainSpaceViewController: UIViewController {
 
 
 
-//MARK: - Extension:
+//MARK: - Extension
 
-//MARK: - UIVC-TransitioningDelegate
-extension WorkerMainSpaceViewController: UIViewControllerTransitioningDelegate {
+//MARK: - by UIVC-TransitioningDelegate
+extension WorkerFAQViewController: UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         slidingMenu.isPresented = true
         return slidingMenu
     }
+    
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         slidingMenu.isPresented = false
         return slidingMenu
@@ -62,4 +64,5 @@ extension WorkerMainSpaceViewController: UIViewControllerTransitioningDelegate {
 }
 
 //MARK: -
+
 

@@ -7,6 +7,14 @@
 
 import UIKit
 
+//MARK: - Protocol-User-Catalog-TableViewCell
+protocol UserCatalogTableViewCellDelegate: class {
+    
+    func addToCart(_ cell: UserCatalogTableViewCell)
+    
+}
+
+//MARK: - Core Class
 class UserCatalogTableViewCell: UITableViewCell {
     
     //MARK: - Implementation
@@ -43,7 +51,7 @@ class UserCatalogTableViewCell: UITableViewCell {
     }
     
     //MARK: - Добавление в Корзину
-    @IBAction func addToBasketTapped(_ sender: UIButton) {
+    @IBAction func addToBasketTapped(_ sender: DesignButton) {
         delegate?.addToCart(self)
     }
     

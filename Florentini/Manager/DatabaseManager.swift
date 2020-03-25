@@ -155,6 +155,9 @@ extension DatabaseManager {
     enum WorkerInfoCases: String, CaseIterable {
         case name
         case position
+        case admin
+        case `operator`
+        case delivery
     }
     //MARK: Про Сообщения
     enum MessagesCases: String, CaseIterable {

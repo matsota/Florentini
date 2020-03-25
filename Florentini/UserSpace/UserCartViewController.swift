@@ -11,15 +11,12 @@ import FirebaseUI
 import CoreData
 
 
-class UserBasketViewController: UIViewController {
+class UserCartViewController: UIViewController {
 
     //MARK: - Overrides
     //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        selectingFeedbackDelegate = self as SelectionByButtonCollectionDelegate
-        prepareForFeedbackSelectionDelegate = self as PrepareForSelectionMethodDelegate
         
         CoreDataManager.shared.fetchPreOrder { (preOrderEntity) -> (Void) in
             self.preOrder = preOrderEntity
@@ -34,11 +31,11 @@ class UserBasketViewController: UIViewController {
     //MARK: - Нажатие кнопки Обратной связи
     @IBAction func feedbackTypeSelectorTapped(_ sender: DesignButton) {
         guard let sender = sender.titleLabel!.text else {return}
-        prepareForFeedbackSelectionDelegate?.showOptionsMethod(option: sender)
+        showOptionsMethod(option: sender)
     }
 
     @IBAction func feedbackTypeTapped(_ sender: DesignButton) {
-        selectingFeedbackDelegate?.selectionMethod(self, sender)
+        selectionMethod(self, sender)
     }
     
     //MARK: - Подтвреждение заказа
@@ -71,9 +68,6 @@ class UserBasketViewController: UIViewController {
     private var selectedFeedbackType: String?
     private var orderBill = Int64()
     private var preOrder = [PreOrderEntity]()
-    //delegates
-    private weak var selectingFeedbackDelegate: SelectionByButtonCollectionDelegate?
-    private weak var prepareForFeedbackSelectionDelegate: PrepareForSelectionMethodDelegate?
     
     //MARK: Views Outlets
     @IBOutlet private weak var buttonsView: UIView!
@@ -101,7 +95,7 @@ class UserBasketViewController: UIViewController {
 
 
 //MARK: - Table View extension
-extension UserBasketViewController: UITableViewDataSource, UITableViewDelegate {
+extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return preOrder.count
@@ -109,7 +103,7 @@ extension UserBasketViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // - Implementation
-        let cell = basketTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.BasketTVCell.rawValue, for: indexPath) as! UserBasketTableViewCell
+        let cell = basketTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.CartTVCell.rawValue, for: indexPath) as! UserCartTableViewCell
         cell.delegate = self
         cell.tag = indexPath.row
         let fetch = preOrder[cell.tag]
@@ -155,9 +149,9 @@ extension UserBasketViewController: UITableViewDataSource, UITableViewDelegate {
 //MARK: - Custom Protocol extension
 
 //MARK: Прокрутка слайдера для выбора количества + Метод (Изменение конечной стоимости продукта в зависимости от выбранного количества)
-extension UserBasketViewController: UserBasketTableViewCellDelegate {
+extension UserCartViewController: UserCartTableViewCellDelegate {
     
-    func sliderValue(_ cell: UserBasketTableViewCell) {
+    func sliderValue(_ cell: UserCartTableViewCell) {
         guard let price = cell.productPrice else {return}
         guard let name = cell.productName else {return}
         guard let fetch = try! PersistenceService.context.fetch(PreOrderEntity.fetchRequest()) as? [PreOrderEntity] else {return}
@@ -176,24 +170,24 @@ extension UserBasketViewController: UserBasketTableViewCellDelegate {
 }
 
 //MARK: Появление вариантов обратной связи
-extension UserBasketViewController: SelectionByButtonCollectionDelegate {
+private extension UserCartViewController {
     
     func selectionMethod(_ class: UIViewController, _ sender: UIButton) {
         guard let title = sender.currentTitle, let feedbackType = DatabaseManager.FeedbackTypesCases(rawValue: title) else {return}
         switch feedbackType {
         case .cellphone:
-            prepareForFeedbackSelectionDelegate?.showOptionsMethod(option: DatabaseManager.FeedbackTypesCases.cellphone.rawValue)
+            showOptionsMethod(option: DatabaseManager.FeedbackTypesCases.cellphone.rawValue)
         case .viber:
-            prepareForFeedbackSelectionDelegate?.showOptionsMethod(option: DatabaseManager.FeedbackTypesCases.viber.rawValue)
+            showOptionsMethod(option: DatabaseManager.FeedbackTypesCases.viber.rawValue)
         case .telegram:
-            prepareForFeedbackSelectionDelegate?.showOptionsMethod(option: DatabaseManager.FeedbackTypesCases.telegram.rawValue)
+            showOptionsMethod(option: DatabaseManager.FeedbackTypesCases.telegram.rawValue)
         }
     }
     
 }
 
 //MARK: Выбор способа обратной связи
-extension UserBasketViewController: PrepareForSelectionMethodDelegate {
+private extension UserCartViewController {
     
     func showOptionsMethod(option: String) {
         selectedFeedbackType = option

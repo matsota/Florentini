@@ -7,9 +7,7 @@
 //
 
 import Foundation
-import UIKit
-
-class NavigationManager: UINavigationController {
+class NavigationManager {
     
     //MARK: - Системные переменные
     static let shared = NavigationManager()
@@ -28,8 +26,11 @@ class NavigationManager: UINavigationController {
         case UserCatalogTVCell
         
         case MenuVC
-        case BasketVC
-        case BasketTVCell
+        
+        case CartVC
+        case CartTVCell
+        
+        case UserHomeTVCell
         
         //for workers
         case LoginWorkSpaceVC
@@ -39,73 +40,11 @@ class NavigationManager: UINavigationController {
         case WorkersFAQVC
         case WorkersChatVC
         
-
         case WorkMenuVC
         case WorkerMessagesTVCell
         case WorkerCatalogTVCell
     }
-    
-    
-    //    func workerChatTransition() {
-    //        let workersChatVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkersChatVC.rawValue) as? WorkersChatViewController
-    //        view.window?.rootViewController = workersChatVC
-    //        view.window?.makeKeyAndVisible()
-    //    }
-    //
-    //    func workerCatalogTransition() {
-    //        let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkerCatalogVC.rawValue) as? WorkerCatalogViewController
-    //        view.window?.rootViewController = catalogVC
-    //        view.window?.makeKeyAndVisible()
-    //    }
-    //
-    //
-    
 
-   
 }
-
-extension UINavigationController {
-    func menuOptionPicked(_ menuType: UserSlidingMenuVC.MenuType) {
-        switch menuType {
-        case .home:
-            print("website")
-            let homeVC = storyboard?.instantiateInitialViewController()
-            view.window?.rootViewController = homeVC
-            view.window?.makeKeyAndVisible()
-        case .catalog:
-            print("catalog")
-            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.CatalogVC.rawValue) as? UserCatalogViewController
-            view.window?.rootViewController = catalogVC
-            view.window?.makeKeyAndVisible()
-        case .feedback:
-            print("feedback")
-            let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? UserAboutUsViewController
-            view.window?.rootViewController = feedbackVC
-            view.window?.makeKeyAndVisible()
-        case .faq:
-            print("feedback")
-            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FAQVC.rawValue) as? UserFAQViewController
-            view.window?.rootViewController = faqVC
-            view.window?.makeKeyAndVisible()
-        case .website:
-            print("website")
-        }
-    }
-    
-}
-
-
-//
-//
-//extension NavigationManager: UIViewControllerTransitioningDelegate {
-//    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//        transition.isPresented = true
-//        return transition
-//    }
-//    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//        transition.isPresented = false
-//        return transition
-//    }
-//}
 
 

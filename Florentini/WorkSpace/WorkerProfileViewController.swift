@@ -11,77 +11,22 @@ import FirebaseAuth
 
 class WorkerProfileViewController: UIViewController {
     
-    
-    //MARK: - TextField Outlet
-    @IBOutlet weak var newPassword: UITextField!
-    @IBOutlet weak var reNewPassword: UITextField!
-    
-    //MARK: - Системные переменные
-    let transition = SlideInTransitionMenu()
-    let alert = UIAlertController()
-    
-    //MARK: - Implementation
-    var currentWorkerInfo = [DatabaseManager.WorkerInfo]()
-    
     //MARK: - ViewDidLoad Method
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        workerInfoLoad()
+        fetchWorkerData()
         
-        //MARK: - New Product button appearance if admin
-        if AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid {
-            newProductButton.isHidden = false
-        }else{
-            newProductButton.isHidden = true
-        }
-        
-        
-    }
-    //MARK: - Menu Button
-    @IBAction func workerMenuTapped(_ sender: UIButton) {
-        guard let workMenuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkMenuVC.rawValue) as? WorkerSlidingMenuVC else {return}
-        workMenuVC.workMenuTypeTapped = { workMenuType in
-            //               NavigationManager.shared.menuOptionPicked(menuType)
-            self.menuOptionPicked(workMenuType)
-        }
-        workMenuVC.modalPresentationStyle = .overCurrentContext
-        workMenuVC.transitioningDelegate = self
-        present(workMenuVC, animated: true)
-    }
-    //menu method
-    func menuOptionPicked(_ menuType: WorkerSlidingMenuVC.WorkMenuType) {
-        switch menuType {
-        case .orders:
-            let ordersVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MainWorkSpaceVC.rawValue) as? WorkerMainSpaceViewController
-            view.window?.rootViewController = ordersVC
-            view.window?.makeKeyAndVisible()
-        case .catalog:
-            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkerCatalogVC.rawValue) as? WorkerCatalogViewController
-            view.window?.rootViewController = catalogVC
-            view.window?.makeKeyAndVisible()
-        case .profile:
-            let profileVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkerProfileVC.rawValue) as? WorkerProfileViewController
-            view.window?.rootViewController = profileVC
-            view.window?.makeKeyAndVisible()
-        case .faq:
-            print("feedback")
-            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkersFAQVC.rawValue) as? WorkersFAQViewController
-            view.window?.rootViewController = faqVC
-            view.window?.makeKeyAndVisible()
-        case .exit:
-            print("signOut")
-            self.present(self.alert.alertSignOut(success: {
-                self.dismiss(animated: true) { self.exitApp()
-                }
-            }), animated: true)
-        }
     }
     
+    //MARK: - Menu Button
+    @IBAction func workerMenuTapped(_ sender: UIButton) {
+        showWorkerSlideInMethod(sender)
+    }
     
     //MARK: - Open Chat Button
     @IBAction func chatTapped(_ sender: UIButton) {
-        chatTransition()
+        transitionToWorkerChat(sender)
     }
     
     //MARK: - Add New Product Button
@@ -99,59 +44,25 @@ class WorkerProfileViewController: UIViewController {
             self.present(self.alert.alertClassicInfoOK(title: "Внимание", message: "Для смены пароля необходимо заполнить все поля"), animated: true)
         }else{
             self.present(self.alert.alertPassChange(success: {
-                self.dismiss(animated: true) { self.ordersTransition()
+                self.dismiss(animated: true) { let ordersVC = self.storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MainWorkSpaceVC.rawValue) as? WorkerMainSpaceViewController
+                    self.view.window?.rootViewController = ordersVC
+                    self.view.window?.makeKeyAndVisible()
                 }
             }, password: newPass), animated: true)
         }
         
     }
     
+    //MARK: - Private:
     
+    //MARK: - Methods
     
-    //Tyt fail po date. Prihoditsa perezahodit' v app 4tobu slit' starue name&position
-    //MARK: - Information About Co-workers Method
-    func workerInfoLoad() {
-        guard let email = Auth.auth().currentUser?.email else {return}
-        emailLabel.text = email
-        emailLabel.textColor = .black
-        
-        NetworkManager.shared.workersInfoLoad(success: { workerInfo in
-            self.currentWorkerInfo = workerInfo
-//            self.currentWorkerInfo.forEach { workerInfo in
-//                self.nameLabel.text = workerInfo.name
-//                self.positionLabel.text = workerInfo.position
-//            }
-            
-        }) { error in
-            self.present(self.alert.alertSomeThingGoesWrong(), animated: true)
-        }
-//        //Naznachit 4erez eto
-//        self.currentWorkerInfo.map { (info) -> T in
-//             self.nameLabel.text = info.name
-//            self.positionLabel.text = info.position
-//        }
-        
-    }
+    //MARK: - Implementation
+    private let slidingMenu = SlideInTransitionMenu()
+    private let alert = UIAlertController()
     
+    private var currentWorkerInfo = [DatabaseManager.WorkerInfo]()
     
-    //MARK: - Transition Methods
-    //чат
-    func chatTransition() {
-        print("chat")
-        let workersChatVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkersChatVC.rawValue) as? WorkersChatViewController
-        view.window?.rootViewController = workersChatVC
-        view.window?.makeKeyAndVisible()
-    }
-
-    
-    func exitApp() {
-        let exitApp = storyboard?.instantiateInitialViewController()
-        view.window?.rootViewController = exitApp
-        view.window?.makeKeyAndVisible()
-    }
-    
-    
-    //MARK: - Private Outlets
     //MARK: Button Outlet
     @IBOutlet weak private var newProductButton: UIButton!
     
@@ -160,18 +71,59 @@ class WorkerProfileViewController: UIViewController {
     @IBOutlet weak private var emailLabel: UILabel!
     @IBOutlet weak private var nameLabel: UILabel!
     
+    //MARK: - TextField Outlet
+    @IBOutlet private weak var newPassword: UITextField!
+    @IBOutlet private weak var reNewPassword: UITextField!
+    
+    
 }
 
 
-//MARK: - Out of Class
-//MARK: - extentions
+
+
+
+
+
+
+
+//MARK: - Extention:
+
+//MARK: - UIVC-TransitioningDelegate
 extension WorkerProfileViewController: UIViewControllerTransitioningDelegate {
+    
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.isPresented = true
-        return transition
+        slidingMenu.isPresented = true
+        return slidingMenu
     }
+    
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.isPresented = false
-        return transition
+        slidingMenu.isPresented = false
+        return slidingMenu
     }
+    
+}
+
+//MARK: -
+
+//MARK: - Заполнение UI относительно CurrentUser
+private extension WorkerProfileViewController {
+    
+    func fetchWorkerData() {
+        NetworkManager.shared.workersInfoLoad(success: { workerInfo in
+            self.currentWorkerInfo = workerInfo
+//            print(self.currentWorkerInfo)
+            self.currentWorkerInfo.forEach { (workerInfo) in
+                self.nameLabel.text = workerInfo.name
+                self.positionLabel.text = workerInfo.position
+                
+                if workerInfo.position == DatabaseManager.WorkerInfoCases.admin.rawValue && AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid {
+                    self.newProductButton.isHidden = false
+                }
+            }
+            self.emailLabel.text = Auth.auth().currentUser?.email
+        }) { error in
+            self.present(self.alert.alertSomeThingGoesWrong(), animated: true)
+        }
+    }
+    
 }

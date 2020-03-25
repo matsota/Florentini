@@ -11,36 +11,59 @@ import UIKit
 class LoginWorkSpaceViewController: UIViewController {
     
     
-    
-    
-    @IBOutlet weak var loginTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    
-    let alert = UIAlertController()
-    
+    //MARK: - Override
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
     
+    //MARK: - Вход в рабочую зону
     @IBAction func signInTapped(_ sender: UIButton) {
         let email = loginTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         
         AuthenticationManager.shared.signIn(email: email, password: password, success: {
-            self.transitionToMainWorkVC()
+            self.signIn()
         }) { error in
             self.present(self.alert.alertClassicInfoOK(title: "Attention", message: error.localizedDescription), animated: true)
         }
         
     }
     
-    ///Элементы метода signInTapped
-    //MARK: Переход в профиль
-    func transitionToMainWorkVC() {
-        let MainWorkSpaceVC = storyboard?.instantiateViewController(identifier: NavigationManager.IDVC.MainWorkSpaceVC.rawValue) as? WorkerMainSpaceViewController
-        view.window?.rootViewController = MainWorkSpaceVC
+    //MARK: - Private:
+    
+    //MARK: - Methods
+    
+    
+    //MARK: - Implementation
+    private let alert = UIAlertController()
+    
+    @IBOutlet private weak var loginTextField: UITextField!
+    @IBOutlet private weak var passwordTextField: UITextField!
+       
+}
+
+
+
+
+
+
+
+
+
+//MARK: - Extension
+
+//MARK: -
+
+
+//MARK: -
+
+//MARK: - Аунтефикация
+
+private extension LoginWorkSpaceViewController {
+    func signIn() {
+        let transition = storyboard?.instantiateViewController(identifier: NavigationManager.IDVC.MainWorkSpaceVC.rawValue) as? WorkerMainSpaceViewController
+        view.window?.rootViewController = transition
         view.window?.makeKeyAndVisible()
     }
-    
 }

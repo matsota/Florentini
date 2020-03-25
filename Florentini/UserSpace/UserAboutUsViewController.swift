@@ -14,35 +14,20 @@ class UserAboutUsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        prepareForTransitionDelegate = self as PrepareForUserSIMTransitionDelegate
-        transitionByMenuDelegate = self as UserSlideInMenuTransitionDelegate
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        hideKeyboardWhenTappedAround()
     }
     
     //MARK: - Нажатие кнопки Меню
     @IBAction func menuTapped(_ sender: UIButton) {
-        prepareForTransitionDelegate?.showSlideInMethod(sender)
+        showUsersSlideInMethod(sender)
     }
     
     //MARK: - Отправить отзыв / Переход в рабочую зону
     @IBAction func sendReviewTapped(_ sender: UIButton) {
-        var name = nameTextField.text
-        let review = reviewTextField.text
-        
-        if name == secretCode && review == secretCode2 {
-            //exit anonymous user and enter for worker
-            AuthenticationManager.shared.signOut()
-            let loginWorkSpaceVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.LoginWorkSpaceVC.rawValue) as? LoginWorkSpaceViewController
-            view.window?.rootViewController = loginWorkSpaceVC
-            view.window?.makeKeyAndVisible()
-        }else if review == "" {
-            if name == "" {name = "anonymous"}
-            self.present(self.alert.alertClassicInfoOK(title: "Эттеншн!", message: "Вы не ввели информацию, которой бы Вы хотели поделиться с нами"), animated: true)
-        }else{
-            NetworkManager.shared.sendReview(name: name!, content: review!)
-        }
+        reviewSent()
     }
     
     
@@ -68,6 +53,7 @@ class UserAboutUsViewController: UIViewController {
             self.view.layoutIfNeeded()
         }
     }
+    //
     
     
     //MARK: - Implementation
@@ -76,9 +62,6 @@ class UserAboutUsViewController: UIViewController {
     private let secretCode = "/WorkSpace"
     private let secretCode2 = "Go/"
     private let alert = UIAlertController()
-    //delegates
-    private weak var prepareForTransitionDelegate: PrepareForUserSIMTransitionDelegate?
-    private weak var transitionByMenuDelegate: UserSlideInMenuTransitionDelegate?
     
     //MARK: ScrollView
     @IBOutlet private weak var scrollView: UIScrollView!
@@ -113,46 +96,20 @@ extension UserAboutUsViewController: UIViewControllerTransitioningDelegate {
     
 }
 
-//MARK: - Подготовка к переходу между ViewController'ами
-extension UserAboutUsViewController: PrepareForUserSIMTransitionDelegate {
-    
-    func showSlideInMethod(_ sender: UIButton) {
-        guard let menuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MenuVC.rawValue) as? UserSlidingMenuVC else {return}
-        menuVC.menuTypeTapped = { menuType in
-            self.transitionByMenuDelegate?.transitionMethod(self, menuType)
-        }
-        menuVC.modalPresentationStyle = .overCurrentContext
-        menuVC.transitioningDelegate = self
-        present(menuVC, animated: true)
-    }
-  
-}
-
-//MARK: - Переход между ViewController'ами
-extension UserAboutUsViewController: UserSlideInMenuTransitionDelegate {
-    
-    func transitionMethod(_ class: UIViewController, _ menuType: UserSlidingMenuVC.MenuType) {
-        switch menuType {
-        case .home:
-            let homeVC = storyboard?.instantiateInitialViewController()
-            view.window?.rootViewController = homeVC
+private extension UserAboutUsViewController {
+    func reviewSent() {
+        var name = nameTextField.text
+        let review = reviewTextField.text
+        
+        if name == secretCode && review == secretCode2 {
+            let loginWorkSpaceVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.LoginWorkSpaceVC.rawValue) as? LoginWorkSpaceViewController
+            view.window?.rootViewController = loginWorkSpaceVC
             view.window?.makeKeyAndVisible()
-        case .catalog:
-            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.CatalogVC.rawValue) as? UserCatalogViewController
-            view.window?.rootViewController = catalogVC
-            view.window?.makeKeyAndVisible()
-        case .feedback:
-            let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? UserAboutUsViewController
-            view.window?.rootViewController = feedbackVC
-            view.window?.makeKeyAndVisible()
-        case .faq:
-            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FAQVC.rawValue) as? UserFAQViewController
-            view.window?.rootViewController = faqVC
-            view.window?.makeKeyAndVisible()
-        case .website:
-            self.dismiss(animated: true, completion: nil)
-            print("website")
+        }else if review == "" {
+            if name == "" {name = "anonymous"}
+            self.present(self.alert.alertClassicInfoOK(title: "Эттеншн!", message: "Вы не ввели информацию, которой бы Вы хотели поделиться с нами"), animated: true)
+        }else{
+            NetworkManager.shared.sendReview(name: name!, content: review!)
         }
     }
-    
 }

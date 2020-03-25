@@ -14,8 +14,6 @@ class UserFAQViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        prepareForTransitionDelegate = self as PrepareForUserSIMTransitionDelegate
-        transitionByMenuDelegate = self as UserSlideInMenuTransitionDelegate
         
     }
     
@@ -39,7 +37,7 @@ class UserFAQViewController: UIViewController {
     
     //MARK: - Нажатие кнопки Меню
     @IBAction func menuTapped(_ sender: UIButton) {
-        prepareForTransitionDelegate?.showSlideInMethod(sender)
+        showUsersSlideInMethod(sender)
     }
     
     //MARK: - Private
@@ -50,10 +48,6 @@ class UserFAQViewController: UIViewController {
     
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
-    //delegates
-    private weak var prepareForTransitionDelegate: PrepareForUserSIMTransitionDelegate?
-    private weak var transitionByMenuDelegate: UserSlideInMenuTransitionDelegate?
-   
     
     //MARK: Label Outlets
     @IBOutlet private weak var paymentProcessDescriptionLabel: UILabel!
@@ -88,46 +82,3 @@ extension UserFAQViewController: UIViewControllerTransitioningDelegate {
     
 }
 
-//MARK: - Подготовка к переходу между ViewController'ами
-extension UserFAQViewController: PrepareForUserSIMTransitionDelegate {
-    
-    func showSlideInMethod(_ sender: UIButton) {
-        guard let menuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MenuVC.rawValue) as? UserSlidingMenuVC else {return}
-        menuVC.menuTypeTapped = { menuType in
-            self.transitionByMenuDelegate?.transitionMethod(self, menuType)
-        }
-        menuVC.modalPresentationStyle = .overCurrentContext
-        menuVC.transitioningDelegate = self
-        present(menuVC, animated: true)
-    }
-  
-}
-
-//MARK: - Переход между ViewController'ами
-extension UserFAQViewController: UserSlideInMenuTransitionDelegate {
-    
-    func transitionMethod(_ class: UIViewController, _ menuType: UserSlidingMenuVC.MenuType) {
-        switch menuType {
-        case .home:
-            let homeVC = storyboard?.instantiateInitialViewController()
-            view.window?.rootViewController = homeVC
-            view.window?.makeKeyAndVisible()
-        case .catalog:
-            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.CatalogVC.rawValue) as? UserCatalogViewController
-            view.window?.rootViewController = catalogVC
-            view.window?.makeKeyAndVisible()
-        case .feedback:
-            let feedbackVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FeedbackVC.rawValue) as? UserAboutUsViewController
-            view.window?.rootViewController = feedbackVC
-            view.window?.makeKeyAndVisible()
-        case .faq:
-            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.FAQVC.rawValue) as? UserFAQViewController
-            view.window?.rootViewController = faqVC
-            view.window?.makeKeyAndVisible()
-        case .website:
-            self.dismiss(animated: true, completion: nil)
-            print("website")
-        }
-    }
-
-}

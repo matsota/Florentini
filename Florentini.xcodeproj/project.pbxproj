@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		8F0E7BB92421496C004235A7 /* FlorentiniModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F0E7BB72421496C004235A7 /* FlorentiniModel.xcdatamodeld */; };
 		8F0E7BDE24214DAC004235A7 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0E7BDD24214DAC004235A7 /* CoreDataManager.swift */; };
-		8F0EEDF924129A3500948175 /* UserBasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0EEDF824129A3500948175 /* UserBasketViewController.swift */; };
+		8F0EEDF924129A3500948175 /* UserCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0EEDF824129A3500948175 /* UserCartViewController.swift */; };
 		8F1778232427E19E00164C0D /* IBDesignable + Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1778222427E19E00164C0D /* IBDesignable + Buttons.swift */; };
 		8F2062A323FEB25A007C481A /* WorkerMainSpaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062A223FEB25A007C481A /* WorkerMainSpaceViewController.swift */; };
 		8F2062A523FF555F007C481A /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062A423FF555F007C481A /* NavigationManager.swift */; };
@@ -19,17 +19,17 @@
 		8F2062AE23FF641C007C481A /* WorkerSlidingMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062AD23FF641C007C481A /* WorkerSlidingMenuVC.swift */; };
 		8F2062B823FF701C007C481A /* WorkerCatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062B723FF701C007C481A /* WorkerCatalogViewController.swift */; };
 		8F2062BA23FF703A007C481A /* WorkerProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062B923FF703A007C481A /* WorkerProfileViewController.swift */; };
-		8F2062BC23FF714D007C481A /* WorkersFAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062BB23FF714D007C481A /* WorkersFAQViewController.swift */; };
+		8F2062BC23FF714D007C481A /* WorkerFAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062BB23FF714D007C481A /* WorkerFAQViewController.swift */; };
 		8F2062C323FF747B007C481A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F2062C123FF747B007C481A /* Main.storyboard */; };
-		8F2062C723FF7F75007C481A /* WorkersChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062C623FF7F75007C481A /* WorkersChatViewController.swift */; };
+		8F2062C723FF7F75007C481A /* WorkerChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062C623FF7F75007C481A /* WorkerChatViewController.swift */; };
 		8F2062CB23FFA4EF007C481A /* WorkerMessagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062CA23FFA4EF007C481A /* WorkerMessagesTableViewCell.swift */; };
-		8F5494D7242A2687002A022F /* Protocols + Workers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5494D6242A2687002A022F /* Protocols + Workers.swift */; };
-		8F5494E1242A2A49002A022F /* Protocols + Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5494E0242A2A49002A022F /* Protocols + Users.swift */; };
+		8F4506D4242A811400759C47 /* UIVC + Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4506D3242A811400759C47 /* UIVC + Custom.swift */; };
+		8F4506D9242B8A1F00759C47 /* UserHomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4506D8242B8A1F00759C47 /* UserHomeTableViewCell.swift */; };
 		8F701E2E2425065400DA37EF /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F701E2D2425065400DA37EF /* PersistenceService.swift */; };
 		8F701E552425235500DA37EF /* PreOrderEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F701E532425235400DA37EF /* PreOrderEntity+CoreDataClass.swift */; };
 		8F701E562425235500DA37EF /* PreOrderEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F701E542425235500DA37EF /* PreOrderEntity+CoreDataProperties.swift */; };
 		8F95742724169DDB00A4EF6E /* WorkerCatalogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F95742624169DDB00A4EF6E /* WorkerCatalogTableViewCell.swift */; };
-		8F9574292417AE7000A4EF6E /* UserBasketTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9574282417AE7000A4EF6E /* UserBasketTableViewCell.swift */; };
+		8F9574292417AE7000A4EF6E /* UserCartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9574282417AE7000A4EF6E /* UserCartTableViewCell.swift */; };
 		8FA80A9823FD65FA0015C878 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA80A9723FD65FA0015C878 /* NetworkManager.swift */; };
 		8FA80A9A23FD660A0015C878 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA80A9923FD660A0015C878 /* DatabaseManager.swift */; };
 		8FD4E4C123FCD1D800C62FA5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD4E4C023FCD1D800C62FA5 /* AppDelegate.swift */; };
@@ -52,7 +52,7 @@
 		684CBB7DD3C972328D14EE25 /* Pods-Florentini.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Florentini.debug.xcconfig"; path = "Target Support Files/Pods-Florentini/Pods-Florentini.debug.xcconfig"; sourceTree = "<group>"; };
 		8F0E7BB82421496C004235A7 /* coreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coreData.xcdatamodel; sourceTree = "<group>"; };
 		8F0E7BDD24214DAC004235A7 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		8F0EEDF824129A3500948175 /* UserBasketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBasketViewController.swift; sourceTree = "<group>"; };
+		8F0EEDF824129A3500948175 /* UserCartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCartViewController.swift; sourceTree = "<group>"; };
 		8F1778222427E19E00164C0D /* IBDesignable + Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IBDesignable + Buttons.swift"; sourceTree = "<group>"; };
 		8F2062A223FEB25A007C481A /* WorkerMainSpaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerMainSpaceViewController.swift; sourceTree = "<group>"; };
 		8F2062A423FF555F007C481A /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
@@ -62,17 +62,17 @@
 		8F2062AD23FF641C007C481A /* WorkerSlidingMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerSlidingMenuVC.swift; sourceTree = "<group>"; };
 		8F2062B723FF701C007C481A /* WorkerCatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerCatalogViewController.swift; sourceTree = "<group>"; };
 		8F2062B923FF703A007C481A /* WorkerProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerProfileViewController.swift; sourceTree = "<group>"; };
-		8F2062BB23FF714D007C481A /* WorkersFAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkersFAQViewController.swift; sourceTree = "<group>"; };
+		8F2062BB23FF714D007C481A /* WorkerFAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerFAQViewController.swift; sourceTree = "<group>"; };
 		8F2062C223FF747B007C481A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		8F2062C623FF7F75007C481A /* WorkersChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkersChatViewController.swift; sourceTree = "<group>"; };
+		8F2062C623FF7F75007C481A /* WorkerChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerChatViewController.swift; sourceTree = "<group>"; };
 		8F2062CA23FFA4EF007C481A /* WorkerMessagesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerMessagesTableViewCell.swift; sourceTree = "<group>"; };
-		8F5494D6242A2687002A022F /* Protocols + Workers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Protocols + Workers.swift"; sourceTree = "<group>"; };
-		8F5494E0242A2A49002A022F /* Protocols + Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Protocols + Users.swift"; sourceTree = "<group>"; };
+		8F4506D3242A811400759C47 /* UIVC + Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVC + Custom.swift"; sourceTree = "<group>"; };
+		8F4506D8242B8A1F00759C47 /* UserHomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeTableViewCell.swift; sourceTree = "<group>"; };
 		8F701E2D2425065400DA37EF /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		8F701E532425235400DA37EF /* PreOrderEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PreOrderEntity+CoreDataClass.swift"; path = "/Users/matsotaa/Desktop/GitHub/Florentini/Florentini/PreOrderEntity+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		8F701E542425235500DA37EF /* PreOrderEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PreOrderEntity+CoreDataProperties.swift"; path = "/Users/matsotaa/Desktop/GitHub/Florentini/Florentini/PreOrderEntity+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		8F95742624169DDB00A4EF6E /* WorkerCatalogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerCatalogTableViewCell.swift; sourceTree = "<group>"; };
-		8F9574282417AE7000A4EF6E /* UserBasketTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBasketTableViewCell.swift; sourceTree = "<group>"; };
+		8F9574282417AE7000A4EF6E /* UserCartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCartTableViewCell.swift; sourceTree = "<group>"; };
 		8FA80A9723FD65FA0015C878 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		8FA80A9923FD660A0015C878 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		8FD4E4BD23FCD1D800C62FA5 /* Florentini.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Florentini.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,8 +124,8 @@
 				8F2062A223FEB25A007C481A /* WorkerMainSpaceViewController.swift */,
 				8F2062B723FF701C007C481A /* WorkerCatalogViewController.swift */,
 				8F2062B923FF703A007C481A /* WorkerProfileViewController.swift */,
-				8F2062BB23FF714D007C481A /* WorkersFAQViewController.swift */,
-				8F2062C623FF7F75007C481A /* WorkersChatViewController.swift */,
+				8F2062BB23FF714D007C481A /* WorkerFAQViewController.swift */,
+				8F2062C623FF7F75007C481A /* WorkerChatViewController.swift */,
 			);
 			path = WorkSpace;
 			sourceTree = "<group>";
@@ -138,6 +138,7 @@
 				8FE3F69E24035BF6003001CA /* UserSlidingMenuVC.swift */,
 				8F2062AD23FF641C007C481A /* WorkerSlidingMenuVC.swift */,
 				8FD4E4E223FCF01000C62FA5 /* SlideInTransitionMenu.swift */,
+				8F4506D3242A811400759C47 /* UIVC + Custom.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -155,7 +156,8 @@
 			isa = PBXGroup;
 			children = (
 				8FFDA506240EC1D700A63A02 /* UserCatalogTableViewCell.swift */,
-				8F9574282417AE7000A4EF6E /* UserBasketTableViewCell.swift */,
+				8F9574282417AE7000A4EF6E /* UserCartTableViewCell.swift */,
+				8F4506D8242B8A1F00759C47 /* UserHomeTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -163,7 +165,6 @@
 		8FA80A9623FD65E70015C878 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				8FFD7CA82428189B008FE8F6 /* Protocols */,
 				8F0E7BDD24214DAC004235A7 /* CoreDataManager.swift */,
 				8FA80A9723FD65FA0015C878 /* NetworkManager.swift */,
 				8FA80A9923FD660A0015C878 /* DatabaseManager.swift */,
@@ -220,18 +221,9 @@
 				8FE3F69624035BE4003001CA /* UserCatalogViewController.swift */,
 				8FE3F69524035BE4003001CA /* UserAboutUsViewController.swift */,
 				8FE3F69424035BE3003001CA /* UserFAQViewController.swift */,
-				8F0EEDF824129A3500948175 /* UserBasketViewController.swift */,
+				8F0EEDF824129A3500948175 /* UserCartViewController.swift */,
 			);
 			path = UserSpace;
-			sourceTree = "<group>";
-		};
-		8FFD7CA82428189B008FE8F6 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				8F5494E0242A2A49002A022F /* Protocols + Users.swift */,
-				8F5494D6242A2687002A022F /* Protocols + Workers.swift */,
-			);
-			path = Protocols;
 			sourceTree = "<group>";
 		};
 		8FFD7CAD24281A0F008FE8F6 /* CoreData */ = {
@@ -375,30 +367,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F2062BC23FF714D007C481A /* WorkersFAQViewController.swift in Sources */,
+				8F2062BC23FF714D007C481A /* WorkerFAQViewController.swift in Sources */,
 				8F2062A323FEB25A007C481A /* WorkerMainSpaceViewController.swift in Sources */,
 				8FFEDF262407EC3500D894FD /* NewProductSetViewController.swift in Sources */,
-				8F5494D7242A2687002A022F /* Protocols + Workers.swift in Sources */,
 				8F2062A723FF5ECE007C481A /* LoginWorkSpaceViewController.swift in Sources */,
 				8F0E7BB92421496C004235A7 /* FlorentiniModel.xcdatamodeld in Sources */,
-				8F5494E1242A2A49002A022F /* Protocols + Users.swift in Sources */,
 				8F1778232427E19E00164C0D /* IBDesignable + Buttons.swift in Sources */,
 				8F701E552425235500DA37EF /* PreOrderEntity+CoreDataClass.swift in Sources */,
 				8FE3F69924035BE4003001CA /* UserCatalogViewController.swift in Sources */,
 				8F2062A923FF5F94007C481A /* AuthenticationManager.swift in Sources */,
-				8F0EEDF924129A3500948175 /* UserBasketViewController.swift in Sources */,
+				8F0EEDF924129A3500948175 /* UserCartViewController.swift in Sources */,
 				8FE3F69D24035BED003001CA /* UserHomeViewController.swift in Sources */,
 				8FA80A9A23FD660A0015C878 /* DatabaseManager.swift in Sources */,
 				8F2062AC23FF6292007C481A /* UIAlertController + Custom.swift in Sources */,
+				8F4506D9242B8A1F00759C47 /* UserHomeTableViewCell.swift in Sources */,
 				8FA80A9823FD65FA0015C878 /* NetworkManager.swift in Sources */,
 				8FE3F69824035BE4003001CA /* UserAboutUsViewController.swift in Sources */,
 				8FE3F69724035BE4003001CA /* UserFAQViewController.swift in Sources */,
 				8F2062CB23FFA4EF007C481A /* WorkerMessagesTableViewCell.swift in Sources */,
 				8F2062B823FF701C007C481A /* WorkerCatalogViewController.swift in Sources */,
-				8F9574292417AE7000A4EF6E /* UserBasketTableViewCell.swift in Sources */,
+				8F9574292417AE7000A4EF6E /* UserCartTableViewCell.swift in Sources */,
 				8FD4E4C123FCD1D800C62FA5 /* AppDelegate.swift in Sources */,
 				8FFDA507240EC1D700A63A02 /* UserCatalogTableViewCell.swift in Sources */,
 				8F95742724169DDB00A4EF6E /* WorkerCatalogTableViewCell.swift in Sources */,
+				8F4506D4242A811400759C47 /* UIVC + Custom.swift in Sources */,
 				8FD4E4C323FCD1D800C62FA5 /* SceneDelegate.swift in Sources */,
 				8FE3F69F24035BF7003001CA /* UserSlidingMenuVC.swift in Sources */,
 				8F2062AE23FF641C007C481A /* WorkerSlidingMenuVC.swift in Sources */,
@@ -407,7 +399,7 @@
 				8F2062A523FF555F007C481A /* NavigationManager.swift in Sources */,
 				8F0E7BDE24214DAC004235A7 /* CoreDataManager.swift in Sources */,
 				8F701E562425235500DA37EF /* PreOrderEntity+CoreDataProperties.swift in Sources */,
-				8F2062C723FF7F75007C481A /* WorkersChatViewController.swift in Sources */,
+				8F2062C723FF7F75007C481A /* WorkerChatViewController.swift in Sources */,
 				8F701E2E2425065400DA37EF /* PersistenceService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -117,10 +117,11 @@ extension UIAlertController {
     }
     
     //MARK: - Delete Product
-    func alertDeleteProduct(name: String) -> (UIAlertController) {
+    func alertDeleteProduct(name: String, success: @escaping() -> Void) -> (UIAlertController) {
         let delete = UIAlertController(title: "Внимание", message: "Подтвердите, что Вы желаете удалить продукт", preferredStyle: .actionSheet)
         delete.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { _ in
             NetworkManager.shared.deleteProduct(name: name)
+            success()
         }))
         delete.addAction(UIAlertAction(title: "Отмена", style: .destructive, handler: nil))
         

@@ -8,8 +8,22 @@
 
 import UIKit
 
-class WorkerCatalogTableViewCell: UITableViewCell {
+//MARK: - Protocol Worker-Catalog-ViewControllerDelegate
 
+protocol WorkerCatalogTableViewCellDelegate: class {
+    
+    func deleteProduct(name: String)
+    
+}
+
+
+//MARK: - Core Class
+class WorkerCatalogTableViewCell: UITableViewCell {
+    
+    //MARK: - Implementation
+    let alert = UIAlertController()
+    weak var delegate: WorkerCatalogTableViewCellDelegate?
+    
     //MARK: - Outlets
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productPriceLabel: UILabel!
@@ -19,20 +33,18 @@ class WorkerCatalogTableViewCell: UITableViewCell {
     @IBOutlet weak var deteleButton: UIButton!
     
     
-    //MARK: - Системные переменные
-    let alert = UIAlertController()
-    
+    //MARK: - Overrides
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
-
+    
     
     //MARK: - Hide Description Button
     @IBAction func hideDiscriptionTapped(_ sender: UIButton) {
@@ -40,11 +52,11 @@ class WorkerCatalogTableViewCell: UITableViewCell {
             self.descriptionView.isHidden = true
         }
     }
-
+    
     //MARK: - Delete Description Button
     @IBAction func deleteDescriptionTapped(_ sender: UIButton) {
-        let name = productNameLabel.text!
-        UIApplication.shared.keyWindow?.rootViewController?.present(self.alert.alertDeleteProduct(name: name), animated: true, completion: nil)
+        guard let name = productNameLabel.text else {return}
+        delegate?.deleteProduct(name: name)
     }
     
     //MARK: -  Метод появления описания продукта и кнопки "Скрыть" / "добавить в корзину"
@@ -64,7 +76,7 @@ class WorkerCatalogTableViewCell: UITableViewCell {
         }
     }
     
-    //MARK: - Метод заполнения клетки
+    //MARK: - Заполнение Таблицы
     func fill(name: String, price: Int, description: String, image: @escaping(UIImageView) -> Void) {
         productNameLabel.text = name
         productPriceLabel.text = "\(price)"

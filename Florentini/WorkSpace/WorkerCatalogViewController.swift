@@ -11,13 +11,6 @@ import FirebaseUI
 
 class WorkerCatalogViewController: UIViewController {
     
-    //MARK: - Outlets
-    @IBOutlet weak var catalogTableView: UITableView!
-    
-    //MARK: Системные переменные
-    let transition = SlideInTransitionMenu()
-    let alert = UIAlertController()
-    
     //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,109 +26,88 @@ class WorkerCatalogViewController: UIViewController {
     
     //MARK: - Menu button
     @IBAction func workerMenuTapped(_ sender: UIButton) {
-        guard let workMenuVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkMenuVC.rawValue) as? WorkerSlidingMenuVC else {return}
-        workMenuVC.workMenuTypeTapped = { workMenuType in
-            //            NavigationManager.shared.menuOptionPicked(menuType)
-            self.menuOptionPicked(workMenuType)
-        }
-        workMenuVC.modalPresentationStyle = .overCurrentContext
-        workMenuVC.transitioningDelegate = self
-        
-        present(workMenuVC, animated: true)
-        
+        showWorkerSlideInMethod(sender)
     }
     
     
     //MARK: - Chat Transition
     @IBAction func chatTapped(_ sender: UIButton) {
-        chatTransition()
+        transitionToWorkerChat(sender)
     }
     
     
-    //перенести меню в другое место.
-    func menuOptionPicked(_ menuType: WorkerSlidingMenuVC.WorkMenuType) {
-        switch menuType {
-        case .orders:
-            let ordersVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MainWorkSpaceVC.rawValue) as? WorkerMainSpaceViewController
-            view.window?.rootViewController = ordersVC
-            view.window?.makeKeyAndVisible()
-        case .catalog:
-            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkerCatalogVC.rawValue) as? WorkerCatalogViewController
-            view.window?.rootViewController = catalogVC
-            view.window?.makeKeyAndVisible()
-        case .profile:
-            let profileVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkerProfileVC.rawValue) as? WorkerProfileViewController
-            view.window?.rootViewController = profileVC
-            view.window?.makeKeyAndVisible()
-        case .faq:
-            print("feedback")
-            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkersFAQVC.rawValue) as? WorkersFAQViewController
-            view.window?.rootViewController = faqVC
-            view.window?.makeKeyAndVisible()
-        case .exit:
-            print("signOut")
-            self.present(self.alert.alertSignOut(success: {
-                self.dismiss(animated: true) { self.exitApp()
-                }
-            }), animated: true)
-        }
-    }
     
+    //MARK: - Private:
     
-    //MARK: Методы переходов
-    //чат
-    func chatTransition() {
-        print("chat")
-        let workersChatVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkersChatVC.rawValue) as? WorkersChatViewController
-        view.window?.rootViewController = workersChatVC
-        view.window?.makeKeyAndVisible()
-    }
-    
-    func exitApp() {
-        let exitApp = storyboard?.instantiateInitialViewController()
-        view.window?.rootViewController = exitApp
-        view.window?.makeKeyAndVisible()
-    }
-    
-    
+    //MARK: - Methods
+
     //MARK: - Implementation
+    private let slidingMenu = SlideInTransitionMenu()
+    private let alert = UIAlertController()
     private var productInfo = [DatabaseManager.ProductInfo]()
+    
+    //MARK: - TableView Outlet
+    @IBOutlet weak var catalogTableView: UITableView!
     
 }
 
 
 
+
+
+
+
+
+//MARK: - Extention:
+
 //MARK: - TableView Extention
 extension WorkerCatalogViewController: UITableViewDelegate, UITableViewDataSource{
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return productInfo.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = catalogTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.WorkerCatalogTVCell.rawValue, for: indexPath) as! WorkerCatalogTableViewCell
-        
+        cell.delegate = self
         cell.showDescription()
         
         let get = productInfo[indexPath.row]
-        
         let storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(get.productName)")
         cell.fill(name: get.productName, price: get.productPrice, description: get.productDescription) { image in
             image.sd_setImage(with: storageRef)
         }
         return cell
     }
+    
 }
 
-//MARK: - Transition Extention
+//MARK: Методы TableViewCell
+extension WorkerCatalogViewController: WorkerCatalogTableViewCellDelegate {
+    
+    func deleteProduct(name: String) {
+        present(self.alert.alertDeleteProduct(name: name, success: {
+            self.catalogTableView.reloadData()
+        }), animated: true)
+    }
+    
+}
+
+//MARK: - UIVC-TransitioningDelegate
 extension WorkerCatalogViewController: UIViewControllerTransitioningDelegate {
+    
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning?
     {
-        transition.isPresented = true
-        return transition
+        slidingMenu.isPresented = true
+        return slidingMenu
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.isPresented = false
-        return transition
+        slidingMenu.isPresented = false
+        return slidingMenu
     }
+    
 }
+
+//MARK: -
+

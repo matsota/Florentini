@@ -153,10 +153,11 @@ class NetworkManager {
     //MARK: - О Сотрудниках:
     //MARK: - Workers Dataload
     func workersInfoLoad (success: @escaping([DatabaseManager.WorkerInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        if AuthenticationManager.shared.currentUser?.uid == nil {
+        let uid = AuthenticationManager.shared.currentUser?.uid
+        if uid == nil {
             failure(NetworkManagerError.workerNotSignedIn)
         }else{
-        db.collection(DatabaseManager.MessagesCases.workers.rawValue).document(AuthenticationManager.shared.currentUser!.uid).getDocument { (documentSnapshot, _) in
+        db.collection(DatabaseManager.MessagesCases.workers.rawValue).document(uid!).getDocument { (documentSnapshot, _) in
             guard let workerInfo = DatabaseManager.WorkerInfo(dictionary: documentSnapshot!.data()!) else {return}
             success([workerInfo])
             }
