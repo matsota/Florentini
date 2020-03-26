@@ -14,6 +14,9 @@ class WorkerMainSpaceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("certain uid: \(String(describing: AuthenticationManager.shared.currentUser?.uid))")
+        print("admin uid: \(AuthenticationManager.shared.uidAdmin)")
+        
     }
     
     //MARK: - Transition Menu tapped

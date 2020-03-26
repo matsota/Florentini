@@ -17,6 +17,9 @@ class WorkerProfileViewController: UIViewController {
         
         fetchWorkerData()
         
+        print("certain uid: \(String(describing: AuthenticationManager.shared.currentUser?.uid))")
+        print("admin uid: \(AuthenticationManager.shared.uidAdmin)")
+        
     }
     
     //MARK: - Menu Button
@@ -31,6 +34,7 @@ class WorkerProfileViewController: UIViewController {
     
     //MARK: - Add New Product Button
     @IBAction func newProductTapped(_ sender: UIButton) {
+        transitionToNewProduct()
     }
     
     //MARK: - Change Password Button
@@ -111,7 +115,6 @@ private extension WorkerProfileViewController {
     func fetchWorkerData() {
         NetworkManager.shared.workersInfoLoad(success: { workerInfo in
             self.currentWorkerInfo = workerInfo
-//            print(self.currentWorkerInfo)
             self.currentWorkerInfo.forEach { (workerInfo) in
                 self.nameLabel.text = workerInfo.name
                 self.positionLabel.text = workerInfo.position
@@ -127,3 +130,15 @@ private extension WorkerProfileViewController {
     }
     
 }
+
+//MARK: - Метод перехода на страницу создания продуктов
+
+private extension WorkerProfileViewController {
+    
+    func transitionToNewProduct() {
+        let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.NewProductSetVC.rawValue) as? NewProductSetViewController
+        view.window?.rootViewController = catalogVC
+    }
+    
+}
+

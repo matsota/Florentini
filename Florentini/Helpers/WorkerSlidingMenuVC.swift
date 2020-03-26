@@ -29,6 +29,7 @@ class WorkerSlidingMenuVC: UITableViewController{
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let workMenuType = WorkMenuType(rawValue: indexPath.row) else {return}
         dismiss(animated: true) { [weak self] in
+            print("dissmissing: \(workMenuType)")
             self?.workMenuTypeTapped?(workMenuType)
         }
     }

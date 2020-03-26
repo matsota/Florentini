@@ -15,6 +15,9 @@ class LoginWorkSpaceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        AuthenticationManager.shared.signOut()
+        print("certain uid: \(String(describing: AuthenticationManager.shared.currentUser?.uid))")
+        print("admin uid: \(AuthenticationManager.shared.uidAdmin)")
     }
     
     //MARK: - Вход в рабочую зону

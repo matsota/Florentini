@@ -14,6 +14,7 @@ protocol WorkerCatalogTableViewCellDelegate: class {
     
     func deleteProduct(name: String)
     
+    func editPrice(_ cell: WorkerCatalogTableViewCell)
 }
 
 
@@ -24,12 +25,20 @@ class WorkerCatalogTableViewCell: UITableViewCell {
     let alert = UIAlertController()
     weak var delegate: WorkerCatalogTableViewCellDelegate?
     
-    //MARK: - Outlets
+    var category = String()
+    
+    //MARK: - Label
     @IBOutlet weak var productNameLabel: UILabel!
-    @IBOutlet weak var productPriceLabel: UILabel!
-    @IBOutlet weak var productDescriptionTextView: UITextView!
+    @IBOutlet weak var productDescriptionLabel: UILabel!
+    
+    //MARK: - ImageView
     @IBOutlet weak var productImageView: UIImageView!
+    
+    //MARK: - View
     @IBOutlet weak var descriptionView: UIView!
+    
+    //MARK: - Buttons
+    @IBOutlet weak var productPriceButton: UIButton!
     @IBOutlet weak var deteleButton: UIButton!
     
     
@@ -38,7 +47,6 @@ class WorkerCatalogTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
@@ -47,23 +55,29 @@ class WorkerCatalogTableViewCell: UITableViewCell {
     
     
     //MARK: - Hide Description Button
-    @IBAction func hideDiscriptionTapped(_ sender: UIButton) {
+    @IBAction func stopDescribeTapped(_ sender: DesignButton) {
         UIView.animate(withDuration: 0.3) {
             self.descriptionView.isHidden = true
         }
     }
     
+    //MARK: - Price Editor
+    @IBAction func priceTapped(_ sender: UIButton) {
+        delegate?.editPrice(self)
+    }
+    
+    
     //MARK: - Delete Description Button
-    @IBAction func deleteDescriptionTapped(_ sender: UIButton) {
+    @IBAction func deleteDescriptionTapped(_ sender: DesignButton) {
         guard let name = productNameLabel.text else {return}
         delegate?.deleteProduct(name: name)
     }
     
-    //MARK: -  Метод появления описания продукта и кнопки "Скрыть" / "добавить в корзину"
+    //MARK: -  Метод появления описания продукта и кнопки
     func showDescription(){
-        let imageGesture = UITapGestureRecognizer()
-        imageGesture.addTarget(self, action: #selector(imageTapped(_ :)))
-        productImageView.addGestureRecognizer(imageGesture)
+        let tapGesture = UITapGestureRecognizer()
+        tapGesture.addTarget(self, action: #selector(imageTapped(_ :)))
+        productImageView.addGestureRecognizer(tapGesture)
     }
     
     @objc func imageTapped(_ gestureRecognizer: UITapGestureRecognizer){
@@ -76,13 +90,26 @@ class WorkerCatalogTableViewCell: UITableViewCell {
         }
     }
     
-    //MARK: - Заполнение Таблицы
-    func fill(name: String, price: Int, description: String, image: @escaping(UIImageView) -> Void) {
-        productNameLabel.text = name
-        productPriceLabel.text = "\(price)"
-        productDescriptionTextView.text = description
-        image(productImageView)
+    //MARK: - Метод исчезания описания продукта
+    func hideDescription(){
+        let tapGesture = UITapGestureRecognizer()
+        tapGesture.addTarget(self, action: #selector(hideDescription(_ :)))
+        productDescriptionLabel.addGestureRecognizer(tapGesture)
     }
     
+    @objc func hideDescription(_ gestureRecognizer: (UITapGestureRecognizer)  -> Void) {
+        UIView.animate(withDuration: 0.3) {
+            self.descriptionView.isHidden = true
+        }
+    }
+    
+    //MARK: - Заполнение Таблицы
+    func fill(name: String, price: Int, category: String, description: String, image: @escaping(UIImageView) -> Void) {
+        productNameLabel.text = name
+        productPriceButton.setTitle("\(price) грн", for: .normal)
+        self.category = category
+        productDescriptionLabel.text = description
+        image(productImageView)
+    }
     
 }

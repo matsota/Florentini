@@ -155,9 +155,9 @@
 		8F67FAE4240ADE4E006EED49 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				8F4506D8242B8A1F00759C47 /* UserHomeTableViewCell.swift */,
 				8FFDA506240EC1D700A63A02 /* UserCatalogTableViewCell.swift */,
 				8F9574282417AE7000A4EF6E /* UserCartTableViewCell.swift */,
-				8F4506D8242B8A1F00759C47 /* UserHomeTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";

@@ -118,14 +118,32 @@ extension UIAlertController {
     
     //MARK: - Delete Product
     func alertDeleteProduct(name: String, success: @escaping() -> Void) -> (UIAlertController) {
-        let delete = UIAlertController(title: "Внимание", message: "Подтвердите, что Вы желаете удалить продукт", preferredStyle: .actionSheet)
-        delete.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { _ in
+        let deleteAction = UIAlertController(title: "Внимание", message: "Подтвердите, что Вы желаете удалить продукт", preferredStyle: .actionSheet)
+        deleteAction.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { _ in
             NetworkManager.shared.deleteProduct(name: name)
             success()
         }))
-        delete.addAction(UIAlertAction(title: "Отмена", style: .destructive, handler: nil))
+        deleteAction.addAction(UIAlertAction(title: "Отмена", style: .destructive, handler: nil))
         
-        return (delete)
+        return deleteAction
+    }
+    
+    //MARK: - Edit Product Price
+    func alertEditProductPrice(name: String, category: String, description: String, success: @escaping(Int) -> Void) -> (UIAlertController) {
+        let editingPrice = UIAlertController(title: "Внимание", message: "Введите новую цену для этого продукта", preferredStyle: .alert)
+            
+        editingPrice.addTextField { (text:UITextField) in
+            text.keyboardType = .numberPad
+            text.placeholder = "Введите сообщение"
+        }
+        
+        editingPrice.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+        editingPrice.addAction(UIAlertAction(title: "Отправить", style: .default, handler: { (action: UIAlertAction) in
+            guard let newPrice = Int((editingPrice.textFields?.first?.text)!)  else {return}
+            NetworkManager.shared.editProductPrice(name: name, newPrice: newPrice, category: category, description: description)
+            success(newPrice)
+        }))
+        return editingPrice
     }
     
 }

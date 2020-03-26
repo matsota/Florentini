@@ -44,7 +44,7 @@ class UserCatalogTableViewCell: UITableViewCell {
     
     
     //MARK: - Спрятать описание продукта
-    @IBAction func hideDescriptionTapped(_ sender: UIButton) {
+    @IBAction func stopDescribeTapped(_ sender: UIButton) {
         UIView.animate(withDuration: 0.3) {
             self.descriptionView.isHidden = true
         }
@@ -55,15 +55,29 @@ class UserCatalogTableViewCell: UITableViewCell {
         delegate?.addToCart(self)
     }
     
-    //MARK: -  Метод появления описания продукта и кнопки "Скрыть" / "добавить в корзину"
+    //MARK: -  Метод появления описания продукта
     func showDescription(){
-        let imageGesture = UITapGestureRecognizer()
-        imageGesture.addTarget(self, action: #selector(imageTapped(_ :)))
-        productImageView.addGestureRecognizer(imageGesture)
+        let showGesture = UITapGestureRecognizer()
+        showGesture.addTarget(self, action: #selector(imageTapped(_ :)))
+        productImageView.addGestureRecognizer(showGesture)
     }
     @objc func imageTapped(_ gestureRecognizer: UITapGestureRecognizer){
         UIView.animate(withDuration: 0.3) {
             self.descriptionView.isHidden = false
+        }
+    }
+    
+    
+    //MARK: - Метод исчезания описания продукта
+    func hideDescription(){
+        let hideGesture = UITapGestureRecognizer()
+        hideGesture.addTarget(self, action: #selector(hideDescription(_ :)))
+        descriptionView.addGestureRecognizer(hideGesture)
+    }
+
+    @objc func hideDescription(_ gestureRecognizer: (UITapGestureRecognizer)  -> Void) {
+        UIView.animate(withDuration: 0.3) {
+            self.descriptionView.isHidden = true
         }
     }
     

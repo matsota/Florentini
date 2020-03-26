@@ -208,6 +208,7 @@ extension DatabaseManager {
     }
     
     enum ProductCategoriesCases: String, CaseIterable {
+        case none = "Без Категрии"
         case apiece = "Поштучно"
         case gift = "Подарки"
         case bouquet = "Букеты"

@@ -22,6 +22,9 @@ class WorkerCatalogViewController: UIViewController {
         }) { error in
             print(error.localizedDescription)
         }
+        
+        print("certain uid: \(String(describing: AuthenticationManager.shared.currentUser?.uid))")
+        print("admin uid: \(AuthenticationManager.shared.uidAdmin)")
     }
     
     //MARK: - Menu button
@@ -40,7 +43,7 @@ class WorkerCatalogViewController: UIViewController {
     //MARK: - Private:
     
     //MARK: - Methods
-
+    
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
     private let alert = UIAlertController()
@@ -71,10 +74,11 @@ extension WorkerCatalogViewController: UITableViewDelegate, UITableViewDataSourc
         let cell = catalogTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.WorkerCatalogTVCell.rawValue, for: indexPath) as! WorkerCatalogTableViewCell
         cell.delegate = self
         cell.showDescription()
-        
-        let get = productInfo[indexPath.row]
+        cell.hideDescription()
+        cell.tag = indexPath.row
+        let get = productInfo[cell.tag]
         let storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(get.productName)")
-        cell.fill(name: get.productName, price: get.productPrice, description: get.productDescription) { image in
+        cell.fill(name: get.productName, price: get.productPrice, category: get.productCategory, description: get.productDescription) { image in
             image.sd_setImage(with: storageRef)
         }
         return cell
@@ -82,11 +86,29 @@ extension WorkerCatalogViewController: UITableViewDelegate, UITableViewDataSourc
     
 }
 
-//MARK: Методы TableViewCell
+//MARK: Методы TableViewCell через delegate
 extension WorkerCatalogViewController: WorkerCatalogTableViewCellDelegate {
     
+    //changeprice
+    func editPrice(_ cell: WorkerCatalogTableViewCell){
+        guard let name = cell.productNameLabel.text, let description = cell.productDescriptionLabel.text else {return}
+        let category = cell.category
+        if AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid {
+            cell.productPriceButton.isUserInteractionEnabled = true
+            
+            self.present(self.alert.alertEditProductPrice(name: name, category: category, description: description, success: { newPrice in
+                cell.productPriceButton.setTitle("\(newPrice) грн", for: .normal)
+            }),animated: true)
+        }else{
+            cell.productPriceButton.isUserInteractionEnabled = false
+        }
+        self.catalogTableView.reloadData()
+    }
+    
+    //deleteProduct
     func deleteProduct(name: String) {
-        present(self.alert.alertDeleteProduct(name: name, success: {
+        
+        self.present(self.alert.alertDeleteProduct(name: name, success: {
             self.catalogTableView.reloadData()
         }), animated: true)
     }

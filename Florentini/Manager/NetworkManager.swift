@@ -72,7 +72,7 @@ class NetworkManager {
     }
     
     //MARK: - Метод загрузки Фотографии продукта в Firebase
-    func uploadPhoto(image: UIImageView, name: String, progressIndicator: UIProgressView, complition: @escaping() -> Void) {
+    func uploadProduct(image: UIImageView, name: String, progressIndicator: UIProgressView, complition: @escaping() -> Void) {
         guard AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid else {return}
         
         progressIndicator.isHidden = false
@@ -132,6 +132,18 @@ class NetworkManager {
                 print ("File deleted successfully")
             }
         }
+    }
+    
+    //MARK: - Редактирование существующих продуктов в Worker-Catalog
+    func editProductPrice(name: String, newPrice: Int, category: String, description: String) {
+        let updatePrice = [
+            DatabaseManager.ProductCases.productName.rawValue: name,
+            DatabaseManager.ProductCases.productPrice.rawValue: newPrice,
+            DatabaseManager.ProductCases.productCategory.rawValue: category,
+            DatabaseManager.ProductCases.productDescription.rawValue: description
+            ] as [String: Any]
+        
+        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).document(name).setData(updatePrice)
     }
     
     

@@ -39,6 +39,7 @@ class NavigationManager {
         case WorkerProfileVC
         case WorkersFAQVC
         case WorkersChatVC
+        case NewProductSetVC
         
         case WorkMenuVC
         case WorkerMessagesTVCell

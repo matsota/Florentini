@@ -23,6 +23,8 @@ class UserCatalogViewController: UIViewController {
         }) { error in
             print(error.localizedDescription)
         }
+        print("certain uid: \(String(describing: AuthenticationManager.shared.currentUser?.uid))")
+        print("admin uid: \(AuthenticationManager.shared.uidAdmin)")
         
     }
     
@@ -90,6 +92,7 @@ extension UserCatalogViewController: UITableViewDelegate, UITableViewDataSource 
         let cell = catalogTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UserCatalogTVCell.rawValue, for: indexPath) as! UserCatalogTableViewCell
         cell.delegate = self
         cell.showDescription()
+        cell.hideDescription()
         
         let get = productInfo[indexPath.row]
         
@@ -181,12 +184,15 @@ private extension UserCatalogViewController {
             }) { error in
                 print(error.localizedDescription)
             }
+        case .none:
+            break
         }
     }
 }
 
 //MARK: - by UserCatalog-TVCell-Delegate
 extension UserCatalogViewController: UserCatalogTableViewCellDelegate {
+    
     //MARK: Adding to user's Cart
     func addToCart(_ cell: UserCatalogTableViewCell) {
         guard let name = cell.productNameLabel.text, let category = cell.category, let price = Int64(cell.productPriceLabel.text!) else {return}
@@ -195,6 +201,7 @@ extension UserCatalogViewController: UserCatalogTableViewCellDelegate {
         let imageData: NSData = image!.pngData()! as NSData
         UserDefaults.standard.set(imageData, forKey: name)
     }
+
 }
 
 

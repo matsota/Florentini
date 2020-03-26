@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseUI
 
 
 class UserHomeViewController: UIViewController {
@@ -17,6 +18,17 @@ class UserHomeViewController: UIViewController {
         super.viewDidLoad()
         
         AuthenticationManager.shared.signInAnonymously()
+        
+        NetworkManager.shared.downLoadStockOnly(success: { productInfo in
+            self.productInfo = productInfo
+            self.homeTableView.reloadData()
+        }) { error in
+            print(error.localizedDescription)
+        }
+        
+        print("certain uid: \(String(describing: AuthenticationManager.shared.currentUser?.uid))")
+        print("admin uid: \(AuthenticationManager.shared.uidAdmin)")
+        
     }
     
     //MARK: - Нажатие кнопки Меню
@@ -37,11 +49,13 @@ class UserHomeViewController: UIViewController {
     
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
-    
+    private var productInfo = [DatabaseManager.ProductInfo]()
+    private var selectedCategory: String?
     
     //MARK: TableView Outlet
     @IBOutlet private weak var homeTableView: UITableView!
     
+    @IBOutlet weak var noneStocksView: UIView!
 }
 
 
@@ -52,8 +66,9 @@ class UserHomeViewController: UIViewController {
 
 
 
-//MARK: - Extention HomeViewControllerr
-//MARK: extention by UIVC-TransitioningDelegate
+//MARK: - Extention
+
+//MARK: - by UIVC-TransitioningDelegate
 extension UserHomeViewController: UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
@@ -67,23 +82,51 @@ extension UserHomeViewController: UIViewControllerTransitioningDelegate {
     
 }
 
-
+//MARK: - by TableView
 extension UserHomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return productInfo.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = homeTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UserHomeTVCell.rawValue, for: indexPath) as! UserHomeTableViewCell
+        cell.delegate = self
+        cell.showDescription()
+        cell.hideDescription()
         
+        if productInfo.count == 0 {
+            noneStocksView.isHidden = false
+        }else{
+            noneStocksView.isHidden = true
+            let get = productInfo[indexPath.row]
+            
+            let storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(get.productName)")
+            cell.fill(name: get.productName, price: get.productPrice, description: get.productDescription, category: get.productCategory) { image in
+                image.sd_setImage(with: storageRef)
+            }
+        }
         return cell
     }
-    
     
 }
 
 
+//MARK: -
+
+//MARK: - by User-Home-TVCellDelegate
+extension UserHomeViewController: UserHomeTableViewCellDelegate {
+    
+    //MARK: Adding to user's Cart
+    func addToCart(_ cell: UserHomeTableViewCell) {
+        guard let name = cell.productNameLabel.text, let category = cell.category, let price = Int64(cell.productPriceLabel.text!) else {return}
+        CoreDataManager.shared.saveForCart(name: name, category: category, price: price, quantity: 1)
+        let image = cell.cellImageView.image
+        let imageData: NSData = image!.pngData()! as NSData
+        UserDefaults.standard.set(imageData, forKey: name)
+    }
+
+}
 
 
 
