@@ -16,6 +16,7 @@ class UserHomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        AuthenticationManager.shared.signInAnonymously()
     }
     
     //MARK: - Нажатие кнопки Меню

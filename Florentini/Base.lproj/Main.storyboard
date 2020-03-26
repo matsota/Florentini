@@ -2486,7 +2486,7 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="HbF-n0-T3D">
-                                <rect key="frame" x="50" y="176" width="275" height="336.66666666666674"/>
+                                <rect key="frame" x="50" y="176.00000000000003" width="275" height="336.66666666666674"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Название" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZVE-PS-BYu">
                                         <rect key="frame" x="0.0" y="0.0" width="275" height="34"/>

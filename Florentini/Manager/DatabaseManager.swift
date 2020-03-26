@@ -69,7 +69,7 @@ class DatabaseManager {
         var cellphone: String
         var feedbackOption: String
         var mark: String
-        var productDescription: [PreOrderEntity]
+//        var productDescription: [[[String: Any]]]
         
         var dictionary: [String:Any]{
             return [
@@ -78,8 +78,8 @@ class DatabaseManager {
                 DatabaseManager.UsersInfoCases.adress.rawValue: adress,
                 DatabaseManager.UsersInfoCases.cellphone.rawValue: cellphone,
                 DatabaseManager.UsersInfoCases.feedbackOption.rawValue: feedbackOption,
-                DatabaseManager.UsersInfoCases.mark.rawValue: mark,
-                DatabaseManager.ProductCases.productDescription.rawValue: productDescription
+                DatabaseManager.UsersInfoCases.mark.rawValue: mark
+//                DatabaseManager.ProductCases.productDescription.rawValue: productDescription
             ]
         }
     }
@@ -87,14 +87,14 @@ class DatabaseManager {
     //MARK: - Шаблон Про Продукт (закачка)
     struct OrderDescription {
         var productName: String
-        var productPrice: Int
-        var productCategory: String
+        var productPrice: Int64
+        var productQuantity: Int64
         
         var dictionary: [String:Any]{
             return [
                 DatabaseManager.ProductCases.productName.rawValue: productName,
                 DatabaseManager.ProductCases.productPrice.rawValue: productPrice,
-                DatabaseManager.ProductCases.productCategory.rawValue: productCategory
+                DatabaseManager.ProductCases.productQuantity.rawValue: productQuantity
             ]
         }
     }
@@ -148,17 +148,16 @@ extension DatabaseManager.Order: DocumentSerializable {
             let userAdress = dictionary[DatabaseManager.UsersInfoCases.adress.rawValue] as? String,
             let userCellphone = dictionary[DatabaseManager.UsersInfoCases.cellphone.rawValue] as? String,
             let feedbackOption = dictionary[DatabaseManager.UsersInfoCases.feedbackOption.rawValue] as? String,
-            let userMark = dictionary[DatabaseManager.UsersInfoCases.mark.rawValue] as? String,
-            let productDescription = dictionary[DatabaseManager.ProductCases.productDescription.rawValue] as? [PreOrderEntity] else {return nil}
-        self.init(totalPrice: totalPrice, name: userName, adress: userAdress, cellphone: userCellphone, feedbackOption: feedbackOption, mark: userMark, productDescription: productDescription)
+            let userMark = dictionary[DatabaseManager.UsersInfoCases.mark.rawValue] as? String else {return nil}
+        self.init(totalPrice: totalPrice, name: userName, adress: userAdress, cellphone: userCellphone, feedbackOption: feedbackOption, mark: userMark)
     }
 }
 extension DatabaseManager.OrderDescription: DocumentSerializable {
     init?(dictionary: [String: Any]) {
         guard let productName = dictionary[DatabaseManager.ProductCases.productName.rawValue] as? String,
-            let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? Int,
-            let productCategory = dictionary[DatabaseManager.ProductCases.productCategory.rawValue] as? String else {return nil}
-        self.init(productName: productName, productPrice: productPrice, productCategory: productCategory)
+            let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? Int64,
+            let productQuantity = dictionary[DatabaseManager.ProductCases.productCategory.rawValue] as? Int64 else {return nil}
+        self.init(productName: productName, productPrice: productPrice, productQuantity: productQuantity)
     }
 }
 

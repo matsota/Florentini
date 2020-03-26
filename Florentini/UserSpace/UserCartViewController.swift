@@ -12,7 +12,7 @@ import CoreData
 
 
 class UserCartViewController: UIViewController {
-
+    
     //MARK: - Overrides
     //MARK: ViewDidLoad
     override func viewDidLoad() {
@@ -26,12 +26,15 @@ class UserCartViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        hideKeyboardWhenTappedAround()
         
         if preOrder.count == 0 {
             tableCountZeroView.isHidden = false
         }else{
             tableCountZeroView.isHidden = true
         }
+        
+        
     }
     
     //MARK: -
@@ -45,26 +48,60 @@ class UserCartViewController: UIViewController {
         guard let sender = sender.titleLabel!.text else {return}
         showOptionsMethod(option: sender)
     }
-
+    
     @IBAction func feedbackTypeTapped(_ sender: DesignButton) {
         selectionMethod(self, sender)
     }
     
     //MARK: - Подтвреждение заказа
     @IBAction func confirmTapped(_ sender: UIButton) {
-        
+        //ДИКИЙ способ, что добавить множественный заказ в Firebase
         let totalPrice = orderBill
-        let name = clientNameTextField.text!
         let adress = clientAdressTextField.text!
         let cellphone = clientCellPhoneTextField.text!
-        let feedbackOption = selectedFeedbackType!
-        let mark = clientDescriptionTextField.text!
+        var name = clientNameTextField.text!
+        var mark = clientDescriptionTextField.text!
+        var feedbackOption = selectedFeedbackType
         
+        if feedbackOption == "" {
+            feedbackOption = "Телефон"
+        }
+        if name == "" {
+            name = "Без Имени"
+        }
+        if mark == "" {
+            mark = "Без Дополнений"
+        }
         
-        NetworkManager.shared.sendOrder(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, productDictionary: preOrder)
+        if adress == "" || cellphone == "" {
+            self.present(self.alert.alertClassicInfoOK(title: "Эттеншн!", message: "Мы не знаем всех необходимых данных, что бы осуществить доставку радости. Просим Вас ввести: Адресс доставки и Телефон, чтобы мы смогли подтвердить заказ"), animated: true)
+        }else{
+            
+            var jsonArray: [[String: Any]] = []
+            
+            for item in preOrder {
+                var dict: [String: Any] = [:]
+                for attribute in item.entity.attributesByName {
+                    //check if value is present, then add key to dictionary so as to avoid the nil value crash
+                    if let value = item.value(forKey: attribute.key) {
+                        dict[attribute.key] = value
+                    }
+                }
+                jsonArray.append(dict)
+            }
+            for _ in preOrder {
+                NetworkManager.shared.sendOrder(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, productDescription: jsonArray.remove(at:0))
+            }
+            CoreDataManager.shared.deleteAllData(entity: "PreOrderEntity") {
+                self.preOrder.removeAll()
+                self.basketTableView.reloadData()
+            }
+
+        }
     }
     
-
+    
+    
     
     
     //MARK: - Private:
@@ -90,8 +127,9 @@ class UserCartViewController: UIViewController {
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
     private var preOrder = [PreOrderEntity]()
+    private let alert = UIAlertController()
     
-    private var selectedFeedbackType: String?
+    private var selectedFeedbackType = String()
     private var orderBill = Int64()
     
     //MARK: Views Outlets
@@ -112,11 +150,11 @@ class UserCartViewController: UIViewController {
     //MARK: Buttons Outlets
     @IBOutlet private var feedbackTypeBttnsCellection: [UIButton]!
     @IBOutlet private weak var feebackTypeSelectorButton: UIButton!
-
+    
     
     //MARK: Constrains Outlets
     @IBOutlet private weak var lowestConstraint: NSLayoutConstraint!
-
+    
 }
 
 

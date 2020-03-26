@@ -13,7 +13,7 @@ class CoreDataManager {
     
     static let shared = CoreDataManager()
     var preOrder = [PreOrderEntity]()
-   
+    
     //MARK: - Создание заказа/Добавление к заказу
     func saveForCart(name: String, category: String, price: Int64, quantity: Int64) {
         let preOrder = PreOrderEntity(context: PersistenceService.context)
@@ -60,4 +60,22 @@ class CoreDataManager {
         }
     }
     
+    func deleteAllData(entity: String, success: @escaping() -> Void) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        do
+        {
+            let results = try PersistenceService.context.fetch(fetchRequest)
+            for managedObject in results
+            {
+                let managedObjectData:NSManagedObject = managedObject as! NSManagedObject
+                PersistenceService.context.delete(managedObjectData)
+            }
+            success()
+        } catch let error as NSError {
+            print("Detele all data in \(entity) error : \(error) \(error.userInfo)")
+        }
+        
+    }
 }

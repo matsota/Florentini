@@ -133,7 +133,7 @@ class NetworkManager {
             }
         }
     }
- 
+    
     
     //MARK: - О Пользователях:
     //MARK: - Отправка отзыва
@@ -150,10 +150,10 @@ class NetworkManager {
         }
     }
     
-    func sendOrder(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, productDictionary: [PreOrderEntity]) {
-        let newOrder = DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, productDescription: productDictionary)
-
-        db.collection(DatabaseManager.ProductCases.orders.rawValue).addDocument(data: newOrder.dictionary) {
+    func sendOrder(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, productDescription: [String : Any]) {
+        let newOrder = DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark)
+        
+        db.collection(DatabaseManager.ProductCases.orders.rawValue).document(AuthenticationManager.shared.currentUser!.uid).setData(newOrder.dictionary) {
             error in
             if let error = error {
                 print("Error: \(error.localizedDescription)")
@@ -161,14 +161,7 @@ class NetworkManager {
                 print("Order Completed")
             }
         }
-//
-//
-//        Миколы Бажана 26/1 044 465 72 64
-//
-//
-//        Арава
-//sadsa
-//
+        db.collection(DatabaseManager.ProductCases.orders.rawValue).document(AuthenticationManager.shared.currentUser!.uid).collection(DatabaseManager.ProductCases.productDescription.rawValue).addDocument(data: productDescription)
     }
     
     //MARK: - О Сотрудниках:
@@ -178,9 +171,9 @@ class NetworkManager {
         if uid == nil {
             failure(NetworkManagerError.workerNotSignedIn)
         }else{
-        db.collection(DatabaseManager.MessagesCases.workers.rawValue).document(uid!).getDocument { (documentSnapshot, _) in
-            guard let workerInfo = DatabaseManager.WorkerInfo(dictionary: documentSnapshot!.data()!) else {return}
-            success([workerInfo])
+            db.collection(DatabaseManager.MessagesCases.workers.rawValue).document(uid!).getDocument { (documentSnapshot, _) in
+                guard let workerInfo = DatabaseManager.WorkerInfo(dictionary: documentSnapshot!.data()!) else {return}
+                success([workerInfo])
             }
         }
     }
