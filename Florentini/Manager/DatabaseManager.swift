@@ -69,7 +69,7 @@ class DatabaseManager {
         var cellphone: String
         var feedbackOption: String
         var mark: String
-//        var productDescription: [[[String: Any]]]
+        var deviceID: String
         
         var dictionary: [String:Any]{
             return [
@@ -78,8 +78,8 @@ class DatabaseManager {
                 DatabaseManager.UsersInfoCases.adress.rawValue: adress,
                 DatabaseManager.UsersInfoCases.cellphone.rawValue: cellphone,
                 DatabaseManager.UsersInfoCases.feedbackOption.rawValue: feedbackOption,
-                DatabaseManager.UsersInfoCases.mark.rawValue: mark
-//                DatabaseManager.ProductCases.productDescription.rawValue: productDescription
+                DatabaseManager.UsersInfoCases.mark.rawValue: mark,
+                DatabaseManager.UsersInfoCases.deviceID.rawValue: deviceID
             ]
         }
     }
@@ -148,8 +148,9 @@ extension DatabaseManager.Order: DocumentSerializable {
             let userAdress = dictionary[DatabaseManager.UsersInfoCases.adress.rawValue] as? String,
             let userCellphone = dictionary[DatabaseManager.UsersInfoCases.cellphone.rawValue] as? String,
             let feedbackOption = dictionary[DatabaseManager.UsersInfoCases.feedbackOption.rawValue] as? String,
-            let userMark = dictionary[DatabaseManager.UsersInfoCases.mark.rawValue] as? String else {return nil}
-        self.init(totalPrice: totalPrice, name: userName, adress: userAdress, cellphone: userCellphone, feedbackOption: feedbackOption, mark: userMark)
+            let userMark = dictionary[DatabaseManager.UsersInfoCases.mark.rawValue] as? String,
+            let deviceID = dictionary[DatabaseManager.UsersInfoCases.deviceID.rawValue] as? String else {return nil}
+        self.init(totalPrice: totalPrice, name: userName, adress: userAdress, cellphone: userCellphone, feedbackOption: feedbackOption, mark: userMark, deviceID: deviceID)
     }
 }
 extension DatabaseManager.OrderDescription: DocumentSerializable {
@@ -180,7 +181,12 @@ extension DatabaseManager {
         case cellphone
         case feedbackOption
         case mark
+        case deviceID
+        
         case PreOrderEntity
+        case cart
+        case order
+        case orderDescription
     }
     
     //MARK: Про Сообщения
@@ -192,7 +198,6 @@ extension DatabaseManager {
         case workers
         case workersMessages
         case review
-        
     }
     
     //MARK: Про Товар
@@ -204,25 +209,18 @@ extension DatabaseManager {
         case productDescription
         case productImageURL
         case imageCollection
-        case cart
-        case order
-        case orderDescription
-        
     }
     
+    //MARK: Про категории товара
     enum ProductCategoriesCases: String, CaseIterable {
         case none = "Без Категории"
         case apiece = "Поштучно"
         case gift = "Подарки"
         case bouquet = "Букеты"
         case stock = "Акции"
-        //        case stockApice = "Акция Поштучно"
-        //        case stockBouquet = "Акция Букет"
     }
-    
-    enum NonCategory: String, CaseIterable {
-        case none = "Без Категории"
-    }
+
+    //MARK: Про количество
     enum MaxQuantityByCategoriesCases: Int {
         case towHundred = 200
         //        case hundredAndHalf = 150
@@ -231,6 +229,8 @@ extension DatabaseManager {
         case five = 5
         case three = 3
     }
+    
+    //MARK: Про обратную связь
     enum FeedbackTypesCases: String, CaseIterable {
         case cellphone = "По телефону"
         case viber = "Viber"

@@ -20,7 +20,7 @@ class UserCatalogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NetworkManager.shared.downLoadProductInfo(success: { productInfo in
+        NetworkManager.shared.downloadProducts(success: { productInfo in
             self.productInfo = productInfo
             self.catalogTableView.reloadData()
         }) { error in
@@ -149,7 +149,7 @@ private extension UserCatalogViewController {
         switch categories {
         case .apiece:
             showOptionsMethod(option: DatabaseManager.ProductCategoriesCases.apiece.rawValue)
-            NetworkManager.shared.downLoadApieceOnly(success: { productInfo in
+            NetworkManager.shared.downloadApieces(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
                 self.catalogTableView.reloadData()
@@ -158,7 +158,7 @@ private extension UserCatalogViewController {
             }
         case .gift:
             showOptionsMethod(option: DatabaseManager.ProductCategoriesCases.gift.rawValue)
-            NetworkManager.shared.downLoadGiftOnly(success: { productInfo in
+            NetworkManager.shared.downloadGifts(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
                 self.catalogTableView.reloadData()
@@ -167,7 +167,7 @@ private extension UserCatalogViewController {
             }
         case .bouquet:
             showOptionsMethod(option: DatabaseManager.ProductCategoriesCases.bouquet.rawValue)
-            NetworkManager.shared.downLoadBouquetOnly(success: { productInfo in
+            NetworkManager.shared.downloadBouquets(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
                 self.catalogTableView.reloadData()
@@ -176,7 +176,7 @@ private extension UserCatalogViewController {
             }
         case .stock:
             showOptionsMethod(option: DatabaseManager.ProductCategoriesCases.stock.rawValue)
-            NetworkManager.shared.downLoadStockOnly(success: { productInfo in
+            NetworkManager.shared.downloadStocks(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
                 self.catalogTableView.reloadData()

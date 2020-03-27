@@ -17,7 +17,7 @@ class UserHomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NetworkManager.shared.downLoadStockOnly(success: { productInfo in
+        NetworkManager.shared.downloadStocks(success: { productInfo in
             self.productInfo = productInfo
             self.homeTableView.reloadData()
         }) { error in

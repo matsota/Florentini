@@ -16,7 +16,7 @@ class WorkerCatalogViewController: UIViewController {
         super.viewDidLoad()
         
         //data Implementation
-        NetworkManager.shared.downLoadProductInfo(success: { productInfo in
+        NetworkManager.shared.downloadProducts(success: { productInfo in
             self.productInfo = productInfo
             self.catalogTableView.reloadData()
         }) { error in

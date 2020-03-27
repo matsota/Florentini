@@ -16,9 +16,10 @@ class NetworkManager {
     static let shared = NetworkManager()
     let db = Firestore.firestore()
     
-    //MARK: - О продуктах:
+    //MARK: - Общее:
+    
     //MARK: - Метод выгрузки Информации о продукте продукта из Firebase
-    func downLoadProductInfo(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+    func downloadProducts(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
         db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).getDocuments(completion: {
             (querySnapshot, _) in
             let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
@@ -26,7 +27,7 @@ class NetworkManager {
         })
     }
     
-    func downLoadBouquetOnly(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+    func downloadBouquets(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
         db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).whereField(DatabaseManager.ProductCases.productCategory.rawValue, isEqualTo: DatabaseManager.ProductCategoriesCases.bouquet.rawValue).getDocuments(completion: {
             (querySnapshot, _) in
             let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
@@ -34,7 +35,7 @@ class NetworkManager {
         })
     }
     
-    func downLoadApieceOnly(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+    func downloadApieces(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
         db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).whereField(DatabaseManager.ProductCases.productCategory.rawValue, isEqualTo: DatabaseManager.ProductCategoriesCases.apiece.rawValue).getDocuments(completion: {
             (querySnapshot, _) in
             let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
@@ -42,7 +43,15 @@ class NetworkManager {
         })
     }
     
-    func downLoadStockOnly(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+    func downloadGifts(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).whereField(DatabaseManager.ProductCases.productCategory.rawValue, isEqualTo: DatabaseManager.ProductCategoriesCases.gift.rawValue).getDocuments(completion: {
+            (querySnapshot, _) in
+            let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
+            success(productInfo)
+        })
+    }
+    
+    func downloadStocks(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
         db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).whereField(DatabaseManager.ProductCases.productCategory.rawValue, isEqualTo: DatabaseManager.ProductCategoriesCases.stock.rawValue).getDocuments(completion: {
             (querySnapshot, _) in
             let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
@@ -50,13 +59,7 @@ class NetworkManager {
         })
     }
     
-    func downLoadGiftOnly(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).whereField(DatabaseManager.ProductCases.productCategory.rawValue, isEqualTo: DatabaseManager.ProductCategoriesCases.gift.rawValue).getDocuments(completion: {
-            (querySnapshot, _) in
-            let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
-            success(productInfo)
-        })
-    }
+    //MARK: - Для Админа:
     
     //MARK: - Метод Загрузки изображения по Ссылке в приложение
     func downLoadImageByURL(url: String, success: @escaping(UIImage) -> Void) {
@@ -101,7 +104,7 @@ class NetworkManager {
         }
     }
     
-    //MARK: - Метод внесения информации  о товаре в Firebase
+    //MARK: - Метод внесения информации о товаре в Firebase
     func setProductDescription(name: String, price: Int, category: String, description: String, documentNamedID: String) {
         
         let imageTemplate = [
@@ -112,6 +115,18 @@ class NetworkManager {
             ] as [String: Any]
         
         db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).document(documentNamedID).setData(imageTemplate, merge: true)
+    }
+    
+    //MARK: - Редактирование цены существующего продукта в Worker-Catalog
+    func editProductPrice(name: String, newPrice: Int, category: String, description: String) {
+        let updatePrice = [
+            DatabaseManager.ProductCases.productName.rawValue: name,
+            DatabaseManager.ProductCases.productPrice.rawValue: newPrice,
+            DatabaseManager.ProductCases.productCategory.rawValue: category,
+            DatabaseManager.ProductCases.productDescription.rawValue: description
+            ] as [String: Any]
+        
+        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).document(name).setData(updatePrice)
     }
     
     //MARK: - Метод удаления продукта из базы данных
@@ -134,20 +149,8 @@ class NetworkManager {
         }
     }
     
-    //MARK: - Редактирование существующих продуктов в Worker-Catalog
-    func editProductPrice(name: String, newPrice: Int, category: String, description: String) {
-        let updatePrice = [
-            DatabaseManager.ProductCases.productName.rawValue: name,
-            DatabaseManager.ProductCases.productPrice.rawValue: newPrice,
-            DatabaseManager.ProductCases.productCategory.rawValue: category,
-            DatabaseManager.ProductCases.productDescription.rawValue: description
-            ] as [String: Any]
-        
-        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).document(name).setData(updatePrice)
-    }
+    //MARK: - Для пользователей:
     
-    
-    //MARK: - О Пользователях:
     //MARK: - Отправка отзыва
     func sendReview(name: String, content: String) {
         let newReview = DatabaseManager.ChatMessages(name: name, content: content, uid: AuthenticationManager.shared.currentUser!.uid, timeStamp: Date())
@@ -163,22 +166,22 @@ class NetworkManager {
     }
     
     func sendOrder(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, productDescription: [String : Any]) {
-        let newOrder = DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark)
         guard let currentIDDevice = CoreDataManager.shared.device.identifierForVendor else {return}
-
-        db.collection(DatabaseManager.ProductCases.order.rawValue).document("\(currentIDDevice)").setData(newOrder.dictionary) {
+        let newOrder = DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, deviceID: "\(currentIDDevice)")
+        
+        db.collection(DatabaseManager.UsersInfoCases.order.rawValue).document("\(currentIDDevice)").setData(newOrder.dictionary) {
             error in
             if let error = error {
                 print("Error: \(error.localizedDescription)")
             }else{
-                print("Order Completed")
-                self.db.collection(DatabaseManager.ProductCases.order.rawValue).document("\(currentIDDevice)").collection(DatabaseManager.ProductCases.orderDescription.rawValue).document().setData(productDescription)
+                
             }
         }
-        
+        db.collection(DatabaseManager.UsersInfoCases.order.rawValue).document("\(currentIDDevice)").collection("\(currentIDDevice)").document().setData(productDescription)
     }
     
-    //MARK: - О Сотрудниках:
+    //MARK: - Для всех сотрудников:
+    
     //MARK: - Workers Dataload
     func workersInfoLoad (success: @escaping([DatabaseManager.WorkerInfo]) -> Void, failure: @escaping(Error) -> Void) {
         let uid = AuthenticationManager.shared.currentUser?.uid
@@ -204,7 +207,6 @@ class NetworkManager {
             })
         }
     }
-    
     
     //MARK: - Отправка сообщения в Чате сотрудников
     func newChatMessage(name: String, content: String) {
@@ -234,6 +236,15 @@ class NetworkManager {
             }
         }
     }
+    
+    //MARK: - Метод выгрузки Информации о заказе из Firebase
+    //    func downloadMainOrderInfo(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+    //        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).getDocuments(completion: {
+    //            (querySnapshot, _) in
+    //            let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
+    //            success(productInfo)
+    //        })
+    //    }
     
 }
 
