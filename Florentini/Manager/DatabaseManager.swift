@@ -180,6 +180,7 @@ extension DatabaseManager {
         case cellphone
         case feedbackOption
         case mark
+        case PreOrderEntity
     }
     
     //MARK: Про Сообщения

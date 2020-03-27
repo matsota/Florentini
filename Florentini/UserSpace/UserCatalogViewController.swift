@@ -10,20 +10,9 @@ import UIKit
 import Firebase
 import FirebaseUI
 
-protocol UserCatalogViewControllerDelegate: class {
-    
-    func cartIsNotEmpty (_ `class`: UserCatalogViewController)
-    
-}
 
 class UserCatalogViewController: UIViewController {
-    
-    
-    //MARK: - Implementation
-    //delegate
-    var delegate: UserCatalogViewControllerDelegate?
-    
-    //MARK: - Button
+
     @IBOutlet weak var cartButton: UIButton!
     
     //MARK: - Overrides
@@ -37,8 +26,9 @@ class UserCatalogViewController: UIViewController {
         }) { error in
             print(error.localizedDescription)
         }
-        delegate?.cartIsNotEmpty(self)
         
+        cartCondition()
+
     }
     
     //MARK: - Нажатие кнопки Меню
@@ -63,10 +53,6 @@ class UserCatalogViewController: UIViewController {
     }
 
     //MARK: - Private
-    
-    //MARK: - Methods
-    
-    
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
     private var productInfo = [DatabaseManager.ProductInfo]()
@@ -102,15 +88,15 @@ extension UserCatalogViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = catalogTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UserCatalogTVCell.rawValue, for: indexPath) as! UserCatalogTableViewCell
+        let cell = catalogTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UserCatalogTVCell.rawValue, for: indexPath) as! UserCatalogTableViewCell,
+        fetch = productInfo[indexPath.row],
+        storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(fetch.productName)")
+        
         cell.delegate = self
         cell.showDescription()
         cell.hideDescription()
         
-        let get = productInfo[indexPath.row]
-        
-        let storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(get.productName)")
-        cell.fill(name: get.productName, price: get.productPrice, description: get.productDescription, category: get.productCategory) { image in
+        cell.fill(name: fetch.productName, price: fetch.productPrice, description: fetch.productDescription, category: fetch.productCategory) { image in
             image.sd_setImage(with: storageRef)
         }
         return cell
@@ -209,13 +195,35 @@ extension UserCatalogViewController: UserCatalogTableViewCellDelegate {
     //MARK: Adding to user's Cart
     func addToCart(_ cell: UserCatalogTableViewCell) {
         guard let name = cell.productNameLabel.text, let category = cell.category, let price = Int64(cell.productPriceLabel.text!) else {return}
+        
         CoreDataManager.shared.saveForCart(name: name, category: category, price: price, quantity: 1)
-        delegate?.cartIsNotEmpty(self)
-        let image = cell.productImageView.image
-        let imageData: NSData = image!.pngData()! as NSData
+        cartCondition()
+        
+        let image = cell.productImageView.image,
+        imageData: NSData = image!.pngData()! as NSData
+        
         UserDefaults.standard.set(imageData, forKey: name)
     }
 
+}
+
+//MARK: - Проверна на наличие предзаказа, чтобы изменить / не изменять картинку Cart
+private extension UserCatalogViewController {
+    
+    func cartCondition() {
+        CoreDataManager.shared.fetchPreOrder { (preOrderEntity) -> (Void) in
+            let preOrderAmount = preOrderEntity.count
+            
+            if preOrderAmount == 0 {
+                let cart = UIImage(systemName: "cart")
+                self.cartButton.setImage(cart, for: .normal)
+            }else{
+                let cartFill = UIImage(systemName: "cart.fill")
+                self.cartButton.setImage(cartFill, for: .normal)
+            }
+        }
+    }
+    
 }
 
 

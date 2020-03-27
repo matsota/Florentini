@@ -8,22 +8,9 @@
 
 import UIKit
 import FirebaseUI
-
-protocol UserHomeViewControllerDelegate: class {
-    
-    func cartIsNotEmpty (_ `class`: UserHomeViewController)
-    
-}
-
+import CoreData
 
 class UserHomeViewController: UIViewController {
-    
-    //MARK: - Implementation
-    //delegate:
-    var delegate: UserHomeViewControllerDelegate?
-    
-    //MARK: - Button
-    @IBOutlet weak var cartButton: UIButton!
     
     //MARK: - Overrides
     //MARK: ViewDidLoad
@@ -38,8 +25,7 @@ class UserHomeViewController: UIViewController {
         }
         
         print(AuthenticationManager.shared.currentUser?.uid as Any)
-        
-         delegate?.cartIsNotEmpty(self)
+        cartCondition()
     }
     
     //MARK: - Нажатие кнопки Меню
@@ -52,21 +38,20 @@ class UserHomeViewController: UIViewController {
         transitionToUsersCart()
     }
     
-    
     //MARK: - Private
-    
-    //MARK: - Methods
-    
     
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
     private var productInfo = [DatabaseManager.ProductInfo]()
     private var selectedCategory: String?
-    
     //MARK: TableView Outlet
     @IBOutlet private weak var homeTableView: UITableView!
     
-    @IBOutlet weak var noneStocksView: UIView!
+    //MARK: View
+    @IBOutlet private weak var noneStocksView: UIView!
+    
+    //MARK: Button
+    @IBOutlet private weak var cartButton: UIButton!
 }
 
 
@@ -101,7 +86,10 @@ extension UserHomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = homeTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UserHomeTVCell.rawValue, for: indexPath) as! UserHomeTableViewCell
+        let cell = homeTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UserHomeTVCell.rawValue, for: indexPath) as! UserHomeTableViewCell,
+        fetch = productInfo[indexPath.row],
+        storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(fetch.productName)")
+        
         cell.delegate = self
         cell.showDescription()
         cell.hideDescription()
@@ -110,10 +98,7 @@ extension UserHomeViewController: UITableViewDataSource, UITableViewDelegate {
             noneStocksView.isHidden = false
         }else{
             noneStocksView.isHidden = true
-            let get = productInfo[indexPath.row]
-            
-            let storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(get.productName)")
-            cell.fill(name: get.productName, price: get.productPrice, description: get.productDescription, category: get.productCategory) { image in
+            cell.fill(name: fetch.productName, price: fetch.productPrice, description: fetch.productDescription, category: fetch.productCategory) { image in
                 image.sd_setImage(with: storageRef)
             }
         }
@@ -131,13 +116,35 @@ extension UserHomeViewController: UserHomeTableViewCellDelegate {
     //MARK: Adding to user's Cart
     func addToCart(_ cell: UserHomeTableViewCell) {
         guard let name = cell.productNameLabel.text, let category = cell.category, let price = Int64(cell.productPriceLabel.text!) else {return}
+        
+        let image = cell.cellImageView.image,
+        imageData: NSData = image!.pngData()! as NSData
+        
         CoreDataManager.shared.saveForCart(name: name, category: category, price: price, quantity: 1)
-        delegate?.cartIsNotEmpty(self)
-        let image = cell.cellImageView.image
-        let imageData: NSData = image!.pngData()! as NSData
+        cartCondition()
+        
         UserDefaults.standard.set(imageData, forKey: name)
     }
+    
+}
 
+//MARK: - Проверна на наличие предзаказа, чтобы изменить / не изменять картинку Cart
+private extension UserHomeViewController {
+    
+    func cartCondition() {
+        CoreDataManager.shared.fetchPreOrder { (preOrderEntity) -> (Void) in
+            let preOrderAmount = preOrderEntity.count
+            
+            if preOrderAmount == 0 {
+                let cart = UIImage(systemName: "cart")
+                self.cartButton.setImage(cart, for: .normal)
+            }else{
+                let cartFill = UIImage(systemName: "cart.fill")
+                self.cartButton.setImage(cartFill, for: .normal)
+            }
+        }
+    }
+    
 }
 
 

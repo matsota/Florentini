@@ -21,9 +21,9 @@ class WorkerCatalogTableViewCell: UITableViewCell {
     
     //MARK: - Implementation
     let alert = UIAlertController()
-    weak var delegate: WorkerCatalogTableViewCellDelegate?
-    
     var category = String()
+    
+    weak var delegate: WorkerCatalogTableViewCellDelegate?
     
     //MARK: - Label
     @IBOutlet weak var productNameLabel: UILabel!
@@ -37,7 +37,7 @@ class WorkerCatalogTableViewCell: UITableViewCell {
     
     //MARK: - Buttons
     @IBOutlet weak var productPriceButton: UIButton!
-
+    
     
     
     //MARK: - Overrides

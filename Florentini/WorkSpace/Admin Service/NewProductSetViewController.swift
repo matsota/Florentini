@@ -53,8 +53,6 @@ class NewProductSetViewController: UIViewController {
     }
     
     //MARK: - Private:
-    
-    //MARK: - Methods
 
     //MARK: - Implementation
     private let cases = DatabaseManager.ProductCategoriesCases.allCases.map{$0.rawValue}
@@ -114,6 +112,7 @@ extension NewProductSetViewController: UIPickerViewDelegate, UIPickerViewDataSou
         if pickerView == photoCategoryPickerView {return cases.count}
         return 0
     }
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == photoCategoryPickerView {
             selectedCategory = cases[row]
@@ -157,7 +156,7 @@ extension NewProductSetViewController: UITextViewDelegate {
 //MARK: - Создание изображение для товара с помощью камеры телефона + с помощью галлереи телефона
 
 extension NewProductSetViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-
+    
     func makePhoto() {
         if UIImagePickerController.isSourceTypeAvailable(.camera){
             let image = UIImagePickerController()
@@ -181,7 +180,6 @@ extension NewProductSetViewController: UINavigationControllerDelegate, UIImagePi
         self.dismiss(animated: true, completion: nil)
     }
     
-    
     func downLoadPhoto() {
         let image = UIImagePickerController()
         image.delegate = self
@@ -196,7 +194,7 @@ extension NewProductSetViewController: UINavigationControllerDelegate, UIImagePi
 }
 
 //MARK: - Поиск фотографии по ссылке из сети
-extension NewProductSetViewController {
+private extension NewProductSetViewController {
     
     func downloadByURL() {
         self.present(self.alert.setImageByURL { url in
@@ -209,14 +207,14 @@ extension NewProductSetViewController {
 }
 
 //MARK: - Загрузка продукта в сеть
-extension NewProductSetViewController {
+private extension NewProductSetViewController {
     
     func uploadingProduct() {
         
-            let price = Int(photoPriceTextField.text!),
-                image = addedPhotoImageView,
-                name = self.photoNameTextField.text,
-                description = self.photoDescriptionTextView.text
+        let price = Int(photoPriceTextField.text!),
+        image = addedPhotoImageView,
+        name = self.photoNameTextField.text,
+        description = self.photoDescriptionTextView.text
         
         if price == nil || image == nil || name == "" || description == "" {
             self.present(self.alert.alertClassicInfoOK(title: "Эттеншн", message: "Вы ввели не все данные. Перепроверьте свой результат"), animated: true)
@@ -232,8 +230,7 @@ extension NewProductSetViewController {
 }
 
 //MARK: - Keyboard
-
-extension NewProductSetViewController {
+private extension NewProductSetViewController {
     
     //Movement constrains for keyboard
     @objc private func keyboardWillShow(notification: Notification) {

@@ -28,9 +28,6 @@ class WorkerMainSpaceViewController: UIViewController {
     
     //MARK: - Private:
     
-    //MARK: - Methods
-    
-    
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
     private let alert = UIAlertController()
@@ -54,6 +51,7 @@ extension WorkerMainSpaceViewController: UIViewControllerTransitioningDelegate {
         slidingMenu.isPresented = true
         return slidingMenu
     }
+    
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         slidingMenu.isPresented = false
         return slidingMenu

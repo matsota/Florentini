@@ -13,7 +13,10 @@ import CoreData
 
 class UserCartViewController: UIViewController {
     
+    static let shared = UserCartViewController()
+    
     //MARK: - Overrides
+    
     //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +24,6 @@ class UserCartViewController: UIViewController {
         CoreDataManager.shared.fetchPreOrder { (preOrderEntity) -> (Void) in
             self.preOrder = preOrderEntity
             self.cartTableView.reloadData()
-            print(self.preOrder)
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -54,49 +56,7 @@ class UserCartViewController: UIViewController {
     
     //MARK: - Подтвреждение заказа
     @IBAction func confirmTapped(_ sender: UIButton) {
-        //ДИКИЙ способ, что добавить множественный заказ в Firebase
-        let totalPrice = orderBill
-        let adress = clientAdressTextField.text!
-        let cellphone = clientCellPhoneTextField.text!
-        var name = clientNameTextField.text!
-        var mark = clientDescriptionTextField.text!
-        var feedbackOption = selectedFeedbackType
-        
-        if feedbackOption == "" {
-            feedbackOption = "Телефон"
-        }
-        if name == "" {
-            name = "Без Имени"
-        }
-        if mark == "" {
-            mark = "Без Дополнений"
-        }
-        
-        if adress == "" || cellphone == "" {
-            self.present(self.alert.alertClassicInfoOK(title: "Эттеншн!", message: "Мы не знаем всех необходимых данных, что бы осуществить доставку радости. Просим Вас ввести: Адресс доставки и Телефон, чтобы мы смогли подтвердить заказ"), animated: true)
-        }else{
-            
-            var jsonArray: [[String: Any]] = []
-            
-            for item in preOrder {
-                var dict: [String: Any] = [:]
-                for attribute in item.entity.attributesByName {
-                    //check if value is present, then add key to dictionary so as to avoid the nil value crash
-                    if let value = item.value(forKey: attribute.key) {
-                        dict[attribute.key] = value
-                    }
-                }
-                jsonArray.append(dict)
-            }
-            for _ in preOrder {
-                NetworkManager.shared.sendOrder(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, productDescription: jsonArray.remove(at:0))
-            }
-            CoreDataManager.shared.deleteAllData(entity: "PreOrderEntity") {
-                self.preOrder.removeAll()
-                self.cartTableView.reloadData()
-            }
-            
-        }
+        confirm()
     }
     
     
@@ -115,7 +75,7 @@ class UserCartViewController: UIViewController {
     
     //MARK: Views Outlets
     @IBOutlet private weak var buttonsView: UIView!
-    @IBOutlet weak var tableCountZeroView: UIView!
+    @IBOutlet private weak var tableCountZeroView: UIView!
     
     @IBOutlet private weak var scrollView: UIScrollView!
     //MARK: TableView Outlets
@@ -169,27 +129,24 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // - Implementation
-        let cell = cartTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UsersCartTVCell.rawValue, for: indexPath) as! UserCartTableViewCell
+        let cell = cartTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UsersCartTVCell.rawValue, for: indexPath) as! UserCartTableViewCell,
+        fetch = preOrder[cell.tag],
+        name = fetch.value(forKey: DatabaseManager.ProductCases.productName.rawValue) as! String,
+        category = fetch.value(forKey: DatabaseManager.ProductCases.productCategory.rawValue) as! String,
+        price = fetch.value(forKey: DatabaseManager.ProductCases.productPrice.rawValue) as! Int64,
+        sliderValue = fetch.value(forKey: DatabaseManager.ProductCases.productQuantity.rawValue) as! Int64,
+        imageData = UserDefaults.standard.object(forKey: name) as! NSData
+        
         cell.delegate = self
-        cell.tag = indexPath.row
-        let fetch = preOrder[cell.tag]
-        //from coreData
-        let name = fetch.value(forKey: DatabaseManager.ProductCases.productName.rawValue) as! String
-        let category = fetch.value(forKey: DatabaseManager.ProductCases.productCategory.rawValue) as! String
-        let price = fetch.value(forKey: DatabaseManager.ProductCases.productPrice.rawValue) as! Int64
-        let sliderValue = fetch.value(forKey: DatabaseManager.ProductCases.productQuantity.rawValue) as! Int64
-        let imageData = UserDefaults.standard.object(forKey: name) as! NSData
         
         
-        //maxValue correction of sliders in each cell
         if category == DatabaseManager.ProductCategoriesCases.apiece.rawValue {
             cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.hundred.rawValue)
         }
         if category == DatabaseManager.ProductCategoriesCases.bouquet.rawValue {
             cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.five.rawValue)
         }
-        //
+        
         cell.fill (name: name , price: price, slider: sliderValue, imageData: imageData)
         
         return cell
@@ -220,24 +177,23 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
 extension UserCartViewController: UserCartTableViewCellDelegate {
     
     func sliderValue(_ cell: UserCartTableViewCell) {
-        guard let price = cell.productPrice else {return}
-        guard let name = cell.productName else {return}
-        guard let fetch = try! PersistenceService.context.fetch(PreOrderEntity.fetchRequest()) as? [PreOrderEntity] else {return}
+        guard let price = cell.productPrice, let name = cell.productName, let fetch = try! PersistenceService.context.fetch(PreOrderEntity.fetchRequest()) as? [PreOrderEntity] else {return}
         
-        let sliderEquantion = Int64(cell.quantitySlider.value) * price
-        let sliderValue = Int64(cell.quantitySlider.value)
+        let sliderEquantion = Int64(cell.quantitySlider.value) * price,
+        sliderValue = Int64(cell.quantitySlider.value)
         
         cell.productPriceLabel.text! = "\(sliderEquantion) грн"
         cell.quantityLabel.text! = "\(sliderValue) шт"
         
         CoreDataManager.shared.updateCart(name: name, quantity: sliderValue)
+        
         self.orderBill = fetch.map({$0.productPrice * $0.productQuantity}).reduce(0, +)
         self.orderPriceLabel.text = "\(self.orderBill) грн"
     }
     
 }
 
-//MARK: - Появление вариантов обратной связи
+//MARK: - Появление / Выбор вариантов обратной связи
 private extension UserCartViewController {
     
     func selectionMethod(_ class: UIViewController, _ sender: UIButton) {
@@ -252,11 +208,6 @@ private extension UserCartViewController {
         }
     }
     
-}
-
-//MARK: - Выбор способа обратной связи
-private extension UserCartViewController {
-    
     func showOptionsMethod(option: String) {
         selectedFeedbackType = option
         feedbackTypeBttnsCellection.forEach { (buttons) in
@@ -270,7 +221,7 @@ private extension UserCartViewController {
     
 }
 
-//MARK: Смещение constrains при появлении клавиатуры
+//MARK: - Смещение constrains при появлении клавиатуры
 private extension UserCartViewController {
     
     @objc func keyboardWillShow(notification: Notification) {
@@ -290,35 +241,52 @@ private extension UserCartViewController {
     
 }
 
-//MARK: - Для изменения кнопки cart в User-Home-VC
-extension UserCartViewController: UserHomeViewControllerDelegate {
+//MARK: - Отправка предзаза из coredata в firebase
+private extension UserCartViewController {
     
-    func cartIsNotEmpty(_ class: UserHomeViewController) {
-            if preOrder.count == 0 {
-                let cart = UIImage(systemName: "cart")
-                `class`.cartButton.setImage(cart, for: .normal)
-            }else{
-                let cartFill = UIImage(systemName: "cart.fill")
-                `class`.cartButton.setImage(cartFill, for: .normal)
-            }
+    func confirm() {
+        guard let adress = clientAdressTextField.text, let cellphone = clientCellPhoneTextField.text else {return}
+        let totalPrice = orderBill
+        
+        var name = clientNameTextField.text!,
+        mark = clientDescriptionTextField.text!,
+        feedbackOption = selectedFeedbackType
+        
+        //defaults
+        if feedbackOption == "", name == "", mark == "" {
+            feedbackOption = "Телефон"
+            name = "Без Имени"
+            mark = "Без Дополнений"
         }
     
-}
-
-//MARK: - Для изменения кнопки cart в User-Cart-VC
-extension UserCartViewController: UserCatalogViewControllerDelegate {
-    
-    func cartIsNotEmpty(_ class: UserCatalogViewController) {
-        if preOrder.count == 0 {
-            let cart = UIImage(systemName: "cart")
-            `class`.cartButton.setImage(cart, for: .normal)
+        if adress == "" || cellphone == "" {
+            self.present(self.alert.alertClassicInfoOK(title: "Эттеншн!", message: "Мы не знаем всех необходимых данных, что бы осуществить доставку радости. Просим Вас ввести: Адресс доставки и Телефон, чтобы мы смогли подтвердить заказ"), animated: true)
         }else{
-            let cartFill = UIImage(systemName: "cart.fill")
-            `class`.cartButton.setImage(cartFill, for: .normal)
+            var jsonArray: [[String: Any]] = []
+            
+            for i in preOrder {
+                var dict: [String: Any] = [:]
+                for attribute in i.entity.attributesByName {
+                    if let value = i.value(forKey: attribute.key) {
+                        dict[attribute.key] = value
+                    }
+                }
+                jsonArray.append(dict)
+            }
+            
+            for _ in preOrder {
+                NetworkManager.shared.sendOrder(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, productDescription: jsonArray.remove(at:0))
+            }
+            
+            CoreDataManager.shared.deleteAllData(entity: DatabaseManager.UsersInfoCases.PreOrderEntity.rawValue) {
+                self.preOrder.removeAll()
+                self.cartTableView.reloadData()
+            }
         }
     }
     
 }
+
 
 
 

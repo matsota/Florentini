@@ -36,27 +36,10 @@ class WorkerProfileViewController: UIViewController {
     
     //MARK: - Change Password Button
     @IBAction func passChangeTapped(_ sender: UIButton) {
-        let newPass = newPassword.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        let reNewPass = reNewPassword.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        if newPass != reNewPass {
-            self.present(self.alert.alertClassicInfoOK(title: "Внимание", message: "Пароли не совпадают"), animated: true)
-        }else if newPass == "" || reNewPass == "" {
-            self.present(self.alert.alertClassicInfoOK(title: "Внимание", message: "Для смены пароля необходимо заполнить все поля"), animated: true)
-        }else{
-            self.present(self.alert.alertPassChange(success: {
-                self.dismiss(animated: true) { let ordersVC = self.storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MainWorkSpaceVC.rawValue) as? WorkerMainSpaceViewController
-                    self.view.window?.rootViewController = ordersVC
-                    self.view.window?.makeKeyAndVisible()
-                }
-            }, password: newPass), animated: true)
-        }
-        
+        changePassword()
     }
     
     //MARK: - Private:
-    
-    //MARK: - Methods
     
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
@@ -123,6 +106,29 @@ private extension WorkerProfileViewController {
             self.emailLabel.text = Auth.auth().currentUser?.email
         }) { error in
             self.present(self.alert.alertSomeThingGoesWrong(), animated: true)
+        }
+    }
+    
+}
+
+//MARK: - Change Password
+private extension WorkerProfileViewController{
+    
+    func changePassword() {
+        guard let newPass = newPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+            let reNewPass = reNewPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {return}
+        
+        if newPass != reNewPass {
+            self.present(self.alert.alertClassicInfoOK(title: "Внимание", message: "Пароли не совпадают"), animated: true)
+        }else if newPass == "" || reNewPass == "" {
+            self.present(self.alert.alertClassicInfoOK(title: "Внимание", message: "Для смены пароля необходимо заполнить все поля"), animated: true)
+        }else{
+            self.present(self.alert.alertPassChange(success: {
+                self.dismiss(animated: true) { let ordersVC = self.storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MainWorkSpaceVC.rawValue) as? WorkerMainSpaceViewController
+                    self.view.window?.rootViewController = ordersVC
+                    self.view.window?.makeKeyAndVisible()
+                }
+            }, password: newPass), animated: true)
         }
     }
     

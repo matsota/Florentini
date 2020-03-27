@@ -76,16 +76,7 @@ extension UIAlertController {
     }
     
     //MARK: - Send Message Method in Chat of WorkSpace
-    func alertSendMessage() -> (UIAlertController) {
-        var name = String()
-        
-        NetworkManager.shared.workersInfoLoad(success: { workerInfo in
-            workerInfo.forEach { workerInfo in
-                name = workerInfo.name
-            }
-        }) { error in
-            print("Error func alertSendMessage in: \(error.localizedDescription)")
-        }
+    func alertSendMessage(name: String) -> (UIAlertController) {
         
         let alertMessage = UIAlertController(title: name, message: nil, preferredStyle: .alert)
         alertMessage.addTextField { (text:UITextField) in

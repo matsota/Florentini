@@ -15,7 +15,7 @@ class WorkerChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //MARK: Подгрузка информации о сотруднике, для чата
+        //MARK: Информация о сотруднике
         NetworkManager.shared.workersInfoLoad(success: { workerInfo in
             self.currentWorkerInfo = workerInfo
             self.currentWorkerInfo.forEach { workerInfo in
@@ -26,7 +26,7 @@ class WorkerChatViewController: UIViewController {
             print(error.localizedDescription)
         }
         
-        //MARK: Подгрузка всех сообщений, что сотрудники оставляли в чате
+        //MARK: Сообщения чата
         NetworkManager.shared.workersChatLoad(success: { messages in
             self.messagesArray = messages
             self.messageTableView.reloadData()
@@ -34,7 +34,7 @@ class WorkerChatViewController: UIViewController {
             print(error.localizedDescription)
         }
         
-        //MARK: Подгрузка новых сообщений, что сотрудники оставляли в чате, в процессе пользования приложением.
+        //MARK: Обновление чата
         NetworkManager.shared.chatUpdate { newMessages in
             self.messagesArray.insert(newMessages, at: 0)
             self.messageTableView.reloadData()
@@ -49,16 +49,14 @@ class WorkerChatViewController: UIViewController {
     
     //MARK: - Message button
     @IBAction func typeMessage(_ sender: UIButton) {
-        guard self.name != "" else {return}
-        self.present(self.alert.alertSendMessage(), animated: true)
+        guard name != "" else {return}
+        self.present(self.alert.alertSendMessage(name: name), animated: true)
     }
     
     
     
     //MARK: - Private:
-    
-    //MARK: - Methods
-    
+ 
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
     private let alert = UIAlertController()
@@ -107,8 +105,9 @@ extension WorkerChatViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.WorkerMessagesTVCell.rawValue, for: indexPath) as! WorkerMessagesTableViewCell
-        let message = messagesArray[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.WorkerMessagesTVCell.rawValue, for: indexPath) as! WorkerMessagesTableViewCell,
+        message = messagesArray[indexPath.row]
+        
         cell.fill(name: message.name, content: message.content, date: "\(message.timeStamp)")
         
         return cell

@@ -84,9 +84,11 @@ extension WorkerCatalogViewController: UITableViewDelegate, UITableViewDataSourc
     
     //deleteProduct
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
         let cell = catalogTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.WorkerCatalogTVCell.rawValue, for: indexPath) as! WorkerCatalogTableViewCell
         guard let name = cell.productNameLabel.text else {return nil}
-        let delete = deleteAction(name: name,at: indexPath)
+        let delete = deleteAction(name: name, at: indexPath)
+        
         return UISwipeActionsConfiguration(actions: [delete])
     }
     
@@ -112,10 +114,10 @@ extension WorkerCatalogViewController: UITableViewDelegate, UITableViewDataSourc
 //MARK: Методы TableViewCell через delegate
 extension WorkerCatalogViewController: WorkerCatalogTableViewCellDelegate {
     
-    //changeprice
     func editPrice(_ cell: WorkerCatalogTableViewCell){
         guard let name = cell.productNameLabel.text, let description = cell.productDescriptionLabel.text else {return}
         let category = cell.category
+        
         if AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid {
             cell.productPriceButton.isUserInteractionEnabled = true
             

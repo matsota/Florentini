@@ -33,8 +33,6 @@ class WorkerFAQViewController: UIViewController {
     
     //MARK: - Private:
     
-    //MARK: - Methods
-    
     //MARK: - Implementation
 }
 

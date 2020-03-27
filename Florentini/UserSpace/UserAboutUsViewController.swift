@@ -33,34 +33,9 @@ class UserAboutUsViewController: UIViewController {
     
     //MARK: - Private:
     
-    //MARK: - Methods
-    
-    //MARK: Movement constrains for keyboard
-    @objc private func keyboardWillShow(notification: Notification) {
-        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber, let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
-        
-        scrollViewBottomConstraint.constant = -keyboardFrameValue.cgRectValue.height
-        UIView.animate(withDuration: duration.doubleValue) {
-            self.view.layoutIfNeeded()
-            self.scrollView.setContentOffset(CGPoint(x: 0, y: 150), animated: false)
-        }
-    }
-    @objc private func keyboardWillHide(notification: Notification) {
-        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber else {return}
-        
-        scrollViewBottomConstraint.constant = 0
-        UIView.animate(withDuration: duration.doubleValue) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    //
-    
-    
     //MARK: - Implementation
     
     private let slidingMenu = SlideInTransitionMenu()
-    private let secretCode = "/WorkSpace"
-    private let secretCode2 = "Go/"
     private let alert = UIAlertController()
     
     //MARK: ScrollView
@@ -99,7 +74,10 @@ extension UserAboutUsViewController: UIViewControllerTransitioningDelegate {
 private extension UserAboutUsViewController {
     func reviewSent() {
         var name = nameTextField.text
-        let review = reviewTextField.text
+        
+        let review = reviewTextField.text,
+        secretCode = "/WorkSpace",
+        secretCode2 = "Go/"
         
         if name == secretCode && review == secretCode2 {
             let loginWorkSpaceVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.LoginWorkSpaceVC.rawValue) as? LoginWorkSpaceViewController
@@ -112,4 +90,29 @@ private extension UserAboutUsViewController {
             NetworkManager.shared.sendReview(name: name!, content: review!)
         }
     }
+}
+
+
+//MARK: - Появение/Сокрытие клавиатуры
+private extension UserAboutUsViewController {
+    
+    @objc func keyboardWillShow(notification: Notification) {
+        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber, let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
+        
+        scrollViewBottomConstraint.constant = -keyboardFrameValue.cgRectValue.height
+        UIView.animate(withDuration: duration.doubleValue) {
+            self.view.layoutIfNeeded()
+            self.scrollView.setContentOffset(CGPoint(x: 0, y: 150), animated: false)
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: Notification) {
+        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber else {return}
+        
+        scrollViewBottomConstraint.constant = 0
+        UIView.animate(withDuration: duration.doubleValue) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
 }
