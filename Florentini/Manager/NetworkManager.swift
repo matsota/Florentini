@@ -164,18 +164,18 @@ class NetworkManager {
     
     func sendOrder(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, productDescription: [String : Any]) {
         let newOrder = DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark)
-        
-        var ref: DocumentReference? = nil
-        
-        ref = db.collection(DatabaseManager.ProductCases.order.rawValue).addDocument(data: newOrder.dictionary) {
+        guard let currentIDDevice = CoreDataManager.shared.device.identifierForVendor else {return}
+
+        db.collection(DatabaseManager.ProductCases.order.rawValue).document("\(currentIDDevice)").setData(newOrder.dictionary) {
             error in
             if let error = error {
                 print("Error: \(error.localizedDescription)")
             }else{
                 print("Order Completed")
+                self.db.collection(DatabaseManager.ProductCases.order.rawValue).document("\(currentIDDevice)").collection(DatabaseManager.ProductCases.orderDescription.rawValue).document().setData(productDescription)
             }
         }
-        db.collection(DatabaseManager.ProductCases.order.rawValue).document("\(ref!.documentID)").collection(DatabaseManager.ProductCases.orderDescription.rawValue).addDocument(data: productDescription)
+        
     }
     
     //MARK: - О Сотрудниках:

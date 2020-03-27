@@ -24,7 +24,6 @@ class UserHomeViewController: UIViewController {
             print(error.localizedDescription)
         }
         
-        print(AuthenticationManager.shared.currentUser?.uid as Any)
         cartCondition()
     }
     

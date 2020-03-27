@@ -126,11 +126,12 @@ extension NewProductSetViewController: UITextViewDelegate {
     
     func setTextViewPlaceholder() {
         photoDescriptionTextView.text = "Введите текст"
-        photoDescriptionTextView.textColor = .lightGray
+        photoDescriptionTextView.textColor = .systemGray4
         photoDescriptionTextView.font = UIFont(name: "System", size: 13)
         
         photoDescriptionTextView.layer.borderWidth = 1
-        photoDescriptionTextView.layer.borderColor = UIColor.lightGray.cgColor
+        photoDescriptionTextView.layer.borderColor = UIColor.systemGray4.cgColor
+        photoDescriptionTextView.layer.cornerRadius = 5
         photoDescriptionTextView.returnKeyType = .done
         photoDescriptionTextView.delegate = self
     }

@@ -17,6 +17,9 @@ class UserAboutUsViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         hideKeyboardWhenTappedAround()
+        
+        setTextViewPlaceholder()
+        
 
     }
     
@@ -43,8 +46,9 @@ class UserAboutUsViewController: UIViewController {
     
     //MARK: Outlets
     @IBOutlet private weak var nameTextField: UITextField!
-    @IBOutlet private weak var reviewTextField: UITextField!
+    @IBOutlet private weak var reviewTextView: UITextView!
     @IBOutlet private weak var scrollViewBottomConstraint: NSLayoutConstraint!
+    
 }
 
 
@@ -75,7 +79,7 @@ private extension UserAboutUsViewController {
     func reviewSent() {
         var name = nameTextField.text
         
-        let review = reviewTextField.text,
+        let review = reviewTextView.text,
         secretCode = "/WorkSpace",
         secretCode2 = "Go/"
         
@@ -113,6 +117,37 @@ private extension UserAboutUsViewController {
         UIView.animate(withDuration: duration.doubleValue) {
             self.view.layoutIfNeeded()
         }
+    }
+    
+}
+
+//MARK: - by TextView-Delegate + Custom-for-placeholder
+extension UserAboutUsViewController: UITextViewDelegate {
+    
+    func setTextViewPlaceholder() {
+        reviewTextView.text = "Введите текст"
+        reviewTextView.textColor = .systemGray4
+        reviewTextView.font = UIFont(name: "System", size: 13)
+        
+        reviewTextView.layer.borderWidth = 1
+        reviewTextView.layer.borderColor = UIColor.systemGray4.cgColor
+        reviewTextView.layer.cornerRadius = 5
+        reviewTextView.returnKeyType = .done
+        reviewTextView.delegate = self
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if reviewTextView.text == "Введите текст" {
+            reviewTextView.text = ""
+            reviewTextView.textColor = .black
+        }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+        }
+        return true
     }
     
 }

@@ -23,18 +23,21 @@ class UserCartViewController: UIViewController {
         
         CoreDataManager.shared.fetchPreOrder { (preOrderEntity) -> (Void) in
             self.preOrder = preOrderEntity
+            
+            if self.preOrder.count == 0 {
+                self.tableCountZeroView.isHidden = false
+            }else{
+                self.tableCountZeroView.isHidden = true
+            }
+            
+            self.orderBill = self.preOrder.map({$0.productPrice * $0.productQuantity}).reduce(0, +)
+            self.orderPriceLabel.text = "\(self.orderBill) грн"
             self.cartTableView.reloadData()
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         hideKeyboardWhenTappedAround()
-        
-        if preOrder.count == 0 {
-            tableCountZeroView.isHidden = false
-        }else{
-            tableCountZeroView.isHidden = true
-        }
         
     }
     
@@ -58,10 +61,6 @@ class UserCartViewController: UIViewController {
     @IBAction func confirmTapped(_ sender: UIButton) {
         confirm()
     }
-    
-    
-    
-    
     
     //MARK: - Private:
     
@@ -129,16 +128,17 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = cartTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UsersCartTVCell.rawValue, for: indexPath) as! UserCartTableViewCell,
-        fetch = preOrder[cell.tag],
+        let cell = cartTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UsersCartTVCell.rawValue, for: indexPath) as! UserCartTableViewCell
+        
+        cell.tag = indexPath.row
+        cell.delegate = self
+        
+        let fetch = preOrder[cell.tag],
         name = fetch.value(forKey: DatabaseManager.ProductCases.productName.rawValue) as! String,
         category = fetch.value(forKey: DatabaseManager.ProductCases.productCategory.rawValue) as! String,
         price = fetch.value(forKey: DatabaseManager.ProductCases.productPrice.rawValue) as! Int64,
         sliderValue = fetch.value(forKey: DatabaseManager.ProductCases.productQuantity.rawValue) as! Int64,
         imageData = UserDefaults.standard.object(forKey: name) as! NSData
-        
-        cell.delegate = self
-        
         
         if category == DatabaseManager.ProductCategoriesCases.apiece.rawValue {
             cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.hundred.rawValue)

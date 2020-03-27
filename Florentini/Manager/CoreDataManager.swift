@@ -12,7 +12,7 @@ import CoreData
 class CoreDataManager {
     
     static let shared = CoreDataManager()
-    var preOrder = [PreOrderEntity]()
+    let device = UIDevice.current
     
     //MARK: - Создание заказа/Добавление к заказу
     func saveForCart(name: String, category: String, price: Int64, quantity: Int64) {
@@ -71,6 +71,7 @@ class CoreDataManager {
             {
                 let managedObjectData:NSManagedObject = managedObject as! NSManagedObject
                 PersistenceService.context.delete(managedObjectData)
+                PersistenceService.saveContext()
             }
             success()
         } catch let error as NSError {

@@ -1,0 +1,351 @@
+
+/* Class = "UILabel"; text = "грн"; ObjectID = "1oK-t3-R0G"; */
+"1oK-t3-R0G.text" = "грн";
+
+/* Class = "UILabel"; text = "с 9:00 до 19:00"; ObjectID = "2dh-9Z-lan"; */
+"2dh-9Z-lan.text" = "с 9:00 до 19:00";
+
+/* Class = "UILabel"; text = "Платная. Расчитывается в зависимости от растояния"; ObjectID = "32x-Ov-cs2"; */
+"32x-Ov-cs2.text" = "Платная. Расчитывается в зависимости от растояния";
+
+/* Class = "UILabel"; text = "На карту Монобанка"; ObjectID = "3Gr-Wu-cmj"; */
+"3Gr-Wu-cmj.text" = "На карту Монобанка";
+
+/* Class = "UILabel"; text = "доставка по Киеву 100 грн"; ObjectID = "3kx-C6-gyx"; */
+"3kx-C6-gyx.text" = "доставка по Киеву 100 грн";
+
+/* Class = "UIButton"; normalTitle = "Подтвердить"; ObjectID = "40U-ma-gfb"; */
+"40U-ma-gfb.normalTitle" = "Подтвердить";
+
+/* Class = "UIButton"; normalTitle = "enter"; ObjectID = "455-B8-UdB"; */
+"455-B8-UdB.normalTitle" = "enter";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "4MO-KQ-esj"; */
+"4MO-KQ-esj.title" = "Item";
+
+/* Class = "UILabel"; text = "Предварительная оплата заказа осуществляется только, после подтверждения начилия желаемой покупки на складе. Мы всегда Вам перезвоним и обсудим все детали"; ObjectID = "4NW-Al-y2m"; */
+"4NW-Al-y2m.text" = "Предварительная оплата заказа осуществляется только, после подтверждения начилия желаемой покупки на складе. Мы всегда Вам перезвоним и обсудим все детали";
+
+/* Class = "UITextField"; placeholder = "Оставленный Вами отзыв - анонимный"; ObjectID = "4kr-Hq-4V3"; */
+"4kr-Hq-4V3.placeholder" = "Оставленный Вами отзыв - анонимный";
+
+/* Class = "UIButton"; normalTitle = "Скачать"; ObjectID = "5uN-Gd-spP"; */
+"5uN-Gd-spP.normalTitle" = "Скачать";
+
+/* Class = "UIButton"; normalTitle = "Отправить"; ObjectID = "6NT-x1-sqQ"; */
+"6NT-x1-sqQ.normalTitle" = "Отправить";
+
+/* Class = "UITextField"; placeholder = "Введите свое имя"; ObjectID = "6t2-SH-EEl"; */
+"6t2-SH-EEl.placeholder" = "Введите свое имя";
+
+/* Class = "UIButton"; normalTitle = "Загрузить"; ObjectID = "7IQ-iB-Rhb"; */
+"7IQ-iB-Rhb.normalTitle" = "Загрузить";
+
+/* Class = "UILabel"; text = "Доставка за час/полтора с момента оплаты заказа."; ObjectID = "7O0-iA-pXP"; */
+"7O0-iA-pXP.text" = "Доставка за час/полтора с момента оплаты заказа.";
+
+/* Class = "UINavigationItem"; title = "Home"; ObjectID = "7T1-DU-1qb"; */
+"7T1-DU-1qb.title" = "Home";
+
+/* Class = "UILabel"; text = "Каталог"; ObjectID = "84w-IE-7Oq"; */
+"84w-IE-7Oq.text" = "Каталог";
+
+/* Class = "UILabel"; text = "О Нас"; ObjectID = "9Wi-8N-QZx"; */
+"9Wi-8N-QZx.text" = "О Нас";
+
+/* Class = "UITextField"; placeholder = "email"; ObjectID = "ACA-pS-AuJ"; */
+"ACA-pS-AuJ.placeholder" = "email";
+
+/* Class = "UILabel"; text = "Экспресс Доставка"; ObjectID = "AEz-f3-oX7"; */
+"AEz-f3-oX7.text" = "Экспресс Доставка";
+
+/* Class = "UIButton"; normalTitle = "Как с Вами связаться?"; ObjectID = "BFW-42-suV"; */
+"BFW-42-suV.normalTitle" = "Как с Вами связаться?";
+
+/* Class = "UILabel"; text = "date"; ObjectID = "D79-14-idy"; */
+"D79-14-idy.text" = "date";
+
+/* Class = "UIButton"; normalTitle = "Фильтр"; ObjectID = "DJA-sM-WBK"; */
+"DJA-sM-WBK.normalTitle" = "Фильтр";
+
+/* Class = "UILabel"; text = "Профиль"; ObjectID = "DiL-cJ-Zpg"; */
+"DiL-cJ-Zpg.text" = "Профиль";
+
+/* Class = "UIButton"; normalTitle = "Добавить Новый Товар"; ObjectID = "E5R-XA-3pt"; */
+"E5R-XA-3pt.normalTitle" = "Добавить Новый Товар";
+
+/* Class = "UILabel"; text = "с 19:00 до 23:00"; ObjectID = "EJ5-EV-ARi"; */
+"EJ5-EV-ARi.text" = "с 19:00 до 23:00";
+
+/* Class = "UILabel"; text = "FAQ"; ObjectID = "ESP-fd-pDf"; */
+"ESP-fd-pDf.text" = "FAQ";
+
+/* Class = "UILabel"; text = "Не забудьте проверить информацию, которую Вы ввели"; ObjectID = "G1j-Xf-Jbl"; */
+"G1j-Xf-Jbl.text" = "Не забудьте проверить информацию, которую Вы ввели";
+
+/* Class = "UILabel"; text = "FAQ"; ObjectID = "GJJ-JE-Lyt"; */
+"GJJ-JE-Lyt.text" = "FAQ";
+
+/* Class = "UIButton"; normalTitle = "По телефону"; ObjectID = "GJo-Ok-EeM"; */
+"GJo-Ok-EeM.normalTitle" = "По телефону";
+
+/* Class = "UILabel"; text = "О нас"; ObjectID = "HMK-me-YIh"; */
+"HMK-me-YIh.text" = "О нас";
+
+/* Class = "UILabel"; text = "Стоимость - 150 грн"; ObjectID = "HRA-lV-Agc"; */
+"HRA-lV-Agc.text" = "Стоимость - 150 грн";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "K08-LE-QkY"; */
+"K08-LE-QkY.title" = "Item";
+
+/* Class = "UITextField"; placeholder = "Новый пароль"; ObjectID = "K5S-Yu-PDT"; */
+"K5S-Yu-PDT.placeholder" = "Новый пароль";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "KI9-td-d1c"; */
+"KI9-td-d1c.text" = "0";
+
+/* Class = "UILabel"; text = "FAQ"; ObjectID = "KO7-RX-3Oj"; */
+"KO7-RX-3Oj.text" = "FAQ";
+
+/* Class = "UITextView"; text = "Вас приветствует Florentini - многогранный сервис доставки и предоставления приятнейших впечатлений и счастливых эмоций! Наш талантливый, молодой и увлеченный коллектив умеет прислушиваться к каждому пожеланию заказчика, трансформируя его запрос в уникальное оригинальное предложение. А своевременная и качественная доставка цветов по Киеву поразит Вас своим ориентированным на потребителя обслуживанием, ведь наша задача - увидеть улыбку дорогого и важного для Вас человека. Когда желаемый результат достигнут - лучшей наградой для Florentini станет неоднократное обращение заказчика как подтверждение его удовлетворенности предоставленными услугами. Мы хотим быть полезными для каждого человека, обратившегося в нашу компанию, и надеемся на длительное и качественное сотрудничество. Но разве одним только Киевом мы станем ограничиваться? Мы хотим дарить людям радость и ощущать Вашу благодарность по всей Украине, что возможно, ведь Florentini занимается доставкой цветов и подарков во всех крупных городах и регионах нашей прекрасной страны. А дальше - больше!"; ObjectID = "KTf-Ja-Fq6"; */
+"KTf-Ja-Fq6.text" = "Вас приветствует Florentini - многогранный сервис доставки и предоставления приятнейших впечатлений и счастливых эмоций! Наш талантливый, молодой и увлеченный коллектив умеет прислушиваться к каждому пожеланию заказчика, трансформируя его запрос в уникальное оригинальное предложение. А своевременная и качественная доставка цветов по Киеву поразит Вас своим ориентированным на потребителя обслуживанием, ведь наша задача - увидеть улыбку дорогого и важного для Вас человека. Когда желаемый результат достигнут - лучшей наградой для Florentini станет неоднократное обращение заказчика как подтверждение его удовлетворенности предоставленными услугами. Мы хотим быть полезными для каждого человека, обратившегося в нашу компанию, и надеемся на длительное и качественное сотрудничество. Но разве одним только Киевом мы станем ограничиваться? Мы хотим дарить людям радость и ощущать Вашу благодарность по всей Украине, что возможно, ведь Florentini занимается доставкой цветов и подарков во всех крупных городах и регионах нашей прекрасной страны. А дальше - больше!";
+
+/* Class = "UILabel"; text = "Позиция:"; ObjectID = "KmO-Lu-5O7"; */
+"KmO-Lu-5O7.text" = "Позиция:";
+
+/* Class = "UIButton"; normalTitle = "Поштучно"; ObjectID = "LVP-pU-0UJ"; */
+"LVP-pU-0UJ.normalTitle" = "Поштучно";
+
+/* Class = "UILabel"; text = "Почта:"; ObjectID = "Lre-YI-IMm"; */
+"Lre-YI-IMm.text" = "Почта:";
+
+/* Class = "UILabel"; text = "Принимаем заказы"; ObjectID = "MKT-YN-bYL"; */
+"MKT-YN-bYL.text" = "Принимаем заказы";
+
+/* Class = "UILabel"; text = "Смена Пароля"; ObjectID = "MZW-1l-SPw"; */
+"MZW-1l-SPw.text" = "Смена Пароля";
+
+/* Class = "UILabel"; text = "Profile"; ObjectID = "N9X-M3-kSF"; */
+"N9X-M3-kSF.text" = "Profile";
+
+/* Class = "UIButton"; normalTitle = "Как проходит процесс оплаты?"; ObjectID = "Nno-Py-6Cj"; */
+"Nno-Py-6Cj.normalTitle" = "Как проходит процесс оплаты?";
+
+/* Class = "UILabel"; text = "цена"; ObjectID = "OG8-wu-Dwg"; */
+"OG8-wu-Dwg.text" = "цена";
+
+/* Class = "UIButton"; normalTitle = "Подтвердить"; ObjectID = "OnB-Gw-XdE"; */
+"OnB-Gw-XdE.normalTitle" = "Подтвердить";
+
+/* Class = "UIButton"; normalTitle = "Камера"; ObjectID = "PBA-Ma-m7m"; */
+"PBA-Ma-m7m.normalTitle" = "Камера";
+
+/* Class = "UILabel"; text = "Главная"; ObjectID = "PHc-qe-Qpt"; */
+"PHc-qe-Qpt.text" = "Главная";
+
+/* Class = "UILabel"; text = "name"; ObjectID = "PpI-kF-A3X"; */
+"PpI-kF-A3X.text" = "name";
+
+/* Class = "UILabel"; text = "Доставка по Киеву"; ObjectID = "QeT-iw-OuX"; */
+"QeT-iw-OuX.text" = "Доставка по Киеву";
+
+/* Class = "UILabel"; text = "На карту Visa/ MasterCard"; ObjectID = "Qk6-AT-24p"; */
+"Qk6-AT-24p.text" = "На карту Visa/ MasterCard";
+
+/* Class = "UILabel"; text = "пн-вт   с 9:00 до 22:00"; ObjectID = "Qun-Ae-Voe"; */
+"Qun-Ae-Voe.text" = "пн-вт   с 9:00 до 22:00";
+
+/* Class = "UILabel"; text = "Каталог"; ObjectID = "Rab-a5-ujm"; */
+"Rab-a5-ujm.text" = "Каталог";
+
+/* Class = "UILabel"; text = "Chat"; ObjectID = "Rnt-5I-774"; */
+"Rnt-5I-774.text" = "Chat";
+
+/* Class = "UILabel"; text = "Доставка цветов и других подарков для Ваших близких осуществляется в течении трех часов с момента оформления или оплаты букета. При условии, что заказ был оформлен или оплачен миниум за три часа до конца рабочего дня"; ObjectID = "Rvy-0Y-uB9"; */
+"Rvy-0Y-uB9.text" = "Доставка цветов и других подарков для Ваших близких осуществляется в течении трех часов с момента оформления или оплаты букета. При условии, что заказ был оформлен или оплачен миниум за три часа до конца рабочего дня";
+
+/* Class = "UITextField"; placeholder = "Если это необходимо, то тут введите дополнительную информацию."; ObjectID = "RxZ-O1-WMM"; */
+"RxZ-O1-WMM.placeholder" = "Если это необходимо, то тут введите дополнительную информацию.";
+
+/* Class = "UIButton"; normalTitle = "Акции"; ObjectID = "TCY-BY-pXn"; */
+"TCY-BY-pXn.normalTitle" = "Акции";
+
+/* Class = "UILabel"; text = "Заказы"; ObjectID = "TRF-Bo-h4d"; */
+"TRF-Bo-h4d.text" = "Заказы";
+
+/* Class = "UILabel"; text = "название"; ObjectID = "TzN-8C-yJ3"; */
+"TzN-8C-yJ3.text" = "название";
+
+/* Class = "UIButton"; normalTitle = "Как проходит процесс доставки?"; ObjectID = "UZu-vN-PRL"; */
+"UZu-vN-PRL.normalTitle" = "Как проходит процесс доставки?";
+
+/* Class = "UIButton"; normalTitle = "Какими способами возможно оплатить услуг?"; ObjectID = "UjQ-0B-E2N"; */
+"UjQ-0B-E2N.normalTitle" = "Какими способами возможно оплатить услуг?";
+
+/* Class = "UILabel"; text = "name"; ObjectID = "V4T-Os-G7q"; */
+"V4T-Os-G7q.text" = "name";
+
+/* Class = "UILabel"; text = "Акции в Данный момент позаканчивались, но мы будем старатьс найти для Вас достаточное количество приятностей."; ObjectID = "V7T-eF-85f"; */
+"V7T-eF-85f.text" = "Акции в Данный момент позаканчивались, но мы будем старатьс найти для Вас достаточное количество приятностей.";
+
+/* Class = "UILabel"; text = "Каталог"; ObjectID = "WGC-bO-aHH"; */
+"WGC-bO-aHH.text" = "Каталог";
+
+/* Class = "UILabel"; text = "price"; ObjectID = "WYa-Ly-RxS"; */
+"WYa-Ly-RxS.text" = "price";
+
+/* Class = "UITextField"; placeholder = "password"; ObjectID = "XEy-dO-RLv"; */
+"XEy-dO-RLv.placeholder" = "password";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "XSK-Wf-mUU"; */
+"XSK-Wf-mUU.text" = "Label";
+
+/* Class = "UILabel"; text = "Имя:"; ObjectID = "XfP-kK-8ly"; */
+"XfP-kK-8ly.text" = "Имя:";
+
+/* Class = "UILabel"; text = "На карту Приват Банка"; ObjectID = "Yr7-1k-t3Y"; */
+"Yr7-1k-t3Y.text" = "На карту Приват Банка";
+
+/* Class = "UILabel"; text = "Orders"; ObjectID = "ZId-cf-YnP"; */
+"ZId-cf-YnP.text" = "Orders";
+
+/* Class = "UILabel"; text = "Email:  florentini@mail.com"; ObjectID = "ZPo-zT-Fu4"; */
+"ZPo-zT-Fu4.text" = "Email:  florentini@mail.com";
+
+/* Class = "UITextField"; placeholder = "Название"; ObjectID = "ZVE-PS-BYu"; */
+"ZVE-PS-BYu.placeholder" = "Название";
+
+/* Class = "UILabel"; text = "АКЦИЯ!"; ObjectID = "Ztf-db-40u"; */
+"Ztf-db-40u.text" = "АКЦИЯ!";
+
+/* Class = "UILabel"; text = "Номер телефона: +38 097 338 83 33"; ObjectID = "aB5-5j-1W6"; */
+"aB5-5j-1W6.text" = "Номер телефона: +38 097 338 83 33";
+
+/* Class = "UILabel"; text = "Пн-Вс"; ObjectID = "aJT-L8-wwX"; */
+"aJT-L8-wwX.text" = "Пн-Вс";
+
+/* Class = "UILabel"; text = "Сумма к Оплате:"; ObjectID = "aOX-PH-adi"; */
+"aOX-PH-adi.text" = "Сумма к Оплате:";
+
+/* Class = "UIButton"; normalTitle = "Галлерея"; ObjectID = "asi-a9-HPv"; */
+"asi-a9-HPv.normalTitle" = "Галлерея";
+
+/* Class = "UILabel"; text = "description"; ObjectID = "bcp-ak-SI5"; */
+"bcp-ak-SI5.text" = "description";
+
+/* Class = "UILabel"; text = "название"; ObjectID = "bdh-20-Y9l"; */
+"bdh-20-Y9l.text" = "название";
+
+/* Class = "UITextField"; placeholder = "Цена"; ObjectID = "bpz-FM-ttq"; */
+"bpz-FM-ttq.placeholder" = "Цена";
+
+/* Class = "UITextField"; placeholder = "Введите свое прекрасное Имя"; ObjectID = "cBB-e9-NHz"; */
+"cBB-e9-NHz.placeholder" = "Введите свое прекрасное Имя";
+
+/* Class = "UILabel"; text = "name"; ObjectID = "cBf-OO-fp0"; */
+"cBf-OO-fp0.text" = "name";
+
+/* Class = "UIButton"; normalTitle = "Viber"; ObjectID = "cOm-8G-2Y9"; */
+"cOm-8G-2Y9.normalTitle" = "Viber";
+
+/* Class = "UILabel"; text = "Доброго Времени Суток!"; ObjectID = "dl1-oB-z2K"; */
+"dl1-oB-z2K.text" = "Доброго Времени Суток!";
+
+/* Class = "UILabel"; text = "По кнопке 'меню' Вы сможете найти раздел 'О нас', где расположены контакты. Так же Вы можете составить свой заказ в разделе 'Каталог', а после составления заказа мы с Вам свяжемся удобным для Вас способом."; ObjectID = "ek1-4A-s5X"; */
+"ek1-4A-s5X.text" = "По кнопке 'меню' Вы сможете найти раздел 'О нас', где расположены контакты. Так же Вы можете составить свой заказ в разделе 'Каталог', а после составления заказа мы с Вам свяжемся удобным для Вас способом.";
+
+/* Class = "UIButton"; normalTitle = "Добавить в Корзину"; ObjectID = "eth-ak-j9H"; */
+"eth-ak-j9H.normalTitle" = "Добавить в Корзину";
+
+/* Class = "UILabel"; text = "Выход"; ObjectID = "fdD-wC-3QZ"; */
+"fdD-wC-3QZ.text" = "Выход";
+
+/* Class = "UILabel"; text = "FAQ"; ObjectID = "gEV-Eh-11W"; */
+"gEV-Eh-11W.text" = "FAQ";
+
+/* Class = "UILabel"; text = "Пока что Вы не выбрали ни букет, ни цветок, ни подарок. Но вы можете отправить запрос  об обратной связи, если того желаете"; ObjectID = "hAN-qI-B6x"; */
+"hAN-qI-B6x.text" = "Пока что Вы не выбрали ни букет, ни цветок, ни подарок. Но вы можете отправить запрос  об обратной связи, если того желаете";
+
+/* Class = "UILabel"; text = "Мы рады видеть, что вы воспользовались приложением Florentini что порадовать своих любимых приятным презентом. Вместе с нами Вас ждут приятные воспоминания, мы всегда будем стараться для Вас."; ObjectID = "hpL-Vc-Sfn"; */
+"hpL-Vc-Sfn.text" = "Мы рады видеть, что вы воспользовались приложением Florentini что порадовать своих любимых приятным презентом. Вместе с нами Вас ждут приятные воспоминания, мы всегда будем стараться для Вас.";
+
+/* Class = "UILabel"; text = "Доставка по Киеву"; ObjectID = "iHA-zX-EWV"; */
+"iHA-zX-EWV.text" = "Доставка по Киеву";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "iTQ-oc-wWU"; */
+"iTQ-oc-wWU.title" = "Item";
+
+/* Class = "UIButton"; normalTitle = "В Корзину"; ObjectID = "iwu-aA-rkG"; */
+"iwu-aA-rkG.normalTitle" = "В Корзину";
+
+/* Class = "UIButton"; normalTitle = "Как с нами связаться?"; ObjectID = "j3l-Mn-1kM"; */
+"j3l-Mn-1kM.normalTitle" = "Как с нами связаться?";
+
+/* Class = "UILabel"; text = "count"; ObjectID = "jHf-cQ-vfu"; */
+"jHf-cQ-vfu.text" = "count";
+
+/* Class = "UITextField"; placeholder = "Повтор нового пароля"; ObjectID = "jyv-bA-4Rx"; */
+"jyv-bA-4Rx.placeholder" = "Повтор нового пароля";
+
+/* Class = "UILabel"; text = "Наличными при получении"; ObjectID = "ki5-hq-LhW"; */
+"ki5-hq-LhW.text" = "Наличными при получении";
+
+/* Class = "UILabel"; text = "бесплатная"; ObjectID = "knb-92-GCX"; */
+"knb-92-GCX.text" = "бесплатная";
+
+/* Class = "UILabel"; text = "Website"; ObjectID = "l0l-hB-IaJ"; */
+"l0l-hB-IaJ.text" = "Website";
+
+/* Class = "UIButton"; normalTitle = "Букеты"; ObjectID = "lW2-HZ-atK"; */
+"lW2-HZ-atK.normalTitle" = "Букеты";
+
+/* Class = "UIButton"; normalTitle = "Подарки"; ObjectID = "n5Z-Di-qKa"; */
+"n5Z-Di-qKa.normalTitle" = "Подарки";
+
+/* Class = "UILabel"; text = "content"; ObjectID = "nF7-Q1-Wuv"; */
+"nF7-Q1-Wuv.text" = "content";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "nU5-Hw-jzN"; */
+"nU5-Hw-jzN.title" = "Item";
+
+/* Class = "UIButton"; normalTitle = "Telegram"; ObjectID = "oN1-s9-sxS"; */
+"oN1-s9-sxS.normalTitle" = "Telegram";
+
+/* Class = "UILabel"; text = "Доставка по Киевской области"; ObjectID = "pGd-jl-Mrv"; */
+"pGd-jl-Mrv.text" = "Доставка по Киевской области";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "pmW-V7-ewf"; */
+"pmW-V7-ewf.title" = "Item";
+
+/* Class = "UILabel"; text = "Заказы онлайн принимаются круглосуточно"; ObjectID = "pyH-5R-apm"; */
+"pyH-5R-apm.text" = "Заказы онлайн принимаются круглосуточно";
+
+/* Class = "UILabel"; text = "Описание"; ObjectID = "qbj-Ym-HNk"; */
+"qbj-Ym-HNk.text" = "Описание";
+
+/* Class = "UILabel"; text = "Product Customize"; ObjectID = "qlQ-c6-ZeV"; */
+"qlQ-c6-ZeV.text" = "Product Customize";
+
+/* Class = "UIButton"; normalTitle = "price"; ObjectID = "qvw-Ry-JGE"; */
+"qvw-Ry-JGE.normalTitle" = "price";
+
+/* Class = "UILabel"; text = "с 9:00 до 22:00"; ObjectID = "rc6-jq-VYJ"; */
+"rc6-jq-VYJ.text" = "с 9:00 до 22:00";
+
+/* Class = "UILabel"; text = "Желаете оставить отзыв?"; ObjectID = "sTX-x0-3G2"; */
+"sTX-x0-3G2.text" = "Желаете оставить отзыв?";
+
+/* Class = "UITextField"; placeholder = "Введите свой номер телефона"; ObjectID = "tD1-XL-ned"; */
+"tD1-XL-ned.placeholder" = "Введите свой номер телефона";
+
+/* Class = "UIButton"; normalTitle = "Скрыть"; ObjectID = "uiO-UC-m9P"; */
+"uiO-UC-m9P.normalTitle" = "Скрыть";
+
+/* Class = "UILabel"; text = "Catalog"; ObjectID = "ves-Wi-rfB"; */
+"ves-Wi-rfB.text" = "Catalog";
+
+/* Class = "UILabel"; text = "Бланк обратной связи"; ObjectID = "xfx-tz-lqw"; */
+"xfx-tz-lqw.text" = "Бланк обратной связи";
+
+/* Class = "UITextField"; placeholder = "Введите адресс доставки"; ObjectID = "xiy-XW-V6R"; */
+"xiy-XW-V6R.placeholder" = "Введите адресс доставки";
