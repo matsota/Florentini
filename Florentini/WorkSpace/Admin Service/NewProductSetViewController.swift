@@ -85,7 +85,6 @@ class NewProductSetViewController: UIViewController {
     //MARK: - Constraints
     @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
     
-    
 }
 
 
@@ -123,6 +122,35 @@ extension NewProductSetViewController: UIPickerViewDelegate, UIPickerViewDataSou
     
 }
 
+//MARK: - by TextView-Delegate + Custom-for-placeholder
+extension NewProductSetViewController: UITextViewDelegate {
+    
+    func setTextViewPlaceholder() {
+        photoDescriptionTextView.text = "Введите текст"
+        photoDescriptionTextView.textColor = .lightGray
+        photoDescriptionTextView.font = UIFont(name: "System", size: 13)
+        
+        photoDescriptionTextView.layer.borderWidth = 1
+        photoDescriptionTextView.layer.borderColor = UIColor.lightGray.cgColor
+        photoDescriptionTextView.returnKeyType = .done
+        photoDescriptionTextView.delegate = self
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if photoDescriptionTextView.text == "Введите текст" {
+            photoDescriptionTextView.text = ""
+            photoDescriptionTextView.textColor = .black
+        }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+        }
+        return true
+    }
+    
+}
 
 //MARK: -
 
@@ -190,46 +218,15 @@ extension NewProductSetViewController {
                 name = self.photoNameTextField.text,
                 description = self.photoDescriptionTextView.text
         
-        if price == nil, image == nil, name == "", description == "" {
+        if price == nil || image == nil || name == "" || description == "" {
             self.present(self.alert.alertClassicInfoOK(title: "Эттеншн", message: "Вы ввели не все данные. Перепроверьте свой результат"), animated: true)
-        }else if selectedCategory == DatabaseManager.ProductCategoriesCases.none.rawValue{
+        }else if selectedCategory == DatabaseManager.ProductCategoriesCases.none.rawValue {
             self.present(self.alert.alertClassicInfoOK(title: "Эттеншн", message: "Вы не выбрали категорию продукта."), animated: true)
         }else{
             NetworkManager.shared.uploadProduct(image: image!, name: name!, progressIndicator: progressView)  {
                 NetworkManager.shared.setProductDescription(name: name!, price: price!, category: self.selectedCategory, description: description!, documentNamedID: name!)
             }
         }
-    }
-    
-}
-
-
-//MARK: - by TextView-Delegate + Custom-for-placeholder
-extension NewProductSetViewController: UITextViewDelegate {
-    
-    func setTextViewPlaceholder() {
-        photoDescriptionTextView.text = "Введите текст"
-        photoDescriptionTextView.textColor = .lightGray
-        photoDescriptionTextView.font = UIFont(name: "System", size: 13)
-        
-        photoDescriptionTextView.layer.borderWidth = 1
-        photoDescriptionTextView.layer.borderColor = UIColor.lightGray.cgColor
-        photoDescriptionTextView.returnKeyType = .done
-        photoDescriptionTextView.delegate = self
-    }
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if photoDescriptionTextView.text == "Введите текст" {
-            photoDescriptionTextView.text = ""
-            photoDescriptionTextView.textColor = .black
-        }
-    }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            textView.resignFirstResponder()
-        }
-        return true
     }
     
 }

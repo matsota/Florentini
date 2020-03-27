@@ -17,9 +17,6 @@ class WorkerProfileViewController: UIViewController {
         
         fetchWorkerData()
         
-        print("certain uid: \(String(describing: AuthenticationManager.shared.currentUser?.uid))")
-        print("admin uid: \(AuthenticationManager.shared.uidAdmin)")
-        
     }
     
     //MARK: - Menu Button

@@ -33,9 +33,7 @@ class UserCartViewController: UIViewController {
         }else{
             tableCountZeroView.isHidden = true
         }
-        
-        print("certain uid: \(String(describing: AuthenticationManager.shared.currentUser?.uid))")
-        print("admin uid: \(AuthenticationManager.shared.uidAdmin)")
+    
     }
     
     //MARK: -

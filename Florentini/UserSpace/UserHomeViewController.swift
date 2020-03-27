@@ -17,8 +17,6 @@ class UserHomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        AuthenticationManager.shared.signInAnonymously()
-        
         NetworkManager.shared.downLoadStockOnly(success: { productInfo in
             self.productInfo = productInfo
             self.homeTableView.reloadData()
@@ -26,8 +24,7 @@ class UserHomeViewController: UIViewController {
             print(error.localizedDescription)
         }
         
-        print("certain uid: \(String(describing: AuthenticationManager.shared.currentUser?.uid))")
-        print("admin uid: \(AuthenticationManager.shared.uidAdmin)")
+        print(AuthenticationManager.shared.currentUser?.uid)
         
     }
     

@@ -23,8 +23,6 @@ class UserCatalogViewController: UIViewController {
         }) { error in
             print(error.localizedDescription)
         }
-        print("certain uid: \(String(describing: AuthenticationManager.shared.currentUser?.uid))")
-        print("admin uid: \(AuthenticationManager.shared.uidAdmin)")
         
     }
     

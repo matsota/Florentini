@@ -16,7 +16,7 @@ class AuthenticationManager {
     static var shared = AuthenticationManager()
     let currentUser = Auth.auth().currentUser
     let uidAdmin = "Q0Lh49RsIrMU8itoNgNJHN3bjmD2"
-     
+    
     //MARK: - Метод SignIn
     func signIn(email: String, password: String, success: @escaping() -> Void, failure: @escaping(Error) -> Void) {
         
@@ -28,6 +28,7 @@ class AuthenticationManager {
                 success()
             }
         }
+        
     }
     
     //MARK: - Метод SignUp для Клиентов
@@ -44,23 +45,23 @@ class AuthenticationManager {
     //        }
     //    }
     
-    //MARK: - Sign In Anonymously
-    func signInAnonymously() {
-        let auth = Auth.auth()
-        
-        auth.signInAnonymously { (result, error) in
-            if let error = error {
-                print ("error: \(error.localizedDescription)")
-                return
-            }
-            let uid = result?.user.uid
-            print("success: \(String(describing: uid))")
-        }
-    }
+    //    //MARK: - Sign In Anonymously
+    //    func signInAnonymously() {
+    //        let auth = Auth.auth()
+    //
+    //        auth.signInAnonymously { (result, error) in
+    //            if let error = error {
+    //                print ("error: \(error.localizedDescription)")
+    //                return
+    //            }
+    //            let uid = result?.user.uid
+    //            print("success: \(String(describing: uid))")
+    //        }
+    //    }
     
     //MARK: - Метод SignOut
     func signOut() {
-        try? Auth.auth().signOut()
+        try! Auth.auth().signOut()
     }
     
     //MARK: - Метод смены пароля:

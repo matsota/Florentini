@@ -56,7 +56,6 @@ extension UIAlertController {
     func alertSignOut(success: @escaping() -> Void) -> (UIAlertController) {
         let alertSignOut = UIAlertController(title: "Внимание", message: "Подтвердите, что вы нажали на \"Выход\" неслучайно", preferredStyle: .actionSheet)
         alertSignOut.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { _ in
-            AuthenticationManager.shared.signOut()
             success()
         }))
         alertSignOut.addAction(UIAlertAction(title: "Отмена", style: .destructive, handler: nil))

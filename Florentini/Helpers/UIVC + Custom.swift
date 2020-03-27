@@ -109,9 +109,9 @@ extension UIViewController {
             let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.WorkersFAQVC.rawValue) as? WorkerFAQViewController
             view.window?.rootViewController = faqVC
         case .exit:
-            print("signOut")
             self.present(alert.alertSignOut(success: {
                 self.dismiss(animated: true) {
+                    AuthenticationManager.shared.signOut()
                     let exitApp = self.storyboard?.instantiateInitialViewController()
                     self.view.window?.rootViewController = exitApp
                 }

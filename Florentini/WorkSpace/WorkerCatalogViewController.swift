@@ -23,8 +23,6 @@ class WorkerCatalogViewController: UIViewController {
             print(error.localizedDescription)
         }
         
-        print("certain uid: \(String(describing: AuthenticationManager.shared.currentUser?.uid))")
-        print("admin uid: \(AuthenticationManager.shared.uidAdmin)")
     }
     
     //MARK: - Menu button
@@ -84,6 +82,31 @@ extension WorkerCatalogViewController: UITableViewDelegate, UITableViewDataSourc
         return cell
     }
     
+    //deleteProduct
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let cell = catalogTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.WorkerCatalogTVCell.rawValue, for: indexPath) as! WorkerCatalogTableViewCell
+        guard let name = cell.productNameLabel.text else {return nil}
+        let delete = deleteAction(name: name,at: indexPath)
+        return UISwipeActionsConfiguration(actions: [delete])
+    }
+    
+    func deleteAction(name: String, at indexPath: IndexPath) -> UIContextualAction {
+        let action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, complition) in
+            if AuthenticationManager.shared.currentUser?.uid == AuthenticationManager.shared.uidAdmin {
+                self.present(self.alert.alertDeleteProduct(name: name, success: {
+                    self.productInfo.remove(at: indexPath.row)
+                    self.catalogTableView.deleteRows(at: [indexPath], with: .automatic)
+                }), animated: true)
+                complition(true)
+            }else{
+                self.present(self.alert.alertClassicInfoOK(title: "Эттеншн", message: "У Вас нет прав Администратора, чтобы удалять любую из позиций. Не ну ты ЧО"), animated: true)
+                complition(false)
+            }
+        }
+        action.backgroundColor = .red
+        return action
+    }
+    
 }
 
 //MARK: Методы TableViewCell через delegate
@@ -103,14 +126,6 @@ extension WorkerCatalogViewController: WorkerCatalogTableViewCellDelegate {
             cell.productPriceButton.isUserInteractionEnabled = false
         }
         self.catalogTableView.reloadData()
-    }
-    
-    //deleteProduct
-    func deleteProduct(name: String) {
-        
-        self.present(self.alert.alertDeleteProduct(name: name, success: {
-            self.catalogTableView.reloadData()
-        }), animated: true)
     }
     
 }

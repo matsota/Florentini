@@ -12,8 +12,6 @@ import UIKit
 
 protocol WorkerCatalogTableViewCellDelegate: class {
     
-    func deleteProduct(name: String)
-    
     func editPrice(_ cell: WorkerCatalogTableViewCell)
 }
 
@@ -39,7 +37,7 @@ class WorkerCatalogTableViewCell: UITableViewCell {
     
     //MARK: - Buttons
     @IBOutlet weak var productPriceButton: UIButton!
-    @IBOutlet weak var deteleButton: UIButton!
+
     
     
     //MARK: - Overrides
@@ -53,24 +51,16 @@ class WorkerCatalogTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    //MARK: - Price Editor
+    @IBAction func priceTapped(_ sender: UIButton) {
+        delegate?.editPrice(self)
+    }
     
     //MARK: - Hide Description Button
     @IBAction func stopDescribeTapped(_ sender: DesignButton) {
         UIView.animate(withDuration: 0.3) {
             self.descriptionView.isHidden = true
         }
-    }
-    
-    //MARK: - Price Editor
-    @IBAction func priceTapped(_ sender: UIButton) {
-        delegate?.editPrice(self)
-    }
-    
-    
-    //MARK: - Delete Description Button
-    @IBAction func deleteDescriptionTapped(_ sender: DesignButton) {
-        guard let name = productNameLabel.text else {return}
-        delegate?.deleteProduct(name: name)
     }
     
     //MARK: -  Метод появления описания продукта и кнопки
@@ -83,10 +73,6 @@ class WorkerCatalogTableViewCell: UITableViewCell {
     @objc func imageTapped(_ gestureRecognizer: UITapGestureRecognizer){
         UIView.animate(withDuration: 0.3) {
             self.descriptionView.isHidden = false
-        }
-        
-        if AuthenticationManager.shared.currentUser?.uid == AuthenticationManager.shared.uidAdmin {
-            self.deteleButton.isHidden = false
         }
     }
     
