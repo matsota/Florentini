@@ -9,8 +9,21 @@
 import UIKit
 import FirebaseUI
 
+protocol UserHomeViewControllerDelegate: class {
+    
+    func cartIsNotEmpty (_ `class`: UserHomeViewController)
+    
+}
+
 
 class UserHomeViewController: UIViewController {
+    
+    //MARK: - Implementation
+    //delegate:
+    var delegate: UserHomeViewControllerDelegate?
+    
+    //MARK: - Button
+    @IBOutlet weak var cartButton: UIButton!
     
     //MARK: - Overrides
     //MARK: ViewDidLoad
@@ -24,8 +37,9 @@ class UserHomeViewController: UIViewController {
             print(error.localizedDescription)
         }
         
-        print(AuthenticationManager.shared.currentUser?.uid)
+        print(AuthenticationManager.shared.currentUser?.uid as Any)
         
+         delegate?.cartIsNotEmpty(self)
     }
     
     //MARK: - Нажатие кнопки Меню
@@ -118,6 +132,7 @@ extension UserHomeViewController: UserHomeTableViewCellDelegate {
     func addToCart(_ cell: UserHomeTableViewCell) {
         guard let name = cell.productNameLabel.text, let category = cell.category, let price = Int64(cell.productPriceLabel.text!) else {return}
         CoreDataManager.shared.saveForCart(name: name, category: category, price: price, quantity: 1)
+        delegate?.cartIsNotEmpty(self)
         let image = cell.cellImageView.image
         let imageData: NSData = image!.pngData()! as NSData
         UserDefaults.standard.set(imageData, forKey: name)

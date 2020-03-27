@@ -10,7 +10,21 @@ import UIKit
 import Firebase
 import FirebaseUI
 
+protocol UserCatalogViewControllerDelegate: class {
+    
+    func cartIsNotEmpty (_ `class`: UserCatalogViewController)
+    
+}
+
 class UserCatalogViewController: UIViewController {
+    
+    
+    //MARK: - Implementation
+    //delegate
+    var delegate: UserCatalogViewControllerDelegate?
+    
+    //MARK: - Button
+    @IBOutlet weak var cartButton: UIButton!
     
     //MARK: - Overrides
     //MARK: - ViewDidLoad
@@ -23,6 +37,7 @@ class UserCatalogViewController: UIViewController {
         }) { error in
             print(error.localizedDescription)
         }
+        delegate?.cartIsNotEmpty(self)
         
     }
     
@@ -195,6 +210,7 @@ extension UserCatalogViewController: UserCatalogTableViewCellDelegate {
     func addToCart(_ cell: UserCatalogTableViewCell) {
         guard let name = cell.productNameLabel.text, let category = cell.category, let price = Int64(cell.productPriceLabel.text!) else {return}
         CoreDataManager.shared.saveForCart(name: name, category: category, price: price, quantity: 1)
+        delegate?.cartIsNotEmpty(self)
         let image = cell.productImageView.image
         let imageData: NSData = image!.pngData()! as NSData
         UserDefaults.standard.set(imageData, forKey: name)

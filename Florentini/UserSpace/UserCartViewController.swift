@@ -20,7 +20,7 @@ class UserCartViewController: UIViewController {
         
         CoreDataManager.shared.fetchPreOrder { (preOrderEntity) -> (Void) in
             self.preOrder = preOrderEntity
-            self.basketTableView.reloadData()
+            self.cartTableView.reloadData()
             print(self.preOrder)
         }
         
@@ -33,7 +33,7 @@ class UserCartViewController: UIViewController {
         }else{
             tableCountZeroView.isHidden = true
         }
-    
+        
     }
     
     //MARK: -
@@ -93,9 +93,9 @@ class UserCartViewController: UIViewController {
             }
             CoreDataManager.shared.deleteAllData(entity: "PreOrderEntity") {
                 self.preOrder.removeAll()
-                self.basketTableView.reloadData()
+                self.cartTableView.reloadData()
             }
-
+            
         }
     }
     
@@ -104,24 +104,6 @@ class UserCartViewController: UIViewController {
     
     
     //MARK: - Private:
-    
-    //MARK: - Methods
-    //MARK: Смещение constrains при появлении клавиатуры
-    @objc private func keyboardWillShow(notification: Notification) {
-        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber, let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
-        lowestConstraint.constant = keyboardFrameValue.cgRectValue.height * 0.9
-        UIView.animate(withDuration: duration.doubleValue) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    @objc private func keyboardWillHide(notification: Notification) {
-        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber else {return}
-        lowestConstraint.constant = 14
-        UIView.animate(withDuration: duration.doubleValue) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    
     
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
@@ -137,7 +119,7 @@ class UserCartViewController: UIViewController {
     
     @IBOutlet private weak var scrollView: UIScrollView!
     //MARK: TableView Outlets
-    @IBOutlet private weak var basketTableView: UITableView!
+    @IBOutlet private weak var cartTableView: UITableView!
     
     //MARK: TextFields Outlets
     @IBOutlet private weak var clientNameTextField: UITextField!
@@ -165,7 +147,8 @@ class UserCartViewController: UIViewController {
 
 
 //MARK: - Extention HomeViewControllerr
-//MARK: extention by UIVC-TransitioningDelegate
+
+//MARK: - byextention by UIVC-TransitioningDelegate
 extension UserCartViewController: UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
@@ -187,7 +170,7 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // - Implementation
-        let cell = basketTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UsersCartTVCell.rawValue, for: indexPath) as! UserCartTableViewCell
+        let cell = cartTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UsersCartTVCell.rawValue, for: indexPath) as! UserCartTableViewCell
         cell.delegate = self
         cell.tag = indexPath.row
         let fetch = preOrder[cell.tag]
@@ -221,7 +204,7 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
         let action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, complition) in
             CoreDataManager.shared.deleteFromCart(deleteWhere: self.preOrder, at: indexPath)
             self.preOrder.remove(at: indexPath.row)
-            self.basketTableView.deleteRows(at: [indexPath], with: .automatic)
+            self.cartTableView.deleteRows(at: [indexPath], with: .automatic)
             complition(true)
         }
         action.backgroundColor = .red
@@ -233,7 +216,7 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
 
 //MARK: -
 
-//MARK: Прокрутка слайдера для выбора количества + Метод (Изменение конечной стоимости продукта в зависимости от выбранного количества)
+//MARK: - Прокрутка слайдера для выбора количества + Метод (Изменение конечной стоимости продукта в зависимости от выбранного количества)
 extension UserCartViewController: UserCartTableViewCellDelegate {
     
     func sliderValue(_ cell: UserCartTableViewCell) {
@@ -254,7 +237,7 @@ extension UserCartViewController: UserCartTableViewCellDelegate {
     
 }
 
-//MARK: Появление вариантов обратной связи
+//MARK: - Появление вариантов обратной связи
 private extension UserCartViewController {
     
     func selectionMethod(_ class: UIViewController, _ sender: UIButton) {
@@ -271,7 +254,7 @@ private extension UserCartViewController {
     
 }
 
-//MARK: Выбор способа обратной связи
+//MARK: - Выбор способа обратной связи
 private extension UserCartViewController {
     
     func showOptionsMethod(option: String) {
@@ -286,5 +269,56 @@ private extension UserCartViewController {
     }
     
 }
+
+//MARK: Смещение constrains при появлении клавиатуры
+private extension UserCartViewController {
+    
+    @objc func keyboardWillShow(notification: Notification) {
+        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber, let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
+        lowestConstraint.constant = keyboardFrameValue.cgRectValue.height * 0.9
+        UIView.animate(withDuration: duration.doubleValue) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    @objc func keyboardWillHide(notification: Notification) {
+        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber else {return}
+        lowestConstraint.constant = 14
+        UIView.animate(withDuration: duration.doubleValue) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+}
+
+//MARK: - Для изменения кнопки cart в User-Home-VC
+extension UserCartViewController: UserHomeViewControllerDelegate {
+    
+    func cartIsNotEmpty(_ class: UserHomeViewController) {
+            if preOrder.count == 0 {
+                let cart = UIImage(systemName: "cart")
+                `class`.cartButton.setImage(cart, for: .normal)
+            }else{
+                let cartFill = UIImage(systemName: "cart.fill")
+                `class`.cartButton.setImage(cartFill, for: .normal)
+            }
+        }
+    
+}
+
+//MARK: - Для изменения кнопки cart в User-Cart-VC
+extension UserCartViewController: UserCatalogViewControllerDelegate {
+    
+    func cartIsNotEmpty(_ class: UserCatalogViewController) {
+        if preOrder.count == 0 {
+            let cart = UIImage(systemName: "cart")
+            `class`.cartButton.setImage(cart, for: .normal)
+        }else{
+            let cartFill = UIImage(systemName: "cart.fill")
+            `class`.cartButton.setImage(cartFill, for: .normal)
+        }
+    }
+    
+}
+
 
 
