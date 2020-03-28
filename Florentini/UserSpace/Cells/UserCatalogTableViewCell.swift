@@ -40,6 +40,9 @@ class UserCatalogTableViewCell: UITableViewCell {
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+        UIView.animate(withDuration: 0.5) {
+            self.descriptionView.isHidden = !self.descriptionView.isHidden
+        }
     }
     
     
@@ -53,32 +56,6 @@ class UserCatalogTableViewCell: UITableViewCell {
     //MARK: - Добавление в Корзину
     @IBAction func addToBasketTapped(_ sender: DesignButton) {
         delegate?.addToCart(self)
-    }
-    
-    //MARK: -  Метод появления описания продукта
-    func showDescription(){
-        let showGesture = UITapGestureRecognizer()
-        showGesture.addTarget(self, action: #selector(imageTapped(_ :)))
-        productImageView.addGestureRecognizer(showGesture)
-    }
-    @objc func imageTapped(_ gestureRecognizer: UITapGestureRecognizer){
-        UIView.animate(withDuration: 0.3) {
-            self.descriptionView.isHidden = false
-        }
-    }
-    
-    
-    //MARK: - Метод исчезания описания продукта
-    func hideDescription(){
-        let hideGesture = UITapGestureRecognizer()
-        hideGesture.addTarget(self, action: #selector(hideDescription(_ :)))
-        descriptionView.addGestureRecognizer(hideGesture)
-    }
-
-    @objc func hideDescription(_ gestureRecognizer: (UITapGestureRecognizer)  -> Void) {
-        UIView.animate(withDuration: 0.3) {
-            self.descriptionView.isHidden = true
-        }
     }
     
     //MARK: - Заполнение Таблицы

@@ -70,9 +70,9 @@ extension WorkerCatalogViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = catalogTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.WorkerCatalogTVCell.rawValue, for: indexPath) as! WorkerCatalogTableViewCell
+    
         cell.delegate = self
-        cell.showDescription()
-        cell.hideDescription()
+    
         cell.tag = indexPath.row
         let get = productInfo[cell.tag]
         let storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(get.productName)")

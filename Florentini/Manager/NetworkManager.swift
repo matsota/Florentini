@@ -153,9 +153,10 @@ class NetworkManager {
     
     //MARK: - Отправка отзыва
     func sendReview(name: String, content: String) {
-        let newReview = DatabaseManager.ChatMessages(name: name, content: content, uid: AuthenticationManager.shared.currentUser!.uid, timeStamp: Date())
+        guard let uid = CoreDataManager.shared.device.identifierForVendor else {return}
+        let newReview = DatabaseManager.ChatMessages(name: name, content: content, uid: "\(uid)", timeStamp: Date())
         
-        db.collection(DatabaseManager.MessagesCases.workersMessages.rawValue).addDocument(data: newReview.dictionary) {
+        db.collection(DatabaseManager.UsersInfoCases.review.rawValue).addDocument(data: newReview.dictionary) {
             error in
             if let error = error {
                 print("Error: \(error.localizedDescription)")

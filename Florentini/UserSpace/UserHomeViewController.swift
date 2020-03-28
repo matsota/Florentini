@@ -90,8 +90,6 @@ extension UserHomeViewController: UITableViewDataSource, UITableViewDelegate {
         storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(fetch.productName)")
         
         cell.delegate = self
-        cell.showDescription()
-        cell.hideDescription()
         
         if productInfo.count == 0 {
             noneStocksView.isHidden = false

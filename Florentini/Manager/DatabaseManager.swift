@@ -187,6 +187,8 @@ extension DatabaseManager {
         case cart
         case order
         case orderDescription
+        
+        case review
     }
     
     //MARK: Про Сообщения
@@ -197,7 +199,6 @@ extension DatabaseManager {
         case timeStamp
         case workers
         case workersMessages
-        case review
     }
     
     //MARK: Про Товар

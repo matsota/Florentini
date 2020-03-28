@@ -88,9 +88,9 @@ private extension UserAboutUsViewController {
             view.window?.rootViewController = loginWorkSpaceVC
             view.window?.makeKeyAndVisible()
         }else if review == "" {
-            if name == "" {name = "anonymous"}
             self.present(self.alert.alertClassicInfoOK(title: "Эттеншн!", message: "Вы не ввели информацию, которой бы Вы хотели поделиться с нами"), animated: true)
         }else{
+            if name == "" {name = "anonymous"}
             NetworkManager.shared.sendReview(name: name!, content: review!)
         }
     }
@@ -103,17 +103,17 @@ private extension UserAboutUsViewController {
     @objc func keyboardWillShow(notification: Notification) {
         guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber, let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
         
-        scrollViewBottomConstraint.constant = -keyboardFrameValue.cgRectValue.height
+        scrollViewBottomConstraint.constant -= keyboardFrameValue.cgRectValue.height
         UIView.animate(withDuration: duration.doubleValue) {
             self.view.layoutIfNeeded()
-            self.scrollView.setContentOffset(CGPoint(x: 0, y: 150), animated: false)
+            self.scrollView.setContentOffset(CGPoint(x: 0, y: keyboardFrameValue.cgRectValue.height + 50), animated: false)
         }
     }
     
     @objc func keyboardWillHide(notification: Notification) {
         guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber else {return}
         
-        scrollViewBottomConstraint.constant = 0
+        scrollViewBottomConstraint.constant = 14
         UIView.animate(withDuration: duration.doubleValue) {
             self.view.layoutIfNeeded()
         }

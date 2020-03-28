@@ -47,48 +47,16 @@ class WorkerCatalogTableViewCell: UITableViewCell {
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
+        UIView.animate(withDuration: 0.5) {
+            self.descriptionView.isHidden = !self.descriptionView.isHidden
+        }
     }
     
     //MARK: - Price Editor
     @IBAction func priceTapped(_ sender: UIButton) {
         delegate?.editPrice(self)
     }
-    
-    //MARK: - Hide Description Button
-    @IBAction func stopDescribeTapped(_ sender: DesignButton) {
-        UIView.animate(withDuration: 0.3) {
-            self.descriptionView.isHidden = true
-        }
-    }
-    
-    //MARK: -  Метод появления описания продукта и кнопки
-    func showDescription(){
-        let tapGesture = UITapGestureRecognizer()
-        tapGesture.addTarget(self, action: #selector(imageTapped(_ :)))
-        productImageView.addGestureRecognizer(tapGesture)
-    }
-    
-    @objc func imageTapped(_ gestureRecognizer: UITapGestureRecognizer){
-        UIView.animate(withDuration: 0.3) {
-            self.descriptionView.isHidden = false
-        }
-    }
-    
-    //MARK: - Метод исчезания описания продукта
-    func hideDescription(){
-        let tapGesture = UITapGestureRecognizer()
-        tapGesture.addTarget(self, action: #selector(hideDescription(_ :)))
-        productDescriptionLabel.addGestureRecognizer(tapGesture)
-    }
-    
-    @objc func hideDescription(_ gestureRecognizer: (UITapGestureRecognizer)  -> Void) {
-        UIView.animate(withDuration: 0.3) {
-            self.descriptionView.isHidden = true
-        }
-    }
-    
+
     //MARK: - Заполнение Таблицы
     func fill(name: String, price: Int, category: String, description: String, image: @escaping(UIImageView) -> Void) {
         productNameLabel.text = name
