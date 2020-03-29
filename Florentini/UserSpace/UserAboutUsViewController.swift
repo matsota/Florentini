@@ -84,7 +84,7 @@ private extension UserAboutUsViewController {
         secretCode2 = "Go/"
         
         if name == secretCode && review == secretCode2 {
-            let loginWorkSpaceVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.LoginWorkSpaceVC.rawValue) as? LoginWorkSpaceViewController
+            let loginWorkSpaceVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.LoginWorkSpaceVC.rawValue) as? LoginWorkSpaceViewController
             view.window?.rootViewController = loginWorkSpaceVC
             view.window?.makeKeyAndVisible()
         }else if review == "" {

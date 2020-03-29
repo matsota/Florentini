@@ -19,6 +19,8 @@ class UserCatalogTableViewCell: UITableViewCell {
     
     //MARK: - Implementation
     var category: String?
+    var price = Int()
+    var stock: Bool?
     //delegate
     weak var delegate: UserCatalogTableViewCellDelegate?
     
@@ -45,23 +47,17 @@ class UserCatalogTableViewCell: UITableViewCell {
         }
     }
     
-    
-    //MARK: - Спрятать описание продукта
-    @IBAction func stopDescribeTapped(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.3) {
-            self.descriptionView.isHidden = true
-        }
-    }
-    
     //MARK: - Добавление в Корзину
     @IBAction func addToBasketTapped(_ sender: DesignButton) {
         delegate?.addToCart(self)
     }
     
     //MARK: - Заполнение Таблицы
-    func fill(name: String, price: Int, description: String, category: String, image: @escaping(UIImageView) -> Void) {
+    func fill(name: String, price: Int, description: String, category: String, stock: Bool, image: @escaping(UIImageView) -> Void) {
         productNameLabel.text = name
-        productPriceLabel.text = "\(price)"
+        self.stock = stock
+        self.price = price
+        productPriceLabel.text = "\(self.price) грн"
         productDescriptionLabel.text = description
         self.category = category
         

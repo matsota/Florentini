@@ -128,7 +128,7 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = cartTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UsersCartTVCell.rawValue, for: indexPath) as! UserCartTableViewCell
+        let cell = cartTableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.UsersCartTVCell.rawValue, for: indexPath) as! UserCartTableViewCell
         
         cell.tag = indexPath.row
         cell.delegate = self
@@ -138,6 +138,7 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
         category = fetch.value(forKey: DatabaseManager.ProductCases.productCategory.rawValue) as! String,
         price = fetch.value(forKey: DatabaseManager.ProductCases.productPrice.rawValue) as! Int64,
         sliderValue = fetch.value(forKey: DatabaseManager.ProductCases.productQuantity.rawValue) as! Int64,
+        stock = fetch.value(forKey: DatabaseManager.ProductCases.stock.rawValue) as! Bool,
         imageData = UserDefaults.standard.object(forKey: name) as! NSData
         
         if category == DatabaseManager.ProductCategoriesCases.apiece.rawValue {
@@ -147,7 +148,7 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
             cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.five.rawValue)
         }
         
-        cell.fill (name: name , price: price, slider: sliderValue, imageData: imageData)
+        cell.fill (name: name , price: price, slider: sliderValue, stock: stock, imageData: imageData)
         
         return cell
     }
@@ -158,10 +159,11 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
         return UISwipeActionsConfiguration(actions: [delete])
     }
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
-        let action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, complition) in
+        let action = UIContextualAction(style: .destructive, title: "X") { (action, view, complition) in
             CoreDataManager.shared.deleteFromCart(deleteWhere: self.preOrder, at: indexPath)
             self.preOrder.remove(at: indexPath.row)
             self.cartTableView.deleteRows(at: [indexPath], with: .automatic)
+            self.viewDidLoad()
             complition(true)
         }
         action.backgroundColor = .red
@@ -275,7 +277,7 @@ private extension UserCartViewController {
             }
             
             for _ in preOrder {
-                NetworkManager.shared.sendOrder(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, productDescription: jsonArray.remove(at:0))
+                NetworkManager.shared.sendOrder(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: Date(), productDescription: jsonArray.remove(at:0))
             }
             
             CoreDataManager.shared.deleteAllData(entity: DatabaseManager.UsersInfoCases.PreOrderEntity.rawValue) {

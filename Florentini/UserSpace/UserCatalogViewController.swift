@@ -21,8 +21,8 @@ class UserCatalogViewController: UIViewController {
         super.viewDidLoad()
         
         NetworkManager.shared.downloadProducts(success: { productInfo in
-            self.productInfo = productInfo
-            self.catalogTableView.reloadData()
+            self.productInfo = productInfo.shuffled()
+            self.tableView.reloadData()
         }) { error in
             print(error.localizedDescription)
         }
@@ -42,13 +42,13 @@ class UserCatalogViewController: UIViewController {
     }
     
     //MARK: - Появление вариантров выбора для фильтра
-    @IBAction func filterTapped(_ sender: DesignButton) {
+    @IBAction func startFiltering(_ sender: DesignButton) {
         guard let sender = sender.titleLabel!.text else {return}
         showOptionsMethod(option: sender)
     }
     
     //MARK: - Выбор категории для Фильтра
-    @IBAction func categorySelection(_ sender: DesignButton) {
+    @IBAction func endFiltering(_ sender: DesignButton) {
         selectionMethod(self, sender)
     }
 
@@ -66,7 +66,7 @@ class UserCatalogViewController: UIViewController {
     @IBOutlet private weak  var filterButton: DesignButton!
     
     //MARK: - TableView Outlet
-    @IBOutlet private weak var catalogTableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
 }
 
@@ -88,13 +88,13 @@ extension UserCatalogViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = catalogTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UserCatalogTVCell.rawValue, for: indexPath) as! UserCatalogTableViewCell,
+        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.UserCatalogTVCell.rawValue, for: indexPath) as! UserCatalogTableViewCell,
         fetch = productInfo[indexPath.row],
         storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(fetch.productName)")
         
         cell.delegate = self
         
-        cell.fill(name: fetch.productName, price: fetch.productPrice, description: fetch.productDescription, category: fetch.productCategory) { image in
+        cell.fill(name: fetch.productName, price: fetch.productPrice, description: fetch.productDescription, category: fetch.productCategory, stock: fetch.stock) { image in
             image.sd_setImage(with: storageRef)
         }
         return cell
@@ -150,7 +150,7 @@ private extension UserCatalogViewController {
             NetworkManager.shared.downloadApieces(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
-                self.catalogTableView.reloadData()
+                self.tableView.reloadData()
             }) { error in
                 print(error.localizedDescription)
             }
@@ -159,7 +159,7 @@ private extension UserCatalogViewController {
             NetworkManager.shared.downloadGifts(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
-                self.catalogTableView.reloadData()
+                self.tableView.reloadData()
             }) { error in
                 print(error.localizedDescription)
             }
@@ -168,7 +168,7 @@ private extension UserCatalogViewController {
             NetworkManager.shared.downloadBouquets(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
-                self.catalogTableView.reloadData()
+                self.tableView.reloadData()
             }) { error in
                 print(error.localizedDescription)
             }
@@ -177,7 +177,7 @@ private extension UserCatalogViewController {
             NetworkManager.shared.downloadStocks(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
-                self.catalogTableView.reloadData()
+                self.tableView.reloadData()
             }) { error in
                 print(error.localizedDescription)
             }
@@ -192,13 +192,17 @@ extension UserCatalogViewController: UserCatalogTableViewCellDelegate {
     
     //MARK: Adding to user's Cart
     func addToCart(_ cell: UserCatalogTableViewCell) {
-        guard let name = cell.productNameLabel.text, let category = cell.category, let price = Int64(cell.productPriceLabel.text!) else {return}
         
-        CoreDataManager.shared.saveForCart(name: name, category: category, price: price, quantity: 1)
+        let price = Int64(cell.price),
+        image = cell.productImageView.image
+        guard let name = cell.productNameLabel.text,
+            let category = cell.category,
+            let stock = cell.stock,
+            let imageData: NSData = image?.pngData() as NSData? else {return}
+        
+        CoreDataManager.shared.saveForCart(name: name, category: category, price: price, quantity: 1, stock: stock)
+        
         cartCondition()
-        
-        let image = cell.productImageView.image,
-        imageData: NSData = image!.pngData()! as NSData
         
         UserDefaults.standard.set(imageData, forKey: name)
     }

@@ -53,6 +53,17 @@ class NewProductSetViewController: UIViewController {
         uploadingProduct()
     }
     
+    
+    @IBAction func stockCondition(_ sender: UISwitch) {
+        if stockSwitch.isOn == true {
+            stock = true
+            stockConditionLabel.text = "Акционный товар"
+        }else{
+            stock = false
+            stockConditionLabel.text = "Без акции"
+        }
+    }
+    
     //MARK: - Private:
 
     //MARK: - Implementation
@@ -62,11 +73,16 @@ class NewProductSetViewController: UIViewController {
     private let storageRef = Storage.storage().reference()
     private let alert = UIAlertController()
     private var givenUrl: URL?
+    private var stock = false
     
     //MARK: - TextField Outelets
     @IBOutlet private weak var photoNameTextField: UITextField!
     @IBOutlet private weak var photoPriceTextField: UITextField!
     @IBOutlet private weak var photoDescriptionTextView: UITextView!
+    
+    //MARK: - Label
+    @IBOutlet weak var stockConditionLabel: UILabel!
+    
     
     //MARK: - ProgressView
     @IBOutlet private weak var progressView: UIProgressView!
@@ -80,6 +96,8 @@ class NewProductSetViewController: UIViewController {
     //MARK: - ScrollView
     @IBOutlet weak var scrollView: UIScrollView!
     
+    //MARK: - Switch
+    @IBOutlet weak var stockSwitch: UISwitch!
     
     //MARK: - Constraints
     @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
@@ -105,7 +123,7 @@ extension NewProductSetViewController: UIPickerViewDelegate, UIPickerViewDataSou
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
-        if pickerView == photoCategoryPickerView {return cases[row]}
+        if pickerView == photoCategoryPickerView {return  cases[row]}
         return ""
     }
     
@@ -218,13 +236,15 @@ private extension NewProductSetViewController {
         name = self.photoNameTextField.text,
         description = self.photoDescriptionTextView.text
         
-        if price == nil || image == nil || name == "" || description == "" {
+        if price == nil || name == "" || description == "" {
             self.present(self.alert.alertClassicInfoOK(title: "Эттеншн", message: "Вы ввели не все данные. Перепроверьте свой результат"), animated: true)
         }else if selectedCategory == DatabaseManager.ProductCategoriesCases.none.rawValue {
             self.present(self.alert.alertClassicInfoOK(title: "Эттеншн", message: "Вы не выбрали категорию продукта."), animated: true)
+        }else if image == nil{
+            self.present(self.alert.alertClassicInfoOK(title: "Эттеншн", message: "Вы забыли фотографию"), animated: true)
         }else{
             NetworkManager.shared.uploadProduct(image: image!, name: name!, progressIndicator: progressView)  {
-                NetworkManager.shared.setProductDescription(name: name!, price: price!, category: self.selectedCategory, description: description!, documentNamedID: name!)
+                NetworkManager.shared.setProductDescription(name: name!, price: price!, description: description!, category: self.selectedCategory, stock: self.stock)
             }
         }
     }

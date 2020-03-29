@@ -13,6 +13,9 @@ import UIKit
 protocol WorkerCatalogTableViewCellDelegate: class {
     
     func editPrice(_ cell: WorkerCatalogTableViewCell)
+    
+    func editStockCondition(_ cell: WorkerCatalogTableViewCell)
+    
 }
 
 
@@ -21,13 +24,16 @@ class WorkerCatalogTableViewCell: UITableViewCell {
     
     //MARK: - Implementation
     let alert = UIAlertController()
+    var price = Int()
     var category = String()
+    var stock = false
     
     weak var delegate: WorkerCatalogTableViewCellDelegate?
     
     //MARK: - Label
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productDescriptionLabel: UILabel!
+    @IBOutlet weak var stockConditionLabel: UILabel!
     
     //MARK: - ImageView
     @IBOutlet weak var productImageView: UIImageView!
@@ -38,13 +44,15 @@ class WorkerCatalogTableViewCell: UITableViewCell {
     //MARK: - Buttons
     @IBOutlet weak var productPriceButton: UIButton!
     
+    //MARK: - Switch
+    @IBOutlet weak var stockSwitch: UISwitch!
     
     
     //MARK: - Overrides
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         UIView.animate(withDuration: 0.5) {
@@ -56,13 +64,34 @@ class WorkerCatalogTableViewCell: UITableViewCell {
     @IBAction func priceTapped(_ sender: UIButton) {
         delegate?.editPrice(self)
     }
-
+    
+    @IBAction func stockCondition(_ sender: UISwitch) {
+        delegate?.editStockCondition(self)
+    }
+    
+    
     //MARK: - Заполнение Таблицы
-    func fill(name: String, price: Int, category: String, description: String, image: @escaping(UIImageView) -> Void) {
+    func fill(name: String, price: Int, category: String, description: String, stock: Bool, image: @escaping(UIImageView) -> Void) {
         productNameLabel.text = name
         productPriceButton.setTitle("\(price) грн", for: .normal)
+        
+        self.price = price
         self.category = category
+        
         productDescriptionLabel.text = description
+        
+        self.stock = stock
+        if stock == true {
+            stockSwitch.isOn = true
+            stockConditionLabel.text = "Акционный товар"
+            stockConditionLabel.textColor = .red
+        }else{
+            stockSwitch.isOn = false
+            stockConditionLabel.text = "Акция отсутствует"
+            stockConditionLabel.textColor = .black
+            
+        }
+        
         image(productImageView)
     }
     

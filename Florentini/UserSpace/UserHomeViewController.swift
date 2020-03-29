@@ -18,8 +18,8 @@ class UserHomeViewController: UIViewController {
         super.viewDidLoad()
         
         NetworkManager.shared.downloadStocks(success: { productInfo in
-            self.productInfo = productInfo
-            self.homeTableView.reloadData()
+            self.productInfo = productInfo.shuffled()
+            self.tableView.reloadData()
         }) { error in
             print(error.localizedDescription)
         }
@@ -42,9 +42,9 @@ class UserHomeViewController: UIViewController {
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
     private var productInfo = [DatabaseManager.ProductInfo]()
-    private var selectedCategory: String?
+//    private var selectedCategory: String?
     //MARK: TableView Outlet
-    @IBOutlet private weak var homeTableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
     //MARK: View
     @IBOutlet private weak var noneStocksView: UIView!
@@ -85,7 +85,7 @@ extension UserHomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = homeTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.UserHomeTVCell.rawValue, for: indexPath) as! UserHomeTableViewCell,
+        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.UserHomeTVCell.rawValue, for: indexPath) as! UserHomeTableViewCell,
         fetch = productInfo[indexPath.row],
         storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(fetch.productName)")
         
@@ -95,7 +95,7 @@ extension UserHomeViewController: UITableViewDataSource, UITableViewDelegate {
             noneStocksView.isHidden = false
         }else{
             noneStocksView.isHidden = true
-            cell.fill(name: fetch.productName, price: fetch.productPrice, description: fetch.productDescription, category: fetch.productCategory) { image in
+            cell.fill(name: fetch.productName, price: fetch.productPrice, description: fetch.productDescription, category: fetch.productCategory, stock: fetch.stock) { image in
                 image.sd_setImage(with: storageRef)
             }
         }
@@ -112,12 +112,15 @@ extension UserHomeViewController: UserHomeTableViewCellDelegate {
     
     //MARK: Adding to user's Cart
     func addToCart(_ cell: UserHomeTableViewCell) {
-        guard let name = cell.productNameLabel.text, let category = cell.category, let price = Int64(cell.productPriceLabel.text!) else {return}
         
-        let image = cell.cellImageView.image,
-        imageData: NSData = image!.pngData()! as NSData
-        
-        CoreDataManager.shared.saveForCart(name: name, category: category, price: price, quantity: 1)
+        let price = Int64(cell.price),
+        image = cell.cellImageView.image
+        guard let name = cell.productNameLabel.text,
+            let category = cell.category,
+            let stock = cell.stock,
+            let imageData: NSData = image?.pngData() as NSData? else {return}
+                
+        CoreDataManager.shared.saveForCart(name: name, category: category, price: price, quantity: 1, stock: stock)
         cartCondition()
         
         UserDefaults.standard.set(imageData, forKey: name)

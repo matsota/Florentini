@@ -124,7 +124,7 @@ private extension WorkerProfileViewController{
             self.present(self.alert.alertClassicInfoOK(title: "Внимание", message: "Для смены пароля необходимо заполнить все поля"), animated: true)
         }else{
             self.present(self.alert.alertPassChange(success: {
-                self.dismiss(animated: true) { let ordersVC = self.storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.MainWorkSpaceVC.rawValue) as? WorkerMainSpaceViewController
+                self.dismiss(animated: true) { let ordersVC = self.storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.MainWorkSpaceVC.rawValue) as? WorkerOrdersViewController
                     self.view.window?.rootViewController = ordersVC
                     self.view.window?.makeKeyAndVisible()
                 }
@@ -139,7 +139,7 @@ private extension WorkerProfileViewController{
 private extension WorkerProfileViewController {
     
     func transitionToNewProduct() {
-        let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationManager.IDVC.NewProductSetVC.rawValue) as? NewProductSetViewController
+        let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.NewProductSetVC.rawValue) as? NewProductSetViewController
         view.window?.rootViewController = catalogVC
     }
     

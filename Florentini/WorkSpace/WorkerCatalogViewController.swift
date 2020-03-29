@@ -18,7 +18,7 @@ class WorkerCatalogViewController: UIViewController {
         //data Implementation
         NetworkManager.shared.downloadProducts(success: { productInfo in
             self.productInfo = productInfo
-            self.catalogTableView.reloadData()
+            self.tableView.reloadData()
         }) { error in
             print(error.localizedDescription)
         }
@@ -36,6 +36,17 @@ class WorkerCatalogViewController: UIViewController {
         transitionToWorkerChat()
     }
     
+    //MARK: - Фильтр
+    @IBAction func startFiltering(_ sender: DesignButton) {
+        guard let sender = sender.titleLabel!.text else {return}
+        showOptionsMethod(option: sender)
+    }
+    @IBAction func endFiltering(_ sender: DesignButton) {
+        selectionMethod(self, sender)
+    }
+    
+    
+    
     
     
     //MARK: - Private:
@@ -46,9 +57,18 @@ class WorkerCatalogViewController: UIViewController {
     private let slidingMenu = SlideInTransitionMenu()
     private let alert = UIAlertController()
     private var productInfo = [DatabaseManager.ProductInfo]()
+    private var selectedCategory = String()
+    
+    //MARK: - View
+    @IBOutlet weak var buttonsView: UIView!
+    
     
     //MARK: - TableView Outlet
-    @IBOutlet weak var catalogTableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
+    
+    //MARK: - Button
+    @IBOutlet var allFilterButtonsCollection: [DesignButton]!
+    @IBOutlet weak var filterButton: DesignButton!
     
 }
 
@@ -69,14 +89,15 @@ extension WorkerCatalogViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = catalogTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.WorkerCatalogTVCell.rawValue, for: indexPath) as! WorkerCatalogTableViewCell
-    
+        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.WorkerCatalogTVCell.rawValue, for: indexPath) as! WorkerCatalogTableViewCell
+        
         cell.delegate = self
-    
         cell.tag = indexPath.row
-        let get = productInfo[cell.tag]
-        let storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(get.productName)")
-        cell.fill(name: get.productName, price: get.productPrice, category: get.productCategory, description: get.productDescription) { image in
+        
+        let get = productInfo[cell.tag],
+        storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(get.productName)")
+        
+        cell.fill(name: get.productName, price: get.productPrice, category: get.productCategory, description: get.productDescription, stock: get.stock) { image in
             image.sd_setImage(with: storageRef)
         }
         return cell
@@ -85,7 +106,7 @@ extension WorkerCatalogViewController: UITableViewDelegate, UITableViewDataSourc
     //deleteProduct
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let cell = catalogTableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.WorkerCatalogTVCell.rawValue, for: indexPath) as! WorkerCatalogTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.WorkerCatalogTVCell.rawValue, for: indexPath) as! WorkerCatalogTableViewCell
         guard let name = cell.productNameLabel.text else {return nil}
         let delete = deleteAction(name: name, at: indexPath)
         
@@ -97,7 +118,7 @@ extension WorkerCatalogViewController: UITableViewDelegate, UITableViewDataSourc
             if AuthenticationManager.shared.currentUser?.uid == AuthenticationManager.shared.uidAdmin {
                 self.present(self.alert.alertDeleteProduct(name: name, success: {
                     self.productInfo.remove(at: indexPath.row)
-                    self.catalogTableView.deleteRows(at: [indexPath], with: .automatic)
+                    self.tableView.deleteRows(at: [indexPath], with: .automatic)
                 }), animated: true)
                 complition(true)
             }else{
@@ -116,18 +137,40 @@ extension WorkerCatalogViewController: WorkerCatalogTableViewCellDelegate {
     
     func editPrice(_ cell: WorkerCatalogTableViewCell){
         guard let name = cell.productNameLabel.text, let description = cell.productDescriptionLabel.text else {return}
-        let category = cell.category
+        let category = cell.category,
+        stock = cell.stock
         
         if AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid {
             cell.productPriceButton.isUserInteractionEnabled = true
             
-            self.present(self.alert.alertEditProductPrice(name: name, category: category, description: description, success: { newPrice in
+            self.present(self.alert.alertEditProductPrice(name: name, category: category, description: description, stock: stock, success: { newPrice in
                 cell.productPriceButton.setTitle("\(newPrice) грн", for: .normal)
             }),animated: true)
         }else{
             cell.productPriceButton.isUserInteractionEnabled = false
         }
-        self.catalogTableView.reloadData()
+        self.tableView.reloadData()
+    }
+    
+    func editStockCondition(_ cell: WorkerCatalogTableViewCell) {
+        
+        guard let name = cell.productNameLabel.text, let description = cell.productDescriptionLabel.text else {return}
+        let category = cell.category,
+        price = cell.price,
+        stock = cell.stock
+        
+        
+        if cell.stockSwitch.isOn == true {
+            cell.stock = true
+            cell.stockConditionLabel.text = "Акционный товар"
+            cell.stockConditionLabel.textColor = .red
+            NetworkManager.shared.editStockCondition(name: name, price: price, category: category, description: description, stock: stock)
+        }else{
+            cell.stock = false
+            cell.stockConditionLabel.text = "Акция отсутствует"
+            cell.stockConditionLabel.textColor = .black
+            NetworkManager.shared.editStockCondition(name: name, price: price, category: category, description: description, stock: stock)
+        }
     }
     
 }
@@ -148,5 +191,74 @@ extension WorkerCatalogViewController: UIViewControllerTransitioningDelegate {
     
 }
 
-//MARK: -
+//MARK: - Появление вариантов Категорий для отфильтровывания продукции
+private extension WorkerCatalogViewController {
+    func showOptionsMethod(option: String) {
+        selectedCategory = option
+        allFilterButtonsCollection.forEach { (buttons) in
+            if buttons.isHidden == true {
+                UIView.animate(withDuration: 0.2) {
+                    buttons.isHidden = false
+                    self.filterButton.isHidden = !self.buttonsView.isHidden
+                    self.buttonsView.layoutIfNeeded()
+                }
+            }else{
+                UIView.animate(withDuration: 0.2) {
+                    buttons.isHidden = true
+                    self.buttonsView.layoutIfNeeded()
+                }
+            }
+            filterButton.setTitle(option, for: .normal)
+        }
+    }
+}
+
+//MARK: - Метод фильтрации продукции по категориям
+private extension WorkerCatalogViewController {
+    
+    func selectionMethod(_ class: UIViewController, _ sender: UIButton) {
+        guard let title = sender.currentTitle, let categories = DatabaseManager.ProductCategoriesCases(rawValue: title) else {return}
+        switch categories {
+        case .apiece:
+            showOptionsMethod(option: DatabaseManager.ProductCategoriesCases.apiece.rawValue)
+            NetworkManager.shared.downloadApieces(success: { productInfo in
+                self.productInfo = productInfo
+                self.filterButton.isHidden = false
+                self.tableView.reloadData()
+            }) { error in
+                print(error.localizedDescription)
+            }
+        case .gift:
+            showOptionsMethod(option: DatabaseManager.ProductCategoriesCases.gift.rawValue)
+            NetworkManager.shared.downloadGifts(success: { productInfo in
+                self.productInfo = productInfo
+                self.filterButton.isHidden = false
+                self.tableView.reloadData()
+            }) { error in
+                print(error.localizedDescription)
+            }
+        case .bouquet:
+            showOptionsMethod(option: DatabaseManager.ProductCategoriesCases.bouquet.rawValue)
+            NetworkManager.shared.downloadBouquets(success: { productInfo in
+                self.productInfo = productInfo
+                self.filterButton.isHidden = false
+                self.tableView.reloadData()
+            }) { error in
+                print(error.localizedDescription)
+            }
+        case .stock:
+            showOptionsMethod(option: DatabaseManager.ProductCategoriesCases.stock.rawValue)
+            NetworkManager.shared.downloadStocks(success: { productInfo in
+                self.productInfo = productInfo
+                self.filterButton.isHidden = false
+                self.tableView.reloadData()
+            }) { error in
+                print(error.localizedDescription)
+            }
+        case .none:
+            break
+        }
+    }
+    
+}
 

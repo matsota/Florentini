@@ -52,7 +52,7 @@ class NetworkManager {
     }
     
     func downloadStocks(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).whereField(DatabaseManager.ProductCases.productCategory.rawValue, isEqualTo: DatabaseManager.ProductCategoriesCases.stock.rawValue).getDocuments(completion: {
+        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).whereField(DatabaseManager.ProductCases.stock.rawValue, isEqualTo: true).getDocuments(completion: {
             (querySnapshot, _) in
             let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
             success(productInfo)
@@ -105,28 +105,24 @@ class NetworkManager {
     }
     
     //MARK: - Метод внесения информации о товаре в Firebase
-    func setProductDescription(name: String, price: Int, category: String, description: String, documentNamedID: String) {
+    func setProductDescription(name: String, price: Int, description: String, category: String, stock: Bool) {
         
-        let imageTemplate = [
-            DatabaseManager.ProductCases.productName.rawValue: name,
-            DatabaseManager.ProductCases.productPrice.rawValue: price,
-            DatabaseManager.ProductCases.productCategory.rawValue: category,
-            DatabaseManager.ProductCases.productDescription.rawValue: description
-            ] as [String: Any]
+        let imageTemplate = DatabaseManager.ProductInfo(productName: name, productPrice: price, productDescription: description, productCategory: category, stock: stock)
         
-        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).document(documentNamedID).setData(imageTemplate, merge: true)
+        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).document(name).setData(imageTemplate.dictionary)
     }
     
     //MARK: - Редактирование цены существующего продукта в Worker-Catalog
-    func editProductPrice(name: String, newPrice: Int, category: String, description: String) {
-        let updatePrice = [
-            DatabaseManager.ProductCases.productName.rawValue: name,
-            DatabaseManager.ProductCases.productPrice.rawValue: newPrice,
-            DatabaseManager.ProductCases.productCategory.rawValue: category,
-            DatabaseManager.ProductCases.productDescription.rawValue: description
-            ] as [String: Any]
+    func editProductPrice(name: String, newPrice: Int, category: String, description: String, stock: Bool) {
+        let updatePrice = DatabaseManager.ProductInfo(productName: name, productPrice: newPrice, productDescription: description, productCategory: category, stock: stock)
         
-        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).document(name).setData(updatePrice)
+        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).document(name).setData(updatePrice.dictionary)
+    }
+    
+    func editStockCondition(name: String, price: Int, category: String, description: String, stock: Bool) {
+        let updatePrice = DatabaseManager.ProductInfo(productName: name, productPrice: price, productDescription: description, productCategory: category, stock: stock)
+        
+        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).document(name).setData(updatePrice.dictionary)
     }
     
     //MARK: - Метод удаления продукта из базы данных
@@ -166,9 +162,9 @@ class NetworkManager {
         }
     }
     
-    func sendOrder(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, productDescription: [String : Any]) {
+    func sendOrder(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, timeStamp: Date, productDescription: [String : Any]) {
         guard let currentIDDevice = CoreDataManager.shared.device.identifierForVendor else {return}
-        let newOrder = DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, deviceID: "\(currentIDDevice)")
+        let newOrder = DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, deviceID: "\(currentIDDevice)")
         
         db.collection(DatabaseManager.UsersInfoCases.order.rawValue).document("\(currentIDDevice)").setData(newOrder.dictionary) {
             error in
@@ -239,13 +235,45 @@ class NetworkManager {
     }
     
     //MARK: - Метод выгрузки Информации о заказе из Firebase
-    //    func downloadMainOrderInfo(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
-    //        db.collection(DatabaseManager.ProductCases.imageCollection.rawValue).getDocuments(completion: {
-    //            (querySnapshot, _) in
-    //            let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
-    //            success(productInfo)
-    //        })
-    //    }
+    func downloadMainOrderInfo(success: @escaping([DatabaseManager.Order]) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(DatabaseManager.UsersInfoCases.order.rawValue).getDocuments(completion: {
+            (querySnapshot, _) in
+            let orders = querySnapshot!.documents.compactMap{DatabaseManager.Order(dictionary: $0.data())}
+            success(orders)
+        })
+    }
+    
+    //MARK: - Обновление содержимого Чата
+    func updateOrders(success: @escaping(DatabaseManager.Order) -> Void) {
+        
+        
+        db.collection(DatabaseManager.UsersInfoCases.order.rawValue).whereField(DatabaseManager.MessagesCases.timeStamp.rawValue, isGreaterThan: Date()).addSnapshotListener { (querySnapshot, error) in
+            guard let snapshot = querySnapshot else {return}
+            
+            snapshot.documentChanges.forEach { diff in
+                if diff.type == .added {
+                    guard let newOrder = DatabaseManager.Order(dictionary: diff.document.data()) else {return}
+                    success(newOrder)
+                }
+            }
+        }
+    }
+    
+    func downloadOrderdsAddition(success: @escaping([DatabaseManager.OrderAddition]) -> Void, failure: @escaping(Error) -> Void) {
+        
+        var key = String()
+        CoreDataManager.shared.fetchOrderPath { path -> (Void) in
+            key = path.map({$0.path}).last!!
+        }
+        
+        let docRef = db.collection(DatabaseManager.UsersInfoCases.order.rawValue).document(key)
+        
+        docRef.collection(key).getDocuments(completion: {
+            (querySnapshot, _) in
+            let addition = querySnapshot!.documents.compactMap{DatabaseManager.OrderAddition(dictionary: $0.data())}
+            success(addition)
+        })
+    }
     
 }
 

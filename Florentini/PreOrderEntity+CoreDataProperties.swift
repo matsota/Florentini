@@ -20,5 +20,6 @@ extension PreOrderEntity {
     @NSManaged public var productPrice: Int64
     @NSManaged public var productQuantity: Int64
     @NSManaged public var productCategory: String?
+    @NSManaged public var stock: Bool
 
 }

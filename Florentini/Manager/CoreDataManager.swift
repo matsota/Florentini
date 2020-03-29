@@ -15,13 +15,31 @@ class CoreDataManager {
     let device = UIDevice.current
     
     //MARK: - Создание заказа/Добавление к заказу
-    func saveForCart(name: String, category: String, price: Int64, quantity: Int64) {
+    func saveForCart(name: String, category: String, price: Int64, quantity: Int64, stock: Bool) {
         let preOrder = PreOrderEntity(context: PersistenceService.context)
+        
         preOrder.productName = name
         preOrder.productCategory = category
         preOrder.productPrice = price
         preOrder.productQuantity = quantity
+        preOrder.stock = stock
         PersistenceService.saveContext()
+    }
+    
+    func saveOrderPath(orderPath: String) {
+        let path = OrderDetailPathEntity(context: PersistenceService.context)
+        path.path = orderPath
+        PersistenceService.saveContext()
+    }
+    
+    @objc func fetchOrderPath(success: @escaping([OrderDetailPathEntity]) -> (Void)) {
+        let fetchRequest: NSFetchRequest<OrderDetailPathEntity> = OrderDetailPathEntity.fetchRequest()
+        do {
+            let result = try PersistenceService.context.fetch(fetchRequest)
+            success(result)
+        } catch {
+            print("CoreData Fetch Error")
+        }
     }
     
     //MARK: - Обновление количества продукта к Заказу
@@ -46,7 +64,6 @@ class CoreDataManager {
         } catch {
             print("CoreData Fetch Error")
         }
-        
     }
     
     func deleteFromCart(deleteWhere: [NSManagedObject], at indexPath: IndexPath) {

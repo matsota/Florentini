@@ -50,18 +50,20 @@ class DatabaseManager {
         var productPrice: Int
         var productDescription: String
         var productCategory: String
+        var stock: Bool
         
         var dictionary: [String:Any]{
             return [
                 DatabaseManager.ProductCases.productName.rawValue: productName,
                 DatabaseManager.ProductCases.productPrice.rawValue: productPrice,
                 DatabaseManager.ProductCases.productDescription.rawValue: productDescription,
-                DatabaseManager.ProductCases.productCategory.rawValue: productCategory
+                DatabaseManager.ProductCases.productCategory.rawValue: productCategory,
+                DatabaseManager.ProductCases.stock.rawValue: stock
             ]
         }
     }
     
-    //MARK: - Шаблон Про Неподтвержденный Продукт
+    //MARK: - Шаблон Про Заказ
     struct Order {
         var totalPrice: Int64
         var name: String
@@ -69,6 +71,7 @@ class DatabaseManager {
         var cellphone: String
         var feedbackOption: String
         var mark: String
+        var timeStamp: Date
         var deviceID: String
         
         var dictionary: [String:Any]{
@@ -79,20 +82,25 @@ class DatabaseManager {
                 DatabaseManager.UsersInfoCases.cellphone.rawValue: cellphone,
                 DatabaseManager.UsersInfoCases.feedbackOption.rawValue: feedbackOption,
                 DatabaseManager.UsersInfoCases.mark.rawValue: mark,
+                DatabaseManager.UsersInfoCases.timeStamp.rawValue: timeStamp,
                 DatabaseManager.UsersInfoCases.deviceID.rawValue: deviceID
             ]
         }
     }
     
-    //MARK: - Шаблон Про Продукт (закачка)
-    struct OrderDescription {
+    //MARK: Про детализацию заказа
+    struct OrderAddition {
+        var productCategory: String
         var productName: String
-        var productPrice: Int64
-        var productQuantity: Int64
-        
+        var stock: Bool
+        var productPrice: Int
+        var productQuantity: Int
+
         var dictionary: [String:Any]{
             return [
+                DatabaseManager.ProductCases.productCategory.rawValue: productCategory,
                 DatabaseManager.ProductCases.productName.rawValue: productName,
+                DatabaseManager.ProductCases.stock.rawValue: stock,
                 DatabaseManager.ProductCases.productPrice.rawValue: productPrice,
                 DatabaseManager.ProductCases.productQuantity.rawValue: productQuantity
             ]
@@ -135,8 +143,9 @@ extension DatabaseManager.ProductInfo: DocumentSerializable {
         guard let productName = dictionary[DatabaseManager.ProductCases.productName.rawValue] as? String,
             let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? Int,
             let productDescription = dictionary[DatabaseManager.ProductCases.productDescription.rawValue] as? String,
-            let productCategory = dictionary[DatabaseManager.ProductCases.productCategory.rawValue] as? String else {return nil}
-        self.init(productName: productName, productPrice: productPrice, productDescription: productDescription, productCategory: productCategory)
+            let productCategory = dictionary[DatabaseManager.ProductCases.productCategory.rawValue] as? String,
+            let stock = dictionary[DatabaseManager.ProductCases.stock.rawValue] as? Bool else {return nil}
+        self.init(productName: productName, productPrice: productPrice, productDescription: productDescription, productCategory: productCategory, stock: stock)
     }
 }
 
@@ -149,16 +158,21 @@ extension DatabaseManager.Order: DocumentSerializable {
             let userCellphone = dictionary[DatabaseManager.UsersInfoCases.cellphone.rawValue] as? String,
             let feedbackOption = dictionary[DatabaseManager.UsersInfoCases.feedbackOption.rawValue] as? String,
             let userMark = dictionary[DatabaseManager.UsersInfoCases.mark.rawValue] as? String,
+            let timeStamp = (dictionary[DatabaseManager.UsersInfoCases.timeStamp.rawValue] as? Timestamp)?.dateValue(),
             let deviceID = dictionary[DatabaseManager.UsersInfoCases.deviceID.rawValue] as? String else {return nil}
-        self.init(totalPrice: totalPrice, name: userName, adress: userAdress, cellphone: userCellphone, feedbackOption: feedbackOption, mark: userMark, deviceID: deviceID)
+        self.init(totalPrice: totalPrice, name: userName, adress: userAdress, cellphone: userCellphone, feedbackOption: feedbackOption, mark: userMark, timeStamp: timeStamp, deviceID: deviceID)
     }
 }
-extension DatabaseManager.OrderDescription: DocumentSerializable {
+
+//MARK: Про детализацию заказа
+extension DatabaseManager.OrderAddition: DocumentSerializable {
     init?(dictionary: [String: Any]) {
-        guard let productName = dictionary[DatabaseManager.ProductCases.productName.rawValue] as? String,
-            let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? Int64,
-            let productQuantity = dictionary[DatabaseManager.ProductCases.productCategory.rawValue] as? Int64 else {return nil}
-        self.init(productName: productName, productPrice: productPrice, productQuantity: productQuantity)
+        guard let productCategory = dictionary[DatabaseManager.ProductCases.productCategory.rawValue] as? String,
+            let productName = dictionary[DatabaseManager.ProductCases.productName.rawValue] as? String,
+            let stock = dictionary[DatabaseManager.ProductCases.stock.rawValue] as? Bool,
+            let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? Int,
+            let productQuantity = dictionary[DatabaseManager.ProductCases.productQuantity.rawValue] as? Int else {return nil}
+        self.init(productCategory: productCategory, productName: productName, stock: stock, productPrice: productPrice, productQuantity: productQuantity)
     }
 }
 
@@ -181,6 +195,7 @@ extension DatabaseManager {
         case cellphone
         case feedbackOption
         case mark
+        case timeStamp
         case deviceID
         
         case PreOrderEntity
@@ -210,6 +225,7 @@ extension DatabaseManager {
         case productDescription
         case productImageURL
         case imageCollection
+        case stock
     }
     
     //MARK: Про категории товара
@@ -220,7 +236,7 @@ extension DatabaseManager {
         case bouquet = "Букеты"
         case stock = "Акции"
     }
-
+    
     //MARK: Про количество
     enum MaxQuantityByCategoriesCases: Int {
         case towHundred = 200

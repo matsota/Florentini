@@ -29,7 +29,7 @@ class WorkerChatViewController: UIViewController {
         //MARK: Сообщения чата
         NetworkManager.shared.workersChatLoad(success: { messages in
             self.messagesArray = messages
-            self.messageTableView.reloadData()
+            self.tableView.reloadData()
         }) { error in
             print(error.localizedDescription)
         }
@@ -37,7 +37,7 @@ class WorkerChatViewController: UIViewController {
         //MARK: Обновление чата
         NetworkManager.shared.chatUpdate { newMessages in
             self.messagesArray.insert(newMessages, at: 0)
-            self.messageTableView.reloadData()
+            self.tableView.reloadData()
         }
         
     }
@@ -68,7 +68,7 @@ class WorkerChatViewController: UIViewController {
     private var position = String()
     
     //MARK: - TableView Outlet
-    @IBOutlet weak var messageTableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     
 }
 
@@ -105,7 +105,7 @@ extension WorkerChatViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationManager.IDVC.WorkerMessagesTVCell.rawValue, for: indexPath) as! WorkerMessagesTableViewCell,
+        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.WorkerMessagesTVCell.rawValue, for: indexPath) as! WorkerMessagesTableViewCell,
         message = messagesArray[indexPath.row]
         
         cell.fill(name: message.name, content: message.content, date: "\(message.timeStamp)")

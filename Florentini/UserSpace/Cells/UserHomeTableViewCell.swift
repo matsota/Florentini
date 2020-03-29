@@ -19,6 +19,8 @@ class UserHomeTableViewCell: UITableViewCell {
 
     //MARK: - Implementation
     var category: String?
+    var price = Int()
+    var stock: Bool?
     //delegate
     weak var delegate: UserHomeTableViewCellDelegate?
     
@@ -51,10 +53,13 @@ class UserHomeTableViewCell: UITableViewCell {
     }
 
     //MARK: - Заполнение Таблицы
-    func fill(name: String, price: Int, description: String, category: String, image: @escaping(UIImageView) -> Void) {
+    func fill(name: String, price: Int, description: String, category: String, stock: Bool, image: @escaping(UIImageView) -> Void) {
         productNameLabel.text = name
-        productPriceLabel.text = "\(price)"
+        productPriceLabel.text = "\(self.price) грн"
         productDescriptionLabel.text = description
+        
+        self.price = price
+        self.stock = stock
         self.category = category
         image(cellImageView)
     }

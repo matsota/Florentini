@@ -14,20 +14,20 @@ class NavigationCases {
     enum IDVC: String, CaseIterable {
         
         //for clients
+        case MenuVC
+        
+        case UsersCartVC
         case CatalogVC
         case FeedbackVC
         case FAQVC
         
         case UserCatalogTVCell
-        
-        case MenuVC
-        
-        case UsersCartVC
         case UsersCartTVCell
-        
         case UserHomeTVCell
         
         //for workers
+        case WorkMenuVC
+        
         case LoginWorkSpaceVC
         case MainWorkSpaceVC
         case WorkerCatalogVC
@@ -35,12 +35,11 @@ class NavigationCases {
         case WorkersFAQVC
         case WorkersChatVC
         case NewProductSetVC
-        
-        case WorkMenuVC
-        
+    
         case WorkerMessagesTVCell
         case WorkerCatalogTVCell
         case WorkerOrdersTVCell
+        case WorkerOrdersDetailTVCell
     }
 
 }

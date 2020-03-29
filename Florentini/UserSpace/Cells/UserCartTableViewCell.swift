@@ -22,6 +22,7 @@ class UserCartTableViewCell: UITableViewCell {
     var productName: String?
     var productPrice: Int64?
     var productCategory: String?
+    var stock: Bool?
     ///delegate
     weak var delegate: UserCartTableViewCellDelegate?
     
@@ -53,10 +54,11 @@ class UserCartTableViewCell: UITableViewCell {
     }
     
     //MARK: - Заполнение таблицы
-    func fill(name: String, price: Int64, slider: Int64, imageData: NSData) {
+    func fill(name: String, price: Int64, slider: Int64, stock: Bool, imageData: NSData) {
         productNameLabel.text = name
         productName = name
         productPrice = price
+        self.stock = stock
         
         quantitySlider.value = Float(slider)
         productPriceLabel.text! = "\(price) грн"
