@@ -136,21 +136,14 @@ extension UIAlertController {
         return editingPrice
     }
     
-//    func alertEditStock(name: String, price: Int, category: String, description: String, success: @escaping(Bool) -> Void) -> (UIAlertController) {
-//        let editingPrice = UIAlertController(title: "Внимание", message: "Подтвердите изменение наличия АКЦИИ", preferredStyle: .alert)
-//            
-//        editingPrice.addTextField { (text:UITextField) in
-//            text.keyboardType = .numberPad
-//            text.placeholder = "Введите сообщение"
-//        }
-//
-//        editingPrice.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
-//        editingPrice.addAction(UIAlertAction(title: "Отправить", style: .default, handler: { (action: UIAlertAction) in
-//            guard let stock =   else {return}
-//            NetworkManager.shared.editProductPrice(name: name, price: price, category: category, description: description, stock: stock)
-//            success(true)
-//        }))
-//        return editingPrice
-//    }
+    func alertEditStock(name: String, price: Int, category: String, description: String, stock: Bool, compltion: () -> Void) -> (UIAlertController) {
+        let editingPrice = UIAlertController(title: "Внимание", message: "Подтвердите изменение наличия АКЦИИ", preferredStyle: .alert)
+
+        editingPrice.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+        editingPrice.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { (action: UIAlertAction) in
+            NetworkManager.shared.editStockCondition(name: name, price: price, category: category, description: description, stock: stock)
+        }))
+        return editingPrice
+    }
     
 }

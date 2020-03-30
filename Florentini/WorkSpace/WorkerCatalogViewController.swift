@@ -156,20 +156,26 @@ extension WorkerCatalogViewController: WorkerCatalogTableViewCellDelegate {
         
         guard let name = cell.productNameLabel.text, let description = cell.productDescriptionLabel.text else {return}
         let category = cell.category,
-        price = cell.price,
-        stock = cell.stock
-        
+        price = cell.price
         
         if cell.stockSwitch.isOn == true {
-            cell.stock = true
-            cell.stockConditionLabel.text = "Акционный товар"
-            cell.stockConditionLabel.textColor = .red
-            NetworkManager.shared.editStockCondition(name: name, price: price, category: category, description: description, stock: stock)
+            DispatchQueue.main.async {
+                self.present(self.alert.alertEditStock(name: name, price: price, category: category, description: description, stock: true){
+                    cell.stock = true
+                    cell.stockConditionLabel.text = "Акционный товар"
+                    cell.stockConditionLabel.textColor = .red
+                }, animated: true)
+                
+            }
+            
         }else{
-            cell.stock = false
-            cell.stockConditionLabel.text = "Акция отсутствует"
-            cell.stockConditionLabel.textColor = .black
-            NetworkManager.shared.editStockCondition(name: name, price: price, category: category, description: description, stock: stock)
+            DispatchQueue.main.async {
+                self.present(self.alert.alertEditStock(name: name, price: price, category: category, description: description, stock: false){
+                    cell.stock = false
+                    cell.stockConditionLabel.text = "Акция отсутствует"
+                    cell.stockConditionLabel.textColor = .black
+                }, animated: true)
+            }
         }
     }
     

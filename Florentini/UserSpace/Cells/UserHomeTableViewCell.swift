@@ -54,13 +54,14 @@ class UserHomeTableViewCell: UITableViewCell {
 
     //MARK: - Заполнение Таблицы
     func fill(name: String, price: Int, description: String, category: String, stock: Bool, image: @escaping(UIImageView) -> Void) {
+        self.price = price
+        self.stock = stock
+        self.category = category
+    
         productNameLabel.text = name
         productPriceLabel.text = "\(self.price) грн"
         productDescriptionLabel.text = description
         
-        self.price = price
-        self.stock = stock
-        self.category = category
         image(cellImageView)
     }
 }
