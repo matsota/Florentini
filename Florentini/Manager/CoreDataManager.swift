@@ -26,14 +26,17 @@ class CoreDataManager {
         PersistenceService.saveContext()
     }
     
+    //MARK: - Сохранить ИД клиента для поиска деталей его заказов
     func saveOrderPath(orderPath: String) {
         let path = OrderDetailPathEntity(context: PersistenceService.context)
         path.path = orderPath
         PersistenceService.saveContext()
     }
     
+    //MARK: - Достать ИД Клиента
     @objc func fetchOrderPath(success: @escaping([OrderDetailPathEntity]) -> (Void)) {
         let fetchRequest: NSFetchRequest<OrderDetailPathEntity> = OrderDetailPathEntity.fetchRequest()
+        
         do {
             let result = try PersistenceService.context.fetch(fetchRequest)
             success(result)
@@ -45,10 +48,11 @@ class CoreDataManager {
     //MARK: - Обновление количества продукта к Заказу
     func updateCart(name: String, quantity: Int64) {
         guard let preOrderEntity = try! PersistenceService.context.fetch(PreOrderEntity.fetchRequest()) as? [PreOrderEntity] else {return}
+        
         if preOrderEntity.count > 0 {
             for currentOrder in preOrderEntity as [NSManagedObject] {
-                if name == currentOrder.value(forKey: DatabaseManager.ProductCases.productName.rawValue) as! String{
-                    currentOrder.setValuesForKeys([DatabaseManager.ProductCases.productQuantity.rawValue: quantity])
+                if name == currentOrder.value(forKey: NavigationCases.ProductCases.productName.rawValue) as! String{
+                    currentOrder.setValuesForKeys([NavigationCases.ProductCases.productQuantity.rawValue: quantity])
                     PersistenceService.saveContext()
                 }
             }
@@ -58,6 +62,7 @@ class CoreDataManager {
     //MARK: - Custom Core Data Saving support
     @objc func fetchPreOrder(success: @escaping([PreOrderEntity]) -> (Void)) {
         let fetchRequest: NSFetchRequest<PreOrderEntity> = PreOrderEntity.fetchRequest()
+        
         do {
             let result = try PersistenceService.context.fetch(fetchRequest)
             success(result)
@@ -66,17 +71,18 @@ class CoreDataManager {
         }
     }
     
+    //MARK: - Удаление из Cart
     func deleteFromCart(deleteWhere: [NSManagedObject], at indexPath: IndexPath) {
         let certainPosition = indexPath.row
-        
         PersistenceService.context.delete(deleteWhere[certainPosition])
+        
         do {
             try PersistenceService.context.save()
         } catch {
             print("CoreData Saving Error")
         }
     }
-    
+    //MARK: - Удаление всего заказа
     func deleteAllData(entity: String, success: @escaping() -> Void) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         fetchRequest.returnsObjectsAsFaults = false
@@ -94,6 +100,5 @@ class CoreDataManager {
         } catch let error as NSError {
             print("Detele all data in \(entity) error : \(error) \(error.userInfo)")
         }
-        
     }
 }

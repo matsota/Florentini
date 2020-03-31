@@ -47,10 +47,10 @@ class WorkerProfileViewController: UIViewController {
     
     private var currentWorkerInfo = [DatabaseManager.WorkerInfo]()
     
-    //MARK: Button Outlet
+    //MARK: - Button Outlet
     @IBOutlet weak private var newProductButton: UIButton!
     
-    //MARK: Label Outlet
+    //MARK: - Label Outlet
     @IBOutlet weak private var positionLabel: UILabel!
     @IBOutlet weak private var emailLabel: UILabel!
     @IBOutlet weak private var nameLabel: UILabel!
@@ -99,7 +99,7 @@ private extension WorkerProfileViewController {
                 self.nameLabel.text = workerInfo.name
                 self.positionLabel.text = workerInfo.position
                 
-                if workerInfo.position == DatabaseManager.WorkerInfoCases.admin.rawValue && AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid {
+                if workerInfo.position == NavigationCases.WorkerInfoCases.admin.rawValue && AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid {
                     self.newProductButton.isHidden = false
                 }
             }

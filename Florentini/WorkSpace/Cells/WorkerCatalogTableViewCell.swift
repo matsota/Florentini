@@ -47,6 +47,8 @@ class WorkerCatalogTableViewCell: UITableViewCell {
     //MARK: - Switch
     @IBOutlet weak var stockSwitch: UISwitch!
     
+    //MARK: - Activity Indicator
+    @IBOutlet weak var imageActivityIndicator: UIActivityIndicatorView!
     
     //MARK: - Overrides
     override func awakeFromNib() {
@@ -71,7 +73,7 @@ class WorkerCatalogTableViewCell: UITableViewCell {
     
     
     //MARK: - Заполнение Таблицы
-    func fill(name: String, price: Int, category: String, description: String, stock: Bool, image: @escaping(UIImageView) -> Void) {
+    func fill(name: String, price: Int, category: String, description: String, stock: Bool, image: @escaping(UIImageView) -> Void, failure: @escaping(Error) -> Void) {
         productNameLabel.text = name
         productPriceButton.setTitle("\(price) грн", for: .normal)
         

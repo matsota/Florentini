@@ -88,9 +88,16 @@ extension WorkerOrdersViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.WorkerOrdersTVCell.rawValue, for: indexPath) as! WorkerOrdersTableViewCell,
-        fetch = order[indexPath.row]
+        fetch = order[indexPath.row],
+        bill = Int(fetch.totalPrice),
+        orderKey = fetch.deviceID,
+        phoneNumber = fetch.cellphone,
+        adress = fetch.adress,
+        name = fetch.name,
+        feedbackOption = fetch.feedbackOption,
+        mark = fetch.mark
         
-        cell.fill(bill: Int(fetch.totalPrice), orderKey: fetch.deviceID, phoneNumber: fetch.cellphone, adress: fetch.adress, name: fetch.name, feedbackOption: fetch.feedbackOption, mark: fetch.mark)
+        cell.fill(bill: bill, orderKey: orderKey, phoneNumber: phoneNumber, adress: adress, name: name, feedbackOption: feedbackOption, mark: mark)
         
         return cell
     }

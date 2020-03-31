@@ -67,8 +67,8 @@ class NewProductSetViewController: UIViewController {
     //MARK: - Private:
 
     //MARK: - Implementation
-    private let cases = DatabaseManager.ProductCategoriesCases.allCases.map{$0.rawValue}
-    private var selectedCategory = DatabaseManager.ProductCategoriesCases.none.rawValue
+    private let cases = NavigationCases.CategorySwitch.allCases.map{$0.rawValue}
+    private var selectedCategory = NavigationCases.CategorySwitch.none.rawValue
     private let storage = Storage.storage()
     private let storageRef = Storage.storage().reference()
     private let alert = UIAlertController()
@@ -81,7 +81,7 @@ class NewProductSetViewController: UIViewController {
     @IBOutlet private weak var photoDescriptionTextView: UITextView!
     
     //MARK: - Label
-    @IBOutlet weak var stockConditionLabel: UILabel!
+    @IBOutlet private weak var stockConditionLabel: UILabel!
     
     
     //MARK: - ProgressView
@@ -94,14 +94,15 @@ class NewProductSetViewController: UIViewController {
     @IBOutlet private weak var addedPhotoImageView: UIImageView!
     
     //MARK: - ScrollView
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet private weak var scrollView: UIScrollView!
     
     //MARK: - Switch
-    @IBOutlet weak var stockSwitch: UISwitch!
+    @IBOutlet private weak var stockSwitch: UISwitch!
     
     //MARK: - Constraints
-    @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
-    
+    @IBOutlet private weak var scrollViewBottomConstraint: NSLayoutConstraint!
+    //MARK: - Activity Indicator
+    @IBOutlet private weak var imageActivityIndicator: UIActivityIndicatorView!
 }
 
 
@@ -238,7 +239,7 @@ private extension NewProductSetViewController {
         
         if price == nil || name == "" || description == "" {
             self.present(self.alert.alertClassicInfoOK(title: "Эттеншн", message: "Вы ввели не все данные. Перепроверьте свой результат"), animated: true)
-        }else if selectedCategory == DatabaseManager.ProductCategoriesCases.none.rawValue {
+        }else if selectedCategory == NavigationCases.CategorySwitch.none.rawValue {
             self.present(self.alert.alertClassicInfoOK(title: "Эттеншн", message: "Вы не выбрали категорию продукта."), animated: true)
         }else if image == nil{
             self.present(self.alert.alertClassicInfoOK(title: "Эттеншн", message: "Вы забыли фотографию"), animated: true)

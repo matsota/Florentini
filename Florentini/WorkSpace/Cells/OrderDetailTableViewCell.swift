@@ -10,15 +10,20 @@ import UIKit
 
 class OrderDetailTableViewCell: UITableViewCell {
 
-    //MARK: - Imp[lementation
+    //MARK: - Implementation
     
+    //MARK: - Label
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var quantityLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var stockLabel: UILabel!
     
+    //MARK: - ImageView
     @IBOutlet weak var images: UIImageView!
+    
+    //MARK: - Activity Indicator
+    @IBOutlet weak var imageActivityIndicator: UIActivityIndicatorView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,7 +34,7 @@ class OrderDetailTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
             }
     
-    func fill (name: String, quantity: Int, category: String, price: Int, stock: Bool, image: @escaping(UIImageView) -> Void) {
+    func fill (name: String, quantity: Int, category: String, price: Int, stock: Bool, image: @escaping(UIImageView) -> Void, failure: @escaping(Error) -> Void) {
         
         nameLabel.text = name
         quantityLabel.text = "\(quantity) единиц"

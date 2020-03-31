@@ -10,11 +10,11 @@ import UIKit
 
 class WorkerFAQViewController: UIViewController {
     
-    //MARK: Системные переменные
+    //MARK: - Системные переменные
     private let slidingMenu = SlideInTransitionMenu()
     let alert = UIAlertController()
     
-    //MARK: Overrides
+    //MARK: - Overrides
     override func viewDidLoad() {
         super.viewDidLoad()
         

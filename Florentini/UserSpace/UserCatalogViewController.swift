@@ -12,7 +12,7 @@ import FirebaseUI
 
 
 class UserCatalogViewController: UIViewController {
-
+    
     @IBOutlet weak var cartButton: UIButton!
     
     //MARK: - Overrides
@@ -28,7 +28,7 @@ class UserCatalogViewController: UIViewController {
         }
         
         cartCondition()
-
+        
     }
     
     //MARK: - Нажатие кнопки Меню
@@ -51,10 +51,11 @@ class UserCatalogViewController: UIViewController {
     @IBAction func endFiltering(_ sender: DesignButton) {
         selectionMethod(self, sender)
     }
-
+    
     //MARK: - Private
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
+    private let alert = UIAlertController()
     private var productInfo = [DatabaseManager.ProductInfo]()
     private var selectedCategory: String?
     
@@ -90,12 +91,31 @@ extension UserCatalogViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.UserCatalogTVCell.rawValue, for: indexPath) as! UserCatalogTableViewCell,
         fetch = productInfo[indexPath.row],
-        storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(fetch.productName)")
+        indicator = cell.imageActivityIndicator,
+        name = fetch.productName,
+        price = fetch.productPrice,
+        description = fetch.productDescription,
+        category = fetch.productCategory,
+        stock = fetch.stock,
+        storagePath =  "\(NavigationCases.ProductCases.imageCollection.rawValue)/\(name)",
+        storageRef = Storage.storage().reference(withPath: storagePath)
         
         cell.delegate = self
         
-        cell.fill(name: fetch.productName, price: fetch.productPrice, description: fetch.productDescription, category: fetch.productCategory, stock: fetch.stock) { image in
-            image.sd_setImage(with: storageRef)
+        indicator?.isHidden = false
+        indicator?.startAnimating()
+        cell.fill(name: name, price: price, description: description, category: category, stock: stock, image: { (image) in
+            DispatchQueue.main.async {
+                image.sd_setImage(with: storageRef, placeholderImage: nil) { (image, _, _, _) in
+                    indicator?.stopAnimating()
+                    indicator?.isHidden = true
+                }
+            }
+        }) { (error) in
+            indicator?.stopAnimating()
+            indicator?.isHidden = true
+            self.present(self.alert.alertSomeThingGoesWrong(), animated: true)
+            print("ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR: \(error.localizedDescription)")
         }
         return cell
     }
@@ -143,10 +163,10 @@ private extension UserCatalogViewController {
 //MARK: - Метод фильтрации продукции по категориям
 private extension UserCatalogViewController {
     func selectionMethod(_ class: UIViewController, _ sender: UIButton) {
-        guard let title = sender.currentTitle, let categories = DatabaseManager.ProductCategoriesCases(rawValue: title) else {return}
+        guard let title = sender.currentTitle, let categories = NavigationCases.ProductCategoriesCases(rawValue: title) else {return}
         switch categories {
         case .apiece:
-            showOptionsMethod(option: DatabaseManager.ProductCategoriesCases.apiece.rawValue)
+            showOptionsMethod(option: NavigationCases.ProductCategoriesCases.apiece.rawValue)
             NetworkManager.shared.downloadApieces(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
@@ -155,7 +175,7 @@ private extension UserCatalogViewController {
                 print(error.localizedDescription)
             }
         case .gift:
-            showOptionsMethod(option: DatabaseManager.ProductCategoriesCases.gift.rawValue)
+            showOptionsMethod(option: NavigationCases.ProductCategoriesCases.gift.rawValue)
             NetworkManager.shared.downloadGifts(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
@@ -164,7 +184,7 @@ private extension UserCatalogViewController {
                 print(error.localizedDescription)
             }
         case .bouquet:
-            showOptionsMethod(option: DatabaseManager.ProductCategoriesCases.bouquet.rawValue)
+            showOptionsMethod(option: NavigationCases.ProductCategoriesCases.bouquet.rawValue)
             NetworkManager.shared.downloadBouquets(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
@@ -173,7 +193,7 @@ private extension UserCatalogViewController {
                 print(error.localizedDescription)
             }
         case .stock:
-            showOptionsMethod(option: DatabaseManager.ProductCategoriesCases.stock.rawValue)
+            showOptionsMethod(option: NavigationCases.ProductCategoriesCases.stock.rawValue)
             NetworkManager.shared.downloadStocks(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
@@ -181,8 +201,6 @@ private extension UserCatalogViewController {
             }) { error in
                 print(error.localizedDescription)
             }
-        case .none:
-            break
         }
     }
 }
@@ -206,7 +224,7 @@ extension UserCatalogViewController: UserCatalogTableViewCellDelegate {
         
         UserDefaults.standard.set(imageData, forKey: name)
     }
-
+    
 }
 
 //MARK: - Проверна на наличие предзаказа, чтобы изменить / не изменять картинку Cart

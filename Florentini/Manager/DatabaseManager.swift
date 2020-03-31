@@ -21,8 +21,8 @@ class DatabaseManager {
         
         var dictionary: [String:Any]{
             return [
-                DatabaseManager.WorkerInfoCases.name.rawValue: name,
-                DatabaseManager.WorkerInfoCases.position.rawValue: position
+                NavigationCases.WorkerInfoCases.name.rawValue: name,
+                NavigationCases.WorkerInfoCases.position.rawValue: position
             ]
         }
     }
@@ -36,10 +36,10 @@ class DatabaseManager {
         
         var dictionary: [String:Any] {
             return [
-                DatabaseManager.MessagesCases.name.rawValue: name,
-                DatabaseManager.MessagesCases.content.rawValue: content,
-                DatabaseManager.MessagesCases.uid.rawValue: uid,
-                DatabaseManager.MessagesCases.timeStamp.rawValue: timeStamp
+                NavigationCases.MessagesCases.name.rawValue: name,
+                NavigationCases.MessagesCases.content.rawValue: content,
+                NavigationCases.MessagesCases.uid.rawValue: uid,
+                NavigationCases.MessagesCases.timeStamp.rawValue: timeStamp
             ]
         }
     }
@@ -54,11 +54,11 @@ class DatabaseManager {
         
         var dictionary: [String:Any]{
             return [
-                DatabaseManager.ProductCases.productName.rawValue: productName,
-                DatabaseManager.ProductCases.productPrice.rawValue: productPrice,
-                DatabaseManager.ProductCases.productDescription.rawValue: productDescription,
-                DatabaseManager.ProductCases.productCategory.rawValue: productCategory,
-                DatabaseManager.ProductCases.stock.rawValue: stock
+                NavigationCases.ProductCases.productName.rawValue: productName,
+                NavigationCases.ProductCases.productPrice.rawValue: productPrice,
+                NavigationCases.ProductCases.productDescription.rawValue: productDescription,
+                NavigationCases.ProductCases.productCategory.rawValue: productCategory,
+                NavigationCases.ProductCases.stock.rawValue: stock
             ]
         }
     }
@@ -76,14 +76,14 @@ class DatabaseManager {
         
         var dictionary: [String:Any]{
             return [
-                DatabaseManager.UsersInfoCases.totalPrice.rawValue: totalPrice,
-                DatabaseManager.UsersInfoCases.name.rawValue: name,
-                DatabaseManager.UsersInfoCases.adress.rawValue: adress,
-                DatabaseManager.UsersInfoCases.cellphone.rawValue: cellphone,
-                DatabaseManager.UsersInfoCases.feedbackOption.rawValue: feedbackOption,
-                DatabaseManager.UsersInfoCases.mark.rawValue: mark,
-                DatabaseManager.UsersInfoCases.timeStamp.rawValue: timeStamp,
-                DatabaseManager.UsersInfoCases.deviceID.rawValue: deviceID
+                NavigationCases.UsersInfoCases.totalPrice.rawValue: totalPrice,
+                NavigationCases.UsersInfoCases.name.rawValue: name,
+                NavigationCases.UsersInfoCases.adress.rawValue: adress,
+                NavigationCases.UsersInfoCases.cellphone.rawValue: cellphone,
+                NavigationCases.UsersInfoCases.feedbackOption.rawValue: feedbackOption,
+                NavigationCases.UsersInfoCases.mark.rawValue: mark,
+                NavigationCases.UsersInfoCases.timeStamp.rawValue: timeStamp,
+                NavigationCases.UsersInfoCases.deviceID.rawValue: deviceID
             ]
         }
     }
@@ -98,11 +98,11 @@ class DatabaseManager {
 
         var dictionary: [String:Any]{
             return [
-                DatabaseManager.ProductCases.productCategory.rawValue: productCategory,
-                DatabaseManager.ProductCases.productName.rawValue: productName,
-                DatabaseManager.ProductCases.stock.rawValue: stock,
-                DatabaseManager.ProductCases.productPrice.rawValue: productPrice,
-                DatabaseManager.ProductCases.productQuantity.rawValue: productQuantity
+                NavigationCases.ProductCases.productCategory.rawValue: productCategory,
+                NavigationCases.ProductCases.productName.rawValue: productName,
+                NavigationCases.ProductCases.stock.rawValue: stock,
+                NavigationCases.ProductCases.productPrice.rawValue: productPrice,
+                NavigationCases.ProductCases.productQuantity.rawValue: productQuantity
             ]
         }
     }
@@ -120,8 +120,8 @@ protocol DocumentSerializable {
 //MARK: О сотрудниках
 extension DatabaseManager.WorkerInfo: DocumentSerializable {
     init?(dictionary: [String : Any]) {
-        guard let name = dictionary[DatabaseManager.WorkerInfoCases.name.rawValue] as? String,
-            let position = dictionary[DatabaseManager.WorkerInfoCases.position.rawValue] as? String else {return nil}
+        guard let name = dictionary[NavigationCases.WorkerInfoCases.name.rawValue] as? String,
+            let position = dictionary[NavigationCases.WorkerInfoCases.position.rawValue] as? String else {return nil}
         self.init(name: name, position: position)
     }
 }
@@ -129,10 +129,10 @@ extension DatabaseManager.WorkerInfo: DocumentSerializable {
 //MARK: Про чат
 extension DatabaseManager.ChatMessages: DocumentSerializable {
     init?(dictionary: [String: Any]) {
-        guard let name = dictionary[DatabaseManager.MessagesCases.name.rawValue] as? String,
-            let content = dictionary[DatabaseManager.MessagesCases.content.rawValue] as? String,
-            let uid = dictionary[DatabaseManager.MessagesCases.uid.rawValue] as? String,
-            let timeStamp = (dictionary[DatabaseManager.MessagesCases.timeStamp.rawValue] as? Timestamp)?.dateValue() else {return nil}
+        guard let name = dictionary[NavigationCases.MessagesCases.name.rawValue] as? String,
+            let content = dictionary[NavigationCases.MessagesCases.content.rawValue] as? String,
+            let uid = dictionary[NavigationCases.MessagesCases.uid.rawValue] as? String,
+            let timeStamp = (dictionary[NavigationCases.MessagesCases.timeStamp.rawValue] as? Timestamp)?.dateValue() else {return nil}
         self.init(name: name, content: content, uid: uid, timeStamp: timeStamp)
     }
 }
@@ -140,11 +140,11 @@ extension DatabaseManager.ChatMessages: DocumentSerializable {
 //MARK: Про Продукт
 extension DatabaseManager.ProductInfo: DocumentSerializable {
     init?(dictionary: [String: Any]) {
-        guard let productName = dictionary[DatabaseManager.ProductCases.productName.rawValue] as? String,
-            let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? Int,
-            let productDescription = dictionary[DatabaseManager.ProductCases.productDescription.rawValue] as? String,
-            let productCategory = dictionary[DatabaseManager.ProductCases.productCategory.rawValue] as? String,
-            let stock = dictionary[DatabaseManager.ProductCases.stock.rawValue] as? Bool else {return nil}
+        guard let productName = dictionary[NavigationCases.ProductCases.productName.rawValue] as? String,
+            let productPrice = dictionary[NavigationCases.ProductCases.productPrice.rawValue] as? Int,
+            let productDescription = dictionary[NavigationCases.ProductCases.productDescription.rawValue] as? String,
+            let productCategory = dictionary[NavigationCases.ProductCases.productCategory.rawValue] as? String,
+            let stock = dictionary[NavigationCases.ProductCases.stock.rawValue] as? Bool else {return nil}
         self.init(productName: productName, productPrice: productPrice, productDescription: productDescription, productCategory: productCategory, stock: stock)
     }
 }
@@ -152,14 +152,14 @@ extension DatabaseManager.ProductInfo: DocumentSerializable {
 //MARK: Про Заказ
 extension DatabaseManager.Order: DocumentSerializable {
     init?(dictionary: [String: Any]) {
-        guard let totalPrice = dictionary[DatabaseManager.UsersInfoCases.totalPrice.rawValue] as? Int64,
-            let userName = dictionary[DatabaseManager.UsersInfoCases.name.rawValue] as? String,
-            let userAdress = dictionary[DatabaseManager.UsersInfoCases.adress.rawValue] as? String,
-            let userCellphone = dictionary[DatabaseManager.UsersInfoCases.cellphone.rawValue] as? String,
-            let feedbackOption = dictionary[DatabaseManager.UsersInfoCases.feedbackOption.rawValue] as? String,
-            let userMark = dictionary[DatabaseManager.UsersInfoCases.mark.rawValue] as? String,
-            let timeStamp = (dictionary[DatabaseManager.UsersInfoCases.timeStamp.rawValue] as? Timestamp)?.dateValue(),
-            let deviceID = dictionary[DatabaseManager.UsersInfoCases.deviceID.rawValue] as? String else {return nil}
+        guard let totalPrice = dictionary[NavigationCases.UsersInfoCases.totalPrice.rawValue] as? Int64,
+            let userName = dictionary[NavigationCases.UsersInfoCases.name.rawValue] as? String,
+            let userAdress = dictionary[NavigationCases.UsersInfoCases.adress.rawValue] as? String,
+            let userCellphone = dictionary[NavigationCases.UsersInfoCases.cellphone.rawValue] as? String,
+            let feedbackOption = dictionary[NavigationCases.UsersInfoCases.feedbackOption.rawValue] as? String,
+            let userMark = dictionary[NavigationCases.UsersInfoCases.mark.rawValue] as? String,
+            let timeStamp = (dictionary[NavigationCases.UsersInfoCases.timeStamp.rawValue] as? Timestamp)?.dateValue(),
+            let deviceID = dictionary[NavigationCases.UsersInfoCases.deviceID.rawValue] as? String else {return nil}
         self.init(totalPrice: totalPrice, name: userName, adress: userAdress, cellphone: userCellphone, feedbackOption: feedbackOption, mark: userMark, timeStamp: timeStamp, deviceID: deviceID)
     }
 }
@@ -167,91 +167,91 @@ extension DatabaseManager.Order: DocumentSerializable {
 //MARK: Про детализацию заказа
 extension DatabaseManager.OrderAddition: DocumentSerializable {
     init?(dictionary: [String: Any]) {
-        guard let productCategory = dictionary[DatabaseManager.ProductCases.productCategory.rawValue] as? String,
-            let productName = dictionary[DatabaseManager.ProductCases.productName.rawValue] as? String,
-            let stock = dictionary[DatabaseManager.ProductCases.stock.rawValue] as? Bool,
-            let productPrice = dictionary[DatabaseManager.ProductCases.productPrice.rawValue] as? Int,
-            let productQuantity = dictionary[DatabaseManager.ProductCases.productQuantity.rawValue] as? Int else {return nil}
+        guard let productCategory = dictionary[NavigationCases.ProductCases.productCategory.rawValue] as? String,
+            let productName = dictionary[NavigationCases.ProductCases.productName.rawValue] as? String,
+            let stock = dictionary[NavigationCases.ProductCases.stock.rawValue] as? Bool,
+            let productPrice = dictionary[NavigationCases.ProductCases.productPrice.rawValue] as? Int,
+            let productQuantity = dictionary[NavigationCases.ProductCases.productQuantity.rawValue] as? Int else {return nil}
         self.init(productCategory: productCategory, productName: productName, stock: stock, productPrice: productPrice, productQuantity: productQuantity)
     }
 }
 
-//MARK: - Cases Extension
-extension DatabaseManager {
-    //MARK: Про сотрудников
-    enum WorkerInfoCases: String, CaseIterable {
-        case name
-        case position
-        case admin
-        case `operator`
-        case delivery
-    }
+////MARK: - Cases Extension
+//extension DatabaseManager {
+//    //MARK: Для сотрудников
+//    enum WorkerInfoCases: String, CaseIterable {
+//        case name
+//        case position
+//        case admin
+//        case `operator`
+//        case delivery
+//    }
+//    
+//    //MARK: Для пользоватей
+//    enum UsersInfoCases: String, CaseIterable {
+//        case totalPrice
+//        case name
+//        case adress
+//        case cellphone
+//        case feedbackOption
+//        case mark
+//        case timeStamp
+//        case deviceID
+//        
+//        case PreOrderEntity
+//        case cart
+//        case order
+//        case orderDescription
+//        
+//        case review
+//    }
+//    
+//    //MARK: Для Сообщений
+//    enum MessagesCases: String, CaseIterable {
+//        case name
+//        case content
+//        case uid
+//        case timeStamp
+//        case workers
+//        case workersMessages
+//    }
+//    
+//    //MARK: Для Товара
+//    enum ProductCases: String, CaseIterable {
+//        case productName
+//        case productPrice
+//        case productQuantity
+//        case productCategory
+//        case productDescription
+//        case productImageURL
+//        case imageCollection
+//        case stock
+//    }
+//    
+//    //MARK: Категории товара
+//    enum ProductCategoriesCases: String, CaseIterable {
+//        case none = "Без Категории"
+//        case apiece = "Поштучно"
+//        case gift = "Подарки"
+//        case bouquet = "Букеты"
+//        case stock = "Акции"
+//    }
+//    
+//    //MARK: Про количество
+//    enum MaxQuantityByCategoriesCases: Int {
+//        case towHundred = 200
+//        //        case hundredAndHalf = 150
+//        case hundred = 100
+//        //        case halfHundred = 50
+//        case five = 5
+//        case three = 3
+//    }
+//    
+//    //MARK: Для обратную связь
+//    enum FeedbackTypesCases: String, CaseIterable {
+//        case cellphone = "По телефону"
+//        case viber = "Viber"
+//        case telegram = "Telegram"
+//    }
     
-    //MARK: Про пользоватей
-    enum UsersInfoCases: String, CaseIterable {
-        case totalPrice
-        case name
-        case adress
-        case cellphone
-        case feedbackOption
-        case mark
-        case timeStamp
-        case deviceID
-        
-        case PreOrderEntity
-        case cart
-        case order
-        case orderDescription
-        
-        case review
-    }
-    
-    //MARK: Про Сообщения
-    enum MessagesCases: String, CaseIterable {
-        case name
-        case content
-        case uid
-        case timeStamp
-        case workers
-        case workersMessages
-    }
-    
-    //MARK: Про Товар
-    enum ProductCases: String, CaseIterable {
-        case productName
-        case productPrice
-        case productQuantity
-        case productCategory
-        case productDescription
-        case productImageURL
-        case imageCollection
-        case stock
-    }
-    
-    //MARK: Про категории товара
-    enum ProductCategoriesCases: String, CaseIterable {
-        case none = "Без Категории"
-        case apiece = "Поштучно"
-        case gift = "Подарки"
-        case bouquet = "Букеты"
-        case stock = "Акции"
-    }
-    
-    //MARK: Про количество
-    enum MaxQuantityByCategoriesCases: Int {
-        case towHundred = 200
-        //        case hundredAndHalf = 150
-        case hundred = 100
-        //        case halfHundred = 50
-        case five = 5
-        case three = 3
-    }
-    
-    //MARK: Про обратную связь
-    enum FeedbackTypesCases: String, CaseIterable {
-        case cellphone = "По телефону"
-        case viber = "Viber"
-        case telegram = "Telegram"
-    }
-    
-}
+//}

@@ -41,8 +41,9 @@ class UserHomeViewController: UIViewController {
     
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
+    private let alert = UIAlertController()
     private var productInfo = [DatabaseManager.ProductInfo]()
-//    private var selectedCategory: String?
+    
     //MARK: TableView Outlet
     @IBOutlet private weak var tableView: UITableView!
     
@@ -87,16 +88,35 @@ extension UserHomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.UserHomeTVCell.rawValue, for: indexPath) as! UserHomeTableViewCell,
         fetch = productInfo[indexPath.row],
-        storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(fetch.productName)")
+        indicator = cell.imageActivityIndicator,
+        name = fetch.productName,
+        price = fetch.productPrice,
+        description = fetch.productDescription,
+        category = fetch.productCategory,
+        stock = fetch.stock,
+        storagePath =  "\(NavigationCases.ProductCases.imageCollection.rawValue)/\(name)",
+        storageRef = Storage.storage().reference(withPath: storagePath)
         
         cell.delegate = self
         
         if productInfo.count == 0 {
             noneStocksView.isHidden = false
         }else{
+            indicator?.isHidden = false
+            indicator?.startAnimating()
             noneStocksView.isHidden = true
-            cell.fill(name: fetch.productName, price: fetch.productPrice, description: fetch.productDescription, category: fetch.productCategory, stock: fetch.stock) { image in
-                image.sd_setImage(with: storageRef)
+            cell.fill(name: name, price: price, description: description, category: category, stock: stock, image: { (image) in
+                DispatchQueue.main.async {
+                    image.sd_setImage(with: storageRef, placeholderImage: nil) { (image, _, _, _) in
+                        indicator?.stopAnimating()
+                        indicator?.isHidden = true
+                    }
+                }
+            }) { (error) in
+                indicator?.stopAnimating()
+                indicator?.isHidden = true
+                self.present(self.alert.alertSomeThingGoesWrong(), animated: true)
+                print("ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR: \(error.localizedDescription)")
             }
         }
         return cell
@@ -119,7 +139,7 @@ extension UserHomeViewController: UserHomeTableViewCellDelegate {
             let category = cell.category,
             let stock = cell.stock,
             let imageData: NSData = image?.pngData() as NSData? else {return}
-                
+        
         CoreDataManager.shared.saveForCart(name: name, category: category, price: price, quantity: 1, stock: stock)
         cartCondition()
         

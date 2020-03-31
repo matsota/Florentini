@@ -35,6 +35,8 @@ class UserHomeTableViewCell: UITableViewCell {
     @IBOutlet weak var productPriceLabel: UILabel!
     @IBOutlet weak var productDescriptionLabel: UILabel!
 
+    //MARK: Activity Indicator
+    @IBOutlet weak var imageActivityIndicator: UIActivityIndicatorView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -53,7 +55,7 @@ class UserHomeTableViewCell: UITableViewCell {
     }
 
     //MARK: - Заполнение Таблицы
-    func fill(name: String, price: Int, description: String, category: String, stock: Bool, image: @escaping(UIImageView) -> Void) {
+    func fill(name: String, price: Int, description: String, category: String, stock: Bool, image: @escaping(UIImageView) -> Void, failure: @escaping(Error) -> Void) {
         self.price = price
         self.stock = stock
         self.category = category

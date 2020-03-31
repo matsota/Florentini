@@ -34,6 +34,10 @@ class UserCatalogTableViewCell: UITableViewCell {
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productPriceLabel: UILabel!
     @IBOutlet weak var productDescriptionLabel: UILabel!
+    
+    //MARK: - Activity Indicator
+    @IBOutlet weak var imageActivityIndicator: UIActivityIndicatorView!
+    
 
     
     //MARK: Override
@@ -53,7 +57,7 @@ class UserCatalogTableViewCell: UITableViewCell {
     }
     
     //MARK: - Заполнение Таблицы
-    func fill(name: String, price: Int, description: String, category: String, stock: Bool, image: @escaping(UIImageView) -> Void) {
+    func fill(name: String, price: Int, description: String, category: String, stock: Bool, image: @escaping(UIImageView) -> Void, failure: @escaping(Error) -> Void) {
         self.stock = stock
         self.price = price
         self.category = category

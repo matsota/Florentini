@@ -134,18 +134,18 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
         cell.delegate = self
         
         let fetch = preOrder[cell.tag],
-        name = fetch.value(forKey: DatabaseManager.ProductCases.productName.rawValue) as! String,
-        category = fetch.value(forKey: DatabaseManager.ProductCases.productCategory.rawValue) as! String,
-        price = fetch.value(forKey: DatabaseManager.ProductCases.productPrice.rawValue) as! Int64,
-        sliderValue = fetch.value(forKey: DatabaseManager.ProductCases.productQuantity.rawValue) as! Int64,
-        stock = fetch.value(forKey: DatabaseManager.ProductCases.stock.rawValue) as! Bool,
+        name = fetch.value(forKey: NavigationCases.ProductCases.productName.rawValue) as! String,
+        category = fetch.value(forKey: NavigationCases.ProductCases.productCategory.rawValue) as! String,
+        price = fetch.value(forKey: NavigationCases.ProductCases.productPrice.rawValue) as! Int64,
+        sliderValue = fetch.value(forKey: NavigationCases.ProductCases.productQuantity.rawValue) as! Int64,
+        stock = fetch.value(forKey: NavigationCases.ProductCases.stock.rawValue) as! Bool,
         imageData = UserDefaults.standard.object(forKey: name) as! NSData
         
-        if category == DatabaseManager.ProductCategoriesCases.apiece.rawValue {
-            cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.hundred.rawValue)
+        if category == NavigationCases.ProductCategoriesCases.apiece.rawValue {
+            cell.quantitySlider.maximumValue = Float(NavigationCases.MaxQuantityByCategoriesCases.hundred.rawValue)
         }
-        if category == DatabaseManager.ProductCategoriesCases.bouquet.rawValue {
-            cell.quantitySlider.maximumValue = Float(DatabaseManager.MaxQuantityByCategoriesCases.five.rawValue)
+        if category == NavigationCases.ProductCategoriesCases.bouquet.rawValue {
+            cell.quantitySlider.maximumValue = Float(NavigationCases.MaxQuantityByCategoriesCases.five.rawValue)
         }
         
         cell.fill (name: name , price: price, slider: sliderValue, stock: stock, imageData: imageData)
@@ -199,14 +199,14 @@ extension UserCartViewController: UserCartTableViewCellDelegate {
 private extension UserCartViewController {
     
     func selectionMethod(_ class: UIViewController, _ sender: UIButton) {
-        guard let title = sender.currentTitle, let feedbackType = DatabaseManager.FeedbackTypesCases(rawValue: title) else {return}
+        guard let title = sender.currentTitle, let feedbackType = NavigationCases.FeedbackTypesCases(rawValue: title) else {return}
         switch feedbackType {
         case .cellphone:
-            showOptionsMethod(option: DatabaseManager.FeedbackTypesCases.cellphone.rawValue)
+            showOptionsMethod(option: NavigationCases.FeedbackTypesCases.cellphone.rawValue)
         case .viber:
-            showOptionsMethod(option: DatabaseManager.FeedbackTypesCases.viber.rawValue)
+            showOptionsMethod(option: NavigationCases.FeedbackTypesCases.viber.rawValue)
         case .telegram:
-            showOptionsMethod(option: DatabaseManager.FeedbackTypesCases.telegram.rawValue)
+            showOptionsMethod(option: NavigationCases.FeedbackTypesCases.telegram.rawValue)
         }
     }
     
@@ -256,7 +256,7 @@ private extension UserCartViewController {
         
         //defaults
         if feedbackOption == "", name == "", mark == "" {
-            feedbackOption = "Телефон"
+            feedbackOption = NavigationCases.FeedbackTypesCases.cellphone.rawValue
             name = "Без Имени"
             mark = "Без Дополнений"
         }
@@ -277,10 +277,12 @@ private extension UserCartViewController {
             }
             
             for _ in preOrder {
-                NetworkManager.shared.sendOrder(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: Date(), productDescription: jsonArray.remove(at:0))
+                NetworkManager.shared.sendOrder(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: Date(), productDescription: jsonArray.remove(at:0)) {
+                    self.present(self.alert.alertUploadSucceed(), animated: true)
+                }
             }
             
-            CoreDataManager.shared.deleteAllData(entity: DatabaseManager.UsersInfoCases.PreOrderEntity.rawValue) {
+            CoreDataManager.shared.deleteAllData(entity: NavigationCases.UsersInfoCases.PreOrderEntity.rawValue) {
                 self.preOrder.removeAll()
                 self.cartTableView.reloadData()
             }

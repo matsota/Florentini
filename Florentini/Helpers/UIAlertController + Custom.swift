@@ -108,42 +108,51 @@ extension UIAlertController {
     
     //MARK: - Delete Product
     func alertDeleteProduct(name: String, success: @escaping() -> Void) -> (UIAlertController) {
-        let deleteAction = UIAlertController(title: "Внимание", message: "Подтвердите, что Вы желаете удалить продукт", preferredStyle: .actionSheet)
-        deleteAction.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { _ in
+        let alert = UIAlertController(title: "Внимание", message: "Подтвердите, что Вы желаете удалить продукт", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { _ in
             NetworkManager.shared.deleteProduct(name: name)
             success()
         }))
-        deleteAction.addAction(UIAlertAction(title: "Отмена", style: .destructive, handler: nil))
+        alert.addAction(UIAlertAction(title: "Отмена", style: .destructive, handler: nil))
         
-        return deleteAction
+        return alert
     }
     
-    //MARK: - Edit Product Price
+    //MARK: - Price editor
     func alertEditProductPrice(name: String, category: String, description: String, stock: Bool, success: @escaping(Int) -> Void) -> (UIAlertController) {
-        let editingPrice = UIAlertController(title: "Внимание", message: "Введите новую цену для этого продукта", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Внимание", message: "Введите новую цену для этого продукта", preferredStyle: .alert)
             
-        editingPrice.addTextField { (text:UITextField) in
+        alert.addTextField { (text:UITextField) in
             text.keyboardType = .numberPad
             text.placeholder = "Введите сообщение"
         }
         
-        editingPrice.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
-        editingPrice.addAction(UIAlertAction(title: "Отправить", style: .default, handler: { (action: UIAlertAction) in
-            guard let newPrice = Int((editingPrice.textFields?.first?.text)!)  else {return}
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Отправить", style: .default, handler: { (action: UIAlertAction) in
+            guard let newPrice = Int((alert.textFields?.first?.text)!)  else {return}
             NetworkManager.shared.editProductPrice(name: name, newPrice: newPrice, category: category, description: description, stock: stock)
             success(newPrice)
         }))
-        return editingPrice
+        return alert
     }
     
+    //MARK: - Stock editor
     func alertEditStock(name: String, price: Int, category: String, description: String, stock: Bool, compltion: () -> Void) -> (UIAlertController) {
-        let editingPrice = UIAlertController(title: "Внимание", message: "Подтвердите изменение наличия АКЦИИ", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Внимание", message: "Подтвердите изменение наличия АКЦИИ", preferredStyle: .alert)
 
-        editingPrice.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
-        editingPrice.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { (action: UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { (action: UIAlertAction) in
             NetworkManager.shared.editStockCondition(name: name, price: price, category: category, description: description, stock: stock)
         }))
-        return editingPrice
+        return alert
     }
     
+    //MARK: - Success Upload
+    func alertUploadSucceed() -> (UIAlertController){
+        let alert = UIAlertController(title: "Заказ успешно оформлен", message: "Мы свяжемся с Вами как можно скорей", preferredStyle: .alert)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+            alert.dismiss(animated: true, completion: nil)
+        }
+        return alert
+    }
 }

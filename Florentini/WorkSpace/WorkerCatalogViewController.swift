@@ -94,11 +94,29 @@ extension WorkerCatalogViewController: UITableViewDelegate, UITableViewDataSourc
         cell.delegate = self
         cell.tag = indexPath.row
         
-        let get = productInfo[cell.tag],
-        storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(get.productName)")
+        let fetch = productInfo[cell.tag],
+        name = fetch.productName,
+        price = fetch.productPrice,
+        category = fetch.productCategory,
+        description = fetch.productDescription,
+        stock = fetch.stock,
+        storagePath = "\(NavigationCases.ProductCases.imageCollection.rawValue)/\(name)",
+        storageRef = Storage.storage().reference(withPath: storagePath)
         
-        cell.fill(name: get.productName, price: get.productPrice, category: get.productCategory, description: get.productDescription, stock: get.stock) { image in
-            image.sd_setImage(with: storageRef)
+        
+        cell.imageActivityIndicator.isHidden = false
+        cell.imageActivityIndicator.startAnimating()
+        
+        cell.fill(name: name, price: price, category: category, description: description, stock: stock, image: { (image) in
+            DispatchQueue.main.async {
+                image.sd_setImage(with: storageRef)
+                cell.imageActivityIndicator.isHidden = true
+                cell.imageActivityIndicator.stopAnimating()
+            }
+        }) { (error) in
+            cell.imageActivityIndicator.isHidden = true
+            cell.imageActivityIndicator.stopAnimating()
+            print(error.localizedDescription)
         }
         return cell
     }
@@ -223,10 +241,10 @@ private extension WorkerCatalogViewController {
 private extension WorkerCatalogViewController {
     
     func selectionMethod(_ class: UIViewController, _ sender: UIButton) {
-        guard let title = sender.currentTitle, let categories = DatabaseManager.ProductCategoriesCases(rawValue: title) else {return}
+        guard let title = sender.currentTitle, let categories = NavigationCases.ProductCategoriesCases(rawValue: title) else {return}
         switch categories {
         case .apiece:
-            showOptionsMethod(option: DatabaseManager.ProductCategoriesCases.apiece.rawValue)
+            showOptionsMethod(option: NavigationCases.ProductCategoriesCases.apiece.rawValue)
             NetworkManager.shared.downloadApieces(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
@@ -235,7 +253,7 @@ private extension WorkerCatalogViewController {
                 print(error.localizedDescription)
             }
         case .gift:
-            showOptionsMethod(option: DatabaseManager.ProductCategoriesCases.gift.rawValue)
+            showOptionsMethod(option: NavigationCases.ProductCategoriesCases.gift.rawValue)
             NetworkManager.shared.downloadGifts(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
@@ -244,7 +262,7 @@ private extension WorkerCatalogViewController {
                 print(error.localizedDescription)
             }
         case .bouquet:
-            showOptionsMethod(option: DatabaseManager.ProductCategoriesCases.bouquet.rawValue)
+            showOptionsMethod(option: NavigationCases.ProductCategoriesCases.bouquet.rawValue)
             NetworkManager.shared.downloadBouquets(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
@@ -253,7 +271,7 @@ private extension WorkerCatalogViewController {
                 print(error.localizedDescription)
             }
         case .stock:
-            showOptionsMethod(option: DatabaseManager.ProductCategoriesCases.stock.rawValue)
+            showOptionsMethod(option: NavigationCases.ProductCategoriesCases.stock.rawValue)
             NetworkManager.shared.downloadStocks(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
@@ -261,8 +279,6 @@ private extension WorkerCatalogViewController {
             }) { error in
                 print(error.localizedDescription)
             }
-        case .none:
-            break
         }
     }
     

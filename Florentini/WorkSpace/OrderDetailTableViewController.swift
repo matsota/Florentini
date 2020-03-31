@@ -39,19 +39,32 @@ class OrderDetailTableViewController: UITableViewController {
         return orderAddition.count
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.WorkerOrdersDetailTVCell.rawValue, for: indexPath) as! OrderDetailTableViewCell,
         fetch = orderAddition[indexPath.row],
-        storageRef = Storage.storage().reference(withPath: "\(DatabaseManager.ProductCases.imageCollection.rawValue)/\(fetch.productName)")
+        name  = fetch.productName,
+        quantity = fetch.productQuantity,
+        category = fetch.productCategory,
+        price = Int(fetch.productPrice),
+        stock = fetch.stock,
+        storagePath = "\(NavigationCases.ProductCases.imageCollection.rawValue)/\(name)",
+        storageRef = Storage.storage().reference(withPath: storagePath)
         
+        cell.imageActivityIndicator.isHidden = false
+        cell.imageActivityIndicator.startAnimating()
         
-        
-        cell.fill(name: fetch.productName, quantity: Int(fetch.productQuantity), category: fetch.productCategory, price: Int(fetch.productPrice), stock: fetch.stock) { image in
-            image.sd_setImage(with: storageRef)
+        cell.fill(name: name, quantity: quantity, category: category, price: price, stock: stock, image: { (image) in
+            DispatchQueue.main.async {
+                image.sd_setImage(with: storageRef)
+                cell.imageActivityIndicator.isHidden = true
+                cell.imageActivityIndicator.stopAnimating()
+            }
+        }) { (error) in
+            cell.imageActivityIndicator.isHidden = true
+            cell.imageActivityIndicator.stopAnimating()
+            print(error.localizedDescription)
         }
-        
         return cell
     }
     
