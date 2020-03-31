@@ -26,7 +26,6 @@ class WorkerOrdersViewController: UIViewController {
             self.order.insert(newOrder, at: 0)
             self.tableView.reloadData()
         }
-        
     }
     
     //MARK: - Transition Menu tapped
@@ -79,14 +78,11 @@ extension WorkerOrdersViewController: UIViewControllerTransitioningDelegate {
 //MARK: - by TableView
 extension WorkerOrdersViewController: UITableViewDelegate, UITableViewDataSource {
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return order.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.WorkerOrdersTVCell.rawValue, for: indexPath) as! WorkerOrdersTableViewCell,
         fetch = order[indexPath.row],
         bill = Int(fetch.totalPrice),
@@ -100,6 +96,25 @@ extension WorkerOrdersViewController: UITableViewDelegate, UITableViewDataSource
         cell.fill(bill: bill, orderKey: orderKey, phoneNumber: phoneNumber, adress: adress, name: name, feedbackOption: feedbackOption, mark: mark)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = deleteAction(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [delete])
+    }
+    
+    func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
+        let fetch = order[indexPath.row],
+        action = UIContextualAction(style: .destructive, title: "X") { (action, view, complition) in
+            self.present(self.alert.alertArchiveOrder(id: fetch.deviceID, success: {
+                self.present(self.alert.succeedFinish(title: "Эттеншн", message: "Заказ успершно архивирован"), animated: true)
+            }), animated: true)
+            self.order.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            self.tableView.reloadData()
+            complition(true)
+        }
+        return action
     }
     
 }

@@ -10,10 +10,12 @@ import Foundation
 
 class NavigationCases {
     
+    //MARK: -
+    
     //MARK: - Для ViewController'ов
     enum IDVC: String, CaseIterable {
         
-        //for clients
+        // - for clients
         case MenuVC
         
         case UsersCartVC
@@ -25,7 +27,7 @@ class NavigationCases {
         case UsersCartTVCell
         case UserHomeTVCell
         
-        //for workers
+        // - for workers
         case WorkMenuVC
         
         case LoginWorkSpaceVC
@@ -40,48 +42,38 @@ class NavigationCases {
         case WorkerCatalogTVCell
         case WorkerOrdersTVCell
         case WorkerOrdersDetailTVCell
+        
     }
     
-    //MARK: Для сотрудников
+    //MARK: -
+    
+    //MARK: - Для сотрудников
     enum WorkerInfoCases: String, CaseIterable {
+        
         case name
         case position
         case admin
         case `operator`
         case delivery
+        
     }
     
-    //MARK: Для пользоватей
-    enum UsersInfoCases: String, CaseIterable {
-        case totalPrice
-        case name
-        case adress
-        case cellphone
-        case feedbackOption
-        case mark
-        case timeStamp
-        case deviceID
-        
-        case PreOrderEntity
-        case cart
-        case order
-        case orderDescription
-        
-        case review
-    }
-    
-    //MARK: Для Сообщений
+    //MARK: - Про Сообщения
     enum MessagesCases: String, CaseIterable {
+        
         case name
         case content
         case uid
         case timeStamp
         case workers
         case workersMessages
+        case review
+        
     }
     
-    //MARK: Для Товара
+    //MARK: - Про Товар
     enum ProductCases: String, CaseIterable {
+        
         case productName
         case productPrice
         case productQuantity
@@ -90,38 +82,78 @@ class NavigationCases {
         case productImageURL
         case imageCollection
         case stock
+        
     }
     
-    //MARK: Категории товара
-    enum ProductCategoriesCases: String, CaseIterable {
+    //MARK: - Про Категории
+    enum CategorySwitch: String, CaseIterable{
+        
+        case none = "Без Категории"
         case apiece = "Поштучно"
         case gift = "Подарки"
         case bouquet = "Букеты"
-        case stock = "Акции"
+        
     }
     
-    //MARK: Про количество
+    //MARK: - Про Архив
+    enum ArchiveCases: String, CaseIterable{
+        
+        case archive
+        
+    }
+    
+    //MARK: - Для пользоватей
+    
+    //MARK: - Про заказ
+    enum UsersInfoCases: String, CaseIterable {
+        
+        case totalPrice
+        case name
+        case adress
+        case cellphone
+        case feedbackOption
+        case mark
+        case timeStamp
+        case deviceID
+            
+        case cart
+        case order
+        case orderDescription
+        
+        case PreOrderEntity
+        case OrderDetailPathEntity
+        
+    }
+    
+    //MARK: - Про обратную связь
+    enum FeedbackTypesCases: String, CaseIterable {
+        
+        case cellphone = "По телефону"
+        case viber = "Viber"
+        case telegram = "Telegram"
+        
+    }
+    
+    //MARK: - Про количество
     enum MaxQuantityByCategoriesCases: Int {
+        
         case towHundred = 200
         //        case hundredAndHalf = 150
         case hundred = 100
         //        case halfHundred = 50
         case five = 5
         case three = 3
+        
     }
     
-    //MARK: Для обратную связь
-    enum FeedbackTypesCases: String, CaseIterable {
-        case cellphone = "По телефону"
-        case viber = "Viber"
-        case telegram = "Telegram"
-    }
-    
-    enum CategorySwitch: String, CaseIterable{
-        case none = "Без Категории"
+    //MARK: - Про Категории
+    enum ProductCategoriesCases: String, CaseIterable {
+        
         case apiece = "Поштучно"
         case gift = "Подарки"
         case bouquet = "Букеты"
+        case stock = "Акции"
+        
     }
 
 }

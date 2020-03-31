@@ -59,6 +59,17 @@ class NetworkManager {
         })
     }
     
+    //MARK: - Метод удаления продукта из базы данных
+    func archiveOrder(id: String){
+        db.collection(NavigationCases.UsersInfoCases.order.rawValue).document(id).delete() { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+            } else {
+                print("Document successfully removed!")
+            }
+        }
+    }
+    
     //MARK: - Для Админа:
     
     //MARK: - Метод Загрузки изображения по Ссылке в приложение
@@ -152,7 +163,7 @@ class NetworkManager {
         guard let uid = CoreDataManager.shared.device.identifierForVendor else {return}
         let newReview = DatabaseManager.ChatMessages(name: name, content: content, uid: "\(uid)", timeStamp: Date())
         
-        db.collection(NavigationCases.UsersInfoCases.review.rawValue).addDocument(data: newReview.dictionary) {
+        db.collection(NavigationCases.MessagesCases.review.rawValue).addDocument(data: newReview.dictionary) {
             error in
             if let error = error {
                 print("Error: \(error.localizedDescription)")
@@ -264,6 +275,7 @@ class NetworkManager {
         
         var key = String()
         CoreDataManager.shared.fetchOrderPath { path -> (Void) in
+            print(path)
             key = path.map({$0.path}).last!!
         }
         

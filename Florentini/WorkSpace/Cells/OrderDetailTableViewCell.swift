@@ -9,7 +9,7 @@
 import UIKit
 
 class OrderDetailTableViewCell: UITableViewCell {
-
+    
     //MARK: - Implementation
     
     //MARK: - Label
@@ -22,6 +22,10 @@ class OrderDetailTableViewCell: UITableViewCell {
     //MARK: - ImageView
     @IBOutlet weak var images: UIImageView!
     
+    //MARK: - View
+    @IBOutlet weak var cellView: UIView!
+    
+    
     //MARK: - Activity Indicator
     @IBOutlet weak var imageActivityIndicator: UIActivityIndicatorView!
     
@@ -29,10 +33,11 @@ class OrderDetailTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-            }
+    
+    }
     
     func fill (name: String, quantity: Int, category: String, price: Int, stock: Bool, image: @escaping(UIImageView) -> Void, failure: @escaping(Error) -> Void) {
         
@@ -51,5 +56,5 @@ class OrderDetailTableViewCell: UITableViewCell {
         
         image(images)
     }
-
+    
 }

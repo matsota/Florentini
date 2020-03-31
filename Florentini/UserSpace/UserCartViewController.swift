@@ -278,7 +278,12 @@ private extension UserCartViewController {
             
             for _ in preOrder {
                 NetworkManager.shared.sendOrder(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: Date(), productDescription: jsonArray.remove(at:0)) {
-                    self.present(self.alert.alertUploadSucceed(), animated: true)
+                    self.present(self.alert.succeedFinish(title: "Ваш заказ оформлен", message: "Мы свяжемся с Вам так скоро, как это возможно"), animated: true)
+                    self.viewDidLoad()
+                    self.clientNameTextField.text = ""
+                    self.clientAdressTextField.text = ""
+                    self.clientCellPhoneTextField.text = ""
+                    self.clientDescriptionTextField.text = ""
                 }
             }
             

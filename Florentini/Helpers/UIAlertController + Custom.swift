@@ -118,6 +118,18 @@ extension UIAlertController {
         return alert
     }
     
+    //MARK: - Delete Order
+    func alertArchiveOrder(id: String, success: @escaping() -> Void) -> (UIAlertController) {
+        let alert = UIAlertController(title: "Внимание", message: "Подтвердите, что Вы желаете отправить заказ в архив", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { _ in
+            NetworkManager.shared.archiveOrder(id: id)
+            success()
+        }))
+        alert.addAction(UIAlertAction(title: "Отмена", style: .destructive, handler: nil))
+        
+        return alert
+    }
+    
     //MARK: - Price editor
     func alertEditProductPrice(name: String, category: String, description: String, stock: Bool, success: @escaping(Int) -> Void) -> (UIAlertController) {
         let alert = UIAlertController(title: "Внимание", message: "Введите новую цену для этого продукта", preferredStyle: .alert)
@@ -148,8 +160,8 @@ extension UIAlertController {
     }
     
     //MARK: - Success Upload
-    func alertUploadSucceed() -> (UIAlertController){
-        let alert = UIAlertController(title: "Заказ успешно оформлен", message: "Мы свяжемся с Вами как можно скорей", preferredStyle: .alert)
+    func succeedFinish(title: String, message: String) -> (UIAlertController){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
             alert.dismiss(animated: true, completion: nil)
         }

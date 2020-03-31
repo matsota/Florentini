@@ -12,23 +12,20 @@ import FirebaseUI
 class OrderDetailTableViewController: UITableViewController {
     
     //MARK: - Implementation
-    var orderAddition = [DatabaseManager.OrderAddition]()
+    private var orderAddition = [DatabaseManager.OrderAddition]()
+    private let alert = UIAlertController()
+    
+    
+    @IBOutlet var orderDetailTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         NetworkManager.shared.downloadOrderdsAddition(success: { (orders) in
             self.orderAddition = orders
-            print(orders)
-            self.tableView.reloadData()
+            self.orderDetailTableView.reloadData()
         }) { error in
             print(error.localizedDescription)
-        }
-        
-        NetworkManager.shared.downloadMainOrderInfo(success: { (info) in
-            print(info)
-        }) { (err) in
-            print(err.localizedDescription)
         }
         
     }
@@ -66,6 +63,13 @@ class OrderDetailTableViewController: UITableViewController {
             print(error.localizedDescription)
         }
         return cell
+    }
+    
+    //MARK: - Очистка CoreData
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        CoreDataManager.shared.deleteAllData(entity: NavigationCases.UsersInfoCases.OrderDetailPathEntity.rawValue) {
+        }
     }
     
     
