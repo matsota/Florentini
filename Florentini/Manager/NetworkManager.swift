@@ -59,46 +59,55 @@ class NetworkManager {
         })
     }
     
-    //MARK: - Метод удаления продукта из базы данных
-    func archiveOrder(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, timeStamp: Date, id: String){
-        db.collection(NavigationCases.UsersInfoCases.order.rawValue).document(id).delete() { err in
-            
-            let data =  DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, deviceID: id)
-            
-            if let err = err {
-                print("Error removing document: \(err)")
-            } else {
-                let path = self.db.collection(NavigationCases.ArchiveCases.archive.rawValue).document(id)
-                path.collection(NavigationCases.ArchiveCases.orders.rawValue).addDocument(data: data.dictionary)
-                print("Document successfully removed!")
-            }
-        }
+    //MARK: - Метод Архивирования заказов
+    func archiveOrder(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, timeStamp: Date, orderKey: String){
+        
+        let data =  DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, deviceID: orderKey)
+        
+        let path = self.db.collection(NavigationCases.ArchiveCases.archive.rawValue).document(orderKey)
+        path.collection(NavigationCases.ArchiveCases.orders.rawValue).addDocument(data: data.dictionary)
+        self.archiveOrderAddition(orderKey: orderKey)
+        
     }
     
-    func archiveOrderAddition(id: String) {
-        var addition = [DatabaseManager.OrderAddition]()
+    //MARK: Архивирования описания заказов
+    func archiveOrderAddition(orderKey: String) {
+        var addition = [DatabaseManager.OrderAddition](),
+        jsonArray: [[String: Any]] = []
         
-        var jsonArray: [[String: Any]] = []
-        
-        let docRef = db.collection(NavigationCases.UsersInfoCases.order.rawValue).document(id)
-        
-        docRef.collection(id).getDocuments(completion: {
+        let docRef = db.collection(NavigationCases.UsersInfoCases.order.rawValue).document(orderKey)
+        docRef.collection(orderKey).getDocuments(completion: {
             (querySnapshot, _) in
             addition = querySnapshot!.documents.compactMap{DatabaseManager.OrderAddition(dictionary: $0.data())}
-            
             for i in addition {
                 jsonArray.append(i.dictionary)
             }
             
             for _ in jsonArray {
-                let path =  self.db.collection(NavigationCases.ArchiveCases.archive.rawValue).document(id)
+                let path =  self.db.collection(NavigationCases.ArchiveCases.archive.rawValue).document(orderKey)
                 path.collection(NavigationCases.ArchiveCases.orderedProducts.rawValue).addDocument(data: jsonArray.remove(at: 0))
             }
-            
         })
-        
-        
+        db.collection(NavigationCases.UsersInfoCases.order.rawValue).document(orderKey).delete()
+        deleteAdditions(collection: docRef.collection(orderKey))
     }
+    
+    //MARK: Удаление Всего Заказа
+    func deleteAdditions(collection: CollectionReference, batchSize: Int = 100) {
+        
+        collection.limit(to: batchSize).getDocuments { (docset, error) in
+            let docset = docset,
+            batch = collection.firestore.batch()
+            
+            docset?.documents.forEach { batch.deleteDocument($0.reference) }
+            
+            batch.commit { _ in
+                self.deleteAdditions(collection: collection, batchSize: batchSize)
+            }
+        }
+    }
+    
+    
     
     //MARK: - Для Админа:
     

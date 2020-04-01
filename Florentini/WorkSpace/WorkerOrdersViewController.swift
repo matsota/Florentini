@@ -121,7 +121,7 @@ extension WorkerOrdersViewController: UITableViewDelegate, UITableViewDataSource
         
         action = UIContextualAction(style: .destructive, title: "Архив") { (action, view, complition) in
             self.present(self.alert.alertArchiveOrder(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, id: id, success: {
-                NetworkManager.shared.archiveOrderAddition(id: id)
+                NetworkManager.shared.archiveOrderAddition(orderKey: id)
                 self.present(self.alert.succeedFinish(title: "Отлично!", message: "Заказ Удачно архивирован"), animated: true)
                 self.order.remove(at: indexPath.row)
                 self.tableView.deleteRows(at: [indexPath], with: .automatic)
