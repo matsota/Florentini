@@ -119,10 +119,10 @@ extension UIAlertController {
     }
     
     //MARK: - Delete Order
-    func alertArchiveOrder(id: String, success: @escaping() -> Void) -> (UIAlertController) {
+    func alertArchiveOrder(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, timeStamp: Date, id: String, success: @escaping() -> Void) -> (UIAlertController) {
         let alert = UIAlertController(title: "Внимание", message: "Подтвердите, что Вы желаете отправить заказ в архив", preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { _ in
-            NetworkManager.shared.archiveOrder(id: id)
+            NetworkManager.shared.archiveOrder(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, id: id)
             success()
         }))
         alert.addAction(UIAlertAction(title: "Отмена", style: .destructive, handler: nil))

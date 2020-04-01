@@ -99,6 +99,8 @@ class NavigationCases {
     enum ArchiveCases: String, CaseIterable{
         
         case archive
+        case orders
+        case orderedProducts
         
     }
     

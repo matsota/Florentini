@@ -26,7 +26,11 @@ class WorkerOrdersViewController: UIViewController {
             self.order.insert(newOrder, at: 0)
             self.tableView.reloadData()
         }
+        
+        
+        
     }
+    var jsonArray: [[String: Any]] = []
     
     //MARK: - Transition Menu tapped
     @IBAction func workerMenuTapped(_ sender: UIButton) {
@@ -44,6 +48,7 @@ class WorkerOrdersViewController: UIViewController {
     private let slidingMenu = SlideInTransitionMenu()
     private let alert = UIAlertController()
     private var order = [DatabaseManager.Order]()
+    private var orderAdditions = [DatabaseManager.OrderAddition]()
     
     //MARK: - TableView
     @IBOutlet weak var tableView: UITableView!
@@ -105,14 +110,25 @@ extension WorkerOrdersViewController: UITableViewDelegate, UITableViewDataSource
     
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
         let fetch = order[indexPath.row],
-        action = UIContextualAction(style: .destructive, title: "X") { (action, view, complition) in
-            self.present(self.alert.alertArchiveOrder(id: fetch.deviceID, success: {
+        totalPrice = fetch.totalPrice,
+        name = fetch.name,
+        adress = fetch.adress,
+        cellphone = fetch.cellphone,
+        feedbackOption = fetch.feedbackOption,
+        mark = fetch.mark,
+        timeStamp = fetch.timeStamp,
+        id = fetch.deviceID,
+        
+        action = UIContextualAction(style: .destructive, title: "Архив") { (action, view, complition) in
+            self.present(self.alert.alertArchiveOrder(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, id: id, success: {
+                NetworkManager.shared.archiveOrderAddition(id: id)
+                self.present(self.alert.succeedFinish(title: "Отлично!", message: "Заказ Удачно архивирован"), animated: true)
+                self.order.remove(at: indexPath.row)
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                self.tableView.reloadData()
                 self.present(self.alert.succeedFinish(title: "Эттеншн", message: "Заказ успершно архивирован"), animated: true)
+                complition(true)
             }), animated: true)
-            self.order.remove(at: indexPath.row)
-            self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            self.tableView.reloadData()
-            complition(true)
         }
         return action
     }
