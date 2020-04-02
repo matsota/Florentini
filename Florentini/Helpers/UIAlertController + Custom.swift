@@ -1,5 +1,5 @@
 //
-//  alerts.swift
+//  UIAlertController + Custom.swift
 //  CleanUp
 //
 //  Created by Andrew Matsota on 27.12.2019.

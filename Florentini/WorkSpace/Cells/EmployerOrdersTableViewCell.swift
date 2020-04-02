@@ -1,5 +1,5 @@
 //
-//  WorkerOrdersTableViewCell.swift
+//  EmployerOrdersTableViewCell.swift
 //  Florentini
 //
 //  Created by Andrew Matsota on 28.03.2020.

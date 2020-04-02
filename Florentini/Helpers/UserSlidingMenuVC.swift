@@ -1,5 +1,5 @@
 //
-//  MenuViewController.swift
+//  UserSlidingMenuVC.swift
 //  Florentini
 //
 //  Created by Andrew Matsota on 19.02.2020.

@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  DesignButton.swift
 //  Florentini
 //
 //  Created by Andrew Matsota on 22.03.2020.

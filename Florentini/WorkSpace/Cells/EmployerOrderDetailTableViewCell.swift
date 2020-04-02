@@ -1,5 +1,5 @@
 //
-//  OrderDetailTableViewCell.swift
+//  EmployerOrderDetailTableViewCell.swift
 //  Florentini
 //
 //  Created by Andrew Matsota on 29.03.2020.

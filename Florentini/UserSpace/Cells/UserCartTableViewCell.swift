@@ -1,5 +1,5 @@
 //
-//  UserBasketTableViewCell.swift
+//  UserCartTableViewCell.swift
 //  Florentini
 //
 //  Created by Andrew Matsota on 10.03.2020.
