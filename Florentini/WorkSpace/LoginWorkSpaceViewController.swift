@@ -46,7 +46,7 @@ class LoginWorkSpaceViewController: UIViewController {
 private extension LoginWorkSpaceViewController {
     
     func transition() {
-        let transition = storyboard?.instantiateViewController(identifier: NavigationCases.IDVC.MainWorkSpaceVC.rawValue) as? EmployerOrdersViewController
+        let transition = storyboard?.instantiateViewController(identifier: NavigationCases.IDVC.EmployerOrdersVC.rawValue) as? EmployerOrdersViewController
         view.window?.rootViewController = transition
         view.window?.makeKeyAndVisible()
     }

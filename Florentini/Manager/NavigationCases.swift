@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  NavigationCases.swift
 //  Florentini
 //
 //  Created by Andrew Matsota on 21.02.2020.
@@ -28,20 +28,21 @@ class NavigationCases {
         case UserHomeTVCell
         
         // - for workers
-        case WorkMenuVC
+        case EmployerMenuVC
         
         case LoginWorkSpaceVC
-        case MainWorkSpaceVC
-        case WorkerCatalogVC
-        case WorkerProfileVC
-        case WorkersFAQVC
-        case WorkersChatVC
+        case EmployerOrdersVC
+        case EmployerCatalogVC
+        case EmployerProfileVC
+        case EmployerFAQVC
+        case EmployerChatVC
+        
         case NewProductSetVC
     
-        case WorkerMessagesTVCell
-        case WorkerCatalogTVCell
-        case WorkerOrdersTVCell
-        case WorkerOrdersDetailTVCell
+        case EmployerMessagesTVCell
+        case EmployerCatalogTVCell
+        case EmployerOrdersTVCell
+        case EmployerOrdersDetailTVCell
         
     }
     

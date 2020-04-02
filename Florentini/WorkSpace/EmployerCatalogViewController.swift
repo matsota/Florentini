@@ -29,7 +29,7 @@ class EmployerCatalogViewController: UIViewController {
     
     //MARK: - Переход В Чат
     @IBAction func chatTapped(_ sender: UIButton) {
-        transitionToWorkerChat()
+        transitionToEmployerChat()
     }
     
     //MARK: - Фильтр
@@ -98,7 +98,7 @@ extension EmployerCatalogViewController: UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.WorkerCatalogTVCell.rawValue, for: indexPath) as! EmployerCatalogTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.EmployerCatalogTVCell.rawValue, for: indexPath) as! EmployerCatalogTableViewCell
         
         cell.delegate = self
         cell.tag = indexPath.row
@@ -133,7 +133,7 @@ extension EmployerCatalogViewController: UITableViewDelegate, UITableViewDataSou
     //deleteProduct
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.WorkerCatalogTVCell.rawValue, for: indexPath) as! EmployerCatalogTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.EmployerCatalogTVCell.rawValue, for: indexPath) as! EmployerCatalogTableViewCell
         guard let name = cell.productNameLabel.text else {return nil}
         let delete = deleteAction(name: name, at: indexPath)
         

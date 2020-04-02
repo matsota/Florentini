@@ -28,7 +28,7 @@ class EmployerOrdersViewController: UIViewController {
     
     //MARK: - Переход в Чат
     @IBAction func chatTapped(_ sender: UIButton) {
-        transitionToWorkerChat()
+        transitionToEmployerChat()
     }
     
     //MARK: - Private:
@@ -104,7 +104,7 @@ extension EmployerOrdersViewController: UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.WorkerOrdersTVCell.rawValue, for: indexPath) as! WorkerOrdersTableViewCell,
+        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.EmployerOrdersTVCell.rawValue, for: indexPath) as! EmployerOrdersTableViewCell,
         fetch = order[indexPath.row],
         bill = Int(fetch.totalPrice),
         orderKey = fetch.currentDeviceID,
@@ -158,9 +158,9 @@ extension EmployerOrdersViewController: UITableViewDelegate, UITableViewDataSour
 }
 
 //MARK: - Назначение Доставки
-extension EmployerOrdersViewController: WorkerOrdersTableViewCellDelegate {
+extension EmployerOrdersViewController: EmployerOrdersTableViewCellDelegate {
     
-    func deliveryPicker(_ cell: WorkerOrdersTableViewCell) {
+    func deliveryPicker(_ cell: EmployerOrdersTableViewCell) {
         let currentDeviceID = cell.currentDeviceID
         
         self.present(self.alert.editDeliveryPerson(currentDeviceID: currentDeviceID, success: { (deliveryPerson) in

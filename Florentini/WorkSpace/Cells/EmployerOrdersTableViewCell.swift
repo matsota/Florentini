@@ -9,10 +9,10 @@
 import UIKit
 
 protocol EmployerOrdersTableViewCellDelegate: class {
-    func deliveryPicker (_ cell: WorkerOrdersTableViewCell)
+    func deliveryPicker (_ cell: EmployerOrdersTableViewCell)
 }
 
-class WorkerOrdersTableViewCell: UITableViewCell {
+class EmployerOrdersTableViewCell: UITableViewCell {
 
     //MARK: - Implementation
     var bill = Int()

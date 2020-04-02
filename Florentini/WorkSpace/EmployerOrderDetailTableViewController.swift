@@ -42,7 +42,7 @@ class EmployerOrderDetailTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.WorkerOrdersDetailTVCell.rawValue, for: indexPath) as! EmployerOrderDetailTableViewCell,
+        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.EmployerOrdersDetailTVCell.rawValue, for: indexPath) as! EmployerOrderDetailTableViewCell,
         fetch = orderAddition[indexPath.row],
         name  = fetch.productName,
         quantity = fetch.productQuantity,

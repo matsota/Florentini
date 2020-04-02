@@ -83,9 +83,9 @@ extension UIViewController {
     
     //MARK: Появление Меню перехода
     func showWorkerSlideInMethod() {
-        guard let menuVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.WorkMenuVC.rawValue) as? WorkerSlidingMenuVC else {return}
-        menuVC.workMenuTypeTapped = { workMenuType in
-            self.workerTransitionBySlidingVC(self, workMenuType)
+        guard let menuVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.EmployerMenuVC.rawValue) as? EmployerSlidingMenuVC else {return}
+        menuVC.employerMenuTypeTapped = { workMenuType in
+            self.employerTransitionBySlidingVC(self, workMenuType)
         }
         menuVC.modalPresentationStyle = .overCurrentContext
         menuVC.transitioningDelegate = self as? UIViewControllerTransitioningDelegate
@@ -93,20 +93,20 @@ extension UIViewController {
     }
     
     //MARK: Выбор перехода
-    func workerTransitionBySlidingVC(_ class: UIViewController, _ menuType: WorkerSlidingMenuVC.WorkMenuType) {
+    func employerTransitionBySlidingVC(_ class: UIViewController, _ menuType: EmployerSlidingMenuVC.EmployerMenuType) {
         let alert = UIAlertController()
         switch menuType {
         case .orders:
-            let ordersVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.MainWorkSpaceVC.rawValue) as? EmployerOrdersViewController
+            let ordersVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.EmployerOrdersVC.rawValue) as? EmployerOrdersViewController
             view.window?.rootViewController = ordersVC
         case .catalog:
-            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.WorkerCatalogVC.rawValue) as? EmployerCatalogViewController
+            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.EmployerCatalogVC.rawValue) as? EmployerCatalogViewController
             view.window?.rootViewController = catalogVC
         case .profile:
-            let profileVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.WorkerProfileVC.rawValue) as? EmployerProfileViewController
+            let profileVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.EmployerProfileVC.rawValue) as? EmployerProfileViewController
             view.window?.rootViewController = profileVC
         case .faq:
-            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.WorkersFAQVC.rawValue) as? EmployerFAQViewController
+            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.EmployerFAQVC.rawValue) as? EmployerFAQViewController
             view.window?.rootViewController = faqVC
         case .exit:
             self.present(alert.signOut(success: {
@@ -120,8 +120,8 @@ extension UIViewController {
     }
     
     //MARK: Переход в Чат
-    func transitionToWorkerChat() {
-        let workersChatVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.WorkersChatVC.rawValue) as? EmployerChatViewController
+    func transitionToEmployerChat() {
+        let workersChatVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.EmployerChatVC.rawValue) as? EmployerChatViewController
         view.window?.rootViewController = workersChatVC
         view.window?.makeKeyAndVisible()
     }

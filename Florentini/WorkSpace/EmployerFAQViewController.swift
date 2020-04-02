@@ -25,7 +25,7 @@ class EmployerFAQViewController: UIViewController {
     
     //MARK: - Переход в Чат
     @IBAction func chatTapped(_ sender: UIButton) {
-        transitionToWorkerChat()
+        transitionToEmployerChat()
     }
     
     

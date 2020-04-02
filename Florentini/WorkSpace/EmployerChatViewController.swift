@@ -119,7 +119,7 @@ extension EmployerChatViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.WorkerMessagesTVCell.rawValue, for: indexPath) as! EmployerChatTableViewCell,
+        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.EmployerMessagesTVCell.rawValue, for: indexPath) as! EmployerChatTableViewCell,
         message = messagesArray[indexPath.row]
         
         cell.fill(name: message.name, content: message.content, date: "\(message.timeStamp)")

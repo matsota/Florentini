@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  EmployerSlidingMenuVC.swift
 //  Florentini
 //
 //  Created by Andrew Matsota on 21.02.2020.
@@ -8,8 +8,8 @@
 
 import UIKit
 
-extension WorkerSlidingMenuVC {
-    enum WorkMenuType: Int {
+extension EmployerSlidingMenuVC {
+    enum EmployerMenuType: Int {
         case orders
         case catalog
         case profile
@@ -18,18 +18,18 @@ extension WorkerSlidingMenuVC {
         
     }
 }
-class WorkerSlidingMenuVC: UITableViewController{
+class EmployerSlidingMenuVC: UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    var workMenuTypeTapped: ((WorkMenuType) -> Void)?
+    var employerMenuTypeTapped: ((EmployerMenuType) -> Void)?
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let workMenuType = WorkMenuType(rawValue: indexPath.row) else {return}
+        guard let employerMenuType = EmployerMenuType(rawValue: indexPath.row) else {return}
         dismiss(animated: true) { [weak self] in
-            self?.workMenuTypeTapped?(workMenuType)
+            self?.employerMenuTypeTapped?(employerMenuType)
         }
     }
     

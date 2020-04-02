@@ -30,7 +30,7 @@ class NewProductSetViewController: UIViewController {
     
     //MARK: - Кнопка перехода в чат
     @IBAction func chatTapped(_ sender: UIButton) {
-        transitionToWorkerChat()
+        transitionToEmployerChat()
     }
     
     //MARK: - Кнопка загрузки фотографии по ссылке

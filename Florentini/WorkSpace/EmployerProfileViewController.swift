@@ -28,7 +28,7 @@ class EmployerProfileViewController: UIViewController {
     
     //MARK: - Перехрод в Чат
     @IBAction func chatTapped(_ sender: UIButton) {
-        transitionToWorkerChat()
+        transitionToEmployerChat()
     }
     
     //MARK: - Переход в Моделирование продукта
@@ -128,7 +128,7 @@ private extension EmployerProfileViewController{
             self.present(self.alert.classic(title: "Внимание", message: "Для смены пароля необходимо заполнить все поля"), animated: true)
         }else{
             self.present(self.alert.rePassword(success: {
-                self.dismiss(animated: true) { let ordersVC = self.storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.MainWorkSpaceVC.rawValue) as? EmployerOrdersViewController
+                self.dismiss(animated: true) { let ordersVC = self.storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.EmployerOrdersVC.rawValue) as? EmployerOrdersViewController
                     self.view.window?.rootViewController = ordersVC
                     self.view.window?.makeKeyAndVisible()
                 }
