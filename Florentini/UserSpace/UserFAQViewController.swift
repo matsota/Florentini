@@ -10,41 +10,42 @@ import UIKit
 
 class UserFAQViewController: UIViewController {
     
-    //MARK: ViewDidLoad
+    //MARK: - Override
+    
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
-    
-    
-    @IBAction func showHidePaymentProcessTapped(_ sender: UIButton) {
-        paymentProcessDescriptionLabel.isHidden = !paymentProcessDescriptionLabel.isHidden
-        
-    }
-    
-    @IBAction func showHidePaymentOptionsTapped(_ sender: UIButton) {
-        paymentOptionsDescriptionStackView.isHidden = !paymentOptionsDescriptionStackView.isHidden
-    }
-    
-    @IBAction func showHideDeliveryProcessTapped(_ sender: UIButton) {
-        deliveryProcessDescriptionStackView.isHidden = !deliveryProcessDescriptionStackView.isHidden
-    }
-    
-    @IBAction func showHideFeedbackTapped(_ sender: UIButton) {
-        feedbackDescriptionLabel.isHidden = !feedbackDescriptionLabel.isHidden
-    }
+
     
     //MARK: - Нажатие кнопки Меню
     @IBAction func menuTapped(_ sender: UIButton) {
         showUsersSlideInMethod()
     }
     
+    //MARK: - Показать/Спрятать Ответ на вопрос из FAQ
+    
+    //MARK: Процесс оплаты
+    @IBAction func showHidePaymentProcessTapped(_ sender: UIButton) {
+        paymentProcessDescriptionLabel.isHidden = !paymentProcessDescriptionLabel.isHidden
+        
+    }
+    //MARK: Варианты Оплаты
+    @IBAction func showHidePaymentOptionsTapped(_ sender: UIButton) {
+        paymentOptionsDescriptionStackView.isHidden = !paymentOptionsDescriptionStackView.isHidden
+    }
+    //MARK: Процесс Доставки
+    @IBAction func showHideDeliveryProcessTapped(_ sender: UIButton) {
+        deliveryProcessDescriptionStackView.isHidden = !deliveryProcessDescriptionStackView.isHidden
+    }
+    //MARK: Способы Обратной связи
+    @IBAction func showHideFeedbackTapped(_ sender: UIButton) {
+        feedbackDescriptionLabel.isHidden = !feedbackDescriptionLabel.isHidden
+    }
+    
     //MARK: - Private
-    
-    //MARK: - Methods
-    
-    
-    
+ 
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
     
@@ -53,7 +54,6 @@ class UserFAQViewController: UIViewController {
     @IBOutlet private weak var paymentOptionsDescriptionStackView: UIStackView!
     @IBOutlet private weak var deliveryProcessDescriptionStackView: UIStackView!
     @IBOutlet private weak var feedbackDescriptionLabel: UILabel!
-    
     
 }
 
@@ -66,6 +66,16 @@ class UserFAQViewController: UIViewController {
 
 
 //MARK: - Extensions
+
+//MARK: - For Overrides
+private extension UserFAQViewController {
+    
+    //MARK: Для ViewDidLoad
+    func forViewDidLoad() {
+    }
+    
+}
+
 //MARK: - Появление SlidingMenu
 extension UserFAQViewController: UIViewControllerTransitioningDelegate {
     

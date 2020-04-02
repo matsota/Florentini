@@ -13,21 +13,13 @@ import FirebaseUI
 
 class UserCatalogViewController: UIViewController {
     
-    @IBOutlet weak var cartButton: UIButton!
+    //MARK: - Override
     
-    //MARK: - Overrides
-    //MARK: - ViewDidLoad
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NetworkManager.shared.downloadProducts(success: { productInfo in
-            self.productInfo = productInfo.shuffled()
-            self.tableView.reloadData()
-        }) { error in
-            print(error.localizedDescription)
-        }
-        
-        cartCondition()
+        forViewDidLoad()
         
     }
     
@@ -65,6 +57,7 @@ class UserCatalogViewController: UIViewController {
     //MARK: Button Outlet
     @IBOutlet private var allFilterButtonsCollection: [DesignButton]!
     @IBOutlet private weak  var filterButton: DesignButton!
+    @IBOutlet private weak var cartButton: UIButton!
     
     //MARK: - TableView Outlet
     @IBOutlet private weak var tableView: UITableView!
@@ -80,6 +73,24 @@ class UserCatalogViewController: UIViewController {
 
 
 //MARK: - Extention:
+
+//MARK: - For Overrides
+private extension UserCatalogViewController {
+    
+    //MARK: Для ViewDidLoad
+    func forViewDidLoad() {
+        NetworkManager.shared.downloadProducts(success: { productInfo in
+            self.productInfo = productInfo.shuffled()
+            self.tableView.reloadData()
+        }) { error in
+            print(error.localizedDescription)
+        }
+        
+        cartCondition()
+    }
+    
+}
+
 
 //MARK: - by TableView
 extension UserCatalogViewController: UITableViewDelegate, UITableViewDataSource {
@@ -114,7 +125,7 @@ extension UserCatalogViewController: UITableViewDelegate, UITableViewDataSource 
         }) { (error) in
             indicator?.stopAnimating()
             indicator?.isHidden = true
-            self.present(self.alert.alertSomeThingGoesWrong(), animated: true)
+            self.present(self.alert.somethingWrong(), animated: true)
             print("ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR: \(error.localizedDescription)")
         }
         return cell

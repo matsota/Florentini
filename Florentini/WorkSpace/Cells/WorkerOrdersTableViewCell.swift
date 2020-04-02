@@ -8,11 +8,19 @@
 
 import UIKit
 
+protocol WorkerOrdersTableViewCellDelegate: class {
+    func deliveryPicker (_ cell: WorkerOrdersTableViewCell)
+}
+
 class WorkerOrdersTableViewCell: UITableViewCell {
 
     //MARK: - Implementation
     var bill = Int()
     var orderKey = String()
+    var deliveryPerson = String()
+    var currentDeviceID = String()
+    //
+    weak var delegate: WorkerOrdersTableViewCellDelegate?
     
     //MARK: - Label
     @IBOutlet weak var billLabel: UILabel!
@@ -22,24 +30,33 @@ class WorkerOrdersTableViewCell: UITableViewCell {
     @IBOutlet weak var feedbackOptionLabel: UILabel!
     @IBOutlet weak var markLabel: UILabel!
     
+    //MARK: - Button
+    @IBOutlet weak var deliveryPickerButton: DesignButton!
     
     //MARK: - Overrides
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-
+    
+    //MARK: Override
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         CoreDataManager.shared.saveOrderPath(orderPath: orderKey)
-
     }
     
     
+    @IBAction func deliveryPickerTapped(_ sender: DesignButton) {
+        delegate?.deliveryPicker(self)
+    }
+    
     //MARK: - Заполнение таблицы
-    func fill (bill: Int, orderKey: String, phoneNumber: String, adress: String, name: String, feedbackOption: String, mark: String) {
+    func fill (bill: Int, orderKey: String, phoneNumber: String, adress: String, name: String, feedbackOption: String, mark: String, deliveryPerson: String, currentDeviceID: String) {
         
         self.bill = bill
         self.orderKey = orderKey
+        self.deliveryPerson = deliveryPerson
+        self.currentDeviceID = currentDeviceID
+        
         billLabel.text = "\(self.bill) грн"
         phoneNumberLabel.text = phoneNumber
         adressLabel.text = adress
@@ -47,7 +64,7 @@ class WorkerOrdersTableViewCell: UITableViewCell {
         feedbackOptionLabel.text = feedbackOption
         markLabel.text = mark
         
-        
+        deliveryPickerButton.setTitle( self.deliveryPerson, for: .normal)
     }
     
 }

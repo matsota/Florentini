@@ -12,19 +12,14 @@ import CoreData
 
 class UserHomeViewController: UIViewController {
     
-    //MARK: - Overrides
-    //MARK: ViewDidLoad
+    //MARK: - Override
+    
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NetworkManager.shared.downloadStocks(success: { productInfo in
-            self.productInfo = productInfo.shuffled()
-            self.tableView.reloadData()
-        }) { error in
-            print(error.localizedDescription)
-        }
+        forViewDidLoad()
         
-        cartCondition()
     }
     
     //MARK: - Нажатие кнопки Меню
@@ -63,6 +58,39 @@ class UserHomeViewController: UIViewController {
 
 
 //MARK: - Extention
+
+//MARK: - For Overrides
+private extension UserHomeViewController {
+    
+    //MARK: Для ViewDidLoad
+    func forViewDidLoad() {
+        NetworkManager.shared.downloadStocks(success: { productInfo in
+            self.productInfo = productInfo.shuffled()
+            self.tableView.reloadData()
+        }) { error in
+            print(error.localizedDescription)
+        }
+        
+        cartCondition()
+    }
+    
+    //MARK: Проверна на наличие предзаказа, чтобы изменить / не изменять картинку Cart
+    func cartCondition() {
+        CoreDataManager.shared.fetchPreOrder { (preOrderEntity) -> (Void) in
+            let preOrderAmount = preOrderEntity.count
+            
+            if preOrderAmount == 0 {
+                let cart = UIImage(systemName: "cart")
+                self.cartButton.setImage(cart, for: .normal)
+            }else{
+                let cartFill = UIImage(systemName: "cart.fill")
+                self.cartButton.setImage(cartFill, for: .normal)
+            }
+        }
+        
+    }
+}
+
 
 //MARK: - by UIVC-TransitioningDelegate
 extension UserHomeViewController: UIViewControllerTransitioningDelegate {
@@ -115,7 +143,7 @@ extension UserHomeViewController: UITableViewDataSource, UITableViewDelegate {
             }) { (error) in
                 indicator?.stopAnimating()
                 indicator?.isHidden = true
-                self.present(self.alert.alertSomeThingGoesWrong(), animated: true)
+                self.present(self.alert.somethingWrong(), animated: true)
                 print("ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR: \(error.localizedDescription)")
             }
         }
@@ -144,25 +172,6 @@ extension UserHomeViewController: UserHomeTableViewCellDelegate {
         cartCondition()
         
         UserDefaults.standard.set(imageData, forKey: name)
-    }
-    
-}
-
-//MARK: - Проверна на наличие предзаказа, чтобы изменить / не изменять картинку Cart
-private extension UserHomeViewController {
-    
-    func cartCondition() {
-        CoreDataManager.shared.fetchPreOrder { (preOrderEntity) -> (Void) in
-            let preOrderAmount = preOrderEntity.count
-            
-            if preOrderAmount == 0 {
-                let cart = UIImage(systemName: "cart")
-                self.cartButton.setImage(cart, for: .normal)
-            }else{
-                let cartFill = UIImage(systemName: "cart.fill")
-                self.cartButton.setImage(cartFill, for: .normal)
-            }
-        }
     }
     
 }

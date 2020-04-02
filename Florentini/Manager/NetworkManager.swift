@@ -60,9 +60,9 @@ class NetworkManager {
     }
     
     //MARK: - Метод Архивирования заказов
-    func archiveOrder(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, timeStamp: Date, orderKey: String){
+    func archiveOrder(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, timeStamp: Date, orderKey: String, deliveryPerson: String){
         
-        let data =  DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, deviceID: orderKey)
+        let data =  DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, currentDeviceID: orderKey, deliveryPerson: deliveryPerson)
         
         let path = self.db.collection(NavigationCases.ArchiveCases.archive.rawValue).document(orderKey)
         path.collection(NavigationCases.ArchiveCases.orders.rawValue).addDocument(data: data.dictionary)
@@ -95,11 +95,11 @@ class NetworkManager {
     //MARK: Удаление Всего Заказа
     func deleteAdditions(collection: CollectionReference, batchSize: Int = 100) {
         
-        collection.limit(to: batchSize).getDocuments { (docset, error) in
-            let docset = docset,
+        collection.limit(to: batchSize).getDocuments { (docs, error) in
+            let docs = docs,
             batch = collection.firestore.batch()
             
-            docset?.documents.forEach { batch.deleteDocument($0.reference) }
+            docs?.documents.forEach { batch.deleteDocument($0.reference) }
             
             batch.commit { _ in
                 self.deleteAdditions(collection: collection, batchSize: batchSize)
@@ -145,6 +145,7 @@ class NetworkManager {
             print("Done with metadata: \(String(describing: downloadMetadata))")
             complition()
         }
+        
         taskRef.observe(.progress){ (snapshot) in
             guard let pctThere = snapshot.progress?.fractionCompleted else {return}
             progressIndicator.progress = Float(pctThere)
@@ -163,16 +164,23 @@ class NetworkManager {
     }
     
     //MARK: - Редактирование цены существующего продукта в Worker-Catalog
-    func editProductPrice(name: String, newPrice: Int, category: String, description: String, stock: Bool) {
-        let updatePrice = DatabaseManager.ProductInfo(productName: name, productPrice: newPrice, productDescription: description, productCategory: category, stock: stock)
+    func editProductPrice(name: String, newPrice: Int) {
         
-        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).document(name).setData(updatePrice.dictionary)
+       let path = db.collection(NavigationCases.ProductCases.imageCollection.rawValue).document(name)
+        path.updateData([NavigationCases.ProductCases.productPrice.rawValue : newPrice])
+
     }
     
-    func editStockCondition(name: String, price: Int, category: String, description: String, stock: Bool) {
-        let updatePrice = DatabaseManager.ProductInfo(productName: name, productPrice: price, productDescription: description, productCategory: category, stock: stock)
+    func editStockCondition(name: String, stock: Bool) {
+    
+        let path = db.collection(NavigationCases.ProductCases.imageCollection.rawValue).document(name)
+        path.updateData([NavigationCases.ProductCases.stock.rawValue : stock])
         
-        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).document(name).setData(updatePrice.dictionary)
+    }
+    
+    func editDeliveryMan(currentDeviceID: String, deliveryPerson: String) {
+        let path = db.collection(NavigationCases.UsersInfoCases.order.rawValue).document(currentDeviceID)
+        path.updateData([NavigationCases.UsersInfoCases.deliveryPerson.rawValue : deliveryPerson])
     }
     
     //MARK: - Метод удаления продукта из базы данных
@@ -199,8 +207,8 @@ class NetworkManager {
     
     //MARK: - Отправка отзыва
     func sendReview(name: String, content: String) {
-        guard let uid = CoreDataManager.shared.device.identifierForVendor else {return}
-        let newReview = DatabaseManager.ChatMessages(name: name, content: content, uid: "\(uid)", timeStamp: Date())
+        guard let currentDeviceID = CoreDataManager.shared.device else {return}
+        let newReview = DatabaseManager.ChatMessages(name: name, content: content, uid: "\(currentDeviceID)", timeStamp: Date())
         
         db.collection(NavigationCases.MessagesCases.review.rawValue).addDocument(data: newReview.dictionary) {
             error in
@@ -214,15 +222,15 @@ class NetworkManager {
     
     //MARK: - Подтверждение заказа
     func sendOrder(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, timeStamp: Date, productDescription: [String : Any], success: @escaping() -> Void) {
-        guard let currentIDDevice = CoreDataManager.shared.device.identifierForVendor else {return}
-        let newOrder = DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, deviceID: "\(currentIDDevice)")
+        guard let currentDeviceID = CoreDataManager.shared.device else {return}
+        let newOrder = DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, currentDeviceID: "\(currentDeviceID)", deliveryPerson: "none")
         
-        db.collection(NavigationCases.UsersInfoCases.order.rawValue).document("\(currentIDDevice)").setData(newOrder.dictionary) {
+        db.collection(NavigationCases.UsersInfoCases.order.rawValue).document("\(currentDeviceID)").setData(newOrder.dictionary) {
             error in
             if let error = error {
                 print("Error: \(error.localizedDescription)")
             }else{
-                self.db.collection(NavigationCases.UsersInfoCases.order.rawValue).document("\(currentIDDevice)").collection("\(currentIDDevice)").document().setData(productDescription)
+                self.db.collection(NavigationCases.UsersInfoCases.order.rawValue).document("\(currentDeviceID)").collection("\(currentDeviceID)").document().setData(productDescription)
                 success()
             }
         }
@@ -231,7 +239,7 @@ class NetworkManager {
     //MARK: - Для всех сотрудников:
     
     //MARK: - Workers Dataload
-    func workersInfoLoad (success: @escaping([DatabaseManager.WorkerInfo]) -> Void, failure: @escaping(Error) -> Void) {
+    func downloadEmployerInfo (success: @escaping([DatabaseManager.WorkerInfo]) -> Void, failure: @escaping(Error) -> Void) {
         let uid = AuthenticationManager.shared.currentUser?.uid
         if uid == nil {
             failure(NetworkManagerError.workerNotSignedIn)

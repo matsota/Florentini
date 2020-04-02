@@ -189,7 +189,7 @@ extension NewProductSetViewController: UINavigationControllerDelegate, UIImagePi
                 //after it is complete        }
             }
         }else{
-            self.present(self.alert.alertClassicInfoOK(title: "Внимание", message: "Камера не доступна"), animated: true)
+            self.present(self.alert.classic(title: "Внимание", message: "Камера не доступна"), animated: true)
         }
     }
     
@@ -218,7 +218,7 @@ extension NewProductSetViewController: UINavigationControllerDelegate, UIImagePi
 private extension NewProductSetViewController {
     
     func downloadByURL() {
-        self.present(self.alert.setImageByURL { url in
+        self.present(self.alert.uploadImageURL { url in
             NetworkManager.shared.downLoadImageByURL(url: url) { image in
                 self.addedPhotoImageView.image = image
             }
@@ -238,11 +238,11 @@ private extension NewProductSetViewController {
         description = self.photoDescriptionTextView.text
         
         if price == nil || name == "" || description == "" {
-            self.present(self.alert.alertClassicInfoOK(title: "Эттеншн", message: "Вы ввели не все данные. Перепроверьте свой результат"), animated: true)
+            self.present(self.alert.classic(title: "Эттеншн", message: "Вы ввели не все данные. Перепроверьте свой результат"), animated: true)
         }else if selectedCategory == NavigationCases.CategorySwitch.none.rawValue {
-            self.present(self.alert.alertClassicInfoOK(title: "Эттеншн", message: "Вы не выбрали категорию продукта."), animated: true)
+            self.present(self.alert.classic(title: "Эттеншн", message: "Вы не выбрали категорию продукта."), animated: true)
         }else if image == nil{
-            self.present(self.alert.alertClassicInfoOK(title: "Эттеншн", message: "Вы забыли фотографию"), animated: true)
+            self.present(self.alert.classic(title: "Эттеншн", message: "Вы забыли фотографию"), animated: true)
         }else{
             NetworkManager.shared.uploadProduct(image: image!, name: name!, progressIndicator: progressView)  {
                 NetworkManager.shared.setProductDescription(name: name!, price: price!, description: description!, category: self.selectedCategory, stock: self.stock)

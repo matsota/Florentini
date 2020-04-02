@@ -11,46 +11,25 @@ import Firebase
 
 class WorkerChatViewController: UIViewController {
     
-    //MARK: - ViewDidLoad
+    //MARK: - Override
+    
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //MARK: Информация о сотруднике
-        NetworkManager.shared.workersInfoLoad(success: { workerInfo in
-            self.currentWorkerInfo = workerInfo
-            self.currentWorkerInfo.forEach { workerInfo in
-                self.name = workerInfo.name
-                self.position = workerInfo.position
-            }
-        }) { error in
-            print(error.localizedDescription)
-        }
-        
-        //MARK: Сообщения чата
-        NetworkManager.shared.workersChatLoad(success: { messages in
-            self.messagesArray = messages
-            self.tableView.reloadData()
-        }) { error in
-            print(error.localizedDescription)
-        }
-        
-        //MARK: Обновление чата
-        NetworkManager.shared.chatUpdate { newMessages in
-            self.messagesArray.insert(newMessages, at: 0)
-            self.tableView.reloadData()
-        }
+        forViewDidLoad()
         
     }
     
-    //MARK: - Menu Button
+    //MARK: - Нажатие кнопки Меню
     @IBAction func workerMenuTapped(_ sender: UIButton) {
         showWorkerSlideInMethod()
     }
     
-    //MARK: - Message button
+    //MARK: - Добавить сообщение
     @IBAction func typeMessage(_ sender: UIButton) {
         guard name != "" else {return}
-        self.present(self.alert.alertSendMessage(name: name), animated: true)
+        self.present(self.alert.sendToChat(name: name), animated: true)
     }
     
     
@@ -81,6 +60,41 @@ class WorkerChatViewController: UIViewController {
 
 
 //MARK: - Extensions:
+
+//MARK: - For Overrides
+private extension WorkerChatViewController {
+    
+    //MARK: Для ViewDidLoad
+    func forViewDidLoad() {
+        
+        //MARK: Информация о сотруднике
+        NetworkManager.shared.downloadEmployerInfo(success: { workerInfo in
+            self.currentWorkerInfo = workerInfo
+            self.currentWorkerInfo.forEach { workerInfo in
+                self.name = workerInfo.name
+                self.position = workerInfo.position
+            }
+        }) { error in
+            print(error.localizedDescription)
+        }
+        
+        //MARK: Сообщения чата
+        NetworkManager.shared.workersChatLoad(success: { messages in
+            self.messagesArray = messages
+            self.tableView.reloadData()
+        }) { error in
+            print(error.localizedDescription)
+        }
+        
+        //MARK: Обновление чата
+        NetworkManager.shared.chatUpdate { newMessages in
+            self.messagesArray.insert(newMessages, at: 0)
+            self.tableView.reloadData()
+        }
+        
+    }
+    
+}
 
 //MARK: - by UIVC-TransitioningDelegate
 extension WorkerChatViewController: UIViewControllerTransitioningDelegate {

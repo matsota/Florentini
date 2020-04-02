@@ -13,35 +13,17 @@ import CoreData
 
 class UserCartViewController: UIViewController {
     
-    static let shared = UserCartViewController()
+    //MARK: - Override
     
-    //MARK: - Overrides
-    
-    //MARK: ViewDidLoad
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        CoreDataManager.shared.fetchPreOrder { (preOrderEntity) -> (Void) in
-            self.preOrder = preOrderEntity
-            
-            if self.preOrder.count == 0 {
-                self.tableCountZeroView.isHidden = false
-            }else{
-                self.tableCountZeroView.isHidden = true
-            }
-            
-            self.orderBill = self.preOrder.map({$0.productPrice * $0.productQuantity}).reduce(0, +)
-            self.orderPriceLabel.text = "\(self.orderBill) грн"
-            self.cartTableView.reloadData()
-        }
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        hideKeyboardWhenTappedAround()
+        forViewDidLoad()
         
     }
     
-    //MARK: -
+    //MARK: - Нажатие кнопки Меню
     @IBAction func menuTapped(_ sender: UIButton) {
         showUsersSlideInMethod()
     }
@@ -106,6 +88,33 @@ class UserCartViewController: UIViewController {
 
 
 //MARK: - Extention HomeViewControllerr
+
+//MARK: - For Overrides
+private extension UserCartViewController {
+    
+    //MARK: Для ViewDidLoad
+    func forViewDidLoad() {
+        CoreDataManager.shared.fetchPreOrder { (preOrderEntity) -> (Void) in
+            self.preOrder = preOrderEntity
+            
+            if self.preOrder.count == 0 {
+                self.tableCountZeroView.isHidden = false
+            }else{
+                self.tableCountZeroView.isHidden = true
+            }
+            
+            self.orderBill = self.preOrder.map({$0.productPrice * $0.productQuantity}).reduce(0, +)
+            self.orderPriceLabel.text = "\(self.orderBill) грн"
+            self.cartTableView.reloadData()
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        hideKeyboardWhenTappedAround()
+    }
+    
+}
+
 
 //MARK: - byextention by UIVC-TransitioningDelegate
 extension UserCartViewController: UIViewControllerTransitioningDelegate {
@@ -262,7 +271,7 @@ private extension UserCartViewController {
         }
     
         if adress == "" || cellphone == "" {
-            self.present(self.alert.alertClassicInfoOK(title: "Эттеншн!", message: "Мы не знаем всех необходимых данных, что бы осуществить доставку радости. Просим Вас ввести: Адресс доставки и Телефон, чтобы мы смогли подтвердить заказ"), animated: true)
+            self.present(self.alert.classic(title: "Эттеншн!", message: "Мы не знаем всех необходимых данных, что бы осуществить доставку радости. Просим Вас ввести: Адресс доставки и Телефон, чтобы мы смогли подтвердить заказ"), animated: true)
         }else{
             var jsonArray: [[String: Any]] = []
             
@@ -278,7 +287,7 @@ private extension UserCartViewController {
             
             for _ in preOrder {
                 NetworkManager.shared.sendOrder(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: Date(), productDescription: jsonArray.remove(at:0)) {
-                    self.present(self.alert.succeedFinish(title: "Ваш заказ оформлен", message: "Мы свяжемся с Вам так скоро, как это возможно"), animated: true)
+                    self.present(self.alert.dataUploadedDelay2(title: "Ваш заказ оформлен", message: "Мы свяжемся с Вам так скоро, как это возможно"), animated: true)
                     self.viewDidLoad()
                     self.clientNameTextField.text = ""
                     self.clientAdressTextField.text = ""

@@ -10,30 +10,28 @@ import UIKit
 
 class WorkerFAQViewController: UIViewController {
     
-    //MARK: - Системные переменные
-    private let slidingMenu = SlideInTransitionMenu()
-    let alert = UIAlertController()
+    //MARK: - Override
     
-    //MARK: - Overrides
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
     
-    //MARK: - Transition Menu tapped
+    //MARK: - Нажатие кнопки Меню
     @IBAction func workerMenuTapped(_ sender: UIButton) {
         showWorkerSlideInMethod()
     }
     
-    //MARK: - Chat Transition tapped
+    //MARK: - Переход в Чат
     @IBAction func chatTapped(_ sender: UIButton) {
         transitionToWorkerChat()
     }
-
     
-    //MARK: - Private:
     
     //MARK: - Implementation
+    private let slidingMenu = SlideInTransitionMenu()
+    private let alert = UIAlertController()
 }
 
 
@@ -45,6 +43,15 @@ class WorkerFAQViewController: UIViewController {
 
 
 //MARK: - Extension
+
+//MARK: - For Overrides
+private extension WorkerFAQViewController {
+    
+    //MARK: Для ViewDidLoad
+    func forViewDidLoad() {
+    }
+    
+}
 
 //MARK: - by UIVC-TransitioningDelegate
 extension WorkerFAQViewController: UIViewControllerTransitioningDelegate {

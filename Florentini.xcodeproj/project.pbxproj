@@ -12,13 +12,13 @@
 		8F0EEDF924129A3500948175 /* UserCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0EEDF824129A3500948175 /* UserCartViewController.swift */; };
 		8F154B1A242FC90A00C21F47 /* WorkerOrdersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F154B19242FC90A00C21F47 /* WorkerOrdersTableViewCell.swift */; };
 		8F1778232427E19E00164C0D /* IBDesignable + Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1778222427E19E00164C0D /* IBDesignable + Buttons.swift */; };
-		8F2062A323FEB25A007C481A /* WorkerOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062A223FEB25A007C481A /* WorkerOrdersViewController.swift */; };
+		8F2062A323FEB25A007C481A /* EmployerOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062A223FEB25A007C481A /* EmployerOrdersViewController.swift */; };
 		8F2062A523FF555F007C481A /* NavigationCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062A423FF555F007C481A /* NavigationCases.swift */; };
 		8F2062A723FF5ECE007C481A /* LoginWorkSpaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062A623FF5ECE007C481A /* LoginWorkSpaceViewController.swift */; };
 		8F2062A923FF5F94007C481A /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062A823FF5F94007C481A /* AuthenticationManager.swift */; };
 		8F2062AC23FF6292007C481A /* UIAlertController + Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062AB23FF6292007C481A /* UIAlertController + Custom.swift */; };
 		8F2062AE23FF641C007C481A /* WorkerSlidingMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062AD23FF641C007C481A /* WorkerSlidingMenuVC.swift */; };
-		8F2062B823FF701C007C481A /* WorkerCatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062B723FF701C007C481A /* WorkerCatalogViewController.swift */; };
+		8F2062B823FF701C007C481A /* EmployerCatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062B723FF701C007C481A /* EmployerCatalogViewController.swift */; };
 		8F2062BA23FF703A007C481A /* WorkerProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062B923FF703A007C481A /* WorkerProfileViewController.swift */; };
 		8F2062BC23FF714D007C481A /* WorkerFAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2062BB23FF714D007C481A /* WorkerFAQViewController.swift */; };
 		8F2062C323FF747B007C481A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F2062C123FF747B007C481A /* Main.storyboard */; };
@@ -58,13 +58,13 @@
 		8F0EEDF824129A3500948175 /* UserCartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCartViewController.swift; sourceTree = "<group>"; };
 		8F154B19242FC90A00C21F47 /* WorkerOrdersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerOrdersTableViewCell.swift; sourceTree = "<group>"; };
 		8F1778222427E19E00164C0D /* IBDesignable + Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IBDesignable + Buttons.swift"; sourceTree = "<group>"; };
-		8F2062A223FEB25A007C481A /* WorkerOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerOrdersViewController.swift; sourceTree = "<group>"; };
+		8F2062A223FEB25A007C481A /* EmployerOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployerOrdersViewController.swift; sourceTree = "<group>"; };
 		8F2062A423FF555F007C481A /* NavigationCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCases.swift; sourceTree = "<group>"; };
 		8F2062A623FF5ECE007C481A /* LoginWorkSpaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWorkSpaceViewController.swift; sourceTree = "<group>"; };
 		8F2062A823FF5F94007C481A /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		8F2062AB23FF6292007C481A /* UIAlertController + Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController + Custom.swift"; sourceTree = "<group>"; };
 		8F2062AD23FF641C007C481A /* WorkerSlidingMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerSlidingMenuVC.swift; sourceTree = "<group>"; };
-		8F2062B723FF701C007C481A /* WorkerCatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerCatalogViewController.swift; sourceTree = "<group>"; };
+		8F2062B723FF701C007C481A /* EmployerCatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployerCatalogViewController.swift; sourceTree = "<group>"; };
 		8F2062B923FF703A007C481A /* WorkerProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerProfileViewController.swift; sourceTree = "<group>"; };
 		8F2062BB23FF714D007C481A /* WorkerFAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerFAQViewController.swift; sourceTree = "<group>"; };
 		8F2062C223FF747B007C481A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -127,8 +127,8 @@
 				8F2062A623FF5ECE007C481A /* LoginWorkSpaceViewController.swift */,
 				8FFEDF272407F39000D894FD /* Admin Service */,
 				8F2062CC23FFA75C007C481A /* Cells */,
-				8F2062A223FEB25A007C481A /* WorkerOrdersViewController.swift */,
-				8F2062B723FF701C007C481A /* WorkerCatalogViewController.swift */,
+				8F2062A223FEB25A007C481A /* EmployerOrdersViewController.swift */,
+				8F2062B723FF701C007C481A /* EmployerCatalogViewController.swift */,
 				8F2062B923FF703A007C481A /* WorkerProfileViewController.swift */,
 				8F2062BB23FF714D007C481A /* WorkerFAQViewController.swift */,
 				8F2062C623FF7F75007C481A /* WorkerChatViewController.swift */,
@@ -377,7 +377,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F2062BC23FF714D007C481A /* WorkerFAQViewController.swift in Sources */,
-				8F2062A323FEB25A007C481A /* WorkerOrdersViewController.swift in Sources */,
+				8F2062A323FEB25A007C481A /* EmployerOrdersViewController.swift in Sources */,
 				8FFEDF262407EC3500D894FD /* NewProductSetViewController.swift in Sources */,
 				8F2062A723FF5ECE007C481A /* LoginWorkSpaceViewController.swift in Sources */,
 				8F0E7BB92421496C004235A7 /* FlorentiniModel.xcdatamodeld in Sources */,
@@ -395,7 +395,7 @@
 				8FDF12E3243100F3009FE7F3 /* OrderDetailTableViewCell.swift in Sources */,
 				8FE3F69724035BE4003001CA /* UserFAQViewController.swift in Sources */,
 				8F2062CB23FFA4EF007C481A /* WorkerMessagesTableViewCell.swift in Sources */,
-				8F2062B823FF701C007C481A /* WorkerCatalogViewController.swift in Sources */,
+				8F2062B823FF701C007C481A /* EmployerCatalogViewController.swift in Sources */,
 				8F9574292417AE7000A4EF6E /* UserCartTableViewCell.swift in Sources */,
 				8FD4E4C123FCD1D800C62FA5 /* AppDelegate.swift in Sources */,
 				8FFDA507240EC1D700A63A02 /* UserCatalogTableViewCell.swift in Sources */,

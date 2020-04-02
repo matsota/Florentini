@@ -116,7 +116,8 @@ class NavigationCases {
         case feedbackOption
         case mark
         case timeStamp
-        case deviceID
+        case currentDeviceID
+        case deliveryPerson
             
         case cart
         case order

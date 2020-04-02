@@ -72,7 +72,8 @@ class DatabaseManager {
         var feedbackOption: String
         var mark: String
         var timeStamp: Date
-        var deviceID: String
+        var currentDeviceID: String
+        var deliveryPerson: String
         
         var dictionary: [String:Any]{
             return [
@@ -83,7 +84,8 @@ class DatabaseManager {
                 NavigationCases.UsersInfoCases.feedbackOption.rawValue: feedbackOption,
                 NavigationCases.UsersInfoCases.mark.rawValue: mark,
                 NavigationCases.UsersInfoCases.timeStamp.rawValue: timeStamp,
-                NavigationCases.UsersInfoCases.deviceID.rawValue: deviceID
+                NavigationCases.UsersInfoCases.currentDeviceID.rawValue: currentDeviceID,
+                NavigationCases.UsersInfoCases.deliveryPerson.rawValue: deliveryPerson
             ]
         }
     }
@@ -159,8 +161,9 @@ extension DatabaseManager.Order: DocumentSerializable {
             let feedbackOption = dictionary[NavigationCases.UsersInfoCases.feedbackOption.rawValue] as? String,
             let userMark = dictionary[NavigationCases.UsersInfoCases.mark.rawValue] as? String,
             let timeStamp = (dictionary[NavigationCases.UsersInfoCases.timeStamp.rawValue] as? Timestamp)?.dateValue(),
-            let deviceID = dictionary[NavigationCases.UsersInfoCases.deviceID.rawValue] as? String else {return nil}
-        self.init(totalPrice: totalPrice, name: userName, adress: userAdress, cellphone: userCellphone, feedbackOption: feedbackOption, mark: userMark, timeStamp: timeStamp, deviceID: deviceID)
+            let currentDeviceID = dictionary[NavigationCases.UsersInfoCases.currentDeviceID.rawValue] as? String,
+        let deliveryPerson = dictionary[NavigationCases.UsersInfoCases.deliveryPerson.rawValue] as? String else {return nil}
+        self.init(totalPrice: totalPrice, name: userName, adress: userAdress, cellphone: userCellphone, feedbackOption: feedbackOption, mark: userMark, timeStamp: timeStamp, currentDeviceID: currentDeviceID, deliveryPerson: deliveryPerson)
     }
 }
 
@@ -175,83 +178,3 @@ extension DatabaseManager.OrderAddition: DocumentSerializable {
         self.init(productCategory: productCategory, productName: productName, stock: stock, productPrice: productPrice, productQuantity: productQuantity)
     }
 }
-
-////MARK: - Cases Extension
-//extension DatabaseManager {
-//    //MARK: Для сотрудников
-//    enum WorkerInfoCases: String, CaseIterable {
-//        case name
-//        case position
-//        case admin
-//        case `operator`
-//        case delivery
-//    }
-//    
-//    //MARK: Для пользоватей
-//    enum UsersInfoCases: String, CaseIterable {
-//        case totalPrice
-//        case name
-//        case adress
-//        case cellphone
-//        case feedbackOption
-//        case mark
-//        case timeStamp
-//        case deviceID
-//        
-//        case PreOrderEntity
-//        case cart
-//        case order
-//        case orderDescription
-//        
-//        case review
-//    }
-//    
-//    //MARK: Для Сообщений
-//    enum MessagesCases: String, CaseIterable {
-//        case name
-//        case content
-//        case uid
-//        case timeStamp
-//        case workers
-//        case workersMessages
-//    }
-//    
-//    //MARK: Для Товара
-//    enum ProductCases: String, CaseIterable {
-//        case productName
-//        case productPrice
-//        case productQuantity
-//        case productCategory
-//        case productDescription
-//        case productImageURL
-//        case imageCollection
-//        case stock
-//    }
-//    
-//    //MARK: Категории товара
-//    enum ProductCategoriesCases: String, CaseIterable {
-//        case none = "Без Категории"
-//        case apiece = "Поштучно"
-//        case gift = "Подарки"
-//        case bouquet = "Букеты"
-//        case stock = "Акции"
-//    }
-//    
-//    //MARK: Про количество
-//    enum MaxQuantityByCategoriesCases: Int {
-//        case towHundred = 200
-//        //        case hundredAndHalf = 150
-//        case hundred = 100
-//        //        case halfHundred = 50
-//        case five = 5
-//        case three = 3
-//    }
-//    
-//    //MARK: Для обратную связь
-//    enum FeedbackTypesCases: String, CaseIterable {
-//        case cellphone = "По телефону"
-//        case viber = "Viber"
-//        case telegram = "Telegram"
-//    }
-    
-//}

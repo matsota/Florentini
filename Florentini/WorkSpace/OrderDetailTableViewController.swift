@@ -18,6 +18,10 @@ class OrderDetailTableViewController: UITableViewController {
     
     @IBOutlet var orderDetailTableView: UITableView!
     
+    
+    //MARK: - Override
+    
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -72,5 +76,23 @@ class OrderDetailTableViewController: UITableViewController {
         }
     }
     
+}
+
+
+
+
+
+
+
+
+
+//MARK: - Extensions:
+
+//MARK: - For Overrides
+private extension OrderDetailTableViewController {
+    
+    //MARK: Для ViewDidLoad
+    func forViewDidLoad() {
+    }
     
 }

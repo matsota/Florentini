@@ -10,17 +10,14 @@ import UIKit
 
 class UserAboutUsViewController: UIViewController {
     
-    //MARK: - ViewDidLoad
+    //MARK: - Override
+    
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        hideKeyboardWhenTappedAround()
+        forViewDidLoad()
         
-        setTextViewPlaceholder()
-        
-
     }
     
     //MARK: - Нажатие кнопки Меню
@@ -60,6 +57,23 @@ class UserAboutUsViewController: UIViewController {
 
 
 //MARK: - Extensions
+
+//MARK: - For Overrides
+private extension UserAboutUsViewController {
+    
+    //MARK: Для ViewDidLoad
+    func forViewDidLoad() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        hideKeyboardWhenTappedAround()
+        
+        setTextViewPlaceholder()
+        
+
+    }
+    
+}
+
 //MARK: - Появление SlidingMenu
 extension UserAboutUsViewController: UIViewControllerTransitioningDelegate {
     
@@ -88,7 +102,7 @@ private extension UserAboutUsViewController {
             view.window?.rootViewController = loginWorkSpaceVC
             view.window?.makeKeyAndVisible()
         }else if review == "" {
-            self.present(self.alert.alertClassicInfoOK(title: "Эттеншн!", message: "Вы не ввели информацию, которой бы Вы хотели поделиться с нами"), animated: true)
+            self.present(self.alert.classic(title: "Эттеншн!", message: "Вы не ввели информацию, которой бы Вы хотели поделиться с нами"), animated: true)
         }else{
             if name == "" {name = "anonymous"}
             NetworkManager.shared.sendReview(name: name!, content: review!)

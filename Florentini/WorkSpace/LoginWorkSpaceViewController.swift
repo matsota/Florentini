@@ -46,7 +46,7 @@ class LoginWorkSpaceViewController: UIViewController {
 private extension LoginWorkSpaceViewController {
     
     func transition() {
-        let transition = storyboard?.instantiateViewController(identifier: NavigationCases.IDVC.MainWorkSpaceVC.rawValue) as? WorkerOrdersViewController
+        let transition = storyboard?.instantiateViewController(identifier: NavigationCases.IDVC.MainWorkSpaceVC.rawValue) as? EmployerOrdersViewController
         view.window?.rootViewController = transition
         view.window?.makeKeyAndVisible()
     }
@@ -58,7 +58,7 @@ private extension LoginWorkSpaceViewController {
         AuthenticationManager.shared.signIn(email: email, password: password, success: {
             self.transition()
         }) { error in
-            self.present(self.alert.alertClassicInfoOK(title: "Attention", message: error.localizedDescription), animated: true)
+            self.present(self.alert.classic(title: "Attention", message: error.localizedDescription), animated: true)
         }
     }
     

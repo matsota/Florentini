@@ -12,7 +12,7 @@ import CoreData
 class CoreDataManager {
     
     static let shared = CoreDataManager()
-    let device = UIDevice.current
+    let device = UIDevice.current.identifierForVendor
     
     //MARK: - Создание заказа/Добавление к заказу
     func saveForCart(name: String, category: String, price: Int64, quantity: Int64, stock: Bool) {

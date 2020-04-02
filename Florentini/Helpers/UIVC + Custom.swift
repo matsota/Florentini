@@ -97,10 +97,10 @@ extension UIViewController {
         let alert = UIAlertController()
         switch menuType {
         case .orders:
-            let ordersVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.MainWorkSpaceVC.rawValue) as? WorkerOrdersViewController
+            let ordersVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.MainWorkSpaceVC.rawValue) as? EmployerOrdersViewController
             view.window?.rootViewController = ordersVC
         case .catalog:
-            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.WorkerCatalogVC.rawValue) as? WorkerCatalogViewController
+            let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.WorkerCatalogVC.rawValue) as? EmployerCatalogViewController
             view.window?.rootViewController = catalogVC
         case .profile:
             let profileVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.WorkerProfileVC.rawValue) as? WorkerProfileViewController
@@ -109,7 +109,7 @@ extension UIViewController {
             let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.WorkersFAQVC.rawValue) as? WorkerFAQViewController
             view.window?.rootViewController = faqVC
         case .exit:
-            self.present(alert.alertSignOut(success: {
+            self.present(alert.signOut(success: {
                 self.dismiss(animated: true) {
                     AuthenticationManager.shared.signOut()
                     let exitApp = self.storyboard?.instantiateInitialViewController()

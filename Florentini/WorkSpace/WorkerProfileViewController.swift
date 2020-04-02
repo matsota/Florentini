@@ -11,30 +11,32 @@ import FirebaseAuth
 
 class WorkerProfileViewController: UIViewController {
     
-    //MARK: - ViewDidLoad Method
+    //MARK: - Override
+    
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetchWorkerData()
+        forViewDidLoad()
         
     }
     
-    //MARK: - Menu Button
+    //MARK: - Нажатие кнопки Меню
     @IBAction func workerMenuTapped(_ sender: UIButton) {
         showWorkerSlideInMethod()
     }
     
-    //MARK: - Open Chat Button
+    //MARK: - Перехрод в Чат
     @IBAction func chatTapped(_ sender: UIButton) {
         transitionToWorkerChat()
     }
     
-    //MARK: - Add New Product Button
+    //MARK: - Переход в Моделирование продукта
     @IBAction func newProductTapped(_ sender: UIButton) {
         transitionToNewProduct()
     }
     
-    //MARK: - Change Password Button
+    //MARK: - Изменение пароля сотрудника
     @IBAction func passChangeTapped(_ sender: UIButton) {
         changePassword()
     }
@@ -72,6 +74,30 @@ class WorkerProfileViewController: UIViewController {
 
 //MARK: - Extention:
 
+//MARK: - For Overrides
+private extension WorkerProfileViewController {
+    
+    //MARK: Для ViewDidLoad
+    func forViewDidLoad() {
+        //MARK:  Заполнение UI относительно CurrentUser
+        NetworkManager.shared.downloadEmployerInfo(success: { workerInfo in
+            self.currentWorkerInfo = workerInfo
+            self.currentWorkerInfo.forEach { (workerInfo) in
+                self.nameLabel.text = workerInfo.name
+                self.positionLabel.text = workerInfo.position
+                
+                if workerInfo.position == NavigationCases.WorkerInfoCases.admin.rawValue && AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid {
+                    self.newProductButton.isHidden = false
+                }
+            }
+            self.emailLabel.text = Auth.auth().currentUser?.email
+        }) { error in
+            self.present(self.alert.somethingWrong(), animated: true)
+        }
+    }
+    
+}
+
 //MARK: - UIVC-TransitioningDelegate
 extension WorkerProfileViewController: UIViewControllerTransitioningDelegate {
     
@@ -89,28 +115,6 @@ extension WorkerProfileViewController: UIViewControllerTransitioningDelegate {
 
 //MARK: -
 
-//MARK: - Заполнение UI относительно CurrentUser
-private extension WorkerProfileViewController {
-    
-    func fetchWorkerData() {
-        NetworkManager.shared.workersInfoLoad(success: { workerInfo in
-            self.currentWorkerInfo = workerInfo
-            self.currentWorkerInfo.forEach { (workerInfo) in
-                self.nameLabel.text = workerInfo.name
-                self.positionLabel.text = workerInfo.position
-                
-                if workerInfo.position == NavigationCases.WorkerInfoCases.admin.rawValue && AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid {
-                    self.newProductButton.isHidden = false
-                }
-            }
-            self.emailLabel.text = Auth.auth().currentUser?.email
-        }) { error in
-            self.present(self.alert.alertSomeThingGoesWrong(), animated: true)
-        }
-    }
-    
-}
-
 //MARK: - Change Password
 private extension WorkerProfileViewController{
     
@@ -119,12 +123,12 @@ private extension WorkerProfileViewController{
             let reNewPass = reNewPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {return}
         
         if newPass != reNewPass {
-            self.present(self.alert.alertClassicInfoOK(title: "Внимание", message: "Пароли не совпадают"), animated: true)
+            self.present(self.alert.classic(title: "Внимание", message: "Пароли не совпадают"), animated: true)
         }else if newPass == "" || reNewPass == "" {
-            self.present(self.alert.alertClassicInfoOK(title: "Внимание", message: "Для смены пароля необходимо заполнить все поля"), animated: true)
+            self.present(self.alert.classic(title: "Внимание", message: "Для смены пароля необходимо заполнить все поля"), animated: true)
         }else{
-            self.present(self.alert.alertPassChange(success: {
-                self.dismiss(animated: true) { let ordersVC = self.storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.MainWorkSpaceVC.rawValue) as? WorkerOrdersViewController
+            self.present(self.alert.rePassword(success: {
+                self.dismiss(animated: true) { let ordersVC = self.storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.MainWorkSpaceVC.rawValue) as? EmployerOrdersViewController
                     self.view.window?.rootViewController = ordersVC
                     self.view.window?.makeKeyAndVisible()
                 }
