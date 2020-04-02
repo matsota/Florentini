@@ -2212,16 +2212,16 @@
             </objects>
             <point key="canvasLocation" x="2527" y="4711"/>
         </scene>
-        <!--Order Detail Table View Controller-->
+        <!--Employer Order Detail Table View Controller-->
         <scene sceneID="zaH-0y-Wt1">
             <objects>
-                <tableViewController id="qi1-cR-F2v" customClass="OrderDetailTableViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="qi1-cR-F2v" customClass="EmployerOrderDetailTableViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="XPv-FU-1Ym">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="WorkerOrdersDetailTVCell" rowHeight="119" id="dW9-rG-OHh" customClass="OrderDetailTableViewCell" customModule="Florentini" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="WorkerOrdersDetailTVCell" rowHeight="119" id="dW9-rG-OHh" customClass="EmployerOrderDetailTableViewCell" customModule="Florentini" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="119"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dW9-rG-OHh" id="LWf-18-Umg">
@@ -2631,7 +2631,7 @@
         <!--Item-->
         <scene sceneID="rog-tg-8nU">
             <objects>
-                <viewController storyboardIdentifier="WorkerProfileVC" id="2R2-tp-U9y" customClass="WorkerProfileViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WorkerProfileVC" id="2R2-tp-U9y" customClass="EmployerProfileViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ma8-W6-nJJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3168,7 +3168,7 @@
                                 <rect key="frame" x="14" y="188" width="347" height="498"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="WorkerCatalogTVCell" rowHeight="260" id="Gro-HF-s09" customClass="WorkerCatalogTableViewCell" customModule="Florentini" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="WorkerCatalogTVCell" rowHeight="260" id="Gro-HF-s09" customClass="EmployerCatalogTableViewCell" customModule="Florentini" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="347" height="260"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gro-HF-s09" id="WDo-wY-YWo">
@@ -3440,7 +3440,7 @@
         <!--Item-->
         <scene sceneID="7Kh-jz-SEg">
             <objects>
-                <viewController storyboardIdentifier="WorkersFAQVC" id="Uir-bZ-Io9" customClass="WorkerFAQViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WorkersFAQVC" id="Uir-bZ-Io9" customClass="EmployerFAQViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TKP-E3-Ukj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3511,7 +3511,7 @@
         <!--Item-->
         <scene sceneID="2RZ-XC-BzQ">
             <objects>
-                <viewController storyboardIdentifier="WorkersChatVC" id="PuU-hR-6RV" customClass="WorkerChatViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WorkersChatVC" id="PuU-hR-6RV" customClass="EmployerChatViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3qZ-y3-RfW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3567,7 +3567,7 @@
                                 <rect key="frame" x="15" y="188" width="345" height="575"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="WorkerMessagesTVCell" rowHeight="107" id="xAm-F8-P0p" customClass="WorkerMessagesTableViewCell" customModule="Florentini" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="WorkerMessagesTVCell" rowHeight="107" id="xAm-F8-P0p" customClass="EmployerChatTableViewCell" customModule="Florentini" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="345" height="107"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xAm-F8-P0p" id="hYy-7X-EA6">

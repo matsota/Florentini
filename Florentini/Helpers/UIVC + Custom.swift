@@ -103,10 +103,10 @@ extension UIViewController {
             let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.WorkerCatalogVC.rawValue) as? EmployerCatalogViewController
             view.window?.rootViewController = catalogVC
         case .profile:
-            let profileVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.WorkerProfileVC.rawValue) as? WorkerProfileViewController
+            let profileVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.WorkerProfileVC.rawValue) as? EmployerProfileViewController
             view.window?.rootViewController = profileVC
         case .faq:
-            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.WorkersFAQVC.rawValue) as? WorkerFAQViewController
+            let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.WorkersFAQVC.rawValue) as? EmployerFAQViewController
             view.window?.rootViewController = faqVC
         case .exit:
             self.present(alert.signOut(success: {
@@ -121,7 +121,7 @@ extension UIViewController {
     
     //MARK: Переход в Чат
     func transitionToWorkerChat() {
-        let workersChatVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.WorkersChatVC.rawValue) as? WorkerChatViewController
+        let workersChatVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.WorkersChatVC.rawValue) as? EmployerChatViewController
         view.window?.rootViewController = workersChatVC
         view.window?.makeKeyAndVisible()
     }

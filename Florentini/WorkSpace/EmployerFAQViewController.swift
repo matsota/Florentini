@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WorkerFAQViewController: UIViewController {
+class EmployerFAQViewController: UIViewController {
     
     //MARK: - Override
     
@@ -45,7 +45,7 @@ class WorkerFAQViewController: UIViewController {
 //MARK: - Extension
 
 //MARK: - For Overrides
-private extension WorkerFAQViewController {
+private extension EmployerFAQViewController {
     
     //MARK: Для ViewDidLoad
     func forViewDidLoad() {
@@ -54,7 +54,7 @@ private extension WorkerFAQViewController {
 }
 
 //MARK: - by UIVC-TransitioningDelegate
-extension WorkerFAQViewController: UIViewControllerTransitioningDelegate {
+extension EmployerFAQViewController: UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         slidingMenu.isPresented = true

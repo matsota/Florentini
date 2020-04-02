@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol WorkerOrdersTableViewCellDelegate: class {
+protocol EmployerOrdersTableViewCellDelegate: class {
     func deliveryPicker (_ cell: WorkerOrdersTableViewCell)
 }
 
@@ -20,7 +20,7 @@ class WorkerOrdersTableViewCell: UITableViewCell {
     var deliveryPerson = String()
     var currentDeviceID = String()
     //
-    weak var delegate: WorkerOrdersTableViewCellDelegate?
+    weak var delegate: EmployerOrdersTableViewCellDelegate?
     
     //MARK: - Label
     @IBOutlet weak var billLabel: UILabel!

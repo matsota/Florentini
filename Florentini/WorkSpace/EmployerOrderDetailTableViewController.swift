@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseUI
 
-class OrderDetailTableViewController: UITableViewController {
+class EmployerOrderDetailTableViewController: UITableViewController {
     
     //MARK: - Implementation
     private var orderAddition = [DatabaseManager.OrderAddition]()
@@ -42,7 +42,7 @@ class OrderDetailTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.WorkerOrdersDetailTVCell.rawValue, for: indexPath) as! OrderDetailTableViewCell,
+        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.WorkerOrdersDetailTVCell.rawValue, for: indexPath) as! EmployerOrderDetailTableViewCell,
         fetch = orderAddition[indexPath.row],
         name  = fetch.productName,
         quantity = fetch.productQuantity,
@@ -89,7 +89,7 @@ class OrderDetailTableViewController: UITableViewController {
 //MARK: - Extensions:
 
 //MARK: - For Overrides
-private extension OrderDetailTableViewController {
+private extension EmployerOrderDetailTableViewController {
     
     //MARK: Для ViewDidLoad
     func forViewDidLoad() {

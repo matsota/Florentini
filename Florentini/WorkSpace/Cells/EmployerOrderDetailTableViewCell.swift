@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OrderDetailTableViewCell: UITableViewCell {
+class EmployerOrderDetailTableViewCell: UITableViewCell {
     
     //MARK: - Implementation
     

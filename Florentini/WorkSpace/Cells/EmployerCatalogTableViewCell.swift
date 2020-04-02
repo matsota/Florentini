@@ -1,5 +1,5 @@
 //
-//  WorkerCatalogTableViewCell.swift
+//  EmployerCatalogTableViewCell.swift
 //  Florentini
 //
 //  Created by Andrew Matsota on 09.03.2020.
@@ -10,17 +10,17 @@ import UIKit
 
 //MARK: - Protocol Worker-Catalog-ViewControllerDelegate
 
-protocol WorkerCatalogTableViewCellDelegate: class {
+protocol EmployerCatalogTableViewCellDelegate: class {
     
-    func editPrice(_ cell: WorkerCatalogTableViewCell)
+    func editPrice(_ cell: EmployerCatalogTableViewCell)
     
-    func editStockCondition(_ cell: WorkerCatalogTableViewCell)
+    func editStockCondition(_ cell: EmployerCatalogTableViewCell)
     
 }
 
 
 //MARK: - Core Class
-class WorkerCatalogTableViewCell: UITableViewCell {
+class EmployerCatalogTableViewCell: UITableViewCell {
     
     //MARK: - Implementation
     let alert = UIAlertController()
@@ -28,7 +28,7 @@ class WorkerCatalogTableViewCell: UITableViewCell {
     var category = String()
     var stock = false
     
-    weak var delegate: WorkerCatalogTableViewCellDelegate?
+    weak var delegate: EmployerCatalogTableViewCellDelegate?
     
     //MARK: - Label
     @IBOutlet weak var productNameLabel: UILabel!

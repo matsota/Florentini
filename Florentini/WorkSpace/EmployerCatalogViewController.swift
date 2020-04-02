@@ -98,7 +98,7 @@ extension EmployerCatalogViewController: UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.WorkerCatalogTVCell.rawValue, for: indexPath) as! WorkerCatalogTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.WorkerCatalogTVCell.rawValue, for: indexPath) as! EmployerCatalogTableViewCell
         
         cell.delegate = self
         cell.tag = indexPath.row
@@ -133,7 +133,7 @@ extension EmployerCatalogViewController: UITableViewDelegate, UITableViewDataSou
     //deleteProduct
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.WorkerCatalogTVCell.rawValue, for: indexPath) as! WorkerCatalogTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.WorkerCatalogTVCell.rawValue, for: indexPath) as! EmployerCatalogTableViewCell
         guard let name = cell.productNameLabel.text else {return nil}
         let delete = deleteAction(name: name, at: indexPath)
         
@@ -160,9 +160,9 @@ extension EmployerCatalogViewController: UITableViewDelegate, UITableViewDataSou
 }
 
 //MARK: Методы TableViewCell через delegate
-extension EmployerCatalogViewController: WorkerCatalogTableViewCellDelegate {
+extension EmployerCatalogViewController: EmployerCatalogTableViewCellDelegate {
     
-    func editPrice(_ cell: WorkerCatalogTableViewCell){
+    func editPrice(_ cell: EmployerCatalogTableViewCell){
         guard let name = cell.productNameLabel.text else {return}
         
         if AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid {
@@ -177,7 +177,7 @@ extension EmployerCatalogViewController: WorkerCatalogTableViewCellDelegate {
         self.tableView.reloadData()
     }
     
-    func editStockCondition(_ cell: WorkerCatalogTableViewCell) {
+    func editStockCondition(_ cell: EmployerCatalogTableViewCell) {
         
         guard let name = cell.productNameLabel.text else {return}
         

@@ -158,7 +158,7 @@ extension EmployerOrdersViewController: UITableViewDelegate, UITableViewDataSour
 }
 
 //MARK: - Назначение Доставки
-extension EmployerOrdersViewController: WorkerOrdersTableViewCellDelegate {
+extension EmployerOrdersViewController: EmployerOrdersTableViewCellDelegate {
     
     func deliveryPicker(_ cell: WorkerOrdersTableViewCell) {
         let currentDeviceID = cell.currentDeviceID
