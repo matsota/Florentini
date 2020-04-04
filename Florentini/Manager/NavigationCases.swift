@@ -38,7 +38,7 @@ class NavigationCases {
         case EmployerChatVC
         
         case NewProductSetVC
-    
+        
         case EmployerMessagesTVCell
         case EmployerCatalogTVCell
         case EmployerOrdersTVCell
@@ -56,6 +56,13 @@ class NavigationCases {
         case admin
         case `operator`
         case delivery
+        
+    }
+    
+    //MARK: - Про Notifications
+    enum Notification: String, CaseIterable {
+        
+        case newMessage
         
     }
     
@@ -99,9 +106,8 @@ class NavigationCases {
     //MARK: - Про Архив
     enum ArchiveCases: String, CaseIterable{
         
-        case archive
-        case orders
-        case orderedProducts
+        case archivedOrders
+        case archivedOrderAdditions
         
     }
     
@@ -119,7 +125,7 @@ class NavigationCases {
         case timeStamp
         case currentDeviceID
         case deliveryPerson
-            
+        
         case cart
         case order
         case orderDescription
@@ -159,7 +165,7 @@ class NavigationCases {
         case stock = "Акции"
         
     }
-
+    
 }
 
 

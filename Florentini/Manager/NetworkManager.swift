@@ -59,18 +59,16 @@ class NetworkManager {
         })
     }
     
-    //MARK: - Метод Архивирования заказов
+    //MARK: - Архивирование заказов
     func archiveOrder(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, timeStamp: Date, orderKey: String, deliveryPerson: String){
         
         let data =  DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, currentDeviceID: orderKey, deliveryPerson: deliveryPerson)
         
-        let path = self.db.collection(NavigationCases.ArchiveCases.archive.rawValue).document(orderKey)
-        path.collection(NavigationCases.ArchiveCases.orders.rawValue).addDocument(data: data.dictionary)
-        self.archiveOrderAddition(orderKey: orderKey)
-        
+        db.collection(NavigationCases.ArchiveCases.archivedOrders.rawValue).addDocument(data: data.dictionary)
+        archiveOrderAddition(orderKey: orderKey)
     }
     
-    //MARK: Архивирования описания заказов
+    //MARK: Архивирование описания заказов
     func archiveOrderAddition(orderKey: String) {
         var addition = [DatabaseManager.OrderAddition](),
         jsonArray: [[String: Any]] = []
@@ -84,8 +82,7 @@ class NetworkManager {
             }
             
             for _ in jsonArray {
-                let path =  self.db.collection(NavigationCases.ArchiveCases.archive.rawValue).document(orderKey)
-                path.collection(NavigationCases.ArchiveCases.orderedProducts.rawValue).addDocument(data: jsonArray.remove(at: 0))
+                self.db.collection(NavigationCases.ArchiveCases.archivedOrderAdditions.rawValue).addDocument(data: jsonArray.remove(at: 0))
             }
         })
         db.collection(NavigationCases.UsersInfoCases.order.rawValue).document(orderKey).delete()

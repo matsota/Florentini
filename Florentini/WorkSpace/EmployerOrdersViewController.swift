@@ -142,8 +142,6 @@ extension EmployerOrdersViewController: UITableViewDelegate, UITableViewDataSour
         
         action = UIContextualAction(style: .destructive, title: "Архив") { (action, view, complition) in
             self.present(self.alert.orderArchive(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, id: id, deliveryPerson: deliveryPerson, success: {
-                NetworkManager.shared.archiveOrderAddition(orderKey: id)
-                self.present(self.alert.dataUploadedDelay2(title: "Отлично!", message: "Заказ Удачно архивирован"), animated: true)
                 self.orderCount -= 1
                 self.order.remove(at: indexPath.row)
                 self.tableView.deleteRows(at: [indexPath], with: .automatic)

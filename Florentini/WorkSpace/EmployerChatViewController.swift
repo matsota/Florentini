@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Firebase
+import UserNotifications
 
 class EmployerChatViewController: UIViewController {
     
@@ -35,7 +35,7 @@ class EmployerChatViewController: UIViewController {
     
     
     //MARK: - Private:
- 
+    
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
     private let alert = UIAlertController()
@@ -89,7 +89,21 @@ private extension EmployerChatViewController {
         //MARK: Обновление чата
         NetworkManager.shared.chatUpdate { newMessages in
             self.messagesArray.insert(newMessages, at: 0)
+            //MARK: Notifications
+            let content = UNMutableNotificationContent(),
+            trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
+            
+            content.title = "У Вас новое сообщение от: \(newMessages.name)"
+            content.body = newMessages.content
+            content.sound = UNNotificationSound.default
+            
+            if self.name != newMessages.name {
+                let request = UNNotificationRequest(identifier: NavigationCases.Notification.newMessage.rawValue, content: content, trigger: trigger)
+                UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+            }
+            
             self.tableView.reloadData()
+            
         }
         
     }
