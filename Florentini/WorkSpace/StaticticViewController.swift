@@ -29,52 +29,86 @@ class StaticticViewController: UIViewController {
         
     }
     
+    
+    @IBAction func byFrequencyTapped(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.3) {
+            self.bouquetFrequencyStackView.isHidden = !self.bouquetFrequencyStackView.isHidden
+            self.flowerFrequencyStackView.isHidden = !self.flowerFrequencyStackView.isHidden
+            self.giftFrequencyStackView.isHidden = !self.giftFrequencyStackView.isHidden
+            self.stockFrequencyStackView.isHidden = !self.stockFrequencyStackView.isHidden
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    @IBAction func byReceiptsTapped(_ sender: UIButton) {
+        
+    }
+    
 
     //MARK: - Implementation
     private var order = [DatabaseManager.Order]()
     private var orderAddition = [DatabaseManager.OrderAddition]()
     
     //MARK: - Labels
-    @IBOutlet weak var totalOrders: UILabel!
+    @IBOutlet private weak var totalOrdersLabel: UILabel!
     
-    @IBOutlet weak var ordersCompleted: UILabel!
-    @IBOutlet weak var ordersCompletedPercentage: UILabel!
+    @IBOutlet private weak var ordersCompletedLabel: UILabel!
+    @IBOutlet private weak var ordersCompletedPercentageLabel: UILabel!
     
-    @IBOutlet weak var ordersFailed: UILabel!
-    @IBOutlet weak var ordersFailedPercentage: UILabel!
+    @IBOutlet private weak var ordersFailedLabel: UILabel!
+    @IBOutlet private weak var ordersFailedPercentageLabel: UILabel!
     
-    @IBOutlet weak var uniqueCustomers: UILabel!
+    @IBOutlet private weak var uniqueCustomersLabel: UILabel!
     
-    @IBOutlet weak var regularCustomers: UILabel!
-    @IBOutlet weak var regularCustomersPercentage: UILabel!
+    @IBOutlet private weak var regularCustomersLabel: UILabel!
+    @IBOutlet private weak var regularCustomersPercentageLabel: UILabel!
     
-    @IBOutlet weak var bouquetFrequency: UILabel!
-    @IBOutlet weak var bouquetFrequencyPercentage: UILabel!
+    @IBOutlet private weak var bouquetFrequencyLabel: UILabel!
+    @IBOutlet private weak var bouquetFrequencyPercentageLabel: UILabel!
+    @IBOutlet private weak var amountOfBouquetsLabel: UILabel!
+    @IBOutlet private weak var amountOfBouquetsPercentageLabel: UILabel!
     
-    @IBOutlet weak var flowerFrequency: UILabel!
-    @IBOutlet weak var flowerFrequencyPercentage: UILabel!
+    @IBOutlet private weak var flowerFrequencyLabel: UILabel!
+    @IBOutlet private weak var flowerFrequencyPercentageLabel: UILabel!
+    @IBOutlet private weak var amountOfFlowersLabel: UILabel!
+    @IBOutlet private weak var amountOfFlowersPercentageLabel: UILabel!
     
-    @IBOutlet weak var giftFrequency: UILabel!
-    @IBOutlet weak var giftFrequencyPercentage: UILabel!
+    @IBOutlet private weak var giftFrequencyLabel: UILabel!
+    @IBOutlet weak var giftFrequencyPercentageLabel: UILabel!
+    @IBOutlet weak var amountOfGiftsLabel: UILabel!
+    @IBOutlet weak var amountOfGiftsPercentageLabel: UILabel!
     
-    @IBOutlet weak var stockFrequency: UILabel!
-    @IBOutlet weak var stockFrequencyPercentage: UILabel!
+    @IBOutlet private weak var stockFrequencyLabel: UILabel!
+    @IBOutlet weak var stockFrequencyPercentageLabel: UILabel!
+    @IBOutlet weak var amountOfStocksLabel: UILabel!
+    @IBOutlet weak var amountOfStocksPercentageLabel: UILabel!
     
-    @IBOutlet weak var maxBill: UILabel!
-    @IBOutlet weak var averageBill: UILabel!
-    @IBOutlet weak var minBill: UILabel!
+    @IBOutlet private weak var maxReceiptLabel: UILabel!
+    @IBOutlet weak var averageReceiptLabel: UILabel!
+    @IBOutlet weak var minReceiptLabel: UILabel!
     
-    @IBOutlet weak var mostPopularProduct: UILabel!
-    @IBOutlet weak var lessPopularProduct: UILabel!
+    @IBOutlet private weak var mostPopularProductLabel: UILabel!
+    @IBOutlet weak var lessPopularProductLabel: UILabel!
     
-    @IBOutlet weak var mostPopularBouquet: UILabel!
-    @IBOutlet weak var lessPopularBouquet: UILabel!
+    @IBOutlet private weak var mostPopularBouquetLabel: UILabel!
+    @IBOutlet weak var lessPopularBouquetLabel: UILabel!
     
-    @IBOutlet weak var mostPopularFlower: UILabel!
-    @IBOutlet weak var lessPopularFlower: UILabel!
+    @IBOutlet private weak var mostPopularFlowerLabel: UILabel!
+    @IBOutlet private weak var lessPopularFlowerLabel: UILabel!
     
-    @IBOutlet weak var mostPopularGift: UILabel!
-    @IBOutlet weak var lessPopularGift: UILabel!
+    @IBOutlet private weak var mostPopularGiftLabel: UILabel!
+    @IBOutlet private weak var lessPopularGiftLabel: UILabel!
+    
+    
+    //MARK: - Stack View
+    @IBOutlet private weak var bouquetFrequencyStackView: UIStackView!
+    @IBOutlet private weak var flowerFrequencyStackView: UIStackView!
+    @IBOutlet private weak var giftFrequencyStackView: UIStackView!
+    @IBOutlet private weak var stockFrequencyStackView: UIStackView!
+    
+    @IBOutlet private weak var maxReceiptStackView: UIStackView!
+    @IBOutlet private weak var averageReceiptStackView: UIStackView!
+    @IBOutlet private weak var minReceiptStackView: UIStackView!
     
     
 }
