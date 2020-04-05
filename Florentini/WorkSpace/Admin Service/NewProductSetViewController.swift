@@ -16,21 +16,8 @@ class NewProductSetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        hideKeyboardWhenTappedAround()
+        forViewDidLoad()
         
-        setTextViewPlaceholder()
-    }
-    
-    //MARK: - Кнопка меню
-    @IBAction func menuTapped(_ sender: UIButton) {
-        showWorkerSlideInMethod()
-    }
-    
-    //MARK: - Кнопка перехода в чат
-    @IBAction func chatTapped(_ sender: UIButton) {
-        transitionToEmployerChat()
     }
     
     //MARK: - Кнопка загрузки фотографии по ссылке
@@ -50,7 +37,7 @@ class NewProductSetViewController: UIViewController {
     
     //MARK: - Кнопка загрузки фотографии в Firebase
     @IBAction func uploadTapped(_ sender: UIButton) {
-        uploadingProduct()
+        productCreationConfirms()
     }
     
     
@@ -65,7 +52,7 @@ class NewProductSetViewController: UIViewController {
     }
     
     //MARK: - Private:
-
+    
     //MARK: - Implementation
     private let cases = NavigationCases.CategorySwitch.allCases.map{$0.rawValue}
     private var selectedCategory = NavigationCases.CategorySwitch.none.rawValue
@@ -114,6 +101,20 @@ class NewProductSetViewController: UIViewController {
 
 
 //MARK: - Extension:
+
+//MARK: - For Overrides
+private extension NewProductSetViewController {
+    
+    //MARK: Для ViewDidLoad
+    func forViewDidLoad() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        hideKeyboardWhenTappedAround()
+        
+        setTextViewPlaceholder()
+    }
+    
+}
 
 //MARK: - by PickerView
 extension NewProductSetViewController: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -180,13 +181,16 @@ extension NewProductSetViewController: UINavigationControllerDelegate, UIImagePi
     
     func makePhoto() {
         if UIImagePickerController.isSourceTypeAvailable(.camera){
+            self.imageActivityIndicator.isHidden = false
+            self.imageActivityIndicator.startAnimating()
             let image = UIImagePickerController()
             image.delegate = self
             image.sourceType = UIImagePickerController.SourceType.camera
             image.allowsEditing = false
             
             self.present(image, animated: true){
-                //after it is complete        }
+                self.imageActivityIndicator.isHidden = true
+                self.imageActivityIndicator.stopAnimating()
             }
         }else{
             self.present(self.alert.classic(title: "Внимание", message: "Камера не доступна"), animated: true)
@@ -194,21 +198,27 @@ extension NewProductSetViewController: UINavigationControllerDelegate, UIImagePi
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        self.imageActivityIndicator.isHidden = false
+        imageActivityIndicator.startAnimating()
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
             self.addedPhotoImageView.image = image
-            
+            self.imageActivityIndicator.isHidden = true
+            self.imageActivityIndicator.stopAnimating()
         }
         self.dismiss(animated: true, completion: nil)
     }
     
     func downLoadPhoto() {
+        self.imageActivityIndicator.isHidden = false
+        self.imageActivityIndicator.startAnimating()
         let image = UIImagePickerController()
         image.delegate = self
         image.sourceType = UIImagePickerController.SourceType.photoLibrary
         image.allowsEditing = false
         
         self.present(image, animated: true){
-            //after it is complete
+            self.imageActivityIndicator.isHidden = true
+            self.imageActivityIndicator.stopAnimating()
         }
     }
     
@@ -219,8 +229,12 @@ private extension NewProductSetViewController {
     
     func downloadByURL() {
         self.present(self.alert.uploadImageURL { url in
+            self.imageActivityIndicator.isHidden = false
+            self.imageActivityIndicator.startAnimating()
             NetworkManager.shared.downLoadImageByURL(url: url) { image in
                 self.addedPhotoImageView.image = image
+                self.imageActivityIndicator.isHidden = true
+                self.imageActivityIndicator.stopAnimating()
             }
         }, animated: true)
     }
@@ -230,12 +244,14 @@ private extension NewProductSetViewController {
 //MARK: - Загрузка продукта в сеть
 private extension NewProductSetViewController {
     
-    func uploadingProduct() {
+    func productCreationConfirms() {
         
         let price = Int(photoPriceTextField.text!),
         image = addedPhotoImageView,
         name = self.photoNameTextField.text,
-        description = self.photoDescriptionTextView.text
+        description = self.photoDescriptionTextView.text,
+        category = self.selectedCategory,
+        stock = self.stock
         
         if price == nil || name == "" || description == "" {
             self.present(self.alert.classic(title: "Эттеншн", message: "Вы ввели не все данные. Перепроверьте свой результат"), animated: true)
@@ -244,9 +260,7 @@ private extension NewProductSetViewController {
         }else if image == nil{
             self.present(self.alert.classic(title: "Эттеншн", message: "Вы забыли фотографию"), animated: true)
         }else{
-            NetworkManager.shared.uploadProduct(image: image!, name: name!, progressIndicator: progressView)  {
-                NetworkManager.shared.setProductDescription(name: name!, price: price!, description: description!, category: self.selectedCategory, stock: self.stock)
-            }
+            NetworkManager.shared.productCreation(image: image!, name: name!, price: price!, description: description!, category: category, stock: stock, progressIndicator: progressView)
         }
     }
     

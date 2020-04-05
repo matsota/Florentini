@@ -32,13 +32,13 @@ class EmployerProfileViewController: UIViewController {
     }
     
     //MARK: - Переход в Моделирование продукта
-    @IBAction func newProductTapped(_ sender: UIButton) {
-        transitionToNewProduct()
+    @IBAction func changePasswordTapped(_ sender: DesignButton) {
+        passwordView.isHidden = !passwordView.isHidden
     }
     
     //MARK: - Изменение пароля сотрудника
-    @IBAction func passChangeTapped(_ sender: UIButton) {
-        changePassword()
+    @IBAction func passwordConfirmTapped(_ sender: UIButton) {
+        changesConfirmed()
     }
     
     //MARK: - Private:
@@ -48,6 +48,9 @@ class EmployerProfileViewController: UIViewController {
     private let alert = UIAlertController()
     
     private var currentWorkerInfo = [DatabaseManager.WorkerInfo]()
+    
+    //MARK: - View
+    @IBOutlet weak var passwordView: UIView!
     
     //MARK: - Button Outlet
     @IBOutlet weak private var newProductButton: UIButton!
@@ -118,7 +121,7 @@ extension EmployerProfileViewController: UIViewControllerTransitioningDelegate {
 //MARK: - Change Password
 private extension EmployerProfileViewController{
     
-    func changePassword() {
+    func changesConfirmed() {
         guard let newPass = newPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines),
             let reNewPass = reNewPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {return}
         
@@ -138,14 +141,5 @@ private extension EmployerProfileViewController{
     
 }
 
-//MARK: - Метод перехода на страницу создания продуктов
-
-private extension EmployerProfileViewController {
-    
-    func transitionToNewProduct() {
-        let catalogVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.NewProductSetVC.rawValue) as? NewProductSetViewController
-        view.window?.rootViewController = catalogVC
-    }
-    
-}
+//MARK: -
 

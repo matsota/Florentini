@@ -130,7 +130,7 @@ extension EmployerCatalogViewController: UITableViewDelegate, UITableViewDataSou
         return cell
     }
     
-    //deleteProduct
+    //MARK: Delete
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.EmployerCatalogTVCell.rawValue, for: indexPath) as! EmployerCatalogTableViewCell
@@ -144,6 +144,7 @@ extension EmployerCatalogViewController: UITableViewDelegate, UITableViewDataSou
         let action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, complition) in
             if AuthenticationManager.shared.currentUser?.uid == AuthenticationManager.shared.uidAdmin {
                 self.present(self.alert.productDelete(name: name, success: {
+                    self.present(self.alert.completionDone(title: "", message: ""), animated: true)
                     self.productInfo.remove(at: indexPath.row)
                     self.tableView.deleteRows(at: [indexPath], with: .automatic)
                 }), animated: true)

@@ -122,7 +122,7 @@ class NetworkManager {
     }
     
     //MARK: - Метод загрузки Фотографии продукта в Firebase
-    func uploadProduct(image: UIImageView, name: String, progressIndicator: UIProgressView, complition: @escaping() -> Void) {
+    func productCreation(image: UIImageView, name: String, price: Int, description: String, category: String, stock: Bool, progressIndicator: UIProgressView) {
         guard AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid else {return}
         
         progressIndicator.isHidden = false
@@ -139,8 +139,7 @@ class NetworkManager {
                 print("Oh no! \(error.localizedDescription)")
                 return
             }
-            print("Done with metadata: \(String(describing: downloadMetadata))")
-            complition()
+            self.setProductDescription(name: name, price: price, description: description, category: category, stock: stock)
         }
         
         taskRef.observe(.progress){ (snapshot) in
@@ -163,13 +162,13 @@ class NetworkManager {
     //MARK: - Редактирование цены существующего продукта в Worker-Catalog
     func editProductPrice(name: String, newPrice: Int) {
         
-       let path = db.collection(NavigationCases.ProductCases.imageCollection.rawValue).document(name)
+        let path = db.collection(NavigationCases.ProductCases.imageCollection.rawValue).document(name)
         path.updateData([NavigationCases.ProductCases.productPrice.rawValue : newPrice])
-
+        
     }
     
     func editStockCondition(name: String, stock: Bool) {
-    
+        
         let path = db.collection(NavigationCases.ProductCases.imageCollection.rawValue).document(name)
         path.updateData([NavigationCases.ProductCases.stock.rawValue : stock])
         
@@ -184,20 +183,40 @@ class NetworkManager {
     func deleteProduct(name: String){
         db.collection(NavigationCases.ProductCases.imageCollection.rawValue).document(name).delete() { err in
             if let err = err {
-                print("Error removing document: \(err)")
+                print("Error removing document: \(err.localizedDescription)")
             } else {
-                print("Document successfully removed!")
+                let imageRef = Storage.storage().reference().child("\(NavigationCases.ProductCases.imageCollection.rawValue)/\(name)")
+                imageRef.delete { error in
+                    if let error = error {
+                        print("error ocured: \(error.localizedDescription)")
+                    } else {
+                        print("Delete succeed")
+                    }
+                }
             }
         }
-        
-        let imageRef = Storage.storage().reference().child("\(NavigationCases.ProductCases.imageCollection.rawValue)/\(name)")
-        imageRef.delete { error in
-            if let error = error {
-                print("error ocured: \(error.localizedDescription)")
-            } else {
-                print ("File deleted successfully")
-            }
-        }
+    }
+    
+    //MARK: - Для Админа и Оператора
+    
+    //MARK: - Информация об Архивированных заказах
+    
+    func fetchArchivedOrders(success: @escaping([DatabaseManager.Order]) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(NavigationCases.ArchiveCases.archivedOrders.rawValue).getDocuments(completion: {
+            (querySnapshot, _) in
+            let archive = querySnapshot!.documents.compactMap{DatabaseManager.Order(dictionary: $0.data())}
+            success(archive)
+        })
+    }
+    
+    //MARK: - Информация об Архивированных Описаниях заказов
+    
+    func fetchArchivedOrdersAdditions(success: @escaping([DatabaseManager.OrderAddition]) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(NavigationCases.ArchiveCases.archivedOrderAdditions.rawValue).getDocuments(completion: {
+            (querySnapshot, _) in
+            let archive = querySnapshot!.documents.compactMap{DatabaseManager.OrderAddition(dictionary: $0.data())}
+            success(archive)
+        })
     }
     
     //MARK: - Для пользователей:

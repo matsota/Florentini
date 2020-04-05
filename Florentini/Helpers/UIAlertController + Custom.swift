@@ -176,7 +176,7 @@ extension UIAlertController {
     }
     
     //MARK: - Success Upload
-    func dataUploadedDelay2(title: String, message: String) -> (UIAlertController){
+    func completionDone(title: String, message: String) -> (UIAlertController){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
             alert.dismiss(animated: true, completion: nil)
