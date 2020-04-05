@@ -183,4 +183,21 @@ extension UIAlertController {
         }
         return alert
     }
+    
+    //MARK: - Price editor
+    func setNumber(success: @escaping(Int) -> Void) -> (UIAlertController) {
+        let alert = UIAlertController(title: "Внимание", message: "Введите число относительно котогоро хотите отфильтровать", preferredStyle: .alert)
+            
+        alert.addTextField { (text:UITextField) in
+            text.keyboardType = .numberPad
+            text.placeholder = "Введите Число"
+        }
+        
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Отправить", style: .default, handler: { (action: UIAlertAction) in
+            guard let newPrice = Int((alert.textFields?.first?.text)!)  else {return}
+            success(newPrice)
+        }))
+        return alert
+    }
 }
