@@ -153,6 +153,37 @@ extension EmployerOrdersViewController: UITableViewDelegate, UITableViewDataSour
         return action
     }
     
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = deleteAction(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [delete])
+    }
+    
+    func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
+        let fetch = order[indexPath.row],
+        totalPrice = fetch.totalPrice,
+        name = fetch.name,
+        adress = fetch.adress,
+        cellphone = fetch.cellphone,
+        feedbackOption = fetch.feedbackOption,
+        mark = fetch.mark,
+        timeStamp = fetch.timeStamp,
+        id = fetch.currentDeviceID,
+        deliveryPerson = fetch.deliveryPerson,
+        
+        action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, complition) in
+            self.present(self.alert.orderDelete(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, id: id, deliveryPerson: deliveryPerson, success: {
+                self.orderCount -= 1
+                self.order.remove(at: indexPath.row)
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                self.viewDidLoad()
+                self.present(self.alert.completionDone(title: "Эттеншн", message: "Заказ успершно удален"), animated: true)
+                complition(true)
+            }), animated: true)
+        }
+        action.backgroundColor = .black
+        return action
+    }
+    
 }
 
 //MARK: - Назначение Доставки

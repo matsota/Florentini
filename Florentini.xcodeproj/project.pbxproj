@@ -31,6 +31,7 @@
 		8F701E552425235500DA37EF /* PreOrderEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F701E532425235400DA37EF /* PreOrderEntity+CoreDataClass.swift */; };
 		8F701E562425235500DA37EF /* PreOrderEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F701E542425235500DA37EF /* PreOrderEntity+CoreDataProperties.swift */; };
 		8F73656E243944A3004A7A81 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F73656D243944A3004A7A81 /* Notifications.swift */; };
+		8F8D7496243B70B100C7EF7C /* String + Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8D7495243B70B100C7EF7C /* String + Custom.swift */; };
 		8F95742724169DDB00A4EF6E /* EmployerCatalogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F95742624169DDB00A4EF6E /* EmployerCatalogTableViewCell.swift */; };
 		8F9574292417AE7000A4EF6E /* UserCartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9574282417AE7000A4EF6E /* UserCartTableViewCell.swift */; };
 		8FA196EE2438B6C200F795DF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FA196ED2438B6C200F795DF /* AudioToolbox.framework */; };
@@ -80,6 +81,7 @@
 		8F701E532425235400DA37EF /* PreOrderEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PreOrderEntity+CoreDataClass.swift"; path = "/Users/matsotaa/Desktop/GitHub/Florentini/Florentini/PreOrderEntity+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		8F701E542425235500DA37EF /* PreOrderEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PreOrderEntity+CoreDataProperties.swift"; path = "/Users/matsotaa/Desktop/GitHub/Florentini/Florentini/PreOrderEntity+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		8F73656D243944A3004A7A81 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		8F8D7495243B70B100C7EF7C /* String + Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + Custom.swift"; sourceTree = "<group>"; };
 		8F95742624169DDB00A4EF6E /* EmployerCatalogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployerCatalogTableViewCell.swift; sourceTree = "<group>"; };
 		8F9574282417AE7000A4EF6E /* UserCartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCartTableViewCell.swift; sourceTree = "<group>"; };
 		8FA196ED2438B6C200F795DF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -154,6 +156,7 @@
 				8F2062AD23FF641C007C481A /* EmployerSlidingMenuVC.swift */,
 				8FD4E4E223FCF01000C62FA5 /* SlideInTransitionMenu.swift */,
 				8F4506D3242A811400759C47 /* UIVC + Custom.swift */,
+				8F8D7495243B70B100C7EF7C /* String + Custom.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				8FD4E4C323FCD1D800C62FA5 /* SceneDelegate.swift in Sources */,
 				8FE3F69F24035BF7003001CA /* UserSlidingMenuVC.swift in Sources */,
 				8F2062AE23FF641C007C481A /* EmployerSlidingMenuVC.swift in Sources */,
+				8F8D7496243B70B100C7EF7C /* String + Custom.swift in Sources */,
 				8F2062BA23FF703A007C481A /* EmployerProfileViewController.swift in Sources */,
 				8FD4E4E323FCF01000C62FA5 /* SlideInTransitionMenu.swift in Sources */,
 				8F154B1A242FC90A00C21F47 /* EmployerOrdersTableViewCell.swift in Sources */,

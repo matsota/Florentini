@@ -16,110 +16,11 @@ class NetworkManager {
     static let shared = NetworkManager()
     let db = Firestore.firestore()
     
-    //MARK: - Общее:
-    
-    //MARK: - Метод выгрузки Информации о продукте продукта из Firebase
-    func downloadProducts(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).getDocuments(completion: {
-            (querySnapshot, _) in
-            let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
-            success(productInfo)
-        })
-    }
-    
-    func downloadBouquets(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).whereField(NavigationCases.ProductCases.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategoriesCases.bouquet.rawValue).getDocuments(completion: {
-            (querySnapshot, _) in
-            let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
-            success(productInfo)
-        })
-    }
-    
-    func downloadApieces(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).whereField(NavigationCases.ProductCases.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategoriesCases.apiece.rawValue).getDocuments(completion: {
-            (querySnapshot, _) in
-            let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
-            success(productInfo)
-        })
-    }
-    
-    func downloadGifts(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).whereField(NavigationCases.ProductCases.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategoriesCases.gift.rawValue).getDocuments(completion: {
-            (querySnapshot, _) in
-            let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
-            success(productInfo)
-        })
-    }
-    
-    func downloadStocks(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).whereField(NavigationCases.ProductCases.stock.rawValue, isEqualTo: true).getDocuments(completion: {
-            (querySnapshot, _) in
-            let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
-            success(productInfo)
-        })
-    }
-    
-    //MARK: - Архивирование заказов
-    func archiveOrder(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, timeStamp: Date, orderKey: String, deliveryPerson: String){
-        
-        let data =  DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, currentDeviceID: orderKey, deliveryPerson: deliveryPerson)
-        
-        db.collection(NavigationCases.ArchiveCases.archivedOrders.rawValue).addDocument(data: data.dictionary)
-        archiveOrderAddition(orderKey: orderKey)
-    }
-    
-    //MARK: Архивирование описания заказов
-    func archiveOrderAddition(orderKey: String) {
-        var addition = [DatabaseManager.OrderAddition](),
-        jsonArray: [[String: Any]] = []
-        
-        let docRef = db.collection(NavigationCases.UsersInfoCases.order.rawValue).document(orderKey)
-        docRef.collection(orderKey).getDocuments(completion: {
-            (querySnapshot, _) in
-            addition = querySnapshot!.documents.compactMap{DatabaseManager.OrderAddition(dictionary: $0.data())}
-            for i in addition {
-                jsonArray.append(i.dictionary)
-            }
-            
-            for _ in jsonArray {
-                self.db.collection(NavigationCases.ArchiveCases.archivedOrderAdditions.rawValue).addDocument(data: jsonArray.remove(at: 0))
-            }
-        })
-        db.collection(NavigationCases.UsersInfoCases.order.rawValue).document(orderKey).delete()
-        deleteAdditions(collection: docRef.collection(orderKey))
-    }
-    
-    //MARK: Удаление Всего Заказа
-    func deleteAdditions(collection: CollectionReference, batchSize: Int = 100) {
-        
-        collection.limit(to: batchSize).getDocuments { (docs, error) in
-            let docs = docs,
-            batch = collection.firestore.batch()
-            
-            docs?.documents.forEach { batch.deleteDocument($0.reference) }
-            
-            batch.commit { _ in
-                self.deleteAdditions(collection: collection, batchSize: batchSize)
-            }
-        }
-    }
-    
-    
+    ///
+    //MARK: - Crud
+    ///
     
     //MARK: - Для Админа:
-    
-    //MARK: - Метод Загрузки изображения по Ссылке в приложение
-    func downLoadImageByURL(url: String, success: @escaping(UIImage) -> Void) {
-        if let url = URL(string: url){
-            do {
-                let data = try Data(contentsOf: url)
-                guard let image = UIImage(data: data) else {return}
-                success(image)
-            }catch let error{
-                print(error.localizedDescription)
-            }
-        }
-    }
     
     //MARK: - Метод загрузки Фотографии продукта в Firebase
     func productCreation(image: UIImageView, name: String, price: Int, description: String, category: String, stock: Bool, progressIndicator: UIProgressView) {
@@ -159,64 +60,52 @@ class NetworkManager {
         db.collection(NavigationCases.ProductCases.imageCollection.rawValue).document(name).setData(imageTemplate.dictionary)
     }
     
-    //MARK: - Редактирование цены существующего продукта в Worker-Catalog
-    func editProductPrice(name: String, newPrice: Int) {
+    
+    //MARK: - Для Сотрудников:
         
-        let path = db.collection(NavigationCases.ProductCases.imageCollection.rawValue).document(name)
-        path.updateData([NavigationCases.ProductCases.productPrice.rawValue : newPrice])
+    //MARK: - Архивирование заказов
+    func archiveOrder(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, timeStamp: Date, orderKey: String, deliveryPerson: String){
         
+        let data =  DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, currentDeviceID: orderKey, deliveryPerson: deliveryPerson)
+        
+        db.collection(NavigationCases.ArchiveCases.archivedOrders.rawValue).addDocument(data: data.dictionary)
+        archiveOrderAddition(orderKey: orderKey)
     }
     
-    func editStockCondition(name: String, stock: Bool) {
+    //MARK: Архивирование описания заказов
+    func archiveOrderAddition(orderKey: String) {
+        var addition = [DatabaseManager.OrderAddition](),
+        jsonArray: [[String: Any]] = []
         
-        let path = db.collection(NavigationCases.ProductCases.imageCollection.rawValue).document(name)
-        path.updateData([NavigationCases.ProductCases.stock.rawValue : stock])
-        
+        let docRef = db.collection(NavigationCases.UsersInfoCases.order.rawValue).document(orderKey)
+        docRef.collection(orderKey).getDocuments(completion: {
+            (querySnapshot, _) in
+            addition = querySnapshot!.documents.compactMap{DatabaseManager.OrderAddition(dictionary: $0.data())}
+            for i in addition {
+                jsonArray.append(i.dictionary)
+            }
+            
+            for _ in jsonArray {
+                self.db.collection(NavigationCases.ArchiveCases.archivedOrderAdditions.rawValue).addDocument(data: jsonArray.remove(at: 0))
+            }
+        })
+        db.collection(NavigationCases.UsersInfoCases.order.rawValue).document(orderKey).delete()
+        deleteAdditions(collection: docRef.collection(orderKey))
     }
     
-    func editDeliveryMan(currentDeviceID: String, deliveryPerson: String) {
-        let path = db.collection(NavigationCases.UsersInfoCases.order.rawValue).document(currentDeviceID)
-        path.updateData([NavigationCases.UsersInfoCases.deliveryPerson.rawValue : deliveryPerson])
-    }
-    
-    //MARK: - Метод удаления продукта из базы данных
-    func deleteProduct(name: String){
-        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).document(name).delete() { err in
-            if let err = err {
-                print("Error removing document: \(err.localizedDescription)")
-            } else {
-                let imageRef = Storage.storage().reference().child("\(NavigationCases.ProductCases.imageCollection.rawValue)/\(name)")
-                imageRef.delete { error in
-                    if let error = error {
-                        print("error ocured: \(error.localizedDescription)")
-                    } else {
-                        print("Delete succeed")
-                    }
-                }
+    //MARK: - Отправка сообщения в Чате сотрудников
+    func newChatMessage(name: String, content: String) {
+        let newMessage = DatabaseManager.ChatMessages(name: name, content: content, uid: AuthenticationManager.shared.currentUser!.uid, timeStamp: Date())
+        var ref: DocumentReference? = nil
+        
+        ref = db.collection(NavigationCases.MessagesCases.workersMessages.rawValue).addDocument(data: newMessage.dictionary) {
+            error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+            }else{
+                print("It's ok. Doc ID: \(ref!.documentID)")
             }
         }
-    }
-    
-    //MARK: - Для Админа и Оператора
-    
-    //MARK: - Информация об Архивированных заказах
-    
-    func fetchArchivedOrders(success: @escaping([DatabaseManager.Order]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.ArchiveCases.archivedOrders.rawValue).getDocuments(completion: {
-            (querySnapshot, _) in
-            let archive = querySnapshot!.documents.compactMap{DatabaseManager.Order(dictionary: $0.data())}
-            success(archive)
-        })
-    }
-    
-    //MARK: - Информация об Архивированных Описаниях заказов
-    
-    func fetchArchivedOrdersAdditions(success: @escaping([DatabaseManager.OrderAddition]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.ArchiveCases.archivedOrderAdditions.rawValue).getDocuments(completion: {
-            (querySnapshot, _) in
-            let archive = querySnapshot!.documents.compactMap{DatabaseManager.OrderAddition(dictionary: $0.data())}
-            success(archive)
-        })
     }
     
     //MARK: - Для пользователей:
@@ -252,9 +141,11 @@ class NetworkManager {
         }
     }
     
-    //MARK: - Для всех сотрудников:
+    ///
+    //MARK: - cRud
+    ///
     
-    //MARK: - Workers Dataload
+    //MARK: - Информация о Сотрудниках
     func downloadEmployerInfo (success: @escaping([DatabaseManager.WorkerInfo]) -> Void, failure: @escaping(Error) -> Void) {
         let uid = AuthenticationManager.shared.currentUser?.uid
         if uid == nil {
@@ -265,6 +156,66 @@ class NetworkManager {
                 success([workerInfo])
             }
         }
+    }
+    
+    //MARK: - Для Админа:
+    
+    //MARK: - Статистические данные об Архивированных заказах
+    func fetchArchivedOrders(success: @escaping(_ receipts: [DatabaseManager.Order],_ additions: [DatabaseManager.OrderAddition], _ deleted: [DatabaseManager.Order]) -> Void, failure: @escaping(Error) -> Void) {
+        //  - first fetch
+        db.collection(NavigationCases.ArchiveCases.archivedOrders.rawValue).getDocuments {
+            (querySnapshot, _) in
+            let receiptsData = querySnapshot!.documents.compactMap{DatabaseManager.Order(dictionary: $0.data())}
+            // - second fetch
+            self.db.collection(NavigationCases.ArchiveCases.archivedOrderAdditions.rawValue).getDocuments {
+                (querySnapshot, _) in
+                let additionsData = querySnapshot!.documents.compactMap{DatabaseManager.OrderAddition(dictionary: $0.data())}
+                //third fetch
+                self.db.collection(NavigationCases.ArchiveCases.deletedOrders.rawValue).getDocuments { (querySnapshot, _) in
+                    let deletedData = querySnapshot!.documents.compactMap{DatabaseManager.Order(dictionary: $0.data())}
+                    success(receiptsData, additionsData, deletedData)
+                }
+            }
+        }
+    }
+    
+    //MARK: - Подкачать изображения по Ссылке в приложение
+    func downLoadImageByURL(url: String, success: @escaping(UIImage) -> Void) {
+        if let url = URL(string: url){
+            do {
+                let data = try Data(contentsOf: url)
+                guard let image = UIImage(data: data) else {return}
+                success(image)
+            }catch let error{
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    //MARK: - Для Сотрудников:
+    
+    //MARK: - Подкачать заказ
+    func downloadMainOrderInfo(success: @escaping([DatabaseManager.Order]) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(NavigationCases.UsersInfoCases.order.rawValue).getDocuments(completion: {
+            (querySnapshot, _) in
+            let orders = querySnapshot!.documents.compactMap{DatabaseManager.Order(dictionary: $0.data())}
+            success(orders)
+        })
+    }
+    
+    //MARK: - Подкачать дополнение к заказу
+    func downloadOrderdsAddition(success: @escaping([DatabaseManager.OrderAddition]) -> Void, failure: @escaping(Error) -> Void) {
+        var key = String()
+        CoreDataManager.shared.fetchOrderPath { path -> (Void) in
+            key = path.map({$0.path}).last!!
+        }
+        
+        let docRef = db.collection(NavigationCases.UsersInfoCases.order.rawValue).document(key)
+        docRef.collection(key).getDocuments(completion: {
+            (querySnapshot, _) in
+            let addition = querySnapshot!.documents.compactMap{DatabaseManager.OrderAddition(dictionary: $0.data())}
+            success(addition)
+        })
     }
     
     //MARK: - Получение всех сообщений  для чата сотрудников
@@ -280,19 +231,75 @@ class NetworkManager {
         }
     }
     
-    //MARK: - Отправка сообщения в Чате сотрудников
-    func newChatMessage(name: String, content: String) {
-        let newMessage = DatabaseManager.ChatMessages(name: name, content: content, uid: AuthenticationManager.shared.currentUser!.uid, timeStamp: Date())
-        var ref: DocumentReference? = nil
-        
-        ref = db.collection(NavigationCases.MessagesCases.workersMessages.rawValue).addDocument(data: newMessage.dictionary) {
-            error in
-            if let error = error {
-                print("Error: \(error.localizedDescription)")
-            }else{
-                print("It's ok. Doc ID: \(ref!.documentID)")
-            }
-        }
+    //MARK: - Общее:
+    
+    //MARK: - Подкачать Все товары
+    func downloadProducts(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).getDocuments(completion: {
+            (querySnapshot, _) in
+            let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
+            success(productInfo)
+        })
+    }
+    
+    //MARK: - Подкачать Букеты
+    func downloadBouquets(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).whereField(NavigationCases.ProductCases.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategoriesCases.bouquet.rawValue).getDocuments(completion: {
+            (querySnapshot, _) in
+            let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
+            success(productInfo)
+        })
+    }
+    
+    //MARK: - Подкачать Цветы поштучно
+    func downloadApieces(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).whereField(NavigationCases.ProductCases.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategoriesCases.apiece.rawValue).getDocuments(completion: {
+            (querySnapshot, _) in
+            let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
+            success(productInfo)
+        })
+    }
+    
+    //MARK: - Подкачать Подарки
+    func downloadGifts(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).whereField(NavigationCases.ProductCases.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategoriesCases.gift.rawValue).getDocuments(completion: {
+            (querySnapshot, _) in
+            let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
+            success(productInfo)
+        })
+    }
+    
+    //MARK: - Подкачать Акционные товары
+    func downloadStocks(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).whereField(NavigationCases.ProductCases.stock.rawValue, isEqualTo: true).getDocuments(completion: {
+            (querySnapshot, _) in
+            let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
+            success(productInfo)
+        })
+    }
+    
+    ///
+    //MARK: - crUd
+    ///
+    
+    //MARK: - Для Сотрудников:
+    
+    //MARK: - Редактирование цены существующего продукта в Worker-Catalog
+    func editProductPrice(name: String, newPrice: Int) {
+        let path = db.collection(NavigationCases.ProductCases.imageCollection.rawValue).document(name)
+        path.updateData([NavigationCases.ProductCases.productPrice.rawValue : newPrice])
+    }
+    
+    //MARK: - Изменение Состояния акции
+    func editStockCondition(name: String, stock: Bool) {
+        let path = db.collection(NavigationCases.ProductCases.imageCollection.rawValue).document(name)
+        path.updateData([NavigationCases.ProductCases.stock.rawValue : stock])
+    }
+    
+    //MARK: - Назначение Курьера
+    func editDeliveryMan(currentDeviceID: String, deliveryPerson: String) {
+        let path = db.collection(NavigationCases.UsersInfoCases.order.rawValue).document(currentDeviceID)
+        path.updateData([NavigationCases.UsersInfoCases.deliveryPerson.rawValue : deliveryPerson])
     }
     
     //MARK: - Обновление содержимого Чата
@@ -308,19 +315,9 @@ class NetworkManager {
             }
         }
     }
-    
-    //MARK: - Метод выгрузки Информации о заказе из Firebase
-    func downloadMainOrderInfo(success: @escaping([DatabaseManager.Order]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.UsersInfoCases.order.rawValue).getDocuments(completion: {
-            (querySnapshot, _) in
-            let orders = querySnapshot!.documents.compactMap{DatabaseManager.Order(dictionary: $0.data())}
-            success(orders)
-        })
-    }
-    
+
     //MARK: - Обновление содержимого Чата
     func updateOrders(success: @escaping(DatabaseManager.Order) -> Void) {
-        
         db.collection(NavigationCases.UsersInfoCases.order.rawValue).whereField(NavigationCases.MessagesCases.timeStamp.rawValue, isGreaterThan: Date()).addSnapshotListener { (querySnapshot, error) in
             guard let snapshot = querySnapshot else {return}
             
@@ -333,24 +330,61 @@ class NetworkManager {
         }
     }
     
-    func downloadOrderdsAddition(success: @escaping([DatabaseManager.OrderAddition]) -> Void, failure: @escaping(Error) -> Void) {
-        
-        var key = String()
-        CoreDataManager.shared.fetchOrderPath { path -> (Void) in
-            key = path.map({$0.path}).last!!
+
+    
+    ///
+    //MARK: - cruD
+    ///
+    
+    //MARK: - Сотрудники:
+    
+    //MARK: - Метод удаления продукта из базы данных
+    func deleteProduct(name: String){
+        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).document(name).delete() { err in
+            if let err = err {
+                print("Error removing document: \(err.localizedDescription)")
+            } else {
+                let imageRef = Storage.storage().reference().child("\(NavigationCases.ProductCases.imageCollection.rawValue)/\(name)")
+                imageRef.delete { error in
+                    if let error = error {
+                        print("error ocured: \(error.localizedDescription)")
+                    } else {
+                        print("Delete succeed")
+                    }
+                }
+            }
         }
-        
-        let docRef = db.collection(NavigationCases.UsersInfoCases.order.rawValue).document(key)
-        
-        docRef.collection(key).getDocuments(completion: {
-            (querySnapshot, _) in
-            let addition = querySnapshot!.documents.compactMap{DatabaseManager.OrderAddition(dictionary: $0.data())}
-            success(addition)
-        })
     }
     
+    //MARK: - Удаление Описания Заказа
+    func deleteAdditions(collection: CollectionReference, batchSize: Int = 100) {
+        collection.limit(to: batchSize).getDocuments { (docs, error) in
+            let docs = docs,
+            batch = collection.firestore.batch()
+            
+            docs?.documents.forEach { batch.deleteDocument($0.reference) }
+            
+            batch.commit { _ in
+                self.deleteAdditions(collection: collection, batchSize: batchSize)
+            }
+        }
+    }
+    
+    //MARK: - Удаление заказа
+    func deleteNotForArchive(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, timeStamp: Date, orderKey: String, deliveryPerson: String) {
+        db.collection(NavigationCases.UsersInfoCases.order.rawValue).document(orderKey).delete { (error) in
+            if let error = error {
+                print(error.localizedDescription)
+            }else{
+                let data =  DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, currentDeviceID: orderKey, deliveryPerson: deliveryPerson),
+                docRef = self.db.collection(NavigationCases.UsersInfoCases.order.rawValue).document(orderKey)
+                
+                self.db.collection(NavigationCases.ArchiveCases.deletedOrders.rawValue).addDocument(data: data.dictionary)
+                self.deleteAdditions(collection: docRef.collection(orderKey))
+            }
+        }
+    }
 }
-
 
 //MARK: - Extensions
 extension NetworkManager {

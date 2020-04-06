@@ -108,6 +108,7 @@ class NavigationCases {
         
         case archivedOrders
         case archivedOrderAdditions
+        case deletedOrders
         
     }
     

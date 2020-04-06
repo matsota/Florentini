@@ -55,13 +55,14 @@ class StaticticViewController: UIViewController {
     
     //MARK: - Implementation
     private let alert = UIAlertController()
-    private var order = [DatabaseManager.Order]()
-    private var orderAddition = [DatabaseManager.OrderAddition]()
+    //    private var order = [DatabaseManager.Order]()
+    //    private var orderAddition = [DatabaseManager.OrderAddition]()
     
     private var overSomePrice = 3000
     private var lessSomePrice = 700
     
     //MARK: - Labels
+    @IBOutlet private weak var totalAmountLabel: UILabel!
     @IBOutlet private weak var totalOrdersLabel: UILabel!
     
     @IBOutlet private weak var ordersCompletedLabel: UILabel!
@@ -155,15 +156,44 @@ private extension StaticticViewController {
     
     //MARK: Для ViewDidLoad
     func forViewDidLoad() {
-        NetworkManager.shared.fetchArchivedOrders(success: { info in
-            self.order = info
+        NetworkManager.shared.fetchArchivedOrders(success: { (receipts, additions, deletedData)  in
             
-        }) { (error) in
-            print("Error occured in fetchArchivedOrders",error.localizedDescription)
-        }
-        
-        NetworkManager.shared.fetchArchivedOrdersAdditions(success: { info in
-            self.orderAddition = info
+            //MARK: Total Amount
+            let totalAmount = additions.map({$0.productPrice * $0.productQuantity}).reduce(0, +)
+            self.totalAmountLabel.text = "\(totalAmount) грн"
+            
+            //MARK: Orders total, completed, deleted
+            let ordersCompleted = receipts.count,
+            ordersFailed = deletedData.count,
+            totalOrders = ordersCompleted + ordersFailed,
+            ordersCompletedPersentage = Int(Float(ordersCompleted)/Float(totalOrders) * 100.0),
+            ordersFailedPersentage = Int(Float(ordersFailed)/Float(totalOrders) * 100.0)
+            // - total
+            self.totalOrdersLabel.text = "\(totalOrders)"
+            // - completed
+            self.ordersCompletedLabel.text = "\(ordersCompleted)"
+            self.ordersCompletedPercentageLabel.text = "\(ordersCompletedPersentage)"
+            // - deleted
+            self.ordersFailedLabel.text = "\(ordersFailed)"
+            self.ordersFailedPercentageLabel.text = "\(ordersFailedPersentage)"
+            
+            //MARK: Customers
+            let uniqueCustomers = Set(receipts.map({$0.currentDeviceID})).count
+            // - unique
+            self.uniqueCustomersLabel.text = "\(uniqueCustomers)"
+            // - regular
+            var regularCustomers = "",
+            regularCustomersArray = [Int]()
+            for i in receipts {
+                regularCustomers += "(\(i.currentDeviceID)), "
+                if regularCustomers.countRegularCustomers(deviceID: i.currentDeviceID.lowercased()) > 5 {
+                    regularCustomersArray.append(regularCustomers.countRegularCustomers(deviceID: i.currentDeviceID.lowercased()))
+                }
+            }
+            self.regularCustomersLabel.text = "\(regularCustomersArray.count)"
+            
+            //MARK: By Frequency
+            
             
         }) { (error) in
             print("Error occured in fetchArchivedOrders",error.localizedDescription)
@@ -171,7 +201,6 @@ private extension StaticticViewController {
     }
     
 }
-
 
 //MARK: - Hide-Unhide certain statistics
 private extension StaticticViewController {
