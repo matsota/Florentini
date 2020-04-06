@@ -62,7 +62,7 @@ class NetworkManager {
     
     
     //MARK: - Для Сотрудников:
-        
+    
     //MARK: - Архивирование заказов
     func archiveOrder(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, timeStamp: Date, orderKey: String, deliveryPerson: String){
         
@@ -158,9 +158,9 @@ class NetworkManager {
         }
     }
     
-    //MARK: - Для Админа:
+    //MARK: - Для Админа: Статистические данные
     
-    //MARK: - Статистические данные об Архивированных заказах
+    //MARK: - По всем Архивированным заказам
     func fetchArchivedOrders(success: @escaping(_ receipts: [DatabaseManager.Order],_ additions: [DatabaseManager.OrderAddition], _ deleted: [DatabaseManager.Order]) -> Void, failure: @escaping(Error) -> Void) {
         //  - first fetch
         db.collection(NavigationCases.ArchiveCases.archivedOrders.rawValue).getDocuments {
@@ -173,8 +173,58 @@ class NetworkManager {
                 //third fetch
                 self.db.collection(NavigationCases.ArchiveCases.deletedOrders.rawValue).getDocuments { (querySnapshot, _) in
                     let deletedData = querySnapshot!.documents.compactMap{DatabaseManager.Order(dictionary: $0.data())}
+                    
                     success(receiptsData, additionsData, deletedData)
                 }
+            }
+        }
+    }
+    
+    //MARK: - Дополнительный fetch для подсчета постоянных клиентов
+    func fetchRegularCustomers(currentDeviceID: String, success: @escaping([DatabaseManager.Order]) -> Void) {
+        self.db.collection(NavigationCases.ArchiveCases.archivedOrders.rawValue).whereField(NavigationCases.UsersInfoCases.currentDeviceID.rawValue, isEqualTo: currentDeviceID).getDocuments{
+            (querySnapshot, _) in
+            let reguralCustomersData = querySnapshot!.documents.compactMap{DatabaseManager.Order(dictionary: $0.data())}
+            success(reguralCustomersData)
+        }
+    }
+    
+    //MARK: - По категориям
+    func fetchArchivedOrdersByCategory(success: @escaping(_ bouquets: [DatabaseManager.OrderAddition],_ apiece: [DatabaseManager.OrderAddition], _ gifts: [DatabaseManager.OrderAddition], _ stocks: [DatabaseManager.OrderAddition]) -> Void, failure: @escaping(Error) -> Void) {
+        //  - first fetch
+        db.collection(NavigationCases.ArchiveCases.archivedOrderAdditions.rawValue).whereField(NavigationCases.ProductCases.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategoriesCases.bouquet.rawValue).getDocuments { (querySnapshot, _) in
+            let bouquetsData = querySnapshot!.documents.compactMap{DatabaseManager.OrderAddition(dictionary: $0.data())}
+            //  - second fetch
+            self.db.collection(NavigationCases.ArchiveCases.archivedOrderAdditions.rawValue).whereField(NavigationCases.ProductCases.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategoriesCases.apiece.rawValue).getDocuments { (querySnapshot, _) in
+                let apieceData = querySnapshot!.documents.compactMap{DatabaseManager.OrderAddition(dictionary: $0.data())}
+                //  - third fetch
+                self.db.collection(NavigationCases.ArchiveCases.archivedOrderAdditions.rawValue).whereField(NavigationCases.ProductCases.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategoriesCases.gift.rawValue).getDocuments { (querySnapshot, _) in
+                    let giftsData = querySnapshot!.documents.compactMap{DatabaseManager.OrderAddition(dictionary: $0.data())}
+                    
+                    //  - fourth fetch
+                    self.db.collection(NavigationCases.ArchiveCases.archivedOrderAdditions.rawValue).whereField(NavigationCases.ProductCases.stock.rawValue, isEqualTo: true).getDocuments { (querySnapshot, _) in
+                        let stocksData = querySnapshot!.documents.compactMap{DatabaseManager.OrderAddition(dictionary: $0.data())}
+                        
+                        success(bouquetsData, apieceData, giftsData, stocksData)
+                    }
+                }
+            }
+        }
+    }
+    
+    //MARK: - По чекам
+    func fetchArchivedOrdersByReceipts(overThan: Int, lessThan: Int, success: @escaping(_ bigger: [DatabaseManager.Order], _ smaller: [DatabaseManager.Order]) -> Void, failure: @escaping(Error) -> Void) {
+        //  - first fetch
+        db.collection(NavigationCases.ArchiveCases.archivedOrders.rawValue).whereField(NavigationCases.UsersInfoCases.totalPrice.rawValue, isGreaterThan: overThan).getDocuments {
+            (querySnapshot, _) in
+            let biggerReceiptsData = querySnapshot!.documents.compactMap{DatabaseManager.Order(dictionary: $0.data())}
+            
+            // - second fetch
+            self.db.collection(NavigationCases.ArchiveCases.archivedOrders.rawValue).whereField(NavigationCases.UsersInfoCases.totalPrice.rawValue, isLessThan: lessThan).getDocuments {
+                (querySnapshot, _) in
+                let smallerReceiptsData = querySnapshot!.documents.compactMap{DatabaseManager.Order(dictionary: $0.data())}
+                
+                success(biggerReceiptsData, smallerReceiptsData)
             }
         }
     }
@@ -315,7 +365,7 @@ class NetworkManager {
             }
         }
     }
-
+    
     //MARK: - Обновление содержимого Чата
     func updateOrders(success: @escaping(DatabaseManager.Order) -> Void) {
         db.collection(NavigationCases.UsersInfoCases.order.rawValue).whereField(NavigationCases.MessagesCases.timeStamp.rawValue, isGreaterThan: Date()).addSnapshotListener { (querySnapshot, error) in
@@ -330,7 +380,7 @@ class NetworkManager {
         }
     }
     
-
+    
     
     ///
     //MARK: - cruD
