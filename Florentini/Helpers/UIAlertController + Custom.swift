@@ -120,12 +120,20 @@ extension UIAlertController {
     }
     
     //MARK: - Stock editor
-    func editStockCondition(name: String, stock: Bool, compltion: () -> Void) -> (UIAlertController) {
+    func editStockCondition(name: String, stock: Bool, text: UILabel, compltion: @escaping() -> Void) -> (UIAlertController) {
         let alert = UIAlertController(title: "Внимание", message: "Подтвердите изменение наличия АКЦИИ", preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { (action: UIAlertAction) in
             NetworkManager.shared.editStockCondition(name: name, stock: stock)
+            if stock == true {
+                text.text = "Акционный товар"
+                text.textColor = .red
+            }else{
+                text.text = "Акция отсутствует"
+                text.textColor = .black
+            }
+            compltion()
         }))
         return alert
     }
@@ -170,11 +178,11 @@ extension UIAlertController {
     //MARK: - Sign Out Method
     func signOut(success: @escaping() -> Void) -> (UIAlertController) {
         let alertSignOut = UIAlertController(title: "Внимание", message: "Подтвердите, что вы нажали на \"Выход\" неслучайно", preferredStyle: .actionSheet)
+        alertSignOut.addAction(UIAlertAction(title: "Отмена", style: .destructive, handler: nil))
         alertSignOut.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { _ in
+            AuthenticationManager.shared.signOut()
             success()
         }))
-        alertSignOut.addAction(UIAlertAction(title: "Отмена", style: .destructive, handler: nil))
-        
         return (alertSignOut)
     }
     

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2R2-tp-U9y">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
@@ -988,9 +988,9 @@
                                                             <action selector="showHidePaymentProcessTapped:" destination="U9M-7H-DAO" eventType="touchUpInside" id="37d-tv-apK"/>
                                                         </connections>
                                                     </button>
-                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4NW-Al-y2m">
+                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4NW-Al-y2m">
                                                         <rect key="frame" x="0.0" y="0.0" width="347" height="0.0"/>
-                                                        <string key="text">Предварительная оплата заказа осуществляется только, после подтверждения начилия желаемой покупки на складе. Мы всегда Вам перезвоним и обсудим все детали</string>
+                                                        <string key="text">Предварительная оплата заказа осуществляется только, после подтверждения начилия желаемой покупки на складе. Мы всегда свяжемся с Вами и обсудим все детали</string>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -1003,7 +1003,7 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="UjQ-0B-E2N">
                                                         <rect key="frame" x="0.0" y="0.0" width="347" height="36"/>
                                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="20"/>
-                                                        <state key="normal" title="Какими способами возможно оплатить услуг?"/>
+                                                        <state key="normal" title="Среди каких способов оплаты услуг можно выбрать подходящий?"/>
                                                         <connections>
                                                             <action selector="showHidePaymentOptionsTapped:" destination="U9M-7H-DAO" eventType="touchUpInside" id="UfZ-2F-nyt"/>
                                                         </connections>
@@ -1017,7 +1017,7 @@
                                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="На карту Visa/ MasterCard" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qk6-AT-24p">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="На карту Visa/MasterCard" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qk6-AT-24p">
                                                                 <rect key="frame" x="0.0" y="7" width="347" height="0.0"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1073,18 +1073,24 @@
                                                                 <rect key="frame" x="69.333333333333343" y="0.0" width="277.66666666666663" height="80.333333333333329"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Принимаем заказы" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MKT-YN-bYL">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="277.66666666666669" height="56.333333333333336"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="277.66666666666669" height="44"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Пн-Вс" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aJT-L8-wwX">
-                                                                        <rect key="frame" x="0.0" y="56.333333333333314" width="277.66666666666669" height="12"/>
+                                                                        <rect key="frame" x="0.0" y="44" width="277.66666666666669" height="12.333333333333336"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="с 9:00 до 22:00" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rc6-jq-VYJ">
+                                                                        <rect key="frame" x="0.0" y="56.333333333333314" width="277.66666666666669" height="12"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="заказы онлайн круглосуточно" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QHY-yB-ISI">
                                                                         <rect key="frame" x="0.0" y="68.333333333333314" width="277.66666666666669" height="12"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1093,7 +1099,8 @@
                                                                 </subviews>
                                                                 <constraints>
                                                                     <constraint firstItem="aJT-L8-wwX" firstAttribute="height" secondItem="4Gd-Bc-glc" secondAttribute="height" multiplier="0.15" id="1Rc-Ga-Ffi"/>
-                                                                    <constraint firstItem="MKT-YN-bYL" firstAttribute="height" secondItem="4Gd-Bc-glc" secondAttribute="height" multiplier="0.7" id="LsH-bi-LQ6"/>
+                                                                    <constraint firstItem="MKT-YN-bYL" firstAttribute="height" secondItem="4Gd-Bc-glc" secondAttribute="height" multiplier="0.55" id="LsH-bi-LQ6"/>
+                                                                    <constraint firstItem="QHY-yB-ISI" firstAttribute="height" secondItem="4Gd-Bc-glc" secondAttribute="height" multiplier="0.15" id="efa-jV-NJ5"/>
                                                                     <constraint firstItem="rc6-jq-VYJ" firstAttribute="height" secondItem="4Gd-Bc-glc" secondAttribute="height" multiplier="0.15" id="gT1-zx-BaU"/>
                                                                 </constraints>
                                                             </stackView>
@@ -1192,14 +1199,14 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ghe-vf-DaS">
                                                                 <rect key="frame" x="69.333333333333343" y="0.0" width="277.66666666666663" height="80.666666666666671"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Доставка по Киевской области" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pGd-jl-Mrv">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="277.66666666666669" height="48.333333333333336"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="По Киевской области" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pGd-jl-Mrv">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="277.66666666666669" height="42"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Платная. Расчитывается в зависимости от растояния" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32x-Ov-cs2">
-                                                                        <rect key="frame" x="0.0" y="48.333333333333371" width="277.66666666666669" height="20"/>
+                                                                        <rect key="frame" x="0.0" y="42" width="277.66666666666669" height="26.333333333333329"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
@@ -1212,9 +1219,8 @@
                                                                     </label>
                                                                 </subviews>
                                                                 <constraints>
-                                                                    <constraint firstItem="pGd-jl-Mrv" firstAttribute="height" secondItem="ghe-vf-DaS" secondAttribute="height" multiplier="0.6" id="Hms-rR-Pd6"/>
                                                                     <constraint firstItem="Qun-Ae-Voe" firstAttribute="height" secondItem="ghe-vf-DaS" secondAttribute="height" multiplier="0.15" id="dj0-Ku-Una"/>
-                                                                    <constraint firstItem="32x-Ov-cs2" firstAttribute="height" secondItem="ghe-vf-DaS" secondAttribute="height" multiplier="0.25" id="lcE-yC-ddZ"/>
+                                                                    <constraint firstItem="32x-Ov-cs2" firstAttribute="height" secondItem="ghe-vf-DaS" secondAttribute="height" multiplier="0.33" id="tTk-y0-Plg"/>
                                                                 </constraints>
                                                             </stackView>
                                                         </subviews>
@@ -1236,13 +1242,13 @@
                                                                 <rect key="frame" x="69.333333333333343" y="0.0" width="277.66666666666663" height="80.333333333333329"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Экспресс Доставка" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AEz-f3-oX7">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="277.66666666666669" height="48"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="277.66666666666669" height="40"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Доставка за час/полтора с момента оплаты заказа." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7O0-iA-pXP">
-                                                                        <rect key="frame" x="0.0" y="48" width="277.66666666666669" height="20.333333333333329"/>
+                                                                        <rect key="frame" x="0.0" y="40" width="277.66666666666669" height="28.333333333333329"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
@@ -1256,9 +1262,9 @@
                                                                 </subviews>
                                                                 <constraints>
                                                                     <constraint firstItem="HRA-lV-Agc" firstAttribute="height" secondItem="EcT-rO-G71" secondAttribute="height" multiplier="0.15" id="BLN-BZ-BTC"/>
-                                                                    <constraint firstItem="AEz-f3-oX7" firstAttribute="height" secondItem="EcT-rO-G71" secondAttribute="height" multiplier="0.6" id="Tqx-xu-cya"/>
+                                                                    <constraint firstItem="AEz-f3-oX7" firstAttribute="height" secondItem="EcT-rO-G71" secondAttribute="height" multiplier="0.5" id="Tqx-xu-cya"/>
                                                                     <constraint firstAttribute="height" constant="80.5" id="hGp-h7-cXf"/>
-                                                                    <constraint firstItem="7O0-iA-pXP" firstAttribute="height" secondItem="EcT-rO-G71" secondAttribute="height" multiplier="0.25" id="qe9-E6-ndS"/>
+                                                                    <constraint firstItem="7O0-iA-pXP" firstAttribute="height" secondItem="EcT-rO-G71" secondAttribute="height" multiplier="0.35" id="qe9-E6-ndS"/>
                                                                 </constraints>
                                                             </stackView>
                                                         </subviews>
@@ -1298,9 +1304,10 @@
                                                             <action selector="showHideFeedbackTapped:" destination="U9M-7H-DAO" eventType="touchUpInside" id="vdb-4d-vsE"/>
                                                         </connections>
                                                     </button>
-                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ek1-4A-s5X">
+                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ek1-4A-s5X">
                                                         <rect key="frame" x="0.0" y="0.0" width="347" height="0.0"/>
-                                                        <string key="text">По кнопке 'меню' Вы сможете найти раздел 'О нас', где расположены контакты. Так же Вы можете составить свой заказ в разделе 'Каталог', а после составления заказа мы с Вам свяжемся удобным для Вас способом.</string>
+                                                        <string key="text">В нижней части раздела 'О нас' вы сможете найти наши контакты. 
+В любом случае Вы можете составить свой заказ в разделе 'Каталог', а после подтверждения заказа мы свяжемся  с Вам удобным для Вас способом.</string>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>

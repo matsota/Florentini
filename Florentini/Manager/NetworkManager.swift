@@ -111,16 +111,16 @@ class NetworkManager {
     //MARK: - Для пользователей:
     
     //MARK: - Отправка отзыва
-    func sendReview(name: String, content: String) {
+    func sendReview(name: String, content: String, success: @escaping() -> Void, failure: @escaping(Error) -> Void) {
         guard let currentDeviceID = CoreDataManager.shared.device else {return}
         let newReview = DatabaseManager.ChatMessages(name: name, content: content, uid: "\(currentDeviceID)", timeStamp: Date())
         
         db.collection(NavigationCases.MessagesCases.review.rawValue).addDocument(data: newReview.dictionary) {
             error in
             if let error = error {
-                print("Error: \(error.localizedDescription)")
+                failure(error)
             }else{
-                print("Review Sent")
+                success()
             }
         }
     }
@@ -294,7 +294,7 @@ class NetworkManager {
     
     //MARK: - Подкачать Букеты
     func downloadBouquets(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).whereField(NavigationCases.ProductCases.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategoriesCases.bouquet.rawValue).getDocuments(completion: {
+        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).whereField(NavigationCases.ProductCases.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategoriesCases.bouquet.rawValue).whereField(NavigationCases.ProductCases.stock.rawValue, isEqualTo: false).getDocuments(completion: {
             (querySnapshot, _) in
             let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
             success(productInfo)
@@ -303,7 +303,7 @@ class NetworkManager {
     
     //MARK: - Подкачать Цветы поштучно
     func downloadApieces(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).whereField(NavigationCases.ProductCases.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategoriesCases.apiece.rawValue).getDocuments(completion: {
+        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).whereField(NavigationCases.ProductCases.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategoriesCases.apiece.rawValue).whereField(NavigationCases.ProductCases.stock.rawValue, isEqualTo: false).getDocuments(completion: {
             (querySnapshot, _) in
             let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
             success(productInfo)
@@ -312,7 +312,7 @@ class NetworkManager {
     
     //MARK: - Подкачать Подарки
     func downloadGifts(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).whereField(NavigationCases.ProductCases.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategoriesCases.gift.rawValue).getDocuments(completion: {
+        db.collection(NavigationCases.ProductCases.imageCollection.rawValue).whereField(NavigationCases.ProductCases.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategoriesCases.gift.rawValue).whereField(NavigationCases.ProductCases.stock.rawValue, isEqualTo: false).getDocuments(completion: {
             (querySnapshot, _) in
             let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
             success(productInfo)

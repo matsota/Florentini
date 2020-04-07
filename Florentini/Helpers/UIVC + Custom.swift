@@ -63,6 +63,7 @@ extension UIViewController {
             view.window?.rootViewController = faqVC
         case .website:
             self.dismiss(animated: true, completion: nil)
+            UIApplication.shared.open(URL(string: "https://florentini.space")! as URL, options: [:], completionHandler: nil)
         }
     }
     func transitionToUsersCart() {
@@ -111,7 +112,6 @@ extension UIViewController {
         case .exit:
             self.present(alert.signOut(success: {
                 self.dismiss(animated: true) {
-                    AuthenticationManager.shared.signOut()
                     let exitApp = self.storyboard?.instantiateInitialViewController()
                     self.view.window?.rootViewController = exitApp
                 }

@@ -89,7 +89,7 @@ private extension EmployerProfileViewController {
                 self.nameLabel.text = workerInfo.name
                 self.positionLabel.text = workerInfo.position
                 
-                if workerInfo.position == NavigationCases.WorkerInfoCases.admin.rawValue && AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid {
+                if workerInfo.position == NavigationCases.WorkerInfoCases.admin.rawValue && AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid{
                     self.newProductButton.isHidden = false
                 }
             }

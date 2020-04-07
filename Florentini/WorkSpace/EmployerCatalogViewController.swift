@@ -51,6 +51,7 @@ class EmployerCatalogViewController: UIViewController {
     private let slidingMenu = SlideInTransitionMenu()
     private let alert = UIAlertController()
     private var productInfo = [DatabaseManager.ProductInfo]()
+    private var employerPosition: String?
     private var selectedCategory = String()
     
     //MARK: - View
@@ -83,6 +84,12 @@ private extension EmployerCatalogViewController {
         NetworkManager.shared.downloadProducts(success: { productInfo in
             self.productInfo = productInfo
             self.tableView.reloadData()
+        }) { error in
+            print(error.localizedDescription)
+        }
+        
+        NetworkManager.shared.downloadEmployerInfo(success: { (data) in
+            self.employerPosition = data.map({$0.position}).first
         }) { error in
             print(error.localizedDescription)
         }
@@ -133,18 +140,22 @@ extension EmployerCatalogViewController: UITableViewDelegate, UITableViewDataSou
     //MARK: Delete
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.EmployerCatalogTVCell.rawValue, for: indexPath) as! EmployerCatalogTableViewCell
-        guard let name = cell.productNameLabel.text else {return nil}
-        let delete = deleteAction(name: name, at: indexPath)
-        
-        return UISwipeActionsConfiguration(actions: [delete])
+        guard let position = self.employerPosition else {return nil}
+        if position == "admin" {
+            let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.EmployerCatalogTVCell.rawValue, for: indexPath) as! EmployerCatalogTableViewCell
+            guard let name = cell.productNameLabel.text else {return nil}
+            let delete = deleteAction(name: name, at: indexPath)
+            
+            return UISwipeActionsConfiguration(actions: [delete])
+        }
+        return nil
     }
     
     func deleteAction(name: String, at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, complition) in
             if AuthenticationManager.shared.currentUser?.uid == AuthenticationManager.shared.uidAdmin {
                 self.present(self.alert.productDelete(name: name, success: {
-                    self.present(self.alert.completionDone(title: "", message: ""), animated: true)
+                    self.present(self.alert.completionDone(title: "Внимание", message: "Продукт удачно Удалён"), animated: true)
                     self.productInfo.remove(at: indexPath.row)
                     self.tableView.deleteRows(at: [indexPath], with: .automatic)
                 }), animated: true)
@@ -178,27 +189,25 @@ extension EmployerCatalogViewController: EmployerCatalogTableViewCellDelegate {
         self.tableView.reloadData()
     }
     
-    func editStockCondition(_ cell: EmployerCatalogTableViewCell) {
+    func editStockCondition(_ cell: EmployerCatalogTableViewCell, _ text: UILabel) {
         
         guard let name = cell.productNameLabel.text else {return}
         
         if cell.stockSwitch.isOn == true {
-            
-            self.present(self.alert.editStockCondition(name: name, stock: true){
-                cell.stock = true
-                cell.stockConditionLabel.text = "Акционный товар"
-                cell.stockConditionLabel.textColor = .red
-                viewDidLoad()
+            self.present(self.alert.editStockCondition(name: name, stock: true, text: text) {
+                if self.selectedCategory != "" {
+                    self.productInfo.remove(at: cell.tag)
+                    self.tableView.reloadData()
+                }
             }, animated: true)
         }else{
             
-            self.present(self.alert.editStockCondition(name: name, stock: false){
-                cell.stock = false
-                cell.stockConditionLabel.text = "Акция отсутствует"
-                cell.stockConditionLabel.textColor = .black
-                viewDidLoad()
+            self.present(self.alert.editStockCondition(name: name, stock: false, text: text) {
+                if self.selectedCategory == NavigationCases.ProductCategoriesCases.stock.rawValue {
+                    self.productInfo.remove(at: cell.tag)
+                    self.tableView.reloadData()
+                }
             }, animated: true)
-            
         }
     }
     

@@ -8,14 +8,15 @@
 
 import Foundation
 import Firebase
+import FirebaseAuth
 
 
 class AuthenticationManager {
     
     //MARK: - Системные переменные
     static var shared = AuthenticationManager()
-    let currentUser = Auth.auth().currentUser
-    let uidAdmin = "Q0Lh49RsIrMU8itoNgNJHN3bjmD2"
+    let currentUser = Auth.auth().currentUser,
+    uidAdmin = "Q0Lh49RsIrMU8itoNgNJHN3bjmD2"
     
     //MARK: - Метод SignIn
     func signIn(email: String, password: String, success: @escaping() -> Void, failure: @escaping(Error) -> Void) {
@@ -61,7 +62,12 @@ class AuthenticationManager {
     
     //MARK: - Метод SignOut
     func signOut() {
-        try! Auth.auth().signOut()
+        try? Auth.auth().signOut()
+         do {
+         try Auth.auth().signOut()
+         }catch {
+            print(Error.self)
+        }
     }
     
     //MARK: - Метод смены пароля:

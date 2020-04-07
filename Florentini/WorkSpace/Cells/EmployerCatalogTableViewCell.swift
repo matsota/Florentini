@@ -14,7 +14,7 @@ protocol EmployerCatalogTableViewCellDelegate: class {
     
     func editPrice(_ cell: EmployerCatalogTableViewCell)
     
-    func editStockCondition(_ cell: EmployerCatalogTableViewCell)
+    func editStockCondition(_ cell: EmployerCatalogTableViewCell, _ text: UILabel)
     
 }
 
@@ -68,7 +68,7 @@ class EmployerCatalogTableViewCell: UITableViewCell {
     }
     
     @IBAction func stockCondition(_ sender: UISwitch) {
-        delegate?.editStockCondition(self)
+        delegate?.editStockCondition(self, stockConditionLabel)
     }
     
     
@@ -83,6 +83,7 @@ class EmployerCatalogTableViewCell: UITableViewCell {
         productDescriptionLabel.text = description
         
         self.stock = stock
+        
         if stock == true {
             stockSwitch.isOn = true
             stockConditionLabel.text = "Акционный товар"

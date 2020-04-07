@@ -69,7 +69,7 @@ private extension UserAboutUsViewController {
         
         setTextViewPlaceholder()
         
-
+        
     }
     
 }
@@ -93,19 +93,27 @@ private extension UserAboutUsViewController {
     func reviewSent() {
         var name = nameTextField.text
         
-        let review = reviewTextView.text,
+        let content = reviewTextView.text,
         secretCode = "/WorkSpace",
         secretCode2 = "Go/"
         
-        if name == secretCode && review == secretCode2 {
+        if name == secretCode && content == secretCode2 {
             let loginWorkSpaceVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.LoginWorkSpaceVC.rawValue) as? LoginWorkSpaceViewController
             view.window?.rootViewController = loginWorkSpaceVC
             view.window?.makeKeyAndVisible()
-        }else if review == "" {
+        }else if content == "" {
             self.present(self.alert.classic(title: "Эттеншн!", message: "Вы не ввели информацию, которой бы Вы хотели поделиться с нами"), animated: true)
         }else{
             if name == "" {name = "anonymous"}
-            NetworkManager.shared.sendReview(name: name!, content: review!)
+            NetworkManager.shared.sendReview(name: name!, content: content!, success: {
+                self.present(self.alert.completionDone(title: "Благодарим Вас", message: "Мы очень рады, что у нас есть возможность заняться самоанализом!"), animated: true)
+                self.nameTextField.text = ""
+                self.reviewTextView.text = ""
+                self.viewDidLoad()
+            }) { (error) in
+                print("Error in UserAboutUsViewController, review: ", error.localizedDescription)
+                self.present(self.alert.completionDone(title: "Внимание", message: "Произошла неизвестная ошибка, попробуйте повторить еще раз"), animated: true)
+            }
         }
     }
 }
