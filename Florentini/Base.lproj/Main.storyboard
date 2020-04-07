@@ -2766,8 +2766,8 @@
                                             <constraint firstItem="Lre-YI-IMm" firstAttribute="width" secondItem="KmO-Lu-5O7" secondAttribute="width" id="teh-Ik-wps"/>
                                         </constraints>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oKc-ub-sp6" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
-                                        <rect key="frame" x="14" y="91" width="319" height="34"/>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oKc-ub-sp6" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="91" width="319" height="34"/>
                                         <color key="backgroundColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="34" id="Pqw-Jg-YVo"/>
@@ -2785,7 +2785,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dfN-ik-pKl" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
-                                        <rect key="frame" x="14" y="139" width="319" height="34"/>
+                                        <rect key="frame" x="16" y="139" width="319" height="34"/>
                                         <color key="backgroundColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <state key="normal" title="Сменить Пароль">
                                             <color key="titleColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -2800,7 +2800,7 @@
                                         </connections>
                                     </button>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lmh-Th-zsc">
-                                        <rect key="frame" x="0.0" y="187" width="347" height="158"/>
+                                        <rect key="frame" x="2" y="187" width="347" height="158"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Новый пароль" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="K5S-Yu-PDT">
                                                 <rect key="frame" x="14" y="14" width="319" height="34"/>
@@ -2884,6 +2884,7 @@
                         <outlet property="passwordView" destination="Lmh-Th-zsc" id="q6r-ss-JzX"/>
                         <outlet property="positionLabel" destination="Scg-2q-7ed" id="fWA-qZ-1fm"/>
                         <outlet property="reNewPassword" destination="jyv-bA-4Rx" id="04l-lo-dix"/>
+                        <outlet property="statisticsButton" destination="oKc-ub-sp6" id="GKf-Pa-mdY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BQZ-Ip-ER2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

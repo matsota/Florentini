@@ -50,15 +50,17 @@ class EmployerProfileViewController: UIViewController {
     private var currentWorkerInfo = [DatabaseManager.WorkerInfo]()
     
     //MARK: - View
-    @IBOutlet weak var passwordView: UIView!
+    @IBOutlet private weak var passwordView: UIView!
     
     //MARK: - Button Outlet
-    @IBOutlet weak private var newProductButton: UIButton!
+    @IBOutlet private weak  var newProductButton: UIButton!
+    @IBOutlet private weak var statisticsButton: DesignButton!
+    
     
     //MARK: - Label Outlet
-    @IBOutlet weak private var positionLabel: UILabel!
-    @IBOutlet weak private var emailLabel: UILabel!
-    @IBOutlet weak private var nameLabel: UILabel!
+    @IBOutlet private weak var positionLabel: UILabel!
+    @IBOutlet private weak var emailLabel: UILabel!
+    @IBOutlet private weak var nameLabel: UILabel!
     
     //MARK: - TextField Outlet
     @IBOutlet private weak var newPassword: UITextField!
@@ -91,6 +93,7 @@ private extension EmployerProfileViewController {
                 
                 if workerInfo.position == NavigationCases.WorkerInfoCases.admin.rawValue && AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid{
                     self.newProductButton.isHidden = false
+                    self.statisticsButton.isHidden = false
                 }
             }
             self.emailLabel.text = Auth.auth().currentUser?.email

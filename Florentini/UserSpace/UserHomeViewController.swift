@@ -19,7 +19,7 @@ class UserHomeViewController: UIViewController {
         super.viewDidLoad()
         
         forViewDidLoad()
-        print(AuthenticationManager.shared.currentUser?.uid)
+        print(AuthenticationManager.shared.currentUser?.uid as Any)
         
     }
     
