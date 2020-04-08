@@ -208,46 +208,6 @@ private extension StaticticViewController {
     
 }
 
-//MARK: - Hide-Unhide certain statistics
-private extension StaticticViewController {
-    
-    func hideUnhideFrequency() {
-        UIView.animate(withDuration: 0.3) {
-            self.bouquetFrequencyStackView.isHidden = !self.bouquetFrequencyStackView.isHidden
-            self.flowerFrequencyStackView.isHidden = !self.flowerFrequencyStackView.isHidden
-            self.giftFrequencyStackView.isHidden = !self.giftFrequencyStackView.isHidden
-            self.stockFrequencyStackView.isHidden = !self.stockFrequencyStackView.isHidden
-            self.view.layoutIfNeeded()
-        }
-    }
-    
-    func hideUnhideReceipts() {
-        UIView.animate(withDuration: 0.3) {
-            self.receiptOverSomePriceStackView.isHidden = !self.receiptOverSomePriceStackView.isHidden
-            self.receiptLessSomePriceStackView.isHidden = !self.receiptLessSomePriceStackView.isHidden
-            self.maxReceiptStackView.isHidden = !self.maxReceiptStackView.isHidden
-            self.averageReceiptStackView.isHidden = !self.averageReceiptStackView.isHidden
-            self.minReceiptStackView.isHidden = !self.minReceiptStackView.isHidden
-            self.view.layoutIfNeeded()
-        }
-    }
-    
-    func hideUnhidePopularity() {
-        UIView.animate(withDuration: 0.3) {
-            self.mostPopularProductStackView.isHidden = !self.mostPopularProductStackView.isHidden
-            self.lessPopularProductStackView.isHidden = !self.lessPopularProductStackView.isHidden
-            self.mostPopularBouquetStackView.isHidden = !self.mostPopularBouquetStackView.isHidden
-            self.lessPopularBouquetStackView.isHidden = !self.lessPopularBouquetStackView.isHidden
-            self.mostPopularFlowerStackView.isHidden = !self.mostPopularFlowerStackView.isHidden
-            self.lessPopularFlowerStackView.isHidden = !self.lessPopularFlowerStackView.isHidden
-            self.mostPopularGiftStackView.isHidden = !self.mostPopularGiftStackView.isHidden
-            self.lessPopularGiftStackView.isHidden = !self.lessPopularGiftStackView.isHidden
-            self.view.layoutIfNeeded()
-        }
-    }
-    
-}
-
 //MARK: - Для Статистики
 private extension StaticticViewController{
     
@@ -370,6 +330,46 @@ private extension StaticticViewController{
         }
         for i in uniqueProduct {
             allProducts.countCertainString(string: i.lowercased())
+        }
+    }
+    
+}
+
+//MARK: - Hide-Unhide certain statistics
+private extension StaticticViewController {
+    
+    func hideUnhideFrequency() {
+        UIView.animate(withDuration: 0.3) {
+            self.bouquetFrequencyStackView.isHidden = !self.bouquetFrequencyStackView.isHidden
+            self.flowerFrequencyStackView.isHidden = !self.flowerFrequencyStackView.isHidden
+            self.giftFrequencyStackView.isHidden = !self.giftFrequencyStackView.isHidden
+            self.stockFrequencyStackView.isHidden = !self.stockFrequencyStackView.isHidden
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func hideUnhideReceipts() {
+        UIView.animate(withDuration: 0.3) {
+            self.receiptOverSomePriceStackView.isHidden = !self.receiptOverSomePriceStackView.isHidden
+            self.receiptLessSomePriceStackView.isHidden = !self.receiptLessSomePriceStackView.isHidden
+            self.maxReceiptStackView.isHidden = !self.maxReceiptStackView.isHidden
+            self.averageReceiptStackView.isHidden = !self.averageReceiptStackView.isHidden
+            self.minReceiptStackView.isHidden = !self.minReceiptStackView.isHidden
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func hideUnhidePopularity() {
+        UIView.animate(withDuration: 0.3) {
+            self.mostPopularProductStackView.isHidden = !self.mostPopularProductStackView.isHidden
+            self.lessPopularProductStackView.isHidden = !self.lessPopularProductStackView.isHidden
+            self.mostPopularBouquetStackView.isHidden = !self.mostPopularBouquetStackView.isHidden
+            self.lessPopularBouquetStackView.isHidden = !self.lessPopularBouquetStackView.isHidden
+            self.mostPopularFlowerStackView.isHidden = !self.mostPopularFlowerStackView.isHidden
+            self.lessPopularFlowerStackView.isHidden = !self.lessPopularFlowerStackView.isHidden
+            self.mostPopularGiftStackView.isHidden = !self.mostPopularGiftStackView.isHidden
+            self.lessPopularGiftStackView.isHidden = !self.lessPopularGiftStackView.isHidden
+            self.view.layoutIfNeeded()
         }
     }
     
