@@ -10,7 +10,7 @@ import Foundation
 
 
 extension String {
-    func countRegularCustomers(deviceID: String) -> Int{
+    func countCertainString(string: String) -> Int{
         var deviceIDArray = [String]()
         let separateSymbols = "(), "
         for i in self.lowercased()
@@ -18,6 +18,6 @@ extension String {
             .filter({x in x != ""}) {
                 deviceIDArray.append(i)
         }
-        return deviceIDArray.filter{$0 == deviceID}.count
+        return deviceIDArray.filter{$0 == string}.count
     }
 }

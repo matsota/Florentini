@@ -174,126 +174,36 @@ private extension StaticticViewController {
     //MARK: Для ViewDidLoad
     func forViewDidLoad() {
         NetworkManager.shared.fetchArchivedOrders(success: { (receipts, additions, deletedData)  in
-            //MARK: Total Amount
-            let totalAmount = additions.map({$0.productPrice * $0.productQuantity}).reduce(0, +)
-            self.totalAmountLabel.text = "\(totalAmount) грн"
+            //Total Amount
+            self.forStatsByTotalAmount(additions: additions)
             
-            //MARK: Orders total, completed, deleted
-            let ordersCompleted = receipts.count,
-            ordersFailed = deletedData.count,
-            totalOrders = ordersCompleted + ordersFailed,
-            ordersCompletedPersentage = Int(Float(ordersCompleted)/Float(totalOrders) * 100.0),
-            ordersFailedPersentage = Int(Float(ordersFailed)/Float(totalOrders) * 100.0)
-            // - total
-            self.totalOrdersLabel.text = "\(totalOrders)"
-            // - completed
-            self.ordersCompletedLabel.text = "\(ordersCompleted)"
-            self.ordersCompletedPercentageLabel.text = "\(ordersCompletedPersentage)"
-            // - deleted
-            self.ordersFailedLabel.text = "\(ordersFailed)"
-            self.ordersFailedPercentageLabel.text = "\(ordersFailedPersentage)"
+            //Orders total, completed, deleted
+            self.forStatsByOrders(receipts: receipts, deletedData: deletedData)
             
-            //MARK: Customers
-            // - unique
-            let uniqueCustomers = Set(receipts.map({$0.currentDeviceID})).count
-            self.uniqueCustomersLabel.text = "\(uniqueCustomers)"
-            // - regular
-            var regularCustomers = Int()
+            //Customers
+            self.forStatsByCustomers(receipts: receipts)
             
-            for i in receipts {
-                NetworkManager.shared.fetchRegularCustomers(currentDeviceID: i.currentDeviceID) { (quantity) in
-                    if quantity.count > 2 {
-                        regularCustomers += 1
-                    }
-                }
+            //for Receipts
+            NetworkManager.shared.fetchArchivedOrdersByReceipts(overThan: self.overSomePrice, lessThan: self.lessSomePrice, success: { (over, less)  in
+                self.forStatsByReceipts(receipts: receipts, over: over, less: less)
+            }) { (error) in
+                print("Error occured in fetchArchivedOrders",error.localizedDescription)
             }
+  
+            //Most/Less popular product
             
-//            var allCustomers = "",
-//            regularCustomers = Int()
-//            for i in receipts {
-//                allCustomers += "(\(i.currentDeviceID)), "
-//                if allCustomers.countRegularCustomers(deviceID: i.currentDeviceID.lowercased()) > self.receiptsCountOfRegularCustomers {
-//                    regularCustomers += 1
-//                    receipt.map({$0.currentDeviceID}).
-//                }
-//            }
-                        
-            let regularCustumersPersentage = Int(Float(regularCustomers)/Float(uniqueCustomers) * 100.0)
-            self.regularCustomersLabel.text = "\(regularCustomers)"
-            self.regularCustomersPercentageLabel.text = "\(regularCustumersPersentage)"
-            
-            //MARK: for Receipts
-            var allTotalPricesArray = receipts.map({$0.totalPrice})
-            allTotalPricesArray.sort()
-            guard let max = allTotalPricesArray.last, let min = allTotalPricesArray.first else {return}
-            let average = Int(allTotalPricesArray.reduce(0, +))/allTotalPricesArray.count
-            self.maxReceiptLabel.text = "\(max)"
-            self.averageReceiptLabel.text = "\(average)"
-            self.minReceiptLabel.text = "\(min)"
             
         }) { (error) in
             print("Error occured in fetchArchivedOrders",error.localizedDescription)
         }
         
-        //MARK: By Frequency
+        //By Frequency
         NetworkManager.shared.fetchArchivedOrdersByCategory(success: { (bouquetData, apeiceData, giftData, stockData) in
-            //MARK: По кагеориям
-            let bouquets = bouquetData.count,
-            apeices = apeiceData.count,
-            gifts = giftData.count,
-            stocks = stockData.count,
-            total = bouquets + apeices + gifts,
-            bouquetPercentage = Int(Double(bouquets)/Double(total) * 100.0),
-            apeicePercentage = Int(Double(apeices)/Double(total) * 100.0),
-            giftPercentage = Int(Double(gifts)/Double(total) * 100.0),
-            stockPercentage = Int(Double(stocks)/Double(total) * 100.0),
-            bouquetAmount = bouquetData.map({$0.productPrice * $0.productQuantity}).reduce(0, +),
-            apeiceAmount = apeiceData.map({$0.productPrice * $0.productQuantity}).reduce(0, +),
-            giftAmount = giftData.map({$0.productPrice * $0.productQuantity}).reduce(0, +),
-            stockAmount = stockData.map({$0.productPrice * $0.productQuantity}).reduce(0, +),
-            totalAmount = bouquetAmount + apeiceAmount + giftAmount,
-            bouquetAmountPercentage = Int(Double(bouquetAmount)/Double(totalAmount) * 100.0),
-            apeiceAmountPercentage = Int(Double(apeiceAmount)/Double(totalAmount) * 100.0),
-            giftAmountPercentage = Int(Double(giftAmount)/Double(totalAmount) * 100.0),
-            stockAmountPercentage = Int(Double(stockAmount)/Double(totalAmount) * 100.0)
-            
-            //MARK - Букеты
-            self.bouquetFrequencyLabel.text = "\(bouquets)"
-            self.bouquetFrequencyPercentageLabel.text = "\(bouquetPercentage)"
-            self.amountOfBouquetsLabel.text = "\(bouquetAmount)"
-            self.amountOfBouquetsPercentageLabel.text = "\(bouquetAmountPercentage)"
-            //MARK - Цветы Поштучно
-            self.flowerFrequencyLabel.text = "\(apeices)"
-            self.flowerFrequencyPercentageLabel.text = "\(apeicePercentage)"
-            self.amountOfFlowersLabel.text = "\(apeiceAmount)"
-            self.amountOfFlowersPercentageLabel.text = "\(apeiceAmountPercentage)"
-            //MARK - Подраки
-            self.giftFrequencyLabel.text = "\(gifts)"
-            self.giftFrequencyPercentageLabel.text = "\(giftPercentage)"
-            self.amountOfGiftsLabel.text = "\(giftAmount)"
-            self.amountOfGiftsPercentageLabel.text = "\(giftAmountPercentage)"
-            //MARK - Акционные товары
-            self.stockFrequencyLabel.text = "\(stocks)"
-            self.stockFrequencyPercentageLabel.text = "\(stockPercentage)"
-            self.amountOfStocksLabel.text = "\(stockAmount)"
-            self.amountOfStocksPercentageLabel.text = "\(stockAmountPercentage)"
+            self.forStatsByCategoryFrequency(bouquetData: bouquetData, apeiceData: apeiceData, giftData: giftData, stockData: stockData)
         }) { (error) in
             print("Error occured in fetchArchivedOrders",error.localizedDescription)
         }
         
-        //MARK: By Reciepts
-        NetworkManager.shared.fetchArchivedOrdersByReceipts(overThan: overSomePrice, lessThan: lessSomePrice, success: { (over, less)  in
-            
-            let biggerThan = over.count,
-            lessThan = less.count
-            
-            self.overSomePriceLabel.text = "\(biggerThan)"
-            self.lessSomePriceLabel.text = "\(lessThan)"
-            
-            
-        }) { (error) in
-            print("Error occured in fetchArchivedOrders",error.localizedDescription)
-        }
     }
     
 }
@@ -333,6 +243,133 @@ private extension StaticticViewController {
             self.mostPopularGiftStackView.isHidden = !self.mostPopularGiftStackView.isHidden
             self.lessPopularGiftStackView.isHidden = !self.lessPopularGiftStackView.isHidden
             self.view.layoutIfNeeded()
+        }
+    }
+    
+}
+
+//MARK: - Для Статистики
+private extension StaticticViewController{
+    
+    //MARK: По Общему обороту
+    func forStatsByTotalAmount(additions: [DatabaseManager.OrderAddition]) {
+        let totalAmount = additions.map({$0.productPrice * $0.productQuantity}).reduce(0, +)
+        self.totalAmountLabel.text = "\(totalAmount) грн"
+    }
+    
+    //MARK: По Заказам
+    func forStatsByOrders(receipts: [DatabaseManager.Order], deletedData: [DatabaseManager.Order]) {
+        let ordersCompleted = receipts.count,
+        ordersFailed = deletedData.count,
+        totalOrders = ordersCompleted + ordersFailed,
+        ordersCompletedPersentage = Int(Float(ordersCompleted)/Float(totalOrders) * 100.0),
+        ordersFailedPersentage = Int(Float(ordersFailed)/Float(totalOrders) * 100.0)
+        // - total
+        self.totalOrdersLabel.text = "\(totalOrders)"
+        // - completed
+        self.ordersCompletedLabel.text = "\(ordersCompleted)"
+        self.ordersCompletedPercentageLabel.text = "\(ordersCompletedPersentage)"
+        // - deleted
+        self.ordersFailedLabel.text = "\(ordersFailed)"
+        self.ordersFailedPercentageLabel.text = "\(ordersFailedPersentage)"
+    }
+    
+    //MARK: По Покупателям
+    func forStatsByCustomers(receipts: [DatabaseManager.Order]) {
+        let uniqueCustomers = Set(receipts.map({$0.currentDeviceID})),
+        uniqueCustomersQuantity = uniqueCustomers.count
+        self.uniqueCustomersLabel.text = "\(uniqueCustomersQuantity)"
+        // - regular
+        var allCustomers = "",
+        regularCustomersQuantity = Int()
+        
+        for i in receipts {
+            allCustomers += "(\(i.currentDeviceID)), "
+        }
+        
+        for i in uniqueCustomers {
+            if allCustomers.countCertainString(string: i.lowercased()) > self.receiptsCountOfRegularCustomers {
+                regularCustomersQuantity += 1
+            }
+        }
+        
+        let regularCustumersPersentage = Int(Float(regularCustomersQuantity)/Float(uniqueCustomersQuantity) * 100.0)
+        self.regularCustomersLabel.text = "\(regularCustomersQuantity)"
+        self.regularCustomersPercentageLabel.text = "\(regularCustumersPersentage)"
+    }
+    
+    //MARK: По Чекам
+    func forStatsByReceipts(receipts: [DatabaseManager.Order], over: [DatabaseManager.Order], less: [DatabaseManager.Order]) {
+        var allTotalPricesArray = receipts.map({$0.totalPrice})
+        allTotalPricesArray.sort()
+        
+        let biggerThan = over.count,
+        lessThan = less.count,
+        average = Int(allTotalPricesArray.reduce(0, +))/allTotalPricesArray.count
+        
+        guard let max = allTotalPricesArray.last, let min = allTotalPricesArray.first else {return}
+        
+        self.maxReceiptLabel.text = "\(max)"
+        self.averageReceiptLabel.text = "\(average)"
+        self.minReceiptLabel.text = "\(min)"
+        self.overSomePriceLabel.text = "\(biggerThan)"
+        self.lessSomePriceLabel.text = "\(lessThan)"
+    }
+    
+    //MARK: По частоте выбора в кагеориях
+    func forStatsByCategoryFrequency(bouquetData: [DatabaseManager.OrderAddition], apeiceData: [DatabaseManager.OrderAddition], giftData: [DatabaseManager.OrderAddition], stockData: [DatabaseManager.OrderAddition]) {
+    
+        let bouquets = bouquetData.count,
+        apeices = apeiceData.count,
+        gifts = giftData.count,
+        stocks = stockData.count,
+        total = bouquets + apeices + gifts,
+        bouquetPercentage = Int(Double(bouquets)/Double(total) * 100.0),
+        apeicePercentage = Int(Double(apeices)/Double(total) * 100.0),
+        giftPercentage = Int(Double(gifts)/Double(total) * 100.0),
+        stockPercentage = Int(Double(stocks)/Double(total) * 100.0),
+        bouquetAmount = bouquetData.map({$0.productPrice * $0.productQuantity}).reduce(0, +),
+        apeiceAmount = apeiceData.map({$0.productPrice * $0.productQuantity}).reduce(0, +),
+        giftAmount = giftData.map({$0.productPrice * $0.productQuantity}).reduce(0, +),
+        stockAmount = stockData.map({$0.productPrice * $0.productQuantity}).reduce(0, +),
+        totalAmount = bouquetAmount + apeiceAmount + giftAmount,
+        bouquetAmountPercentage = Int(Double(bouquetAmount)/Double(totalAmount) * 100.0),
+        apeiceAmountPercentage = Int(Double(apeiceAmount)/Double(totalAmount) * 100.0),
+        giftAmountPercentage = Int(Double(giftAmount)/Double(totalAmount) * 100.0),
+        stockAmountPercentage = Int(Double(stockAmount)/Double(totalAmount) * 100.0)
+        
+        //MARK - Букеты
+        self.bouquetFrequencyLabel.text = "\(bouquets)"
+        self.bouquetFrequencyPercentageLabel.text = "\(bouquetPercentage)"
+        self.amountOfBouquetsLabel.text = "\(bouquetAmount)"
+        self.amountOfBouquetsPercentageLabel.text = "\(bouquetAmountPercentage)"
+        //MARK - Цветы Поштучно
+        self.flowerFrequencyLabel.text = "\(apeices)"
+        self.flowerFrequencyPercentageLabel.text = "\(apeicePercentage)"
+        self.amountOfFlowersLabel.text = "\(apeiceAmount)"
+        self.amountOfFlowersPercentageLabel.text = "\(apeiceAmountPercentage)"
+        //MARK - Подраки
+        self.giftFrequencyLabel.text = "\(gifts)"
+        self.giftFrequencyPercentageLabel.text = "\(giftPercentage)"
+        self.amountOfGiftsLabel.text = "\(giftAmount)"
+        self.amountOfGiftsPercentageLabel.text = "\(giftAmountPercentage)"
+        //MARK - Акционные товары
+        self.stockFrequencyLabel.text = "\(stocks)"
+        self.stockFrequencyPercentageLabel.text = "\(stockPercentage)"
+        self.amountOfStocksLabel.text = "\(stockAmount)"
+        self.amountOfStocksPercentageLabel.text = "\(stockAmountPercentage)"
+    }
+    
+    //MARK: По Популярности
+    func forStatsByPopularity(additions: [DatabaseManager.OrderAddition]) {
+        let uniqueProduct = Set(additions.map({$0.productName}))
+        var allProducts = ""
+        
+        for i in additions {
+            allProducts += "(\(i.productName)), "
+        }
+        for i in uniqueProduct {
+            allProducts.countCertainString(string: i.lowercased())
         }
     }
     
