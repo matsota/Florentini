@@ -189,21 +189,29 @@ private extension StaticticViewController {
             }) { (error) in
                 print("Error occured in fetchArchivedOrders",error.localizedDescription)
             }
-  
+            
             //Most/Less popular product
-            
-            
+            self.mostPopularProductLabel.text = self.forStatsByMostPopular(additions: additions)
+            self.lessPopularProductLabel.text = self.forStatsByLessPopular(additions: additions)
         }) { (error) in
             print("Error occured in fetchArchivedOrders",error.localizedDescription)
         }
         
-        //By Frequency
+        //Based on category
         NetworkManager.shared.fetchArchivedOrdersByCategory(success: { (bouquetData, apeiceData, giftData, stockData) in
+    
+            // - By Frequency
             self.forStatsByCategoryFrequency(bouquetData: bouquetData, apeiceData: apeiceData, giftData: giftData, stockData: stockData)
+            
+            // - By Populariy
+            self.forStatsByPopular(bouquetData: bouquetData, apeiceData: apeiceData, giftData: giftData)
+            
         }) { (error) in
             print("Error occured in fetchArchivedOrders",error.localizedDescription)
         }
         
+        
+//        NetworkManager.shared.fetch
     }
     
 }
@@ -240,7 +248,7 @@ private extension StaticticViewController{
         uniqueCustomersQuantity = uniqueCustomers.count
         self.uniqueCustomersLabel.text = "\(uniqueCustomersQuantity)"
         // - regular
-        var allCustomers = "",
+        var allCustomers = String(),
         regularCustomersQuantity = Int()
         
         for i in receipts {
@@ -278,7 +286,7 @@ private extension StaticticViewController{
     
     //MARK: По частоте выбора в кагеориях
     func forStatsByCategoryFrequency(bouquetData: [DatabaseManager.OrderAddition], apeiceData: [DatabaseManager.OrderAddition], giftData: [DatabaseManager.OrderAddition], stockData: [DatabaseManager.OrderAddition]) {
-    
+        
         let bouquets = bouquetData.count,
         apeices = apeiceData.count,
         gifts = giftData.count,
@@ -320,23 +328,97 @@ private extension StaticticViewController{
         self.amountOfStocksPercentageLabel.text = "\(stockAmountPercentage)"
     }
     
-    //MARK: По Популярности
-    func forStatsByPopularity(additions: [DatabaseManager.OrderAddition]) {
-        let uniqueProduct = Set(additions.map({$0.productName}))
-        var allProducts = ""
+    //MARK: Подготовка-1 для 'По Популярности'
+    func forStatsByMostPopular(additions: [DatabaseManager.OrderAddition]) -> String {
+        
+        var nameCountDict = [String: Int](),
+        array = [String]()
         
         for i in additions {
-            allProducts += "(\(i.productName)), "
+            array.append(i.productName)
         }
-        for i in uniqueProduct {
-            allProducts.countCertainString(string: i.lowercased())
+        
+        for name in array {
+            if let count = nameCountDict[name] {
+                nameCountDict[name] = count + 1
+            }else{
+                nameCountDict[name] = 1
+            }
+        }
+        
+        var mostPopularProduct = ""
+        
+        for key in nameCountDict.keys {
+            if mostPopularProduct == "" {
+                mostPopularProduct = key
+            }else{
+                let count = nameCountDict[key]
+                if count! > nameCountDict[mostPopularProduct]! {
+                    mostPopularProduct = key
+                }
+            }
+        }
+        return mostPopularProduct
+    }
+    
+    //MARK: Подготовка-2 для 'По Популярности'
+    func forStatsByLessPopular(additions: [DatabaseManager.OrderAddition]) -> String {
+        
+        var nameCountDict = [String: Int](),
+        array = [String]()
+        
+        for i in additions {
+            array.append(i.productName)
+        }
+        
+        for name in array {
+            if let count = nameCountDict[name] {
+                nameCountDict[name] = count + 1
+            }else{
+                nameCountDict[name] = 1
+            }
+        }
+        
+        var mostPopularProduct = ""
+        
+        for key in nameCountDict.keys {
+            if mostPopularProduct == "" {
+                mostPopularProduct = key
+            }else{
+                let count = nameCountDict[key]
+                if count! < nameCountDict[mostPopularProduct]! {
+                    mostPopularProduct = key
+                }
+            }
+        }
+        return mostPopularProduct
+    }
+    
+    //MARK: - По популярности
+    func forStatsByPopular (bouquetData: [DatabaseManager.OrderAddition], apeiceData: [DatabaseManager.OrderAddition], giftData: [DatabaseManager.OrderAddition]) {
+        //Bouquet
+        self.mostPopularBouquetLabel.text = self.forStatsByMostPopular(additions: bouquetData)
+        self.lessPopularBouquetLabel.text = self.forStatsByLessPopular(additions: bouquetData)
+        //Flower
+        self.mostPopularFlowerLabel.text = self.forStatsByMostPopular(additions: apeiceData)
+        self.lessPopularFlowerLabel.text = self.forStatsByLessPopular(additions: apeiceData)
+        //Gift
+        self.mostPopularGiftLabel.text = self.forStatsByMostPopular(additions: giftData)
+        self.lessPopularGiftLabel.text = self.forStatsByLessPopular(additions: giftData)
+        
+        if self.mostPopularGiftLabel == nil {
+            
         }
     }
+    
+    
     
 }
 
 //MARK: - Hide-Unhide certain statistics
 private extension StaticticViewController {
+    
+   
     
     func hideUnhideFrequency() {
         UIView.animate(withDuration: 0.3) {
