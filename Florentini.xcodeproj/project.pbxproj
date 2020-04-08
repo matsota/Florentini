@@ -28,8 +28,6 @@
 		8F4506D4242A811400759C47 /* UIVC + Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4506D3242A811400759C47 /* UIVC + Custom.swift */; };
 		8F4506D9242B8A1F00759C47 /* UserHomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4506D8242B8A1F00759C47 /* UserHomeTableViewCell.swift */; };
 		8F701E2E2425065400DA37EF /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F701E2D2425065400DA37EF /* PersistenceService.swift */; };
-		8F701E552425235500DA37EF /* PreOrderEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F701E532425235400DA37EF /* PreOrderEntity+CoreDataClass.swift */; };
-		8F701E562425235500DA37EF /* PreOrderEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F701E542425235500DA37EF /* PreOrderEntity+CoreDataProperties.swift */; };
 		8F73656E243944A3004A7A81 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F73656D243944A3004A7A81 /* Notifications.swift */; };
 		8F8D7496243B70B100C7EF7C /* String + Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8D7495243B70B100C7EF7C /* String + Custom.swift */; };
 		8F95742724169DDB00A4EF6E /* EmployerCatalogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F95742624169DDB00A4EF6E /* EmployerCatalogTableViewCell.swift */; };
@@ -37,6 +35,8 @@
 		8FA196EE2438B6C200F795DF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FA196ED2438B6C200F795DF /* AudioToolbox.framework */; };
 		8FA80A9823FD65FA0015C878 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA80A9723FD65FA0015C878 /* NetworkManager.swift */; };
 		8FA80A9A23FD660A0015C878 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA80A9923FD660A0015C878 /* DatabaseManager.swift */; };
+		8FB439CF243E4A9400C3DC8B /* PreOrderEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB439CD243E4A9400C3DC8B /* PreOrderEntity+CoreDataClass.swift */; };
+		8FB439D0243E4A9400C3DC8B /* PreOrderEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB439CE243E4A9400C3DC8B /* PreOrderEntity+CoreDataProperties.swift */; };
 		8FD4E4C123FCD1D800C62FA5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD4E4C023FCD1D800C62FA5 /* AppDelegate.swift */; };
 		8FD4E4C323FCD1D800C62FA5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD4E4C223FCD1D800C62FA5 /* SceneDelegate.swift */; };
 		8FD4E4CA23FCD1D800C62FA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FD4E4C923FCD1D800C62FA5 /* Assets.xcassets */; };
@@ -78,8 +78,6 @@
 		8F4506D3242A811400759C47 /* UIVC + Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVC + Custom.swift"; sourceTree = "<group>"; };
 		8F4506D8242B8A1F00759C47 /* UserHomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeTableViewCell.swift; sourceTree = "<group>"; };
 		8F701E2D2425065400DA37EF /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
-		8F701E532425235400DA37EF /* PreOrderEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PreOrderEntity+CoreDataClass.swift"; path = "/Users/matsotaa/Desktop/GitHub/Florentini/Florentini/PreOrderEntity+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		8F701E542425235500DA37EF /* PreOrderEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PreOrderEntity+CoreDataProperties.swift"; path = "/Users/matsotaa/Desktop/GitHub/Florentini/Florentini/PreOrderEntity+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		8F73656D243944A3004A7A81 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		8F8D7495243B70B100C7EF7C /* String + Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + Custom.swift"; sourceTree = "<group>"; };
 		8F95742624169DDB00A4EF6E /* EmployerCatalogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployerCatalogTableViewCell.swift; sourceTree = "<group>"; };
@@ -87,6 +85,8 @@
 		8FA196ED2438B6C200F795DF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		8FA80A9723FD65FA0015C878 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		8FA80A9923FD660A0015C878 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		8FB439CD243E4A9400C3DC8B /* PreOrderEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PreOrderEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		8FB439CE243E4A9400C3DC8B /* PreOrderEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PreOrderEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8FD4E4BD23FCD1D800C62FA5 /* Florentini.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Florentini.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FD4E4C023FCD1D800C62FA5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8FD4E4C223FCD1D800C62FA5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -250,8 +250,8 @@
 		8FFD7CAD24281A0F008FE8F6 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				8F701E532425235400DA37EF /* PreOrderEntity+CoreDataClass.swift */,
-				8F701E542425235500DA37EF /* PreOrderEntity+CoreDataProperties.swift */,
+				8FB439CD243E4A9400C3DC8B /* PreOrderEntity+CoreDataClass.swift */,
+				8FB439CE243E4A9400C3DC8B /* PreOrderEntity+CoreDataProperties.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -395,7 +395,6 @@
 				8F2062A723FF5ECE007C481A /* LoginWorkSpaceViewController.swift in Sources */,
 				8F0E7BB92421496C004235A7 /* FlorentiniModel.xcdatamodeld in Sources */,
 				8F1778232427E19E00164C0D /* IBDesignable + Buttons.swift in Sources */,
-				8F701E552425235500DA37EF /* PreOrderEntity+CoreDataClass.swift in Sources */,
 				8FE3F69924035BE4003001CA /* UserCatalogViewController.swift in Sources */,
 				8F2062A923FF5F94007C481A /* AuthenticationManager.swift in Sources */,
 				8F0EEDF924129A3500948175 /* UserCartViewController.swift in Sources */,
@@ -403,6 +402,7 @@
 				8FA80A9A23FD660A0015C878 /* DatabaseManager.swift in Sources */,
 				8F2062AC23FF6292007C481A /* UIAlertController + Custom.swift in Sources */,
 				8F4506D9242B8A1F00759C47 /* UserHomeTableViewCell.swift in Sources */,
+				8FB439D0243E4A9400C3DC8B /* PreOrderEntity+CoreDataProperties.swift in Sources */,
 				8FA80A9823FD65FA0015C878 /* NetworkManager.swift in Sources */,
 				8FE3F69824035BE4003001CA /* UserAboutUsViewController.swift in Sources */,
 				8FDF12E3243100F3009FE7F3 /* EmployerOrderDetailTableViewCell.swift in Sources */,
@@ -425,10 +425,10 @@
 				8F207F1C243A2F5000FBC918 /* StaticticViewController.swift in Sources */,
 				8F2062A523FF555F007C481A /* NavigationCases.swift in Sources */,
 				8F0E7BDE24214DAC004235A7 /* CoreDataManager.swift in Sources */,
-				8F701E562425235500DA37EF /* PreOrderEntity+CoreDataProperties.swift in Sources */,
 				8FDF12E12431000E009FE7F3 /* EmployerOrderDetailTableViewController.swift in Sources */,
 				8F2062C723FF7F75007C481A /* EmployerChatViewController.swift in Sources */,
 				8F701E2E2425065400DA37EF /* PersistenceService.swift in Sources */,
+				8FB439CF243E4A9400C3DC8B /* PreOrderEntity+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

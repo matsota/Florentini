@@ -46,6 +46,17 @@ class EmployerOrdersViewController: UIViewController {
     //MARK: - Label
     @IBOutlet weak var ordersCountLabel: UILabel!
     
+//    prepar fore segue (segue) {
+//    segue.id = "" {
+//    let indexpath = tableView.indexpathforselecterow
+//     let order = orders[indexpath.row]
+//    segue.destination
+//    есть необходимое в рокет лаунч Дитаел
+//
+//
+//
+//
+//
 }
 
 
@@ -122,6 +133,7 @@ extension EmployerOrdersViewController: UITableViewDelegate, UITableViewDataSour
         
         return cell
     }
+    //Передать ключик черещ didSelectRow at index
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let archive = archiveAction(at: indexPath)

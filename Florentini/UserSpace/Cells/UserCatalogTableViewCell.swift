@@ -51,6 +51,13 @@ class UserCatalogTableViewCell: UITableViewCell {
         }
     }
     
+//    ovveride prepareForReuse dobavit' UIImageView = nil {
+//    консельнуть загрузку картинки(отменить)
+//    Алерты - убрать нетворк. перенести в клажуру
+//    добавить к некоторым активитиИндикаторы к процесса связанными с сетью
+//    svprogressHUD
+//    }
+    
     //MARK: - Добавление в Корзину
     @IBAction func addToBasketTapped(_ sender: DesignButton) {
         delegate?.addToCart(self)
