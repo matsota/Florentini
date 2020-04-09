@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import FirebaseUI
-import CoreData
 
 class UserHomeViewController: UIViewController {
     
@@ -45,7 +43,6 @@ class UserHomeViewController: UIViewController {
     
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
-    private let alert = UIAlertController()
     private var productInfo = [DatabaseManager.ProductInfo]()
     
     //MARK: TableView Outlet
@@ -125,36 +122,19 @@ extension UserHomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.UserHomeTVCell.rawValue, for: indexPath) as! UserHomeTableViewCell,
         fetch = productInfo[indexPath.row],
-        indicator = cell.imageActivityIndicator,
         name = fetch.productName,
         price = fetch.productPrice,
         description = fetch.productDescription,
         category = fetch.productCategory,
-        stock = fetch.stock,
-        storagePath =  "\(NavigationCases.ProductCases.imageCollection.rawValue)/\(name)",
-        storageRef = Storage.storage().reference(withPath: storagePath)
+        stock = fetch.stock
         
         cell.delegate = self
         
         if productInfo.count == 0 {
             noneStocksView.isHidden = false
         }else{
-            indicator?.isHidden = false
-            indicator?.startAnimating()
             noneStocksView.isHidden = true
-            cell.fill(name: name, price: price, description: description, category: category, stock: stock, image: { (image) in
-                DispatchQueue.main.async {
-                    image.sd_setImage(with: storageRef, placeholderImage: nil) { (image, _, _, _) in
-                        indicator?.stopAnimating()
-                        indicator?.isHidden = true
-                    }
-                }
-            }) { (error) in
-                indicator?.stopAnimating()
-                indicator?.isHidden = true
-                self.present(self.alert.somethingWrong(), animated: true)
-                print("ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR: \(error.localizedDescription)")
-            }
+            cell.fill(name: name, price: price, description: description, category: category, stock: stock)
         }
         return cell
     }

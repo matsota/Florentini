@@ -58,7 +58,7 @@ private extension LoginWorkSpaceViewController {
         AuthenticationManager.shared.signIn(email: email, password: password, success: {
             self.transition()
         }) { error in
-            self.present(self.alert.classic(title: "Attention", message: error.localizedDescription), animated: true)
+            self.present(UIAlertController.classic(title: "Attention", message: error.localizedDescription), animated: true)
         }
     }
     

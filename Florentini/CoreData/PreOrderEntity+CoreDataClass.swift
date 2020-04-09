@@ -12,7 +12,6 @@ import CoreData
 @objc(PreOrderEntity)
 public class PreOrderEntity: NSManagedObject {
 
-    
     func toJSON() -> [String: Any] {
         var dict: [String: Any] = [:]
         for attribute in entity.attributesByName {
@@ -20,7 +19,6 @@ public class PreOrderEntity: NSManagedObject {
                 dict[attribute.key] = value
             }
         }
-        
         return dict
     }
 }

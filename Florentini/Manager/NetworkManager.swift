@@ -126,14 +126,14 @@ class NetworkManager {
     }
     
     //MARK: - Подтверждение заказа
-    func sendOrder(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, timeStamp: Date, productDescription: [String : Any], success: @escaping() -> Void) {
+    func sendOrder(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, timeStamp: Date, productDescription: [String : Any], success: @escaping() -> Void, failure: @escaping(Error) -> Void) {
         guard let currentDeviceID = CoreDataManager.shared.device else {return}
         let newOrder = DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, currentDeviceID: "\(currentDeviceID)", deliveryPerson: "none")
         
         db.collection(NavigationCases.UsersInfoCases.order.rawValue).document("\(currentDeviceID)").setData(newOrder.dictionary) {
             error in
             if let error = error {
-                print("Error: \(error.localizedDescription)")
+                failure(error)
             }else{
                 self.db.collection(NavigationCases.UsersInfoCases.order.rawValue).document("\(currentDeviceID)").collection("\(currentDeviceID)").document().setData(productDescription)
                 success()

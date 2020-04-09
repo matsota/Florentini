@@ -49,7 +49,6 @@ class UserCartViewController: UIViewController {
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
     private var preOrder = [PreOrderEntity]()
-    private let alert = UIAlertController()
     
     private var selectedFeedbackType = String()
     private var orderBill = Int64()
@@ -58,7 +57,9 @@ class UserCartViewController: UIViewController {
     @IBOutlet private weak var buttonsView: UIView!
     @IBOutlet private weak var tableCountZeroView: UIView!
     
+    //MARK: ScrollView
     @IBOutlet private weak var scrollView: UIScrollView!
+    
     //MARK: TableView Outlets
     @IBOutlet private weak var cartTableView: UITableView!
     
@@ -129,6 +130,7 @@ extension UserCartViewController: UIViewControllerTransitioningDelegate {
     }
     
 }
+
 //MARK: - by Table View
 extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
     
@@ -162,17 +164,17 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    // - Cell's method for delete in TableView
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = deleteAction(at: indexPath)
         return UISwipeActionsConfiguration(actions: [delete])
     }
+    
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: "X") { (action, view, complition) in
             CoreDataManager.shared.deleteFromCart(deleteWhere: self.preOrder, at: indexPath)
             self.preOrder.remove(at: indexPath.row)
             self.cartTableView.deleteRows(at: [indexPath], with: .automatic)
-            self.viewDidLoad()
+            self.cartTableView.reloadData()
             complition(true)
         }
         action.backgroundColor = .red
@@ -257,52 +259,48 @@ private extension UserCartViewController {
     
     func confirm() {
         guard let adress = clientAdressTextField.text, let cellphone = clientCellPhoneTextField.text else {return}
-        let totalPrice = orderBill
-        
+
         var name = clientNameTextField.text!,
         mark = clientDescriptionTextField.text!,
         feedbackOption = selectedFeedbackType
         
-        //defaults
         if feedbackOption == "", name == "", mark == "" {
             feedbackOption = NavigationCases.FeedbackTypesCases.cellphone.rawValue
             name = "Без Имени"
             mark = "Без Дополнений"
         }
-    
+        
         if adress == "" || cellphone == "" {
-            self.present(self.alert.classic(title: "Эттеншн!", message: "Мы не знаем всех необходимых данных, что бы осуществить доставку радости. Просим Вас ввести: Адресс доставки и Телефон, чтобы мы смогли подтвердить заказ"), animated: true)
+            self.present(UIAlertController.classic(title: "Эттеншн!", message: "Мы не знаем всех необходимых данных, что бы осуществить доставку радости. Просим Вас ввести: Адресс доставки и Телефон, чтобы мы смогли подтвердить заказ"), animated: true)
         }else{
             var jsonArray: [[String: Any]] = []
             
             for i in preOrder {
-                var dict: [String: Any] = [:]
-                for attribute in i.entity.attributesByName {
-                    if let value = i.value(forKey: attribute.key) {
-                        dict[attribute.key] = value
-                    }
-                }
-                jsonArray.append(dict)
+                let preOrderJSON = i.toJSON()
+                jsonArray.append(preOrderJSON)
             }
             
+            let totalPrice = orderBill
+            
             for _ in preOrder {
-                NetworkManager.shared.sendOrder(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: Date(), productDescription: jsonArray.remove(at:0)) {
-                    self.present(self.alert.completionDone(title: "Ваш заказ оформлен", message: "Мы свяжемся с Вам так скоро, как это возможно"), animated: true)
-                    self.viewDidLoad()
+                NetworkManager.shared.sendOrder(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: Date(), productDescription: jsonArray.remove(at:0), success: {
+                    
+                    self.present(UIAlertController.completionDone(title: "Ваш заказ оформлен", message: "Мы свяжемся с Вам так скоро, как это возможно"), animated: true)
                     self.clientNameTextField.text = ""
                     self.clientAdressTextField.text = ""
                     self.clientCellPhoneTextField.text = ""
                     self.clientDescriptionTextField.text = ""
+                    CoreDataManager.shared.deleteAllData(entity: NavigationCases.UsersInfoCases.PreOrderEntity.rawValue) {
+                        self.preOrder.removeAll()
+                        self.cartTableView.reloadData()
+                    }
+                }) { (error) in
+                    self.present(UIAlertController.somethingWrong(), animated: true)
+                    print("Error in CartViewController, func confirm(): ", error.localizedDescription)
                 }
-            }
-            
-            CoreDataManager.shared.deleteAllData(entity: NavigationCases.UsersInfoCases.PreOrderEntity.rawValue) {
-                self.preOrder.removeAll()
-                self.cartTableView.reloadData()
             }
         }
     }
-    
 }
 
 

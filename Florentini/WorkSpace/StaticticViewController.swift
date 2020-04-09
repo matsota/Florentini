@@ -25,7 +25,7 @@ class StaticticViewController: UIViewController {
     
     //MARK: - Выбор количества покупок, относительно которых будет считаться постоянный покупатель. Default = 5
     @IBAction func regularCusmotersTapped(_ sender: UIButton) {
-        self.present(self.alert.setNumber(success: { (number) in
+        self.present(UIAlertController.setNumber(success: { (number) in
             self.receiptsCountOfRegularCustomers = number
             self.regularCusmotersButton.setTitle("Постоянные Клиенты (больше \(self.receiptsCountOfRegularCustomers) покупок)", for: .normal)
             self.viewDidLoad()
@@ -44,7 +44,7 @@ class StaticticViewController: UIViewController {
     //MARK: Редактирование статистики по чекам.
     //MARK - Default = 3000
     @IBAction func receiptsOverSomePriceTapped(_ sender: UIButton) {
-        self.present(self.alert.setNumber(success: { (number) in
+        self.present(UIAlertController.setNumber(success: { (number) in
             self.overSomePrice = number
             self.receiptsOverSomePriceButton.setTitle("Чеков на сумму > \(number) грн", for: .normal)
             self.viewDidLoad()
@@ -52,7 +52,7 @@ class StaticticViewController: UIViewController {
     }
     //MARK - Default = 700
     @IBAction func receiptsLessSomePriceTapped(_ sender: UIButton) {
-        self.present(self.alert.setNumber(success: { (number) in
+        self.present(UIAlertController.setNumber(success: { (number) in
             self.lessSomePrice = number
             self.receiptsLessSomePriceButton.setTitle("Чеков на сумму < \(number) грн", for: .normal)
             self.viewDidLoad()

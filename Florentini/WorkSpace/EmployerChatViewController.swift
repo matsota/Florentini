@@ -29,7 +29,7 @@ class EmployerChatViewController: UIViewController {
     //MARK: - Добавить сообщение
     @IBAction func typeMessage(_ sender: UIButton) {
         guard name != "" else {return}
-        self.present(self.alert.sendToChat(name: name), animated: true)
+        self.present(UIAlertController.sendToChat(name: name), animated: true)
     }
     
     

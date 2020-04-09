@@ -154,14 +154,14 @@ extension EmployerCatalogViewController: UITableViewDelegate, UITableViewDataSou
     func deleteAction(name: String, at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, complition) in
             if AuthenticationManager.shared.currentUser?.uid == AuthenticationManager.shared.uidAdmin {
-                self.present(self.alert.productDelete(name: name, success: {
-                    self.present(self.alert.completionDone(title: "Внимание", message: "Продукт удачно Удалён"), animated: true)
+                self.present(UIAlertController.productDelete(name: name, success: {
+                    self.present(UIAlertController.completionDone(title: "Внимание", message: "Продукт удачно Удалён"), animated: true)
                     self.productInfo.remove(at: indexPath.row)
                     self.tableView.deleteRows(at: [indexPath], with: .automatic)
                 }), animated: true)
                 complition(true)
             }else{
-                self.present(self.alert.classic(title: "Эттеншн", message: "У Вас нет прав Администратора, чтобы удалять любую из позиций. Не ну ты ЧО"), animated: true)
+                self.present(UIAlertController.classic(title: "Эттеншн", message: "У Вас нет прав Администратора, чтобы удалять любую из позиций. Не ну ты ЧО"), animated: true)
                 complition(false)
             }
         }
@@ -180,7 +180,7 @@ extension EmployerCatalogViewController: EmployerCatalogTableViewCellDelegate {
         if AuthenticationManager.shared.uidAdmin == AuthenticationManager.shared.currentUser?.uid {
             cell.productPriceButton.isUserInteractionEnabled = true
             
-            self.present(self.alert.editProductPrice(name: name, success: { newPrice in
+            self.present(UIAlertController.editProductPrice(name: name, success: { newPrice in
                 cell.productPriceButton.setTitle("\(newPrice) грн", for: .normal)
             }),animated: true)
         }else{
@@ -194,7 +194,7 @@ extension EmployerCatalogViewController: EmployerCatalogTableViewCellDelegate {
         guard let name = cell.productNameLabel.text else {return}
         
         if cell.stockSwitch.isOn == true {
-            self.present(self.alert.editStockCondition(name: name, stock: true, text: text) {
+            self.present(UIAlertController.editStockCondition(name: name, stock: true, text: text) {
                 if self.selectedCategory != "" {
                     self.productInfo.remove(at: cell.tag)
                     self.tableView.reloadData()
@@ -202,7 +202,7 @@ extension EmployerCatalogViewController: EmployerCatalogTableViewCellDelegate {
             }, animated: true)
         }else{
             
-            self.present(self.alert.editStockCondition(name: name, stock: false, text: text) {
+            self.present(UIAlertController.editStockCondition(name: name, stock: false, text: text) {
                 if self.selectedCategory == NavigationCases.ProductCategoriesCases.stock.rawValue {
                     self.productInfo.remove(at: cell.tag)
                     self.tableView.reloadData()

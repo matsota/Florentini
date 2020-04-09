@@ -80,7 +80,7 @@ private extension EmployerOrdersViewController {
             self.ordersCountLabel.text = "Orders: \(self.orderCount)"
             self.tableView.reloadData()
         }) { error in
-            self.present(self.alert.classic(title: "Attention", message: error.localizedDescription), animated: true)
+            self.present(UIAlertController.classic(title: "Attention", message: error.localizedDescription), animated: true)
         }
         
         NetworkManager.shared.updateOrders { newOrder in
@@ -153,12 +153,12 @@ extension EmployerOrdersViewController: UITableViewDelegate, UITableViewDataSour
         deliveryPerson = fetch.deliveryPerson,
         
         action = UIContextualAction(style: .destructive, title: "Архив") { (action, view, complition) in
-            self.present(self.alert.orderArchive(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, id: id, deliveryPerson: deliveryPerson, success: {
+            self.present(UIAlertController.orderArchive(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, id: id, deliveryPerson: deliveryPerson, success: {
                 self.orderCount -= 1
                 self.order.remove(at: indexPath.row)
                 self.tableView.deleteRows(at: [indexPath], with: .automatic)
                 self.viewDidLoad()
-                self.present(self.alert.completionDone(title: "Эттеншн", message: "Заказ успершно архивирован"), animated: true)
+                self.present(UIAlertController.completionDone(title: "Эттеншн", message: "Заказ успершно архивирован"), animated: true)
                 complition(true)
             }), animated: true)
         }
@@ -183,12 +183,12 @@ extension EmployerOrdersViewController: UITableViewDelegate, UITableViewDataSour
         deliveryPerson = fetch.deliveryPerson,
         
         action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, complition) in
-            self.present(self.alert.orderDelete(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, id: id, deliveryPerson: deliveryPerson, success: {
+            self.present(UIAlertController.orderDelete(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, id: id, deliveryPerson: deliveryPerson, success: {
                 self.orderCount -= 1
                 self.order.remove(at: indexPath.row)
                 self.tableView.deleteRows(at: [indexPath], with: .automatic)
                 self.viewDidLoad()
-                self.present(self.alert.completionDone(title: "Эттеншн", message: "Заказ успершно удален"), animated: true)
+                self.present(UIAlertController.completionDone(title: "Эттеншн", message: "Заказ успершно удален"), animated: true)
                 complition(true)
             }), animated: true)
         }
@@ -204,7 +204,7 @@ extension EmployerOrdersViewController: EmployerOrdersTableViewCellDelegate {
     func deliveryPicker(_ cell: EmployerOrdersTableViewCell) {
         let currentDeviceID = cell.currentDeviceID
         
-        self.present(self.alert.editDeliveryPerson(currentDeviceID: currentDeviceID, success: { (deliveryPerson) in
+        self.present(UIAlertController.editDeliveryPerson(currentDeviceID: currentDeviceID, success: { (deliveryPerson) in
             cell.deliveryPickerButton.setTitle(deliveryPerson, for: .normal)
         }), animated:  true)
         self.tableView.reloadData()

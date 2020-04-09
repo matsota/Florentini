@@ -193,7 +193,7 @@ extension NewProductSetViewController: UINavigationControllerDelegate, UIImagePi
                 self.imageActivityIndicator.stopAnimating()
             }
         }else{
-            self.present(self.alert.classic(title: "Внимание", message: "Камера не доступна"), animated: true)
+            self.present(UIAlertController.classic(title: "Внимание", message: "Камера не доступна"), animated: true)
         }
     }
     
@@ -228,7 +228,7 @@ extension NewProductSetViewController: UINavigationControllerDelegate, UIImagePi
 private extension NewProductSetViewController {
     
     func downloadByURL() {
-        self.present(self.alert.uploadImageURL { url in
+        self.present(UIAlertController.uploadImageURL { url in
             self.imageActivityIndicator.isHidden = false
             self.imageActivityIndicator.startAnimating()
             NetworkManager.shared.downLoadImageByURL(url: url) { image in
@@ -254,11 +254,11 @@ private extension NewProductSetViewController {
         stock = self.stock
         
         if price == nil || name == "" || description == "" {
-            self.present(self.alert.classic(title: "Эттеншн", message: "Вы ввели не все данные. Перепроверьте свой результат"), animated: true)
+            self.present(UIAlertController.classic(title: "Эттеншн", message: "Вы ввели не все данные. Перепроверьте свой результат"), animated: true)
         }else if selectedCategory == NavigationCases.CategorySwitch.none.rawValue {
-            self.present(self.alert.classic(title: "Эттеншн", message: "Вы не выбрали категорию продукта."), animated: true)
+            self.present(UIAlertController.classic(title: "Эттеншн", message: "Вы не выбрали категорию продукта."), animated: true)
         }else if image == nil{
-            self.present(self.alert.classic(title: "Эттеншн", message: "Вы забыли фотографию"), animated: true)
+            self.present(UIAlertController.classic(title: "Эттеншн", message: "Вы забыли фотографию"), animated: true)
         }else{
             NetworkManager.shared.productCreation(image: image!, name: name!, price: price!, description: description!, category: category, stock: stock, progressIndicator: progressView)
         }

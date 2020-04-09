@@ -98,7 +98,7 @@ private extension EmployerProfileViewController {
             }
             self.emailLabel.text = Auth.auth().currentUser?.email
         }) { error in
-            self.present(self.alert.somethingWrong(), animated: true)
+            self.present(UIAlertController.somethingWrong(), animated: true)
         }
     }
     
@@ -129,11 +129,11 @@ private extension EmployerProfileViewController{
             let reNewPass = reNewPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {return}
         
         if newPass != reNewPass {
-            self.present(self.alert.classic(title: "Внимание", message: "Пароли не совпадают"), animated: true)
+            self.present(UIAlertController.classic(title: "Внимание", message: "Пароли не совпадают"), animated: true)
         }else if newPass == "" || reNewPass == "" {
-            self.present(self.alert.classic(title: "Внимание", message: "Для смены пароля необходимо заполнить все поля"), animated: true)
+            self.present(UIAlertController.classic(title: "Внимание", message: "Для смены пароля необходимо заполнить все поля"), animated: true)
         }else{
-            self.present(self.alert.rePassword(success: {
+            self.present(UIAlertController.rePassword(success: {
                 self.dismiss(animated: true) { let ordersVC = self.storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.EmployerOrdersVC.rawValue) as? EmployerOrdersViewController
                     self.view.window?.rootViewController = ordersVC
                     self.view.window?.makeKeyAndVisible()

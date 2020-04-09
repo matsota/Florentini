@@ -20,12 +20,12 @@ class UserAboutUsViewController: UIViewController {
         
     }
     
-    //MARK: - Нажатие кнопки Меню
+    //MARK: - Slider Menu Tapped
     @IBAction func menuTapped(_ sender: UIButton) {
         showUsersSlideInMethod()
     }
     
-    //MARK: - Отправить отзыв / Переход в рабочую зону
+    //MARK: - Send a review
     @IBAction func sendReviewTapped(_ sender: UIButton) {
         reviewSent()
     }
@@ -34,9 +34,7 @@ class UserAboutUsViewController: UIViewController {
     //MARK: - Private:
     
     //MARK: - Implementation
-    
     private let slidingMenu = SlideInTransitionMenu()
-    private let alert = UIAlertController()
     
     //MARK: ScrollView
     @IBOutlet private weak var scrollView: UIScrollView!
@@ -74,7 +72,7 @@ private extension UserAboutUsViewController {
     
 }
 
-//MARK: - Появление SlidingMenu
+//MARK: - SlidingMenu appearance
 extension UserAboutUsViewController: UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
@@ -102,17 +100,17 @@ private extension UserAboutUsViewController {
             view.window?.rootViewController = loginWorkSpaceVC
             view.window?.makeKeyAndVisible()
         }else if content == "" {
-            self.present(self.alert.classic(title: "Эттеншн!", message: "Вы не ввели информацию, которой бы Вы хотели поделиться с нами"), animated: true)
+            self.present(UIAlertController.classic(title: "Эттеншн!", message: "Вы не ввели информацию, которой бы Вы хотели поделиться с нами"), animated: true)
         }else{
             if name == "" {name = "anonymous"}
             NetworkManager.shared.sendReview(name: name!, content: content!, success: {
-                self.present(self.alert.completionDone(title: "Благодарим Вас", message: "Мы очень рады, что у нас есть возможность заняться самоанализом!"), animated: true)
+                self.present(UIAlertController.completionDone(title: "Благодарим Вас", message: "Мы очень рады, что у нас есть возможность заняться самоанализом!"), animated: true)
                 self.nameTextField.text = ""
                 self.reviewTextView.text = ""
                 self.viewDidLoad()
             }) { (error) in
                 print("Error in UserAboutUsViewController, review: ", error.localizedDescription)
-                self.present(self.alert.completionDone(title: "Внимание", message: "Произошла неизвестная ошибка, попробуйте повторить еще раз"), animated: true)
+                self.present(UIAlertController.completionDone(title: "Внимание", message: "Произошла неизвестная ошибка, попробуйте повторить еще раз"), animated: true)
             }
         }
     }

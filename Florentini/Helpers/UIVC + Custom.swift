@@ -110,7 +110,7 @@ extension UIViewController {
             let faqVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.EmployerFAQVC.rawValue) as? EmployerFAQViewController
             view.window?.rootViewController = faqVC
         case .exit:
-            self.present(alert.signOut(success: {
+            self.present(UIAlertController.signOut(success: {
                 self.dismiss(animated: true) {
                     let exitApp = self.storyboard?.instantiateInitialViewController()
                     self.view.window?.rootViewController = exitApp

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseUI
 
 //MARK: - Protocol-User-Catalog-TableViewCell
 protocol UserCatalogTableViewCellDelegate: class {
@@ -64,7 +65,10 @@ class UserCatalogTableViewCell: UITableViewCell {
     }
     
     //MARK: - Заполнение Таблицы
-    func fill(name: String, price: Int, description: String, category: String, stock: Bool, image: @escaping(UIImageView) -> Void, failure: @escaping(Error) -> Void) {
+    func fill(name: String, price: Int, description: String, category: String, stock: Bool) {
+        imageActivityIndicator?.startAnimating()
+        imageActivityIndicator?.isHidden = false
+        
         self.stock = stock
         self.price = price
         self.category = category
@@ -73,7 +77,13 @@ class UserCatalogTableViewCell: UITableViewCell {
         productPriceLabel.text = "\(self.price) грн"
         productDescriptionLabel.text = description
         
-        image(productImageView)
+        let storagePath =  "\(NavigationCases.ProductCases.imageCollection.rawValue)/\(name)",
+        storageRef = Storage.storage().reference(withPath: storagePath)
+        
+        productImageView.sd_setImage(with: storageRef, placeholderImage: nil) { (image, _, _, _) in
+            self.imageActivityIndicator?.stopAnimating()
+            self.imageActivityIndicator?.isHidden = true
+        }
     }
     
 }

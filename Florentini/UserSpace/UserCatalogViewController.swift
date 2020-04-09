@@ -7,9 +7,6 @@
 //
 
 import UIKit
-import Firebase
-import FirebaseUI
-
 
 class UserCatalogViewController: UIViewController {
     
@@ -102,32 +99,15 @@ extension UserCatalogViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.UserCatalogTVCell.rawValue, for: indexPath) as! UserCatalogTableViewCell,
         fetch = productInfo[indexPath.row],
-        indicator = cell.imageActivityIndicator,
         name = fetch.productName,
         price = fetch.productPrice,
         description = fetch.productDescription,
         category = fetch.productCategory,
-        stock = fetch.stock,
-        storagePath =  "\(NavigationCases.ProductCases.imageCollection.rawValue)/\(name)",
-        storageRef = Storage.storage().reference(withPath: storagePath)
-        
+        stock = fetch.stock
+
         cell.delegate = self
+        cell.fill(name: name, price: price, description: description, category: category, stock: stock)
         
-        indicator?.isHidden = false
-        indicator?.startAnimating()
-        cell.fill(name: name, price: price, description: description, category: category, stock: stock, image: { (image) in
-            DispatchQueue.main.async {
-                image.sd_setImage(with: storageRef, placeholderImage: nil) { (image, _, _, _) in
-                    indicator?.stopAnimating()
-                    indicator?.isHidden = true
-                }
-            }
-        }) { (error) in
-            indicator?.stopAnimating()
-            indicator?.isHidden = true
-            self.present(self.alert.somethingWrong(), animated: true)
-            print("ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR: \(error.localizedDescription)")
-        }
         return cell
     }
     
