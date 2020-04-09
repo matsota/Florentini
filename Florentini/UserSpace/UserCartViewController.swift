@@ -152,14 +152,7 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
         stock = fetch.value(forKey: NavigationCases.ProductCases.stock.rawValue) as! Bool,
         imageData = UserDefaults.standard.object(forKey: name) as! NSData
         
-        if category == NavigationCases.ProductCategoriesCases.apiece.rawValue {
-            cell.quantitySlider.maximumValue = Float(NavigationCases.MaxQuantityByCategoriesCases.hundred.rawValue)
-        }
-        if category == NavigationCases.ProductCategoriesCases.bouquet.rawValue {
-            cell.quantitySlider.maximumValue = Float(NavigationCases.MaxQuantityByCategoriesCases.five.rawValue)
-        }
-        
-        cell.fill (name: name , price: price, slider: sliderValue, stock: stock, imageData: imageData)
+        cell.fill(name: name, category: category, price: price, slider: sliderValue, stock: stock, imageData: imageData)
         
         return cell
     }
@@ -275,10 +268,10 @@ private extension UserCartViewController {
         }else{
             var jsonArray: [[String: Any]] = []
             
-            for i in preOrder {
-                let preOrderJSON = i.toJSON()
-                jsonArray.append(preOrderJSON)
-            }
+//            for i in preOrder {
+//                let preOrderJSON = i.toJSON()
+//                jsonArray.append(preOrderJSON)
+//            }
             
             let totalPrice = orderBill
             

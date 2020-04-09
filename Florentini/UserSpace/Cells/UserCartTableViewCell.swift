@@ -54,8 +54,14 @@ class UserCartTableViewCell: UITableViewCell {
     }
     
     //MARK: - Заполнение таблицы
-    func fill(name: String, price: Int64, slider: Int64, stock: Bool, imageData: NSData) {
+    func fill(name: String, category: String, price: Int64, slider: Int64, stock: Bool, imageData: NSData) {
        self.stock = stock
+        
+        if category == NavigationCases.ProductCategoriesCases.apiece.rawValue {
+            self.quantitySlider.maximumValue = Float(NavigationCases.MaxQuantityByCategoriesCases.hundred.rawValue)
+        }else{
+            self.quantitySlider.maximumValue = Float(NavigationCases.MaxQuantityByCategoriesCases.five.rawValue)
+        }
         
         productNameLabel.text = name
         productName = name
@@ -64,6 +70,7 @@ class UserCartTableViewCell: UITableViewCell {
         quantitySlider.value = Float(slider)
         productPriceLabel.text! = "\(price) грн"
         quantityLabel.text! = "\(Int64(quantitySlider.value)) шт"
+        
         
         productImageView.image = UIImage(data: imageData as Data)
     }
