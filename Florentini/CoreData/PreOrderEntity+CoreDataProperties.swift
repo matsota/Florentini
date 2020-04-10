@@ -16,7 +16,7 @@ extension PreOrderEntity {
         return NSFetchRequest<PreOrderEntity>(entityName: "PreOrderEntity")
     }
     
-    @NSManaged public var productImage: NSData
+    @NSManaged public var productImage: Data?
     @NSManaged public var productName: String?
     @NSManaged public var productPrice: Int64
     @NSManaged public var productQuantity: Int64

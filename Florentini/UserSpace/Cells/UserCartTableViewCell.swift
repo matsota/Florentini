@@ -54,7 +54,7 @@ class UserCartTableViewCell: UITableViewCell {
     }
     
     //MARK: - Заполнение таблицы
-    func fill(name: String, category: String, price: Int, slider: Int, stock: Bool, imageData: NSData) {
+    func fill(name: String, category: String, price: Int, slider: Int, stock: Bool, imageData: Data) {
        self.stock = stock
         
         if category == NavigationCases.ProductCategoriesCases.apiece.rawValue {
@@ -72,7 +72,7 @@ class UserCartTableViewCell: UITableViewCell {
         quantityLabel.text! = "\(slider) шт"
         
         
-        productImageView.image = UIImage(data: imageData as Data)
+        productImageView.image = UIImage(data: imageData)
     }
     
 }

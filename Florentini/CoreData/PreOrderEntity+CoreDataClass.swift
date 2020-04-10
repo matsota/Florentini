@@ -14,6 +14,7 @@ public class PreOrderEntity: NSManagedObject {
 
     func toJSON() -> [String: Any] {
         var dict: [String: Any] = [:]
+        
         for attribute in entity.attributesByName {
             if let value = value(forKey: attribute.key) {
                 dict[attribute.key] = value

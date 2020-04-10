@@ -155,7 +155,7 @@ extension UserHomeViewController: UserHomeTableViewCellDelegate {
         guard let name = cell.productNameLabel.text,
             let category = cell.category,
             let stock = cell.stock,
-            let imageData: NSData = image?.pngData() as NSData? else {return}
+            let imageData: Data = image?.pngData() as Data? else {return}
         
         CoreDataManager.shared.saveForCart(name: name, category: category, price: price, quantity: 1, stock: stock, imageData: imageData, success: {
             self.cartImageCondition()

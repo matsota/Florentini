@@ -15,7 +15,7 @@ class CoreDataManager {
     let device = UIDevice.current.identifierForVendor
     
     //MARK: - Создание заказа/Добавление к заказу
-    func saveForCart(name: String, category: String, price: Int, quantity: Int, stock: Bool, imageData: NSData, success: @escaping() -> Void, failure: @escaping() -> Void) {
+    func saveForCart(name: String, category: String, price: Int, quantity: Int, stock: Bool, imageData: Data, success: @escaping() -> Void, failure: @escaping() -> Void) {
         
         if imageData.isEmpty || name.isEmpty || category.isEmpty || price == 0 || quantity == 0  {
             failure()
@@ -57,7 +57,7 @@ class CoreDataManager {
         guard let preOrderEntity = try! PersistenceService.context.fetch(PreOrderEntity.fetchRequest()) as? [PreOrderEntity] else {return}
         if preOrderEntity.count > 0 {
             for currentOrder in preOrderEntity as [NSManagedObject] {
-                if name == currentOrder.value(forKey: NavigationCases.ProductCases.productName.rawValue) as! String{
+                if name == currentOrder.value(forKey: NavigationCases.ProductCases.productName.rawValue) as? String{
                     currentOrder.setValuesForKeys([NavigationCases.ProductCases.productQuantity.rawValue: Int64(quantity)])
                     PersistenceService.saveContext()
                 }
@@ -68,8 +68,9 @@ class CoreDataManager {
     //MARK: - Custom Core Data Saving support
     @objc func fetchPreOrder(success: @escaping([PreOrderEntity]) -> (Void)) {
         let fetchRequest: NSFetchRequest<PreOrderEntity> = PreOrderEntity.fetchRequest()
-        
+
         do {
+            fetchRequest.propertiesToFetch = ["productName", "productPrice", "productQuantity", "productCategory", "stock"]
             let result = try PersistenceService.context.fetch(fetchRequest)
             success(result)
         } catch {
