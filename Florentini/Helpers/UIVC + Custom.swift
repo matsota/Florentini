@@ -95,7 +95,6 @@ extension UIViewController {
     
     //MARK: Выбор перехода
     func employerTransitionBySlidingVC(_ class: UIViewController, _ menuType: EmployerSlidingMenuVC.EmployerMenuType) {
-        let alert = UIAlertController()
         switch menuType {
         case .orders:
             let ordersVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.EmployerOrdersVC.rawValue) as? EmployerOrdersViewController
