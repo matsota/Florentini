@@ -65,9 +65,10 @@ class UserCartTableViewCell: UITableViewCell {
         
         productNameLabel.text = name
         productName = name
+        productPrice = price
         
         quantitySlider.setValue(Float(slider), animated: true)
-        productPriceLabel.text! = "\(price) грн"
+        productPriceLabel.text! = "\(price * slider) грн"
         quantityLabel.text! = "\(slider) шт"
         
         

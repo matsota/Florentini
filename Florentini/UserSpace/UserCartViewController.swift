@@ -147,11 +147,10 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
         let fetch = preOrder[cell.tag],
         name = fetch.value(forKey: NavigationCases.ProductCases.productName.rawValue) as! String,
         category = fetch.value(forKey: NavigationCases.ProductCases.productCategory.rawValue) as! String,
+        price = fetch.value(forKey: NavigationCases.ProductCases.productPrice.rawValue) as! Int,
         sliderValue = fetch.value(forKey: NavigationCases.ProductCases.productQuantity.rawValue) as! Int,
-        price = fetch.value(forKey: NavigationCases.ProductCases.productPrice.rawValue) as! Int * sliderValue,
         stock = fetch.value(forKey: NavigationCases.ProductCases.stock.rawValue) as! Bool,
         imageData = UserDefaults.standard.object(forKey: name) as! NSData
-        cell.productPrice = Int(fetch.productPrice)
         
         cell.fill(name: name, category: category, price: price, slider: sliderValue, stock: stock, imageData: imageData)
         
