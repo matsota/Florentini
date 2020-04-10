@@ -202,7 +202,7 @@ extension UserCatalogViewController: UserCatalogTableViewCellDelegate {
     //MARK: Adding to user's Cart
     func addToCart(_ cell: UserCatalogTableViewCell) {
         
-        let price = Int64(cell.price),
+        let price = cell.price,
         image = cell.productImageView.image
         guard let name = cell.productNameLabel.text,
             let category = cell.category,

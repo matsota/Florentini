@@ -20,7 +20,7 @@ class UserCartTableViewCell: UITableViewCell {
     
     //MARK: - Implementation
     var productName: String?
-    var productPrice: Int64?
+    var productPrice: Int?
     var productCategory: String?
     var stock: Bool?
     ///delegate
@@ -54,7 +54,7 @@ class UserCartTableViewCell: UITableViewCell {
     }
     
     //MARK: - Заполнение таблицы
-    func fill(name: String, category: String, price: Int64, slider: Int64, stock: Bool, imageData: NSData) {
+    func fill(name: String, category: String, price: Int, slider: Int, stock: Bool, imageData: NSData) {
        self.stock = stock
         
         if category == NavigationCases.ProductCategoriesCases.apiece.rawValue {
@@ -65,11 +65,10 @@ class UserCartTableViewCell: UITableViewCell {
         
         productNameLabel.text = name
         productName = name
-        productPrice = price
         
-        quantitySlider.value = Float(slider)
+        quantitySlider.setValue(Float(slider), animated: true)
         productPriceLabel.text! = "\(price) грн"
-        quantityLabel.text! = "\(Int64(quantitySlider.value)) шт"
+        quantityLabel.text! = "\(slider) шт"
         
         
         productImageView.image = UIImage(data: imageData as Data)

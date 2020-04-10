@@ -15,13 +15,13 @@ class CoreDataManager {
     let device = UIDevice.current.identifierForVendor
     
     //MARK: - Создание заказа/Добавление к заказу
-    func saveForCart(name: String, category: String, price: Int64, quantity: Int64, stock: Bool) {
+    func saveForCart(name: String, category: String, price: Int, quantity: Int, stock: Bool) {
         let preOrder = PreOrderEntity(context: PersistenceService.context)
         
         preOrder.productName = name
         preOrder.productCategory = category
-        preOrder.productPrice = price
-        preOrder.productQuantity = quantity
+        preOrder.productPrice = Int64(price)
+        preOrder.productQuantity = Int64(quantity)
         preOrder.stock = stock
         PersistenceService.saveContext()
     }
@@ -46,13 +46,12 @@ class CoreDataManager {
     }
     
     //MARK: - Обновление количества продукта к Заказу
-    func updateCart(name: String, quantity: Int64) {
+    func updateCart(name: String, quantity: Int) {
         guard let preOrderEntity = try! PersistenceService.context.fetch(PreOrderEntity.fetchRequest()) as? [PreOrderEntity] else {return}
-        
         if preOrderEntity.count > 0 {
             for currentOrder in preOrderEntity as [NSManagedObject] {
                 if name == currentOrder.value(forKey: NavigationCases.ProductCases.productName.rawValue) as! String{
-                    currentOrder.setValuesForKeys([NavigationCases.ProductCases.productQuantity.rawValue: quantity])
+                    currentOrder.setValuesForKeys([NavigationCases.ProductCases.productQuantity.rawValue: Int64(quantity)])
                     PersistenceService.saveContext()
                 }
             }

@@ -147,10 +147,11 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
         let fetch = preOrder[cell.tag],
         name = fetch.value(forKey: NavigationCases.ProductCases.productName.rawValue) as! String,
         category = fetch.value(forKey: NavigationCases.ProductCases.productCategory.rawValue) as! String,
-        price = fetch.value(forKey: NavigationCases.ProductCases.productPrice.rawValue) as! Int64,
-        sliderValue = fetch.value(forKey: NavigationCases.ProductCases.productQuantity.rawValue) as! Int64,
+        sliderValue = fetch.value(forKey: NavigationCases.ProductCases.productQuantity.rawValue) as! Int,
+        price = fetch.value(forKey: NavigationCases.ProductCases.productPrice.rawValue) as! Int * sliderValue,
         stock = fetch.value(forKey: NavigationCases.ProductCases.stock.rawValue) as! Bool,
         imageData = UserDefaults.standard.object(forKey: name) as! NSData
+        cell.productPrice = Int(fetch.productPrice)
         
         cell.fill(name: name, category: category, price: price, slider: sliderValue, stock: stock, imageData: imageData)
         
@@ -185,8 +186,8 @@ extension UserCartViewController: UserCartTableViewCellDelegate {
     func sliderValue(_ cell: UserCartTableViewCell) {
         guard let price = cell.productPrice, let name = cell.productName, let fetch = try! PersistenceService.context.fetch(PreOrderEntity.fetchRequest()) as? [PreOrderEntity] else {return}
         
-        let sliderEquantion = Int64(cell.quantitySlider.value) * price,
-        sliderValue = Int64(cell.quantitySlider.value)
+        let sliderEquantion = Int(cell.quantitySlider.value) * price,
+        sliderValue = Int(cell.quantitySlider.value)
         
         cell.productPriceLabel.text! = "\(sliderEquantion) грн"
         cell.quantityLabel.text! = "\(sliderValue) шт"

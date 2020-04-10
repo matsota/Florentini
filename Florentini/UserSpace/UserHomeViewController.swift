@@ -150,7 +150,7 @@ extension UserHomeViewController: UserHomeTableViewCellDelegate {
     //MARK: Adding to user's Cart
     func addToCart(_ cell: UserHomeTableViewCell) {
         
-        let price = Int64(cell.price),
+        let price = cell.price,
         image = cell.cellImageView.image
         guard let name = cell.productNameLabel.text,
             let category = cell.category,
