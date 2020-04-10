@@ -24,23 +24,38 @@ class UserCartViewController: UIViewController {
     }
     
     //MARK: - Нажатие кнопки Меню
-    @IBAction func menuTapped(_ sender: UIButton) {
+    @IBAction private func menuTapped(_ sender: UIButton) {
         showUsersSlideInMethod()
     }
     
     
+    
+    @IBAction private func feedBackBlankTapped(_ sender: Any) {
+        feedBackTopConstraint.constant = hideAndShowFeedbackBlank()
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     //MARK: - Нажатие кнопки Обратной связи
-    @IBAction func feedbackTypeSelectorTapped(_ sender: DesignButton) {
+    @IBAction private func feedbackTypeSelectorTapped(_ sender: DesignButton) {
         guard let sender = sender.titleLabel!.text else {return}
         showOptionsMethod(option: sender)
     }
     
-    @IBAction func feedbackTypeTapped(_ sender: DesignButton) {
+    @IBAction private func feedbackTypeTapped(_ sender: DesignButton) {
         selectionMethod(self, sender)
     }
     
+    @IBAction private func emptyButtonForHideTapped(_ sender: Any) {
+        feedBackTopConstraint.constant = hideAndShowFeedbackBlank()
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     //MARK: - Подтвреждение заказа
-    @IBAction func confirmTapped(_ sender: UIButton) {
+    @IBAction private func confirmTapped(_ sender: UIButton) {
         confirm()
     }
     
@@ -54,8 +69,12 @@ class UserCartViewController: UIViewController {
     private var orderBill = Int64()
     
     //MARK: Views Outlets
+    @IBOutlet private weak var feedbackBlankView: UIView!
     @IBOutlet private weak var buttonsView: UIView!
     @IBOutlet private weak var tableCountZeroView: UIView!
+    
+    //MARK: - StackView
+    @IBOutlet private weak var billStackView: UIStackView!
     
     //MARK: ScrollView
     @IBOutlet private weak var scrollView: UIScrollView!
@@ -73,10 +92,14 @@ class UserCartViewController: UIViewController {
     //MARK: Buttons Outlets
     @IBOutlet private var feedbackTypeBttnsCellection: [UIButton]!
     @IBOutlet private weak var feebackTypeSelectorButton: UIButton!
+    @IBOutlet private weak var emptyButtonForHide: UIButton!
+    @IBOutlet private weak var feedBackBlankButton: DesignButton!
     
     
     //MARK: Constrains Outlets
     @IBOutlet private weak var lowestConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var feedBackTopConstraint: NSLayoutConstraint!
+    
     
 }
 
@@ -150,7 +173,7 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
         price = fetch.value(forKey: NavigationCases.ProductCases.productPrice.rawValue) as! Int,
         sliderValue = fetch.value(forKey: NavigationCases.ProductCases.productQuantity.rawValue) as! Int,
         stock = fetch.value(forKey: NavigationCases.ProductCases.stock.rawValue) as! Bool,
-        imageData = UserDefaults.standard.object(forKey: name) as! NSData
+        imageData = fetch.productImage
         
         cell.fill(name: name, category: category, price: price, slider: sliderValue, stock: stock, imageData: imageData)
         
@@ -167,6 +190,8 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
             CoreDataManager.shared.deleteFromCart(deleteWhere: self.preOrder, at: indexPath)
             self.preOrder.remove(at: indexPath.row)
             self.cartTableView.deleteRows(at: [indexPath], with: .automatic)
+            self.orderBill = self.preOrder.map({$0.productPrice * $0.productQuantity}).reduce(0, +)
+            self.orderPriceLabel.text = "\(self.orderBill) грн"
             self.cartTableView.reloadData()
             complition(true)
         }
@@ -227,22 +252,40 @@ private extension UserCartViewController {
     
 }
 
-//MARK: - Смещение constrains при появлении клавиатуры
+//MARK: - Hide And Show Any
 private extension UserCartViewController {
     
     @objc func keyboardWillShow(notification: Notification) {
+        self.billStackView.isHidden = true
         guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber, let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
-        lowestConstraint.constant = keyboardFrameValue.cgRectValue.height * 0.9
+                lowestConstraint.constant = keyboardFrameValue.cgRectValue.height * 0.9
         UIView.animate(withDuration: duration.doubleValue) {
             self.view.layoutIfNeeded()
         }
     }
     @objc func keyboardWillHide(notification: Notification) {
+        self.billStackView.isHidden = false
         guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber else {return}
-        lowestConstraint.constant = 14
+                lowestConstraint.constant = 14
         UIView.animate(withDuration: duration.doubleValue) {
             self.view.layoutIfNeeded()
         }
+    }
+    
+    
+    func hideAndShowFeedbackBlank() -> CGFloat {
+        let up = UIImage(systemName: "chevron.up"),
+        down = UIImage(systemName: "chevron.down")
+        
+        var height = self.feedBackTopConstraint.constant
+        if  height == 0.0 {
+            height = -self.cartTableView.frame.height
+            self.feedBackBlankButton.setImage(down, for: .normal)
+        }else{
+            height = 0.0
+            self.feedBackBlankButton.setImage(up, for: .normal)
+        }
+        return height
     }
     
 }
@@ -252,7 +295,7 @@ private extension UserCartViewController {
     
     func confirm() {
         guard let adress = clientAdressTextField.text, let cellphone = clientCellPhoneTextField.text else {return}
-
+        
         var name = clientNameTextField.text!,
         mark = clientDescriptionTextField.text!,
         feedbackOption = selectedFeedbackType
@@ -268,17 +311,18 @@ private extension UserCartViewController {
         }else{
             var jsonArray: [[String: Any]] = []
             
-//            for i in preOrder {
-//                let preOrderJSON = i.toJSON()
-//                jsonArray.append(preOrderJSON)
-//            }
+            for i in preOrder {
+                let preOrderJSON = i.toJSON()
+                jsonArray.append(preOrderJSON)
+            }
+            print(jsonArray)
             
             let totalPrice = orderBill
             
             for _ in preOrder {
                 NetworkManager.shared.sendOrder(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: Date(), productDescription: jsonArray.remove(at:0), success: {
                     
-                    self.present(UIAlertController.completionDone(title: "Ваш заказ оформлен", message: "Мы свяжемся с Вам так скоро, как это возможно"), animated: true)
+                    self.present(UIAlertController.completionDoneTwoSec(title: "Ваш заказ оформлен", message: "Мы свяжемся с Вам так скоро, как это возможно"), animated: true)
                     self.clientNameTextField.text = ""
                     self.clientAdressTextField.text = ""
                     self.clientCellPhoneTextField.text = ""

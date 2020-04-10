@@ -187,7 +187,17 @@ extension UIAlertController {
     }
     
     //MARK: - Success Upload
-    static func completionDone(title: String, message: String) -> (UIAlertController){
+    //MARK: Half sec
+    static func completionDoneHalfSec(title: String, message: String) -> (UIAlertController){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+            alert.dismiss(animated: true, completion: nil)
+        }
+        return alert
+    }
+    
+    //MARK: Two sec
+    static func completionDoneTwoSec(title: String, message: String) -> (UIAlertController){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
             alert.dismiss(animated: true, completion: nil)

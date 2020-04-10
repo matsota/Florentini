@@ -104,13 +104,13 @@ private extension UserAboutUsViewController {
         }else{
             if name == "" {name = "anonymous"}
             NetworkManager.shared.sendReview(name: name!, content: content!, success: {
-                self.present(UIAlertController.completionDone(title: "Благодарим Вас", message: "Мы очень рады, что у нас есть возможность заняться самоанализом!"), animated: true)
+                self.present(UIAlertController.completionDoneTwoSec(title: "Благодарим Вас", message: "Мы очень рады, что у нас есть возможность заняться самоанализом!"), animated: true)
                 self.nameTextField.text = ""
                 self.reviewTextView.text = ""
                 self.viewDidLoad()
             }) { (error) in
                 print("Error in UserAboutUsViewController, review: ", error.localizedDescription)
-                self.present(UIAlertController.completionDone(title: "Внимание", message: "Произошла неизвестная ошибка, попробуйте повторить еще раз"), animated: true)
+                self.present(UIAlertController.completionDoneTwoSec(title: "Внимание", message: "Произошла неизвестная ошибка, попробуйте повторить еще раз"), animated: true)
             }
         }
     }

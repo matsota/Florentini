@@ -155,7 +155,7 @@ extension EmployerCatalogViewController: UITableViewDelegate, UITableViewDataSou
         let action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, complition) in
             if AuthenticationManager.shared.currentUser?.uid == AuthenticationManager.shared.uidAdmin {
                 self.present(UIAlertController.productDelete(name: name, success: {
-                    self.present(UIAlertController.completionDone(title: "Внимание", message: "Продукт удачно Удалён"), animated: true)
+                    self.present(UIAlertController.completionDoneTwoSec(title: "Внимание", message: "Продукт удачно Удалён"), animated: true)
                     self.productInfo.remove(at: indexPath.row)
                     self.tableView.deleteRows(at: [indexPath], with: .automatic)
                 }), animated: true)

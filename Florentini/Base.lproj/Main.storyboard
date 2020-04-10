@@ -1229,7 +1229,7 @@
                                                         </constraints>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P5K-g4-YGz">
-                                                        <rect key="frame" x="0.0" y="40" width="347" height="80.333333333333314"/>
+                                                        <rect key="frame" x="0.0" y="39.999999999999993" width="347" height="80.333333333333314"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bolt.fill" catalog="system" highlighted="YES" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hk8-rW-phd">
                                                                 <rect key="frame" x="0.0" y="-0.3333333333333357" width="69.333333333333329" height="81.333333333333329"/>
@@ -1393,7 +1393,7 @@
                                 </constraints>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LKz-J3-wKD">
-                                <rect key="frame" x="14" y="147.99999999999997" width="347" height="307.33333333333326"/>
+                                <rect key="frame" x="14" y="144" width="347" height="509"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UsersCartTVCell" rowHeight="99" id="m0l-Mn-c15" customClass="UserCartTableViewCell" customModule="Florentini" customModuleProvider="target">
@@ -1483,10 +1483,10 @@
                                 </connections>
                             </tableView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xyZ-uA-t0R">
-                                <rect key="frame" x="14" y="147.99999999999997" width="347" height="307.33333333333326"/>
+                                <rect key="frame" x="14" y="144" width="347" height="509"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Пока что Вы не выбрали ни букет, ни цветок, ни подарок. Но вы можете отправить запрос  об обратной связи, если того желаете" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hAN-qI-B6x">
-                                        <rect key="frame" x="0.0" y="14" width="347" height="279.33333333333331"/>
+                                        <rect key="frame" x="0.0" y="14" width="347" height="481"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
@@ -1502,42 +1502,52 @@
                                     <constraint firstAttribute="bottom" secondItem="hAN-qI-B6x" secondAttribute="bottom" constant="14" id="xqn-Mx-izy"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Id7-T7-g7r">
-                                <rect key="frame" x="0.0" y="469.33333333333326" width="375" height="215"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bCI-uY-sP4" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="653" width="375" height="44"/>
+                                <color key="backgroundColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="nTc-pE-GJI"/>
+                                </constraints>
+                                <color key="tintColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title="Бланк Обратной связи" image="chevron.up" catalog="system">
+                                    <color key="titleColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="rounding">
+                                        <real key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="feedBackBlankTapped:" destination="MvW-Ha-Rkh" eventType="touchUpInside" id="WPk-az-ZSS"/>
+                                </connections>
+                            </button>
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Id7-T7-g7r">
+                                <rect key="frame" x="0.0" y="697" width="375" height="0.0"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5vd-4F-z3z">
-                                        <rect key="frame" x="14" y="0.0" width="347" height="215"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Cbs-eS-WEF">
-                                                <rect key="frame" x="0.0" y="0.0" width="347" height="220.33333333333334"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="225"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Бланк обратной связи" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfx-tz-lqw">
-                                                        <rect key="frame" x="0.0" y="0.0" width="347" height="20.333333333333332"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="20.5" id="FND-ze-LJn"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="aY4-GO-M1c">
-                                                        <rect key="frame" x="0.0" y="24.333333333333371" width="347" height="121"/>
+                                                        <rect key="frame" x="0.0" y="4" width="375" height="121"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="9nX-ec-hRj">
-                                                                <rect key="frame" x="0.0" y="0.0" width="204.33333333333334" height="121"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="221" height="121"/>
                                                                 <subviews>
                                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Введите свое прекрасное Имя" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="cBB-e9-NHz">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="204.33333333333334" height="37.666666666666664"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="221" height="37.666666666666664"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" textContentType="name"/>
                                                                     </textField>
                                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Введите свой номер телефона" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="tD1-XL-ned">
-                                                                        <rect key="frame" x="0.0" y="41.666666666666686" width="204.33333333333334" height="37.666666666666657"/>
+                                                                        <rect key="frame" x="0.0" y="41.666666666666629" width="221" height="37.666666666666657"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                         <textInputTraits key="textInputTraits" keyboardType="phonePad" textContentType="tel"/>
                                                                     </textField>
                                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Введите адресс доставки" textAlignment="natural" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="xiy-XW-V6R">
-                                                                        <rect key="frame" x="0.0" y="83.333333333333314" width="204.33333333333334" height="37.666666666666657"/>
+                                                                        <rect key="frame" x="0.0" y="83.333333333333371" width="221" height="37.666666666666657"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                         <textInputTraits key="textInputTraits" autocorrectionType="yes" textContentType="street-address"/>
                                                                     </textField>
@@ -1548,13 +1558,13 @@
                                                                 </constraints>
                                                             </stackView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rd0-MR-ty1">
-                                                                <rect key="frame" x="208.33333333333337" y="0.0" width="138.66666666666663" height="121"/>
+                                                                <rect key="frame" x="225" y="0.0" width="150" height="121"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="HsP-Ru-mFp">
-                                                                        <rect key="frame" x="3" y="3" width="132.66666666666666" height="115"/>
+                                                                        <rect key="frame" x="3" y="3" width="144" height="115"/>
                                                                         <subviews>
                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="BFW-42-suV" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="132.66666666666666" height="115"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="144" height="115"/>
                                                                                 <color key="backgroundColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                 <color key="tintColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -1564,7 +1574,7 @@
                                                                                 </state>
                                                                                 <userDefinedRuntimeAttributes>
                                                                                     <userDefinedRuntimeAttribute type="number" keyPath="rounding">
-                                                                                        <real key="value" value="10"/>
+                                                                                        <real key="value" value="5"/>
                                                                                     </userDefinedRuntimeAttribute>
                                                                                 </userDefinedRuntimeAttributes>
                                                                                 <connections>
@@ -1572,11 +1582,11 @@
                                                                                 </connections>
                                                                             </button>
                                                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJo-Ok-EeM" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="132.66666666666666" height="115"/>
-                                                                                <color key="backgroundColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="144" height="115"/>
+                                                                                <color key="backgroundColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                 <state key="normal" title="По телефону">
-                                                                                    <color key="titleColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                                    <color key="titleColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                                 </state>
                                                                                 <userDefinedRuntimeAttributes>
                                                                                     <userDefinedRuntimeAttribute type="number" keyPath="rounding">
@@ -1588,11 +1598,11 @@
                                                                                 </connections>
                                                                             </button>
                                                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cOm-8G-2Y9" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="132.66666666666666" height="115"/>
-                                                                                <color key="backgroundColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="144" height="115"/>
+                                                                                <color key="backgroundColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                 <state key="normal" title="Viber">
-                                                                                    <color key="titleColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                                    <color key="titleColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                                 </state>
                                                                                 <userDefinedRuntimeAttributes>
                                                                                     <userDefinedRuntimeAttribute type="number" keyPath="rounding">
@@ -1604,11 +1614,11 @@
                                                                                 </connections>
                                                                             </button>
                                                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="oN1-s9-sxS" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="132.66666666666666" height="115"/>
-                                                                                <color key="backgroundColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="144" height="115"/>
+                                                                                <color key="backgroundColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                 <state key="normal" title="Telegram">
-                                                                                    <color key="titleColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                                    <color key="titleColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                                 </state>
                                                                                 <userDefinedRuntimeAttributes>
                                                                                     <userDefinedRuntimeAttribute type="number" keyPath="rounding">
@@ -1627,7 +1637,7 @@
                                                                         </constraints>
                                                                     </stackView>
                                                                 </subviews>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                <color key="backgroundColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                 <constraints>
                                                                     <constraint firstItem="HsP-Ru-mFp" firstAttribute="leading" secondItem="Rd0-MR-ty1" secondAttribute="leading" constant="3" id="3uI-M8-fYk"/>
                                                                     <constraint firstAttribute="height" constant="121" id="8mS-zO-Lux"/>
@@ -1642,10 +1652,10 @@
                                                         </constraints>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="wMj-OP-9Mg">
-                                                        <rect key="frame" x="0.0" y="149.33333333333331" width="347" height="71"/>
+                                                        <rect key="frame" x="0.0" y="129" width="375" height="96"/>
                                                         <subviews>
                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="top" borderStyle="roundedRect" placeholder="Если это необходимо, то тут введите дополнительную информацию." minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="RxZ-O1-WMM">
-                                                                <rect key="frame" x="0.0" y="0.0" width="347" height="71"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes"/>
                                                             </textField>
@@ -1653,54 +1663,67 @@
                                                     </stackView>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="220.5" id="vmq-uk-jYq"/>
+                                                    <constraint firstAttribute="height" constant="225" id="vmq-uk-jYq"/>
                                                 </constraints>
                                             </stackView>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="Cbs-eS-WEF" firstAttribute="trailing" secondItem="cr7-bu-kuW" secondAttribute="trailing" id="Vtc-OJ-4zP"/>
                                             <constraint firstItem="Cbs-eS-WEF" firstAttribute="bottom" secondItem="cr7-bu-kuW" secondAttribute="bottom" id="bB5-LT-UuN"/>
-                                            <constraint firstItem="xfx-tz-lqw" firstAttribute="width" secondItem="MaM-7A-fIg" secondAttribute="width" id="f04-1v-tUh"/>
                                             <constraint firstItem="cr7-bu-kuW" firstAttribute="top" secondItem="Cbs-eS-WEF" secondAttribute="top" id="jvn-eu-vK1"/>
+                                            <constraint firstItem="Cbs-eS-WEF" firstAttribute="width" secondItem="MaM-7A-fIg" secondAttribute="width" id="km2-1B-jdd"/>
                                             <constraint firstItem="Cbs-eS-WEF" firstAttribute="leading" secondItem="cr7-bu-kuW" secondAttribute="leading" id="ukv-Hf-jrL"/>
+                                            <constraint firstItem="aY4-GO-M1c" firstAttribute="top" secondItem="MaM-7A-fIg" secondAttribute="top" constant="4" id="vXF-ug-A64"/>
                                         </constraints>
                                         <viewLayoutGuide key="contentLayoutGuide" id="cr7-bu-kuW"/>
                                         <viewLayoutGuide key="frameLayoutGuide" id="MaM-7A-fIg"/>
                                     </scrollView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstItem="5vd-4F-z3z" firstAttribute="top" secondItem="Id7-T7-g7r" secondAttribute="top" id="2ij-bl-zg8"/>
-                                    <constraint firstAttribute="bottom" secondItem="5vd-4F-z3z" secondAttribute="bottom" id="XzD-r0-h74"/>
-                                    <constraint firstItem="5vd-4F-z3z" firstAttribute="leading" secondItem="Id7-T7-g7r" secondAttribute="leading" constant="14" id="djN-10-53B"/>
-                                    <constraint firstAttribute="trailing" secondItem="5vd-4F-z3z" secondAttribute="trailing" constant="14" id="mqc-Qh-fU3"/>
+                                    <constraint firstAttribute="trailing" secondItem="5vd-4F-z3z" secondAttribute="trailing" id="NP9-Qe-h9V"/>
+                                    <constraint firstItem="5vd-4F-z3z" firstAttribute="leading" secondItem="Id7-T7-g7r" secondAttribute="leading" id="RpT-Vt-4Bx"/>
+                                    <constraint firstItem="5vd-4F-z3z" firstAttribute="top" secondItem="Id7-T7-g7r" secondAttribute="top" id="ZRj-DT-CSr"/>
+                                    <constraint firstAttribute="bottom" secondItem="5vd-4F-z3z" secondAttribute="bottom" id="nly-K3-d18"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" alpha="0.34999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k9k-5C-irF">
+                                <rect key="frame" x="0.0" y="697" width="375" height="0.0"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="emptyButtonForHideTapped:" destination="MvW-Ha-Rkh" eventType="touchUpInside" id="MT4-79-VgZ"/>
+                                </connections>
+                            </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="O17-47-69m">
-                                <rect key="frame" x="14" y="698.33333333333337" width="347" height="65.666666666666629"/>
+                                <rect key="frame" x="0.0" y="698" width="375" height="66"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uyp-a0-G7H">
-                                        <rect key="frame" x="0.0" y="0.0" width="347" height="15.666666666666666"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="16"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Сумма к Оплате:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aOX-PH-adi">
-                                                <rect key="frame" x="0.0" y="0.0" width="173.66666666666666" height="15.666666666666666"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="187.66666666666666" height="16"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="16" id="q0Z-ls-MwT"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KI9-td-d1c">
-                                                <rect key="frame" x="173.66666666666663" y="0.0" width="173.33333333333337" height="15.666666666666666"/>
+                                                <rect key="frame" x="187.66666666666663" y="0.0" width="187.33333333333337" height="16"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <color key="textColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstItem="KI9-td-d1c" firstAttribute="height" secondItem="aOX-PH-adi" secondAttribute="height" id="QF6-Vi-X1t"/>
                                             <constraint firstItem="KI9-td-d1c" firstAttribute="width" secondItem="aOX-PH-adi" secondAttribute="width" id="rrm-0T-xa9"/>
                                         </constraints>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OnB-Gw-XdE">
-                                        <rect key="frame" x="0.0" y="15.666666666666629" width="347" height="50"/>
+                                        <rect key="frame" x="0.0" y="16" width="375" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="lL2-pT-gH6"/>
                                         </constraints>
@@ -1717,35 +1740,47 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="WzG-wx-sAy" firstAttribute="top" secondItem="Dy1-FX-ddD" secondAttribute="top" id="0g3-Us-sJV"/>
-                            <constraint firstItem="Dy1-FX-ddD" firstAttribute="trailing" secondItem="Id7-T7-g7r" secondAttribute="trailing" id="4Fy-Vy-9Du"/>
-                            <constraint firstItem="Id7-T7-g7r" firstAttribute="height" secondItem="LKz-J3-wKD" secondAttribute="height" multiplier="0.7" id="5o8-P0-KaL"/>
+                            <constraint firstItem="bCI-uY-sP4" firstAttribute="top" secondItem="LKz-J3-wKD" secondAttribute="bottom" id="6Ad-5Z-tGb"/>
+                            <constraint firstItem="Dy1-FX-ddD" firstAttribute="bottom" secondItem="xyZ-uA-t0R" secondAttribute="bottom" constant="125" id="82S-Z3-7Dz"/>
+                            <constraint firstItem="bCI-uY-sP4" firstAttribute="leading" secondItem="Dy1-FX-ddD" secondAttribute="leading" id="Api-kB-zzR"/>
                             <constraint firstItem="WzG-wx-sAy" firstAttribute="leading" secondItem="Dy1-FX-ddD" secondAttribute="leading" constant="14" id="BAb-uh-Z1m"/>
-                            <constraint firstItem="Dy1-FX-ddD" firstAttribute="trailing" secondItem="O17-47-69m" secondAttribute="trailing" constant="14" id="Edj-WS-Kqi"/>
+                            <constraint firstItem="Dy1-FX-ddD" firstAttribute="trailing" secondItem="Id7-T7-g7r" secondAttribute="trailing" id="Bjp-F6-gWJ"/>
+                            <constraint firstItem="Dy1-FX-ddD" firstAttribute="trailing" secondItem="O17-47-69m" secondAttribute="trailing" id="Edj-WS-Kqi"/>
                             <constraint firstItem="xyZ-uA-t0R" firstAttribute="leading" secondItem="Dy1-FX-ddD" secondAttribute="leading" constant="14" id="FBv-de-bXL"/>
-                            <constraint firstItem="LKz-J3-wKD" firstAttribute="top" secondItem="WzG-wx-sAy" secondAttribute="bottom" constant="4" id="Klw-bD-Y6Y"/>
+                            <constraint firstItem="k9k-5C-irF" firstAttribute="height" secondItem="Id7-T7-g7r" secondAttribute="height" multiplier="1.2" id="FLY-wN-Ap8"/>
+                            <constraint firstItem="k9k-5C-irF" firstAttribute="leading" secondItem="Dy1-FX-ddD" secondAttribute="leading" id="GEk-uL-tYF"/>
+                            <constraint firstItem="Dy1-FX-ddD" firstAttribute="trailing" secondItem="k9k-5C-irF" secondAttribute="trailing" id="Grl-Xs-Va8"/>
+                            <constraint firstItem="Id7-T7-g7r" firstAttribute="leading" secondItem="Dy1-FX-ddD" secondAttribute="leading" id="JhM-nz-tSP"/>
+                            <constraint firstItem="LKz-J3-wKD" firstAttribute="top" secondItem="WzG-wx-sAy" secondAttribute="bottom" id="Klw-bD-Y6Y"/>
+                            <constraint firstItem="Dy1-FX-ddD" firstAttribute="trailing" secondItem="bCI-uY-sP4" secondAttribute="trailing" id="LvA-ji-ZY6"/>
                             <constraint firstItem="Dy1-FX-ddD" firstAttribute="trailing" secondItem="xyZ-uA-t0R" secondAttribute="trailing" constant="14" id="Ndb-O6-mxf"/>
-                            <constraint firstItem="Id7-T7-g7r" firstAttribute="top" secondItem="xyZ-uA-t0R" secondAttribute="bottom" constant="14" id="Qdc-fm-8io"/>
-                            <constraint firstItem="O17-47-69m" firstAttribute="leading" secondItem="Dy1-FX-ddD" secondAttribute="leading" constant="14" id="Xep-C8-45B"/>
+                            <constraint firstItem="k9k-5C-irF" firstAttribute="top" secondItem="Id7-T7-g7r" secondAttribute="bottom" id="QcF-Ac-4sw"/>
+                            <constraint firstItem="O17-47-69m" firstAttribute="leading" secondItem="Dy1-FX-ddD" secondAttribute="leading" id="Xep-C8-45B"/>
                             <constraint firstItem="LKz-J3-wKD" firstAttribute="leading" secondItem="Dy1-FX-ddD" secondAttribute="leading" constant="14" id="de6-XN-cbs"/>
                             <constraint firstItem="Dy1-FX-ddD" firstAttribute="bottom" secondItem="O17-47-69m" secondAttribute="bottom" constant="14" id="eI6-YN-pBO"/>
-                            <constraint firstItem="xyZ-uA-t0R" firstAttribute="top" secondItem="WzG-wx-sAy" secondAttribute="bottom" constant="4" id="ePN-iY-CgS"/>
-                            <constraint firstItem="O17-47-69m" firstAttribute="top" secondItem="Id7-T7-g7r" secondAttribute="bottom" constant="14" id="gEY-kA-fl5"/>
+                            <constraint firstItem="xyZ-uA-t0R" firstAttribute="top" secondItem="WzG-wx-sAy" secondAttribute="bottom" id="ePN-iY-CgS"/>
                             <constraint firstItem="WzG-wx-sAy" firstAttribute="trailing" secondItem="Dy1-FX-ddD" secondAttribute="trailing" constant="-14" id="iZb-dF-nsw"/>
                             <constraint firstItem="Dy1-FX-ddD" firstAttribute="trailing" secondItem="LKz-J3-wKD" secondAttribute="trailing" constant="14" id="idm-cR-NYa"/>
-                            <constraint firstItem="Id7-T7-g7r" firstAttribute="leading" secondItem="Dy1-FX-ddD" secondAttribute="leading" id="kEx-hy-kB3"/>
-                            <constraint firstItem="Id7-T7-g7r" firstAttribute="top" secondItem="LKz-J3-wKD" secondAttribute="bottom" constant="14" id="mV7-Q4-4DA"/>
+                            <constraint firstItem="Dy1-FX-ddD" firstAttribute="bottom" secondItem="LKz-J3-wKD" secondAttribute="bottom" constant="125" id="jZG-Pa-gVZ"/>
+                            <constraint firstItem="Id7-T7-g7r" firstAttribute="top" secondItem="bCI-uY-sP4" secondAttribute="bottom" id="nzR-9q-DpY"/>
+                            <constraint firstItem="Dy1-FX-ddD" firstAttribute="bottom" secondItem="k9k-5C-irF" secondAttribute="bottom" constant="81" id="zAO-xI-tv3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Dy1-FX-ddD"/>
                     </view>
                     <navigationItem key="navigationItem" id="MII-4p-4XZ"/>
                     <connections>
+                        <outlet property="billStackView" destination="uyp-a0-G7H" id="X40-dX-0NI"/>
                         <outlet property="buttonsView" destination="Rd0-MR-ty1" id="47q-Q1-MIv"/>
                         <outlet property="cartTableView" destination="LKz-J3-wKD" id="811-at-5ok"/>
                         <outlet property="clientAdressTextField" destination="xiy-XW-V6R" id="3lP-bS-hjH"/>
                         <outlet property="clientCellPhoneTextField" destination="tD1-XL-ned" id="yUC-5S-iZJ"/>
                         <outlet property="clientDescriptionTextField" destination="RxZ-O1-WMM" id="l7n-Fk-nxH"/>
                         <outlet property="clientNameTextField" destination="cBB-e9-NHz" id="wpx-cE-NeD"/>
+                        <outlet property="emptyButtonForHide" destination="k9k-5C-irF" id="S3R-1L-xy5"/>
                         <outlet property="feebackTypeSelectorButton" destination="BFW-42-suV" id="q4N-cv-Drb"/>
+                        <outlet property="feedBackBlankButton" destination="bCI-uY-sP4" id="gmo-Ny-kYF"/>
+                        <outlet property="feedBackTopConstraint" destination="6Ad-5Z-tGb" id="o22-Pl-7Ge"/>
+                        <outlet property="feedbackBlankView" destination="Id7-T7-g7r" id="YZY-mK-Dzz"/>
                         <outlet property="lowestConstraint" destination="eI6-YN-pBO" id="HCh-IK-QCo"/>
                         <outlet property="orderPriceLabel" destination="KI9-td-d1c" id="VGN-AK-s01"/>
                         <outlet property="scrollView" destination="5vd-4F-z3z" id="G1v-4K-yKQ"/>
@@ -1757,7 +1792,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZIC-Q9-PVy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="775" y="-223"/>
+            <point key="canvasLocation" x="773.60000000000002" y="-223.15270935960592"/>
         </scene>
         <!--User Sliding MenuVC-->
         <scene sceneID="6h2-J8-4nd">
@@ -4568,6 +4603,7 @@
         <image name="car" catalog="system" width="128" height="93"/>
         <image name="cart" catalog="system" width="128" height="102"/>
         <image name="cart.badge.plus" catalog="system" width="128" height="98"/>
+        <image name="chevron.up" catalog="system" width="128" height="72"/>
         <image name="circle.grid.3x3.fill" catalog="system" width="128" height="112"/>
         <image name="florentiniLogoImage" width="1280" height="714"/>
         <image name="house" catalog="system" width="128" height="110"/>

@@ -158,7 +158,7 @@ extension EmployerOrdersViewController: UITableViewDelegate, UITableViewDataSour
                 self.order.remove(at: indexPath.row)
                 self.tableView.deleteRows(at: [indexPath], with: .automatic)
                 self.viewDidLoad()
-                self.present(UIAlertController.completionDone(title: "Эттеншн", message: "Заказ успершно архивирован"), animated: true)
+                self.present(UIAlertController.completionDoneTwoSec(title: "Эттеншн", message: "Заказ успершно архивирован"), animated: true)
                 complition(true)
             }), animated: true)
         }
@@ -188,7 +188,7 @@ extension EmployerOrdersViewController: UITableViewDelegate, UITableViewDataSour
                 self.order.remove(at: indexPath.row)
                 self.tableView.deleteRows(at: [indexPath], with: .automatic)
                 self.viewDidLoad()
-                self.present(UIAlertController.completionDone(title: "Эттеншн", message: "Заказ успершно удален"), animated: true)
+                self.present(UIAlertController.completionDoneTwoSec(title: "Эттеншн", message: "Заказ успершно удален"), animated: true)
                 complition(true)
             }), animated: true)
         }

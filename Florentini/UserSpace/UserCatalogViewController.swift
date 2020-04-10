@@ -83,7 +83,7 @@ private extension UserCatalogViewController {
             print(error.localizedDescription)
         }
         
-        cartCondition()
+        cartImageCondition()
     }
     
 }
@@ -104,7 +104,7 @@ extension UserCatalogViewController: UITableViewDelegate, UITableViewDataSource 
         description = fetch.productDescription,
         category = fetch.productCategory,
         stock = fetch.stock
-
+        
         cell.delegate = self
         cell.fill(name: name, price: price, description: description, category: category, stock: stock)
         
@@ -209,19 +209,19 @@ extension UserCatalogViewController: UserCatalogTableViewCellDelegate {
             let stock = cell.stock,
             let imageData: NSData = image?.pngData() as NSData? else {return}
         
-        CoreDataManager.shared.saveForCart(name: name, category: category, price: price, quantity: 1, stock: stock)
-        
-        cartCondition()
-        
-        UserDefaults.standard.set(imageData, forKey: name)
+        CoreDataManager.shared.saveForCart(name: name, category: category, price: price, quantity: 1, stock: stock, imageData: imageData, success: {
+            self.cartImageCondition()
+            self.present(UIAlertController.completionDoneHalfSec(title: "Товар", message: "Добавлен"), animated: true)
+        }) {
+            self.present(UIAlertController.completionDoneTwoSec(title: "Внимание!", message: "Произошла ошибка. Товар НЕ добавлен"), animated: true)
+        }
     }
-    
 }
 
 //MARK: - Проверна на наличие предзаказа, чтобы изменить / не изменять картинку Cart
 private extension UserCatalogViewController {
     
-    func cartCondition() {
+    func cartImageCondition() {
         CoreDataManager.shared.fetchPreOrder { (preOrderEntity) -> (Void) in
             let preOrderAmount = preOrderEntity.count
             
