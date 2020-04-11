@@ -21,13 +21,22 @@ class EmployerOrdersViewController: UIViewController {
         
     }
     
+    //MARK: prepare(for segue)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "OrderDetailSegue", let OrderDetailVC = segue.destination as? EmployerOrderDetailTableViewController, let index = tableView.indexPathsForSelectedRows?.first?.row {
+            let detail = order[index]
+            let currentDeviceID = detail.currentDeviceID
+            OrderDetailVC.currentDeviceID = currentDeviceID
+        }
+    }
+    
     //MARK: - Нажатие кнопки Меню
-    @IBAction func workerMenuTapped(_ sender: UIButton) {
+    @IBAction private func workerMenuTapped(_ sender: UIButton) {
         showWorkerSlideInMethod()
     }
     
     //MARK: - Переход в Чат
-    @IBAction func chatTapped(_ sender: UIButton) {
+    @IBAction private func chatTapped(_ sender: UIButton) {
         transitionToEmployerChat()
     }
     
@@ -41,22 +50,11 @@ class EmployerOrdersViewController: UIViewController {
     private var orderAdditions = [DatabaseManager.OrderAddition]()
     
     //MARK: - TableView
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
     //MARK: - Label
-    @IBOutlet weak var ordersCountLabel: UILabel!
-    
-//    prepar fore segue (segue) {
-//    segue.id = "" {
-//    let indexpath = tableView.indexpathforselecterow
-//     let order = orders[indexpath.row]
-//    segue.destination
-//    есть необходимое в рокет лаунч Дитаел
-//
-//
-//
-//
-//
+    @IBOutlet private weak var ordersCountLabel: UILabel!
+        
 }
 
 
@@ -133,7 +131,6 @@ extension EmployerOrdersViewController: UITableViewDelegate, UITableViewDataSour
         
         return cell
     }
-    //Передать ключик черещ didSelectRow at index
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let archive = archiveAction(at: indexPath)

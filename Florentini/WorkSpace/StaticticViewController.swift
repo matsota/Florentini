@@ -24,7 +24,7 @@ class StaticticViewController: UIViewController {
     //MARK: - Статистика
     
     //MARK: - Выбор количества покупок, относительно которых будет считаться постоянный покупатель. Default = 5
-    @IBAction func regularCusmotersTapped(_ sender: UIButton) {
+    @IBAction private func regularCusmotersTapped(_ sender: UIButton) {
         self.present(UIAlertController.setNumber(success: { (number) in
             self.receiptsCountOfRegularCustomers = number
             self.regularCusmotersButton.setTitle("Постоянные Клиенты (больше \(self.receiptsCountOfRegularCustomers) покупок)", for: .normal)
@@ -32,18 +32,18 @@ class StaticticViewController: UIViewController {
         }), animated: true)
     }
     //MARK: - По частоте покупки
-    @IBAction func byFrequencyTapped(_ sender: UIButton) {
+    @IBAction private func byFrequencyTapped(_ sender: UIButton) {
         hideUnhideFrequency()
     }
     
     //MARK: - По Чекам
-    @IBAction func byReceiptsTapped(_ sender: UIButton) {
+    @IBAction private func byReceiptsTapped(_ sender: UIButton) {
         hideUnhideReceipts()
     }
     
     //MARK: Редактирование статистики по чекам.
     //MARK - Default = 3000
-    @IBAction func receiptsOverSomePriceTapped(_ sender: UIButton) {
+    @IBAction private func receiptsOverSomePriceTapped(_ sender: UIButton) {
         self.present(UIAlertController.setNumber(success: { (number) in
             self.overSomePrice = number
             self.receiptsOverSomePriceButton.setTitle("Чеков на сумму > \(number) грн", for: .normal)
@@ -51,7 +51,7 @@ class StaticticViewController: UIViewController {
         }), animated: true)
     }
     //MARK - Default = 700
-    @IBAction func receiptsLessSomePriceTapped(_ sender: UIButton) {
+    @IBAction private func receiptsLessSomePriceTapped(_ sender: UIButton) {
         self.present(UIAlertController.setNumber(success: { (number) in
             self.lessSomePrice = number
             self.receiptsLessSomePriceButton.setTitle("Чеков на сумму < \(number) грн", for: .normal)
@@ -60,16 +60,12 @@ class StaticticViewController: UIViewController {
     }
     
     //MARK: - По популярности
-    @IBAction func byPopularityTapped(_ sender: UIButton) {
+    @IBAction private func byPopularityTapped(_ sender: UIButton) {
         hideUnhidePopularity()
     }
     
     
     //MARK: - Implementation
-    private let alert = UIAlertController()
-    //    private var order = [DatabaseManager.Order]()
-    //    private var orderAddition = [DatabaseManager.OrderAddition]()
-    
     private var receiptsCountOfRegularCustomers = 5
     private var overSomePrice = 3000
     private var lessSomePrice = 700

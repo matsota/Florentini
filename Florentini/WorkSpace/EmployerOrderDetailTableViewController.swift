@@ -13,10 +13,10 @@ class EmployerOrderDetailTableViewController: UITableViewController {
     
     //MARK: - Implementation
     private var orderAddition = [DatabaseManager.OrderAddition]()
-    private let alert = UIAlertController()
+    var currentDeviceID = String()
     
-    
-    @IBOutlet var orderDetailTableView: UITableView!
+    //MARK: - Table View
+    @IBOutlet private var orderDetailTableView: UITableView!
     
     
     //MARK: - Override
@@ -25,7 +25,7 @@ class EmployerOrderDetailTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NetworkManager.shared.downloadOrderdsAddition(success: { (orders) in
+        NetworkManager.shared.downloadOrderdsAddition(key: currentDeviceID,success: { (orders) in
             self.orderAddition = orders
             self.orderDetailTableView.reloadData()
         }) { error in
@@ -36,7 +36,6 @@ class EmployerOrderDetailTableViewController: UITableViewController {
     
     // MARK: - Table view
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return orderAddition.count
     }
     
@@ -69,13 +68,6 @@ class EmployerOrderDetailTableViewController: UITableViewController {
         return cell
     }
     
-    //MARK: - Очистка CoreData
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(true)
-        CoreDataManager.shared.deleteAllData(entity: NavigationCases.UsersInfoCases.OrderDetailPathEntity.rawValue) {
-        }
-    }
-    
 }
 
 
@@ -88,11 +80,3 @@ class EmployerOrderDetailTableViewController: UITableViewController {
 
 //MARK: - Extensions:
 
-//MARK: - For Overrides
-private extension EmployerOrderDetailTableViewController {
-    
-    //MARK: Для ViewDidLoad
-    func forViewDidLoad() {
-    }
-    
-}

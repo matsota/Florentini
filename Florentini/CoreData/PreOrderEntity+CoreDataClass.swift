@@ -22,4 +22,5 @@ public class PreOrderEntity: NSManagedObject {
         }
         return dict
     }
+    
 }

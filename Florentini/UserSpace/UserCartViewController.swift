@@ -23,13 +23,27 @@ class UserCartViewController: UIViewController {
         
     }
     
-    //MARK: - Нажатие кнопки Меню
+    //MARK: - TransitionMenu button Tapped
     @IBAction private func menuTapped(_ sender: UIButton) {
-        showUsersSlideInMethod()
+        slideMethod(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
     }
     
+    //MARK: - Transition seletion
+    @IBAction func transitionAccepted(_ sender: UIButton) {
+        guard let title = sender.currentTitle,
+        let view = transitionView,
+        let constraint = transitionViewLeftConstraint,
+        let button = transitionDismissButton else {return}
+
+        transitionPerform(by: title, for: view, with: constraint, dismiss: button)
+    }
     
+    //MARK: - Transition Dismiss
+    @IBAction func transitionDismissTapped(_ sender: UIButton) {
+        slideMethod(for: self.transitionView, constraint: self.transitionViewLeftConstraint, dismissBy: self.transitionDismissButton)
+    }
     
+    //MARK: - Cart button Tapped
     @IBAction private func feedBackBlankTapped(_ sender: Any) {
         feedBackTopConstraint.constant = hideAndShowFeedbackBlank()
         UIView.animate(withDuration: 0.3) {
@@ -37,16 +51,18 @@ class UserCartViewController: UIViewController {
         }
     }
     
-    //MARK: - Нажатие кнопки Обратной связи
+    //MARK: - Feedback button Tapped
     @IBAction private func feedbackTypeSelectorTapped(_ sender: DesignButton) {
         guard let sender = sender.titleLabel!.text else {return}
-        showOptionsMethod(option: sender)
+        showFeedbackOptions(option: sender)
     }
     
-    @IBAction private func feedbackTypeTapped(_ sender: DesignButton) {
-        selectionMethod(self, sender)
+    //MARK: - Feedback Selected
+    @IBAction private func feedbackSelection(_ sender: DesignButton) {
+        feedbackSelected(by: sender)
     }
     
+    //MARK: - Hide feedback form
     @IBAction private func emptyButtonForHideTapped(_ sender: Any) {
         feedBackTopConstraint.constant = hideAndShowFeedbackBlank()
         UIView.animate(withDuration: 0.3) {
@@ -54,7 +70,7 @@ class UserCartViewController: UIViewController {
         }
     }
     
-    //MARK: - Подтвреждение заказа
+    //MARK: - Order confirmation
     @IBAction private func confirmTapped(_ sender: UIButton) {
         confirm()
     }
@@ -68,38 +84,40 @@ class UserCartViewController: UIViewController {
     private var selectedFeedbackType = String()
     private var orderBill = Int64()
     
-    //MARK: Views Outlets
+    //MARK: - Views
     @IBOutlet private weak var feedbackBlankView: UIView!
     @IBOutlet private weak var buttonsView: UIView!
     @IBOutlet private weak var tableCountZeroView: UIView!
+    @IBOutlet private weak var transitionView: UIView!
     
     //MARK: - StackView
     @IBOutlet private weak var billStackView: UIStackView!
     
-    //MARK: ScrollView
+    //MARK: - ScrollView
     @IBOutlet private weak var scrollView: UIScrollView!
     
-    //MARK: TableView Outlets
+    //MARK: - TableView Outlets
     @IBOutlet private weak var cartTableView: UITableView!
     
-    //MARK: TextFields Outlets
+    //MARK: - TextFields Outlets
     @IBOutlet private weak var clientNameTextField: UITextField!
     @IBOutlet private weak var clientCellPhoneTextField: UITextField!
     @IBOutlet private weak var clientAdressTextField: UITextField!
     @IBOutlet private weak var clientDescriptionTextField: UITextField!
     @IBOutlet private weak var orderPriceLabel: UILabel!
     
-    //MARK: Buttons Outlets
+    //MARK: - Buttons Outlets
     @IBOutlet private var feedbackTypeBttnsCellection: [UIButton]!
     @IBOutlet private weak var feebackTypeSelectorButton: UIButton!
     @IBOutlet private weak var emptyButtonForHide: UIButton!
     @IBOutlet private weak var feedBackBlankButton: DesignButton!
+    @IBOutlet private weak var transitionDismissButton: UIButton!
     
     
-    //MARK: Constrains Outlets
+    //MARK: - Constrains Outlets
     @IBOutlet private weak var lowestConstraint: NSLayoutConstraint!
     @IBOutlet private weak var feedBackTopConstraint: NSLayoutConstraint!
-    
+    @IBOutlet private weak var transitionViewLeftConstraint: NSLayoutConstraint!
     
 }
 
@@ -111,13 +129,15 @@ class UserCartViewController: UIViewController {
 
 
 
-//MARK: - Extention HomeViewControllerr
+//MARK: - Extention
 
 //MARK: - For Overrides
 private extension UserCartViewController {
     
     //MARK: Для ViewDidLoad
     func forViewDidLoad() {
+        transitionViewLeftConstraint.constant = -transitionView.bounds.width
+        
         CoreDataManager.shared.fetchPreOrder { (preOrderEntity) -> (Void) in
             self.preOrder = preOrderEntity
             
@@ -135,21 +155,6 @@ private extension UserCartViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         hideKeyboardWhenTappedAround()
-    }
-    
-}
-
-
-//MARK: - byextention by UIVC-TransitioningDelegate
-extension UserCartViewController: UIViewControllerTransitioningDelegate {
-    
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        slidingMenu.isPresented = true
-        return slidingMenu
-    }
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        slidingMenu.isPresented = false
-        return slidingMenu
     }
     
 }
@@ -202,10 +207,9 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
     
 }
 
-
 //MARK: -
 
-//MARK: - Прокрутка слайдера для выбора количества + Метод (Изменение конечной стоимости продукта в зависимости от выбранного количества)
+//MARK: - Slider Values & Receipt changes
 extension UserCartViewController: UserCartTableViewCellDelegate {
     
     func sliderValue(_ cell: UserCartTableViewCell) {
@@ -225,34 +229,6 @@ extension UserCartViewController: UserCartTableViewCellDelegate {
     
 }
 
-//MARK: - Появление / Выбор вариантов обратной связи
-private extension UserCartViewController {
-    
-    func selectionMethod(_ class: UIViewController, _ sender: UIButton) {
-        guard let title = sender.currentTitle, let feedbackType = NavigationCases.FeedbackTypesCases(rawValue: title) else {return}
-        switch feedbackType {
-        case .cellphone:
-            showOptionsMethod(option: NavigationCases.FeedbackTypesCases.cellphone.rawValue)
-        case .viber:
-            showOptionsMethod(option: NavigationCases.FeedbackTypesCases.viber.rawValue)
-        case .telegram:
-            showOptionsMethod(option: NavigationCases.FeedbackTypesCases.telegram.rawValue)
-        }
-    }
-    
-    func showOptionsMethod(option: String) {
-        selectedFeedbackType = option
-        feedbackTypeBttnsCellection.forEach { (buttons) in
-            UIView.animate(withDuration: 0.2) {
-                buttons.isHidden = !buttons.isHidden
-                self.buttonsView.layoutIfNeeded()
-            }
-        }
-        feebackTypeSelectorButton.setTitle(option, for: .normal)
-    }
-    
-}
-
 //MARK: - Hide And Show Any
 private extension UserCartViewController {
     
@@ -264,6 +240,7 @@ private extension UserCartViewController {
             self.view.layoutIfNeeded()
         }
     }
+    
     @objc func keyboardWillHide(notification: Notification) {
         self.billStackView.isHidden = false
         guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber else {return}
@@ -272,7 +249,6 @@ private extension UserCartViewController {
             self.view.layoutIfNeeded()
         }
     }
-    
     
     func hideAndShowFeedbackBlank() -> CGFloat {
         let up = UIImage(systemName: "chevron.up"),
@@ -289,9 +265,36 @@ private extension UserCartViewController {
         return height
     }
     
+    func feedbackSelected(by sender: UIButton) {
+        guard let title = sender.currentTitle, let feedbackType = NavigationCases.FeedbackTypesCases(rawValue: title) else {return}
+        let cellphone = NavigationCases.FeedbackTypesCases.cellphone.rawValue,
+        viber = NavigationCases.FeedbackTypesCases.viber.rawValue,
+        telegram = NavigationCases.FeedbackTypesCases.telegram.rawValue
+        
+        switch feedbackType {
+        case .cellphone:
+            showFeedbackOptions(option: cellphone)
+        case .viber:
+            showFeedbackOptions(option: viber)
+        case .telegram:
+            showFeedbackOptions(option: telegram)
+        }
+    }
+    
+    func showFeedbackOptions(option: String) {
+        selectedFeedbackType = option
+        feedbackTypeBttnsCellection.forEach { (buttons) in
+            UIView.animate(withDuration: 0.2) {
+                buttons.isHidden = !buttons.isHidden
+                self.buttonsView.layoutIfNeeded()
+            }
+        }
+        feebackTypeSelectorButton.setTitle(option, for: .normal)
+    }
+    
 }
 
-//MARK: - Отправка предзаза из coredata в firebase
+//MARK: - Send order from CoreData to Firebase
 private extension UserCartViewController {
     
     func confirm() {
@@ -313,6 +316,7 @@ private extension UserCartViewController {
             var jsonArray: [[String: Any]] = []
             
             for i in preOrder {
+                i.productImage = nil
                 let preOrderJSON = i.toJSON()
                 jsonArray.append(preOrderJSON)
             }
@@ -339,6 +343,7 @@ private extension UserCartViewController {
             }
         }
     }
+    
 }
 
 

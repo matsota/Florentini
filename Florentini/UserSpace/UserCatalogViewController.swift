@@ -20,44 +20,64 @@ class UserCatalogViewController: UIViewController {
         
     }
     
-    //MARK: - Нажатие кнопки Меню
-    @IBAction func menuTapped(_ sender: UIButton) {
-        showUsersSlideInMethod()
+    //MARK: - TransitionMenu button Tapped
+    @IBAction private func menuTapped(_ sender: UIButton) {
+        slideMethod(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
     }
     
-    //MARK: - Нажатие кнопки Cart
-    @IBAction func cartTapped(_ sender: UIButton) {
+    //MARK: - Transition seletion
+    @IBAction func transitionAccepted(_ sender: UIButton) {
+        guard let title = sender.currentTitle,
+            let view = transitionView,
+            let constraint = transitionViewLeftConstraint,
+            let button = transitionDismissButton else {return}
+        
+        transitionPerform(by: title, for: view, with: constraint, dismiss: button)
+    }
+    
+    //MARK: - Decline to transition
+    @IBAction func transitionDismissTapped(_ sender: UIButton) {
+        slideMethod(for: self.transitionView, constraint: self.transitionViewLeftConstraint, dismissBy: self.transitionDismissButton)
+    }
+    //MARK: - Cart button Tapped
+    @IBAction private func cartTapped(_ sender: UIButton) {
         transitionToUsersCart()
     }
     
-    //MARK: - Появление вариантров выбора для фильтра
-    @IBAction func startFiltering(_ sender: DesignButton) {
+    //MARK: - Filter option appearance
+    @IBAction private func startFiltering(_ sender: DesignButton) {
         guard let sender = sender.titleLabel!.text else {return}
         showOptionsMethod(option: sender)
     }
     
-    //MARK: - Выбор категории для Фильтра
-    @IBAction func endFiltering(_ sender: DesignButton) {
+    //MARK: - Category Picker
+    @IBAction private func endFiltering(_ sender: DesignButton) {
         selectionMethod(self, sender)
     }
     
     //MARK: - Private
+    
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
     private let alert = UIAlertController()
     private var productInfo = [DatabaseManager.ProductInfo]()
     private var selectedCategory: String?
     
-    //MARK: View
+    //MARK: - View
     @IBOutlet private weak var buttonsView: UIView!
+    @IBOutlet private weak var transitionView: UIView!
     
-    //MARK: Button Outlet
+    //MARK: - Button Outlet
     @IBOutlet private var allFilterButtonsCollection: [DesignButton]!
     @IBOutlet private weak  var filterButton: DesignButton!
     @IBOutlet private weak var cartButton: UIButton!
+    @IBOutlet private weak var transitionDismissButton: UIButton!
     
     //MARK: - TableView Outlet
     @IBOutlet private weak var tableView: UITableView!
+    
+    //MARK: - Constraint
+    @IBOutlet private weak var transitionViewLeftConstraint: NSLayoutConstraint!
     
 }
 
@@ -83,6 +103,7 @@ private extension UserCatalogViewController {
             print(error.localizedDescription)
         }
         
+        transitionViewLeftConstraint.constant = -transitionView.bounds.width
         cartImageCondition()
     }
     
@@ -113,23 +134,7 @@ extension UserCatalogViewController: UITableViewDelegate, UITableViewDataSource 
     
 }
 
-//MARK: -
-
-//MARK: - Появление SlidingMenu
-extension UserCatalogViewController: UIViewControllerTransitioningDelegate {
-    
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        slidingMenu.isPresented = true
-        return slidingMenu
-    }
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        slidingMenu.isPresented = false
-        return slidingMenu
-    }
-    
-}
-
-//MARK: - Появление вариантов Категорий для отфильтровывания продукции
+//MARK: - Filter categories appearance
 private extension UserCatalogViewController {
     func showOptionsMethod(option: String) {
         selectedCategory = option
@@ -151,7 +156,7 @@ private extension UserCatalogViewController {
     }
 }
 
-//MARK: - Метод фильтрации продукции по категориям
+//MARK: - Category Picked
 private extension UserCatalogViewController {
     func selectionMethod(_ class: UIViewController, _ sender: UIButton) {
         guard let title = sender.currentTitle, let categories = NavigationCases.ProductCategoriesCases(rawValue: title) else {return}
@@ -196,7 +201,7 @@ private extension UserCatalogViewController {
     }
 }
 
-//MARK: - by UserCatalog-TVCell-Delegate
+//MARK: - by Table View Cell Delegate
 extension UserCatalogViewController: UserCatalogTableViewCellDelegate {
     
     //MARK: Adding to user's Cart
@@ -218,7 +223,7 @@ extension UserCatalogViewController: UserCatalogTableViewCellDelegate {
     }
 }
 
-//MARK: - Проверна на наличие предзаказа, чтобы изменить / не изменять картинку Cart
+//MARK: - Cart image condition
 private extension UserCatalogViewController {
     
     func cartImageCondition() {

@@ -22,12 +22,12 @@ class EmployerChatViewController: UIViewController {
     }
     
     //MARK: - Нажатие кнопки Меню
-    @IBAction func workerMenuTapped(_ sender: UIButton) {
+    @IBAction private func workerMenuTapped(_ sender: UIButton) {
         showWorkerSlideInMethod()
     }
     
     //MARK: - Добавить сообщение
-    @IBAction func typeMessage(_ sender: UIButton) {
+    @IBAction private func typeMessage(_ sender: UIButton) {
         guard name != "" else {return}
         self.present(UIAlertController.sendToChat(name: name), animated: true)
     }
@@ -38,8 +38,6 @@ class EmployerChatViewController: UIViewController {
     
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
-    private let alert = UIAlertController()
-    
     private var currentWorkerInfo = [DatabaseManager.WorkerInfo]()
     private var messagesArray = [DatabaseManager.ChatMessages]()
     
@@ -47,7 +45,7 @@ class EmployerChatViewController: UIViewController {
     private var position = String()
     
     //MARK: - TableView Outlet
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
 }
 

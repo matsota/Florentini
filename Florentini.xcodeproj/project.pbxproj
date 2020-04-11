@@ -49,7 +49,6 @@
 		8FE3F69824035BE4003001CA /* UserAboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F69524035BE4003001CA /* UserAboutUsViewController.swift */; };
 		8FE3F69924035BE4003001CA /* UserCatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F69624035BE4003001CA /* UserCatalogViewController.swift */; };
 		8FE3F69D24035BED003001CA /* UserHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F69B24035BED003001CA /* UserHomeViewController.swift */; };
-		8FE3F69F24035BF7003001CA /* UserSlidingMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F69E24035BF6003001CA /* UserSlidingMenuVC.swift */; };
 		8FFDA507240EC1D700A63A02 /* UserCatalogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFDA506240EC1D700A63A02 /* UserCatalogTableViewCell.swift */; };
 		8FFEDF262407EC3500D894FD /* NewProductSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFEDF252407EC3500D894FD /* NewProductSetViewController.swift */; };
 		E86CADEFD3FB618B8C6FB2C4 /* Pods_Florentini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6A7F0BFE6E9D9665F2F01FE /* Pods_Florentini.framework */; };
@@ -101,7 +100,6 @@
 		8FE3F69524035BE4003001CA /* UserAboutUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAboutUsViewController.swift; sourceTree = "<group>"; };
 		8FE3F69624035BE4003001CA /* UserCatalogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCatalogViewController.swift; sourceTree = "<group>"; };
 		8FE3F69B24035BED003001CA /* UserHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserHomeViewController.swift; sourceTree = "<group>"; };
-		8FE3F69E24035BF6003001CA /* UserSlidingMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSlidingMenuVC.swift; sourceTree = "<group>"; };
 		8FFDA506240EC1D700A63A02 /* UserCatalogTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCatalogTableViewCell.swift; sourceTree = "<group>"; };
 		8FFEDF252407EC3500D894FD /* NewProductSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProductSetViewController.swift; sourceTree = "<group>"; };
 		D6A7F0BFE6E9D9665F2F01FE /* Pods_Florentini.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Florentini.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,7 +150,6 @@
 			children = (
 				8F2062AB23FF6292007C481A /* UIAlertController + Custom.swift */,
 				8F1778222427E19E00164C0D /* IBDesignable + Buttons.swift */,
-				8FE3F69E24035BF6003001CA /* UserSlidingMenuVC.swift */,
 				8F2062AD23FF641C007C481A /* EmployerSlidingMenuVC.swift */,
 				8FD4E4E223FCF01000C62FA5 /* SlideInTransitionMenu.swift */,
 				8F4506D3242A811400759C47 /* UIVC + Custom.swift */,
@@ -416,7 +413,6 @@
 				8F95742724169DDB00A4EF6E /* EmployerCatalogTableViewCell.swift in Sources */,
 				8F4506D4242A811400759C47 /* UIVC + Custom.swift in Sources */,
 				8FD4E4C323FCD1D800C62FA5 /* SceneDelegate.swift in Sources */,
-				8FE3F69F24035BF7003001CA /* UserSlidingMenuVC.swift in Sources */,
 				8F2062AE23FF641C007C481A /* EmployerSlidingMenuVC.swift in Sources */,
 				8F8D7496243B70B100C7EF7C /* String + Custom.swift in Sources */,
 				8F2062BA23FF703A007C481A /* EmployerProfileViewController.swift in Sources */,

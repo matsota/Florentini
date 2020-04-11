@@ -22,22 +22,22 @@ class EmployerProfileViewController: UIViewController {
     }
     
     //MARK: - Нажатие кнопки Меню
-    @IBAction func workerMenuTapped(_ sender: UIButton) {
+    @IBAction private func workerMenuTapped(_ sender: UIButton) {
         showWorkerSlideInMethod()
     }
     
     //MARK: - Перехрод в Чат
-    @IBAction func chatTapped(_ sender: UIButton) {
+    @IBAction private func chatTapped(_ sender: UIButton) {
         transitionToEmployerChat()
     }
     
     //MARK: - Переход в Моделирование продукта
-    @IBAction func changePasswordTapped(_ sender: DesignButton) {
+    @IBAction private func changePasswordTapped(_ sender: DesignButton) {
         passwordView.isHidden = !passwordView.isHidden
     }
     
     //MARK: - Изменение пароля сотрудника
-    @IBAction func passwordConfirmTapped(_ sender: UIButton) {
+    @IBAction private func passwordConfirmTapped(_ sender: UIButton) {
         changesConfirmed()
     }
     
@@ -45,8 +45,6 @@ class EmployerProfileViewController: UIViewController {
     
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
-    private let alert = UIAlertController()
-    
     private var currentWorkerInfo = [DatabaseManager.WorkerInfo]()
     
     //MARK: - View

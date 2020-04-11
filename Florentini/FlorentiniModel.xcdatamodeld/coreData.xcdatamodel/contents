@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="OrderDetailPathEntity" representedClassName="OrderDetailPathEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="path" optional="YES" attributeType="String"/>
-    </entity>
     <entity name="PreOrderEntity" representedClassName="PreOrderEntity" syncable="YES">
         <attribute name="productCategory" optional="YES" attributeType="String"/>
         <attribute name="productImage" optional="YES" attributeType="Binary"/>
@@ -12,7 +9,6 @@
         <attribute name="stock" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="OrderDetailPathEntity" positionX="-54" positionY="27" width="128" height="58"/>
         <element name="PreOrderEntity" positionX="-54" positionY="0" width="128" height="133"/>
     </elements>
 </model>

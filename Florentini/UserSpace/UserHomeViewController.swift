@@ -9,15 +9,7 @@
 import UIKit
 
 class UserHomeViewController: UIViewController {
-    
-    //
-    
-// dispatch group for for in carodeta deletion
-//
-//
-//
-//
-    
+
     //MARK: - Override
     
     //MARK: viewDidLoad
@@ -29,13 +21,28 @@ class UserHomeViewController: UIViewController {
         
     }
     
-    //MARK: - Нажатие кнопки Меню
-    @IBAction func menuTapped(_ sender: UIButton) {
-        showUsersSlideInMethod()
+    //MARK: - TransitionMenu button Tapped 
+    @IBAction private func menuTapped(_ sender: UIButton) {
+        slideMethod(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
     }
     
-    //MARK: - Нажатие кнопки Cart
-    @IBAction func cartTapped(_ sender: UIButton) {
+    //MARK: - Transition seletion
+    @IBAction func transitionAccepted(_ sender: UIButton) {
+        guard let title = sender.currentTitle,
+        let view = transitionView,
+        let constraint = transitionViewLeftConstraint,
+        let button = transitionDismissButton else {return}
+
+        transitionPerform(by: title, for: view, with: constraint, dismiss: button)
+    }
+    
+    //MARK: - Decline to transition
+    @IBAction func transitionDismissTapped(_ sender: UIButton) {
+        slideMethod(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
+    }
+    
+    //MARK: - Cart button Tapped
+    @IBAction private func cartTapped(_ sender: UIButton) {
         transitionToUsersCart()
     }
     
@@ -45,14 +52,20 @@ class UserHomeViewController: UIViewController {
     private let slidingMenu = SlideInTransitionMenu()
     private var productInfo = [DatabaseManager.ProductInfo]()
     
-    //MARK: TableView Outlet
+    //MARK: - TableView Outlet
     @IBOutlet private weak var tableView: UITableView!
     
-    //MARK: View
+    //MARK: - View
     @IBOutlet private weak var noneStocksView: UIView!
+    @IBOutlet private weak var transitionView: UIView!
     
-    //MARK: Button
+    //MARK: - Button
     @IBOutlet private weak var cartButton: UIButton!
+    @IBOutlet private weak var transitionDismissButton: UIButton!
+    
+    //MARK: - Contstraint
+    @IBOutlet private weak var transitionViewLeftConstraint: NSLayoutConstraint!
+    
 }
 
 
@@ -77,6 +90,7 @@ private extension UserHomeViewController {
             print(error.localizedDescription)
         }
         
+        transitionViewLeftConstraint.constant = -transitionView.bounds.width
         cartImageCondition()
     }
     
@@ -95,21 +109,6 @@ private extension UserHomeViewController {
         }
         
     }
-}
-
-
-//MARK: - by UIVC-TransitioningDelegate
-extension UserHomeViewController: UIViewControllerTransitioningDelegate {
-    
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        slidingMenu.isPresented = true
-        return slidingMenu
-    }
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        slidingMenu.isPresented = false
-        return slidingMenu
-    }
-    
 }
 
 //MARK: - by TableView
@@ -141,10 +140,9 @@ extension UserHomeViewController: UITableViewDataSource, UITableViewDelegate {
     
 }
 
-
 //MARK: -
 
-//MARK: - by User-Home-TVCellDelegate
+//MARK: - by Table View Cell Delegate
 extension UserHomeViewController: UserHomeTableViewCellDelegate {
     
     //MARK: Adding to user's Cart
@@ -166,6 +164,3 @@ extension UserHomeViewController: UserHomeTableViewCellDelegate {
     }
     
 }
-
-
-

@@ -19,19 +19,19 @@ class EmployerFAQViewController: UIViewController {
     }
     
     //MARK: - Нажатие кнопки Меню
-    @IBAction func workerMenuTapped(_ sender: UIButton) {
+    @IBAction private func workerMenuTapped(_ sender: UIButton) {
         showWorkerSlideInMethod()
     }
     
     //MARK: - Переход в Чат
-    @IBAction func chatTapped(_ sender: UIButton) {
+    @IBAction private func chatTapped(_ sender: UIButton) {
         transitionToEmployerChat()
     }
     
     
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
-    private let alert = UIAlertController()
+
 }
 
 

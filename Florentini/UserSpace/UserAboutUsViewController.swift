@@ -20,18 +20,32 @@ class UserAboutUsViewController: UIViewController {
         
     }
     
-    //MARK: - Slider Menu Tapped
-    @IBAction func menuTapped(_ sender: UIButton) {
-        showUsersSlideInMethod()
+    //MARK: - TransitionMenu button Tapped
+    @IBAction private func menuTapped(_ sender: UIButton) {
+        slideMethod(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
+    }
+    
+    //MARK: - Transition seletion
+    @IBAction private func transitionAccepted(_ sender: UIButton) {
+        guard let title = sender.currentTitle,
+            let view = transitionView,
+            let constraint = transitionViewLeftConstraint,
+            let button = transitionDismissButton else {return}
+        
+        transitionPerform(by: title, for: view, with: constraint, dismiss: button)
+    }
+    
+    //MARK: - Transition Dismiss
+    @IBAction private func transitionDismissTapped(_ sender: UIButton) {
+        slideMethod(for: self.transitionView, constraint: self.transitionViewLeftConstraint, dismissBy: self.transitionDismissButton)
     }
     
     //MARK: - Send a review
-    @IBAction func sendReviewTapped(_ sender: UIButton) {
+    @IBAction private func sendReviewTapped(_ sender: UIButton) {
         reviewSent()
     }
     
-    
-    //MARK: - Private:
+    //MARK: - Private
     
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
@@ -39,10 +53,21 @@ class UserAboutUsViewController: UIViewController {
     //MARK: ScrollView
     @IBOutlet private weak var scrollView: UIScrollView!
     
-    //MARK: Outlets
+    //MARK: View
+    @IBOutlet private weak var transitionView: UIView!
+    
+    //MARK: Button
+    @IBOutlet private weak var transitionDismissButton: UIButton!
+    
+    //MARK: TextField
     @IBOutlet private weak var nameTextField: UITextField!
+    
+    //MARK: TextView
     @IBOutlet private weak var reviewTextView: UITextView!
+    
+    //MARK: Constraint
     @IBOutlet private weak var scrollViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var transitionViewLeftConstraint: NSLayoutConstraint!
     
 }
 
@@ -61,32 +86,19 @@ private extension UserAboutUsViewController {
     
     //MARK: Для ViewDidLoad
     func forViewDidLoad() {
+        transitionViewLeftConstraint.constant = -transitionView.bounds.width
+        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         hideKeyboardWhenTappedAround()
         
-        setTextViewPlaceholder()
-        
+        setTextViewPlaceholder(for: reviewTextView)
         
     }
     
 }
 
-//MARK: - SlidingMenu appearance
-extension UserAboutUsViewController: UIViewControllerTransitioningDelegate {
-    
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        slidingMenu.isPresented = true
-        return slidingMenu
-    }
-    
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        slidingMenu.isPresented = false
-        return slidingMenu
-    }
-    
-}
-
+//MARK: - Review method
 private extension UserAboutUsViewController {
     func reviewSent() {
         var name = nameTextField.text
@@ -116,8 +128,7 @@ private extension UserAboutUsViewController {
     }
 }
 
-
-//MARK: - Появение/Сокрытие клавиатуры
+//MARK: - Hide and Show Any
 private extension UserAboutUsViewController {
     
     @objc func keyboardWillShow(notification: Notification) {
@@ -141,25 +152,25 @@ private extension UserAboutUsViewController {
     
 }
 
-//MARK: - by TextView-Delegate + Custom-for-placeholder
+//MARK: - TextView Delegate + Custom
 extension UserAboutUsViewController: UITextViewDelegate {
     
-    func setTextViewPlaceholder() {
-        reviewTextView.text = "Введите текст"
-        reviewTextView.textColor = .systemGray4
-        reviewTextView.font = UIFont(name: "System", size: 13)
+    func setTextViewPlaceholder(for textView: UITextView) {
+        textView.text = "Введите текст"
+        textView.textColor = .systemGray4
+        textView.font = UIFont(name: "System", size: 13)
         
-        reviewTextView.layer.borderWidth = 1
-        reviewTextView.layer.borderColor = UIColor.systemGray4.cgColor
-        reviewTextView.layer.cornerRadius = 5
-        reviewTextView.returnKeyType = .done
-        reviewTextView.delegate = self
+        textView.layer.borderWidth = 1
+        textView.layer.borderColor = UIColor.systemGray4.cgColor
+        textView.layer.cornerRadius = 5
+        textView.returnKeyType = .done
+        textView.delegate = self
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if reviewTextView.text == "Введите текст" {
-            reviewTextView.text = ""
-            reviewTextView.textColor = .black
+        if textView.text == "Введите текст" {
+            textView.text = ""
+            textView.textColor = .black
         }
     }
     

@@ -254,12 +254,7 @@ class NetworkManager {
     }
     
     //MARK: - Подкачать дополнение к заказу
-    func downloadOrderdsAddition(success: @escaping([DatabaseManager.OrderAddition]) -> Void, failure: @escaping(Error) -> Void) {
-        var key = String()
-        CoreDataManager.shared.fetchOrderPath { path -> (Void) in
-            key = path.map({$0.path}).last!!
-        }
-        
+    func downloadOrderdsAddition(key: String, success: @escaping([DatabaseManager.OrderAddition]) -> Void, failure: @escaping(Error) -> Void) {        
         let docRef = db.collection(NavigationCases.UsersInfoCases.order.rawValue).document(key)
         docRef.collection(key).getDocuments(completion: {
             (querySnapshot, _) in

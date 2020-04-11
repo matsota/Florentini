@@ -33,25 +33,6 @@ class CoreDataManager {
         }
     }
     
-    //MARK: - Сохранить ИД клиента для поиска деталей его заказов
-    func saveOrderPath(orderPath: String) {
-        let path = OrderDetailPathEntity(context: PersistenceService.context)
-        path.path = orderPath
-        PersistenceService.saveContext()
-    }
-    
-    //MARK: - Достать ИД Клиента
-    @objc func fetchOrderPath(success: @escaping([OrderDetailPathEntity]) -> (Void)) {
-        let fetchRequest: NSFetchRequest<OrderDetailPathEntity> = OrderDetailPathEntity.fetchRequest()
-        
-        do {
-            let result = try PersistenceService.context.fetch(fetchRequest)
-            success(result)
-        } catch {
-            print("CoreData Fetch Error")
-        }
-    }
-    
     //MARK: - Обновление количества продукта к Заказу
     func updateCart(name: String, quantity: Int) {
         guard let preOrderEntity = try! PersistenceService.context.fetch(PreOrderEntity.fetchRequest()) as? [PreOrderEntity] else {return}

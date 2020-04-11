@@ -114,6 +114,16 @@ class NavigationCases {
     
     //MARK: - Для пользоватей
     
+    enum TranstionCases: String, CaseIterable {
+        
+        case homeScreen = "Главная"
+        case catalogScreen = "Каталог"
+        case feedbackScreen = "О нас"
+        case faqScreen = "FAQ"
+        case website = "Website"
+        
+    }
+    
     //MARK: - Про заказ
     enum UsersInfoCases: String, CaseIterable {
         

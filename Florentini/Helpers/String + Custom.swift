@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 extension String {
     func countCertainString(string: String) -> Int{
         var deviceIDArray = [String]()

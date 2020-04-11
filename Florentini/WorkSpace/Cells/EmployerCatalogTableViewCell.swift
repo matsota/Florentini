@@ -23,7 +23,6 @@ protocol EmployerCatalogTableViewCellDelegate: class {
 class EmployerCatalogTableViewCell: UITableViewCell {
     
     //MARK: - Implementation
-    let alert = UIAlertController()
     var price = Int()
     var category = String()
     var stock = false

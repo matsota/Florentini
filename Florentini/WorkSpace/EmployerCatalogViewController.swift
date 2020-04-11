@@ -49,7 +49,6 @@ class EmployerCatalogViewController: UIViewController {
     
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
-    private let alert = UIAlertController()
     private var productInfo = [DatabaseManager.ProductInfo]()
     private var employerPosition: String?
     private var selectedCategory = String()
@@ -62,8 +61,8 @@ class EmployerCatalogViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     //MARK: - Button
-    @IBOutlet var allFilterButtonsCollection: [DesignButton]!
-    @IBOutlet weak var filterButton: DesignButton!
+    @IBOutlet private var allFilterButtonsCollection: [DesignButton]!
+    @IBOutlet private weak var filterButton: DesignButton!
     
 }
 

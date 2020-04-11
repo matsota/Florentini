@@ -16,44 +16,86 @@ class UserFAQViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-    }
-
-    
-    //MARK: - Нажатие кнопки Меню
-    @IBAction func menuTapped(_ sender: UIButton) {
-        showUsersSlideInMethod()
-    }
-    
-    //MARK: - Показать/Спрятать Ответ на вопрос из FAQ
-    
-    //MARK: Процесс оплаты
-    @IBAction func showHidePaymentProcessTapped(_ sender: UIButton) {
-        paymentProcessDescriptionLabel.isHidden = !paymentProcessDescriptionLabel.isHidden
+        transitionViewLeftConstraint.constant = -transitionView.bounds.width
         
     }
-    //MARK: Варианты Оплаты
-    @IBAction func showHidePaymentOptionsTapped(_ sender: UIButton) {
-        paymentOptionsDescriptionStackView.isHidden = !paymentOptionsDescriptionStackView.isHidden
+    
+    
+    //MARK: - TransitionMenu button Tapped
+    @IBAction private func menuTapped(_ sender: UIButton) {
+        slideMethod(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
     }
-    //MARK: Процесс Доставки
-    @IBAction func showHideDeliveryProcessTapped(_ sender: UIButton) {
-        deliveryProcessDescriptionStackView.isHidden = !deliveryProcessDescriptionStackView.isHidden
+    
+    //MARK: - Transition seletion
+    @IBAction func transitionAccepted(_ sender: UIButton) {
+        guard let title = sender.currentTitle,
+        let view = transitionView,
+        let constraint = transitionViewLeftConstraint,
+        let button = transitionDismissButton else {return}
+
+        transitionPerform(by: title, for: view, with: constraint, dismiss: button)
     }
-    //MARK: Способы Обратной связи
-    @IBAction func showHideFeedbackTapped(_ sender: UIButton) {
-        feedbackDescriptionLabel.isHidden = !feedbackDescriptionLabel.isHidden
+    
+    //MARK: - Transition Dismiss
+    @IBAction private func transitionDismissTapped(_ sender: UIButton) {
+        slideMethod(for: self.transitionView, constraint: self.transitionViewLeftConstraint, dismissBy: self.transitionDismissButton)
+    }
+    
+    //MARK: Hide and show FAQs:
+    
+    //MARK: - Payment process
+    @IBAction private func showHidePaymentProcessTapped(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.3) {
+            self.paymentProcessDescriptionLabel.isHidden = !self.paymentProcessDescriptionLabel.isHidden
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    //MARK: - Payment ptions
+    @IBAction private func showHidePaymentOptionsTapped(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.3) {
+            self.paymentOptionsDescriptionStackView.isHidden = !self.paymentOptionsDescriptionStackView.isHidden
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    //MARK: - Delivery process
+    @IBAction private func showHideDeliveryProcessTapped(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.3) {
+            self.deliveryProcessDescriptionStackView.isHidden = !self.deliveryProcessDescriptionStackView.isHidden
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    //MARK: - Feedback options
+    @IBAction private func showHideFeedbackTapped(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.3) {
+            self.feedbackDescriptionLabel.isHidden = !self.feedbackDescriptionLabel.isHidden
+            self.view.layoutIfNeeded()
+        }
     }
     
     //MARK: - Private
- 
+    
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
     
-    //MARK: Label Outlets
-    @IBOutlet private weak var paymentProcessDescriptionLabel: UILabel!
+    //MARK: - View
+    @IBOutlet private weak var transitionView: UIView!
+    
+    //MARK: - StackView
     @IBOutlet private weak var paymentOptionsDescriptionStackView: UIStackView!
     @IBOutlet private weak var deliveryProcessDescriptionStackView: UIStackView!
+    
+    //MARK: - Button
+    @IBOutlet private weak var transitionDismissButton: UIButton!
+    
+    //MARK: - Label Outlets
+    @IBOutlet private weak var paymentProcessDescriptionLabel: UILabel!
     @IBOutlet private weak var feedbackDescriptionLabel: UILabel!
+    
+    //MARK: - Constraint
+    @IBOutlet private weak var transitionViewLeftConstraint: NSLayoutConstraint!
     
 }
 
@@ -67,27 +109,4 @@ class UserFAQViewController: UIViewController {
 
 //MARK: - Extensions
 
-//MARK: - For Overrides
-private extension UserFAQViewController {
-    
-    //MARK: Для ViewDidLoad
-    func forViewDidLoad() {
-    }
-    
-}
-
-//MARK: - Появление SlidingMenu
-extension UserFAQViewController: UIViewControllerTransitioningDelegate {
-    
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        slidingMenu.isPresented = true
-        return slidingMenu
-    }
-    
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        slidingMenu.isPresented = false
-        return slidingMenu
-    }
-    
-}
 
