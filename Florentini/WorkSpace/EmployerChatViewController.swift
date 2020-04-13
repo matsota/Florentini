@@ -38,7 +38,7 @@ class EmployerChatViewController: UIViewController {
     
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
-    private var currentWorkerInfo = [DatabaseManager.WorkerInfo]()
+    private var currentWorkerInfo = [DatabaseManager.EmployeeInfo]()
     private var messagesArray = [DatabaseManager.ChatMessages]()
     
     private var name = String()

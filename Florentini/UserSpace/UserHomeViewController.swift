@@ -24,6 +24,7 @@ class UserHomeViewController: UIViewController {
     //MARK: - TransitionMenu button Tapped 
     @IBAction private func menuTapped(_ sender: UIButton) {
         slideMethod(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
+        print(transitionView.bounds.width, transitionViewLeftConstraint.constant, transitionView.alpha, transitionView.isUserInteractionEnabled)
     }
     
     //MARK: - Transition seletion
@@ -32,7 +33,7 @@ class UserHomeViewController: UIViewController {
         let view = transitionView,
         let constraint = transitionViewLeftConstraint,
         let button = transitionDismissButton else {return}
-
+        
         transitionPerform(by: title, for: view, with: constraint, dismiss: button)
     }
     
@@ -83,6 +84,8 @@ private extension UserHomeViewController {
     
     //MARK: Для ViewDidLoad
     func forViewDidLoad() {
+        transitionViewLeftConstraint.constant = -transitionView.bounds.width
+        
         NetworkManager.shared.downloadStocks(success: { productInfo in
             self.productInfo = productInfo.shuffled()
             self.tableView.reloadData()

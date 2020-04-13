@@ -146,13 +146,13 @@ class NetworkManager {
     ///
     
     //MARK: - Информация о Сотрудниках
-    func downloadEmployerInfo (success: @escaping([DatabaseManager.WorkerInfo]) -> Void, failure: @escaping(Error) -> Void) {
+    func downloadEmployerInfo (success: @escaping([DatabaseManager.EmployeeInfo]) -> Void, failure: @escaping(Error) -> Void) {
         let uid = AuthenticationManager.shared.currentUser?.uid
         if uid == nil {
             failure(NetworkManagerError.workerNotSignedIn)
         }else{
             db.collection(NavigationCases.MessagesCases.workers.rawValue).document(uid!).getDocument { (documentSnapshot, _) in
-                guard let workerInfo = DatabaseManager.WorkerInfo(dictionary: documentSnapshot!.data()!) else {return}
+                guard let workerInfo = DatabaseManager.EmployeeInfo(dictionary: documentSnapshot!.data()!) else {return}
                 success([workerInfo])
             }
         }

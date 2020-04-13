@@ -45,7 +45,7 @@ class EmployerProfileViewController: UIViewController {
     
     //MARK: - Implementation
     private let slidingMenu = SlideInTransitionMenu()
-    private var currentWorkerInfo = [DatabaseManager.WorkerInfo]()
+    private var currentWorkerInfo = [DatabaseManager.EmployeeInfo]()
     
     //MARK: - View
     @IBOutlet private weak var passwordView: UIView!

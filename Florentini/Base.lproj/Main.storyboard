@@ -3172,7 +3172,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eSf-Pr-2gv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2527" y="4711"/>
+            <point key="canvasLocation" x="5676" y="4711"/>
         </scene>
         <!--Employer Order Detail Table View Controller-->
         <scene sceneID="zaH-0y-Wt1">
@@ -5477,7 +5477,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AEb-8R-rMx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1754" y="4711"/>
+            <point key="canvasLocation" x="2134" y="4695"/>
         </scene>
         <!--Item-->
         <scene sceneID="Bdy-N0-3dS">

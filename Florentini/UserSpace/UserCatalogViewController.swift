@@ -69,7 +69,7 @@ class UserCatalogViewController: UIViewController {
     
     //MARK: - Button Outlet
     @IBOutlet private var allFilterButtonsCollection: [DesignButton]!
-    @IBOutlet private weak  var filterButton: DesignButton!
+    @IBOutlet private weak var filterButton: DesignButton!
     @IBOutlet private weak var cartButton: UIButton!
     @IBOutlet private weak var transitionDismissButton: UIButton!
     

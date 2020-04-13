@@ -15,7 +15,7 @@ class DatabaseManager {
     static let shared = DatabaseManager()
     
     //MARK: - Шаблон для информации о Сотруднике
-    struct WorkerInfo {
+    struct EmployeeInfo {
         var name: String
         var position: String
         
@@ -119,8 +119,9 @@ protocol DocumentSerializable {
 
 
 //MARK: - Extensions Init
-//MARK: О сотрудниках
-extension DatabaseManager.WorkerInfo: DocumentSerializable {
+
+//MARK: Employee
+extension DatabaseManager.EmployeeInfo: DocumentSerializable {
     init?(dictionary: [String : Any]) {
         guard let name = dictionary[NavigationCases.WorkerInfoCases.name.rawValue] as? String,
             let position = dictionary[NavigationCases.WorkerInfoCases.position.rawValue] as? String else {return nil}
