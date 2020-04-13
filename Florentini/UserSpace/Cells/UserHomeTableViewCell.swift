@@ -63,7 +63,7 @@ class UserHomeTableViewCell: UITableViewCell {
         self.stock = stock
         self.category = category
         
-        let storagePath =  "\(NavigationCases.ProductCases.imageCollection.rawValue)/\(name)",
+        let storagePath =  "\(NavigationCases.Product.imageCollection.rawValue)/\(name)",
         storageRef = Storage.storage().reference(withPath: storagePath)
     
         productNameLabel.text = name

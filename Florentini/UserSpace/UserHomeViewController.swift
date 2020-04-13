@@ -12,7 +12,6 @@ class UserHomeViewController: UIViewController {
 
     //MARK: - Override
     
-    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,14 +20,14 @@ class UserHomeViewController: UIViewController {
         
     }
     
-    //MARK: - TransitionMenu button Tapped 
+    //MARK: - TransitionMenu button tapped
     @IBAction private func menuTapped(_ sender: UIButton) {
-        slideMethod(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
+        slideInTransitionMenu(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
         print(transitionView.bounds.width, transitionViewLeftConstraint.constant, transitionView.alpha, transitionView.isUserInteractionEnabled)
     }
     
-    //MARK: - Transition seletion
-    @IBAction func transitionAccepted(_ sender: UIButton) {
+    //MARK: - Transition confirm
+    @IBAction func transitionConfim(_ sender: UIButton) {
         guard let title = sender.currentTitle,
         let view = transitionView,
         let constraint = transitionViewLeftConstraint,
@@ -37,34 +36,31 @@ class UserHomeViewController: UIViewController {
         transitionPerform(by: title, for: view, with: constraint, dismiss: button)
     }
     
-    //MARK: - Decline to transition
-    @IBAction func transitionDismissTapped(_ sender: UIButton) {
-        slideMethod(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
+    //MARK: - Transition dismiss
+    @IBAction func transitionDismiss(_ sender: UIButton) {
+        slideInTransitionMenu(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
     }
     
-    //MARK: - Cart button Tapped
+    //MARK: - Cart button tapped
     @IBAction private func cartTapped(_ sender: UIButton) {
         transitionToUsersCart()
     }
     
-    //MARK: - Private
-    
-    //MARK: - Implementation
-    private let slidingMenu = SlideInTransitionMenu()
+    //MARK: - Private Implementation
     private var productInfo = [DatabaseManager.ProductInfo]()
     
-    //MARK: - TableView Outlet
+    //MARK: TableView Outlet
     @IBOutlet private weak var tableView: UITableView!
     
-    //MARK: - View
+    //MARK: View
     @IBOutlet private weak var noneStocksView: UIView!
     @IBOutlet private weak var transitionView: UIView!
     
-    //MARK: - Button
+    //MARK: Button
     @IBOutlet private weak var cartButton: UIButton!
     @IBOutlet private weak var transitionDismissButton: UIButton!
     
-    //MARK: - Contstraint
+    //MARK: Contstraint
     @IBOutlet private weak var transitionViewLeftConstraint: NSLayoutConstraint!
     
 }
@@ -122,7 +118,7 @@ extension UserHomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.UserHomeTVCell.rawValue, for: indexPath) as! UserHomeTableViewCell,
+        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.HomeTVCell.rawValue, for: indexPath) as! UserHomeTableViewCell,
         fetch = productInfo[indexPath.row],
         name = fetch.productName,
         price = fetch.productPrice,
@@ -158,7 +154,7 @@ extension UserHomeViewController: UserHomeTableViewCellDelegate {
             let stock = cell.stock,
             let imageData: Data = image?.pngData() as Data? else {return}
         
-        CoreDataManager.shared.saveForCart(name: name, category: category, price: price, quantity: 1, stock: stock, imageData: imageData, success: {
+        CoreDataManager.shared.addProduct(name: name, category: category, price: price, quantity: 1, stock: stock, imageData: imageData, success: {
             self.cartImageCondition()
             self.present(UIAlertController.completionDoneHalfSec(title: "Товар", message: "Добавлен"), animated: true)
         }) {

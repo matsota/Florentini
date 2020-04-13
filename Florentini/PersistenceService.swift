@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 class PersistenceService {
-    //MARK: CoreData stack
+    
     private init() {}
     
     static var context: NSManagedObjectContext {
@@ -27,7 +27,6 @@ class PersistenceService {
         return container
     }()
     
-    // MARK: - Core Data Saving support
     static func saveContext () {
         let context = persistentContainer.viewContext
         if context.hasChanges {

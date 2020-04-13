@@ -55,123 +55,11 @@ extension UIAlertController {
     ///
     //MARK: - Crud
     ///
-    //MARK: - Send Message Method in Chat of WorkSpace
-    static func sendToChat(name: String) -> (UIAlertController) {
-        
-        let alertMessage = UIAlertController(title: name, message: nil, preferredStyle: .alert)
-        alertMessage.addTextField { (text:UITextField) in
-            text.placeholder = "Введите сообщение"
-        }
-        
-        alertMessage.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
-        alertMessage.addAction(UIAlertAction(title: "Отправить", style: .default, handler: { (action: UIAlertAction) in
-            if let content = alertMessage.textFields?.first?.text {
-                NetworkManager.shared.newChatMessage(name: name, content: content)
-            }
-        }))
-        return alertMessage
-    }
-    
-    //MARK: - Alert Image from URL
-    static func uploadImageURL(success: @escaping(String) -> Void) -> (UIAlertController) {
-        let alert = UIAlertController(title: "Добавить Изображение по Ссылке", message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { (action: UIAlertAction) in
-            let textField = alert.textFields?[0]
-            success((textField?.text)!)
-        }))
-        alert.addTextField { (textField: UITextField) in
-            textField.placeholder = "Введите ссылку"
-        }
-        return alert
-    }
     
     ///
     //MARK: - crUd
     ///
-    //MARK: - Password change
-    static func rePassword(success: @escaping() -> Void, password: String) -> (UIAlertController) {
-        let alertSignOut = UIAlertController(title: "Внимание", message: "Подтвердите смену пароля", preferredStyle: .actionSheet)
-        alertSignOut.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { _ in
-            AuthenticationManager.shared.passChange(password: password)
-            success()
-        }))
-        alertSignOut.addAction(UIAlertAction(title: "Отмена", style: .destructive, handler: nil))
-        
-        return (alertSignOut)
-    }
-    
-    //MARK: - Price editor
-    static func editProductPrice(name: String, success: @escaping(Int) -> Void) -> (UIAlertController) {
-        let alert = UIAlertController(title: "Внимание", message: "Введите новую цену для этого продукта", preferredStyle: .alert)
-            
-        alert.addTextField { (text:UITextField) in
-            text.keyboardType = .numberPad
-            text.placeholder = "Введите сообщение"
-        }
-        
-        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Отправить", style: .default, handler: { (action: UIAlertAction) in
-            guard let newPrice = Int((alert.textFields?.first?.text)!)  else {return}
-            NetworkManager.shared.editProductPrice(name: name, newPrice: newPrice)
-            success(newPrice)
-        }))
-        return alert
-    }
-    
-    //MARK: - Stock editor
-    static func editStockCondition(name: String, stock: Bool, text: UILabel, compltion: @escaping() -> Void) -> (UIAlertController) {
-        let alert = UIAlertController(title: "Внимание", message: "Подтвердите изменение наличия АКЦИИ", preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { (action: UIAlertAction) in
-            NetworkManager.shared.editStockCondition(name: name, stock: stock)
-            if stock == true {
-                text.text = "Акционный товар"
-                text.textColor = .red
-            }else{
-                text.text = "Акция отсутствует"
-                text.textColor = .black
-            }
-            compltion()
-        }))
-        return alert
-    }
-    
-    //MARK: - Delivery editor
-    static func editDeliveryPerson(currentDeviceID: String, success: @escaping(String) -> Void) -> (UIAlertController) {
-        let alert = UIAlertController(title: "Внимание", message: "Введите Имя человека, который будет доставлять этот заказ", preferredStyle: .alert)
-            
-        alert.addTextField { (text:UITextField) in
-            text.placeholder = "Введите имя"
-        }
-        
-        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { (action: UIAlertAction) in
-            guard let deliveryPerson = alert.textFields?.first?.text else {return}
-            NetworkManager.shared.editDeliveryMan(currentDeviceID: currentDeviceID, deliveryPerson: deliveryPerson)
-            success(deliveryPerson)
-        }))
-        return alert
-    }
-    
-    //MARK: - Price editor
-    static func setNumber(success: @escaping(Int) -> Void) -> (UIAlertController) {
-        let alert = UIAlertController(title: "Внимание", message: "Введите число относительно котогоро хотите отфильтровать", preferredStyle: .alert)
-            
-        alert.addTextField { (text:UITextField) in
-            text.keyboardType = .numberPad
-            text.placeholder = "Введите Число"
-        }
-        
-        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Отправить", style: .default, handler: { (action: UIAlertAction) in
-            guard let newPrice = Int((alert.textFields?.first?.text)!)  else {return}
-            success(newPrice)
-        }))
-        return alert
-    }
-    
     ///
     //MARK: - cruD
     ///
@@ -187,6 +75,7 @@ extension UIAlertController {
     }
     
     //MARK: - Success Upload
+    
     //MARK: Half sec
     static func completionDoneHalfSec(title: String, message: String) -> (UIAlertController){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -202,42 +91,6 @@ extension UIAlertController {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
             alert.dismiss(animated: true, completion: nil)
         }
-        return alert
-    }
-    
-    //MARK: - Delete Product
-    static func productDelete(name: String, success: @escaping() -> Void) -> (UIAlertController) {
-        let alert = UIAlertController(title: "Внимание", message: "Подтвердите, что Вы желаете удалить продукт", preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { _ in
-            NetworkManager.shared.deleteProduct(name: name)
-            success()
-        }))
-        alert.addAction(UIAlertAction(title: "Отмена", style: .destructive, handler: nil))
-        
-        return alert
-    }
-    
-    //MARK: - Archive Order
-    static func orderArchive(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, timeStamp: Date, id: String, deliveryPerson: String, success: @escaping() -> Void) -> (UIAlertController) {
-        let alert = UIAlertController(title: "Внимание", message: "Подтвердите, что Вы желаете отправить заказ в архив", preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { _ in
-            NetworkManager.shared.archiveOrder(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, orderKey: id, deliveryPerson: deliveryPerson)
-            success()
-        }))
-        alert.addAction(UIAlertAction(title: "Отмена", style: .destructive, handler: nil))
-        
-        return alert
-    }
-    
-    //MARK: - Delete Order
-    static func orderDelete(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, timeStamp: Date, id: String, deliveryPerson: String, success: @escaping() -> Void) -> (UIAlertController) {
-        let alert = UIAlertController(title: "Внимание", message: "Подтвердите, что Вы желаете удалить заказ", preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Подтвердить", style: .default, handler: { _ in
-            NetworkManager.shared.deleteNotForArchive(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, orderKey: id, deliveryPerson: deliveryPerson)
-            success()
-        }))
-        alert.addAction(UIAlertAction(title: "Отмена", style: .destructive, handler: nil))
-        
         return alert
     }
 }

@@ -10,77 +10,41 @@ import Foundation
 
 class NavigationCases {
     
-    //MARK: -
-    
     //MARK: - Для ViewController'ов
     enum IDVC: String, CaseIterable {
-        
-        // - for clients
-        case MenuVC
         
         case UsersCartVC
         case CatalogVC
         case FeedbackVC
         case FAQVC
         
-        case UserCatalogTVCell
-        case UsersCartTVCell
-        case UserHomeTVCell
+        case CatalogTVCell
+        case CartTVCell
+        case HomeTVCell
         
-        // - for workers
-        case EmployerMenuVC
-        
-        case LoginWorkSpaceVC
-        case EmployerOrdersVC
-        case EmployerCatalogVC
-        case EmployerProfileVC
-        case EmployerFAQVC
-        case EmployerChatVC
-        
-        case NewProductSetVC
-        
-        case EmployerMessagesTVCell
-        case EmployerCatalogTVCell
-        case EmployerOrdersTVCell
-        case EmployerOrdersDetailTVCell
         
     }
     
-    //MARK: -
-    
-    //MARK: - Для сотрудников
-    enum WorkerInfoCases: String, CaseIterable {
+    //MARK: - for CoreData
+    enum CoreData: String, CaseIterable {
         
-        case name
-        case position
-        case admin
-        case `operator`
-        case delivery
-        
-    }
-    
-    //MARK: - Про Notifications
-    enum Notification: String, CaseIterable {
-        
-        case newMessage
+        case PreOrderEntity
         
     }
     
     //MARK: - Про Сообщения
-    enum MessagesCases: String, CaseIterable {
+    enum Review: String, CaseIterable {
         
         case name
         case content
         case uid
         case timeStamp
-        case workers
-        case workersMessages
         case review
         
     }
     
-    //MARK: - Про Товар
-    enum ProductCases: String, CaseIterable {
+    //MARK: - About Product
+    enum Product: String, CaseIterable {
         
         case productName
         case productPrice
@@ -93,28 +57,9 @@ class NavigationCases {
         
     }
     
-    //MARK: - Про Категории
-    enum CategorySwitch: String, CaseIterable{
-        
-        case none = "Без Категории"
-        case apiece = "Поштучно"
-        case gift = "Подарки"
-        case bouquet = "Букеты"
-        
-    }
+    //MARK: - Transtion Cases
     
-    //MARK: - Про Архив
-    enum ArchiveCases: String, CaseIterable{
-        
-        case archivedOrders
-        case archivedOrderAdditions
-        case deletedOrders
-        
-    }
-    
-    //MARK: - Для пользоватей
-    
-    enum TranstionCases: String, CaseIterable {
+    enum ScreenTranstion: String, CaseIterable {
         
         case homeScreen = "Главная"
         case catalogScreen = "Каталог"
@@ -124,8 +69,8 @@ class NavigationCases {
         
     }
     
-    //MARK: - Про заказ
-    enum UsersInfoCases: String, CaseIterable {
+    //MARK: - About Order attributes
+    enum UsersInfo: String, CaseIterable {
         
         case totalPrice
         case name
@@ -139,15 +84,11 @@ class NavigationCases {
         
         case cart
         case order
-        case orderDescription
-        
-        case PreOrderEntity
-        case OrderDetailPathEntity
         
     }
     
-    //MARK: - Про обратную связь
-    enum FeedbackTypesCases: String, CaseIterable {
+    //MARK: - About feedback options
+    enum Feedback: String, CaseIterable {
         
         case cellphone = "По телефону"
         case viber = "Viber"
@@ -155,8 +96,8 @@ class NavigationCases {
         
     }
     
-    //MARK: - Про количество
-    enum MaxQuantityByCategoriesCases: Int {
+    //MARK: - For slider value
+    enum MaxSliderValueByCategories: Int {
         
         case towHundred = 200
         //        case hundredAndHalf = 150
@@ -167,8 +108,8 @@ class NavigationCases {
         
     }
     
-    //MARK: - Про Категории
-    enum ProductCategoriesCases: String, CaseIterable {
+    //MARK: - Categories
+    enum ProductCategories: String, CaseIterable {
         
         case apiece = "Поштучно"
         case gift = "Подарки"

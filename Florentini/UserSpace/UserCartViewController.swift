@@ -14,8 +14,6 @@ import CoreData
 class UserCartViewController: UIViewController {
     
     //MARK: - Override
-    
-    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,27 +21,27 @@ class UserCartViewController: UIViewController {
         
     }
     
-    //MARK: - TransitionMenu button Tapped
+    //MARK: - Transition menu tapped
     @IBAction private func menuTapped(_ sender: UIButton) {
-        slideMethod(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
+        slideInTransitionMenu(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
     }
     
-    //MARK: - Transition seletion
-    @IBAction func transitionAccepted(_ sender: UIButton) {
+    //MARK: - Transition confirm
+    @IBAction func transitionConfirm(_ sender: UIButton) {
         guard let title = sender.currentTitle,
-        let view = transitionView,
-        let constraint = transitionViewLeftConstraint,
-        let button = transitionDismissButton else {return}
-
+            let view = transitionView,
+            let constraint = transitionViewLeftConstraint,
+            let button = transitionDismissButton else {return}
+        
         transitionPerform(by: title, for: view, with: constraint, dismiss: button)
     }
     
-    //MARK: - Transition Dismiss
-    @IBAction func transitionDismissTapped(_ sender: UIButton) {
-        slideMethod(for: self.transitionView, constraint: self.transitionViewLeftConstraint, dismissBy: self.transitionDismissButton)
+    //MARK: - Transition dismiss
+    @IBAction func transitionDismiss(_ sender: UIButton) {
+        slideInTransitionMenu(for: self.transitionView, constraint: self.transitionViewLeftConstraint, dismissBy: self.transitionDismissButton)
     }
     
-    //MARK: - Cart button Tapped
+    //MARK: - Cart button tapped
     @IBAction private func feedBackBlankTapped(_ sender: Any) {
         feedBackTopConstraint.constant = hideAndShowFeedbackBlank()
         UIView.animate(withDuration: 0.3) {
@@ -51,13 +49,13 @@ class UserCartViewController: UIViewController {
         }
     }
     
-    //MARK: - Feedback button Tapped
+    //MARK: - Feedback button tapped
     @IBAction private func feedbackTypeSelectorTapped(_ sender: DesignButton) {
         guard let sender = sender.titleLabel!.text else {return}
         showFeedbackOptions(option: sender)
     }
     
-    //MARK: - Feedback Selected
+    //MARK: - Feedback selected
     @IBAction private func feedbackSelection(_ sender: DesignButton) {
         feedbackSelected(by: sender)
     }
@@ -75,38 +73,35 @@ class UserCartViewController: UIViewController {
         confirm()
     }
     
-    //MARK: - Private:
-    
-    //MARK: - Implementation
-    private let slidingMenu = SlideInTransitionMenu()
+    //MARK: - Private Implementation
     private var preOrder = [PreOrderEntity]()
     
     private var selectedFeedbackType = String()
     private var orderBill = Int64()
     
-    //MARK: - Views
+    //MARK: Views
     @IBOutlet private weak var feedbackBlankView: UIView!
     @IBOutlet private weak var buttonsView: UIView!
     @IBOutlet private weak var tableCountZeroView: UIView!
     @IBOutlet private weak var transitionView: UIView!
     
-    //MARK: - StackView
+    //MARK: StackView
     @IBOutlet private weak var billStackView: UIStackView!
     
-    //MARK: - ScrollView
+    //MARK: ScrollView
     @IBOutlet private weak var scrollView: UIScrollView!
     
-    //MARK: - TableView Outlets
+    //MARK: TableView Outlets
     @IBOutlet private weak var cartTableView: UITableView!
     
-    //MARK: - TextFields Outlets
+    //MARK: TextFields Outlets
     @IBOutlet private weak var clientNameTextField: UITextField!
     @IBOutlet private weak var clientCellPhoneTextField: UITextField!
     @IBOutlet private weak var clientAdressTextField: UITextField!
     @IBOutlet private weak var clientDescriptionTextField: UITextField!
     @IBOutlet private weak var orderPriceLabel: UILabel!
     
-    //MARK: - Buttons Outlets
+    //MARK: Buttons Outlets
     @IBOutlet private var feedbackTypeBttnsCellection: [UIButton]!
     @IBOutlet private weak var feebackTypeSelectorButton: UIButton!
     @IBOutlet private weak var emptyButtonForHide: UIButton!
@@ -114,7 +109,7 @@ class UserCartViewController: UIViewController {
     @IBOutlet private weak var transitionDismissButton: UIButton!
     
     
-    //MARK: - Constrains Outlets
+    //MARK: Constrains Outlets
     @IBOutlet private weak var lowestConstraint: NSLayoutConstraint!
     @IBOutlet private weak var feedBackTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var transitionViewLeftConstraint: NSLayoutConstraint!
@@ -167,17 +162,17 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = cartTableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.UsersCartTVCell.rawValue, for: indexPath) as! UserCartTableViewCell
+        let cell = cartTableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.CartTVCell.rawValue, for: indexPath) as! UserCartTableViewCell
         
         cell.tag = indexPath.row
         cell.delegate = self
         
         let fetch = preOrder[cell.tag],
-        name = fetch.value(forKey: NavigationCases.ProductCases.productName.rawValue) as! String,
-        category = fetch.value(forKey: NavigationCases.ProductCases.productCategory.rawValue) as! String,
-        price = fetch.value(forKey: NavigationCases.ProductCases.productPrice.rawValue) as! Int,
-        sliderValue = fetch.value(forKey: NavigationCases.ProductCases.productQuantity.rawValue) as! Int,
-        stock = fetch.value(forKey: NavigationCases.ProductCases.stock.rawValue) as! Bool
+        name = fetch.value(forKey: NavigationCases.Product.productName.rawValue) as! String,
+        category = fetch.value(forKey: NavigationCases.Product.productCategory.rawValue) as! String,
+        price = fetch.value(forKey: NavigationCases.Product.productPrice.rawValue) as! Int,
+        sliderValue = fetch.value(forKey: NavigationCases.Product.productQuantity.rawValue) as! Int,
+        stock = fetch.value(forKey: NavigationCases.Product.stock.rawValue) as! Bool
         
         guard let imageData = fetch.productImage else {return cell}
         
@@ -193,7 +188,7 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
     
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: "X") { (action, view, complition) in
-            CoreDataManager.shared.deleteFromCart(deleteWhere: self.preOrder, at: indexPath)
+            CoreDataManager.shared.productDismiss(deleteWhere: self.preOrder, at: indexPath)
             self.preOrder.remove(at: indexPath.row)
             self.cartTableView.deleteRows(at: [indexPath], with: .automatic)
             self.orderBill = self.preOrder.map({$0.productPrice * $0.productQuantity}).reduce(0, +)
@@ -207,8 +202,6 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
     
 }
 
-//MARK: -
-
 //MARK: - Slider Values & Receipt changes
 extension UserCartViewController: UserCartTableViewCellDelegate {
     
@@ -221,7 +214,7 @@ extension UserCartViewController: UserCartTableViewCellDelegate {
         cell.productPriceLabel.text! = "\(sliderEquantion) грн"
         cell.quantityLabel.text! = "\(sliderValue) шт"
         
-        CoreDataManager.shared.updateCart(name: name, quantity: sliderValue)
+        CoreDataManager.shared.cartUpdate(name: name, quantity: sliderValue)
         
         self.orderBill = fetch.map({$0.productPrice * $0.productQuantity}).reduce(0, +)
         self.orderPriceLabel.text = "\(self.orderBill) грн"
@@ -235,7 +228,7 @@ private extension UserCartViewController {
     @objc func keyboardWillShow(notification: Notification) {
         self.billStackView.isHidden = true
         guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber, let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
-                lowestConstraint.constant = keyboardFrameValue.cgRectValue.height * 0.9
+        lowestConstraint.constant = keyboardFrameValue.cgRectValue.height * 0.9
         UIView.animate(withDuration: duration.doubleValue) {
             self.view.layoutIfNeeded()
         }
@@ -244,7 +237,7 @@ private extension UserCartViewController {
     @objc func keyboardWillHide(notification: Notification) {
         self.billStackView.isHidden = false
         guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber else {return}
-                lowestConstraint.constant = 14
+        lowestConstraint.constant = 14
         UIView.animate(withDuration: duration.doubleValue) {
             self.view.layoutIfNeeded()
         }
@@ -266,10 +259,10 @@ private extension UserCartViewController {
     }
     
     func feedbackSelected(by sender: UIButton) {
-        guard let title = sender.currentTitle, let feedbackType = NavigationCases.FeedbackTypesCases(rawValue: title) else {return}
-        let cellphone = NavigationCases.FeedbackTypesCases.cellphone.rawValue,
-        viber = NavigationCases.FeedbackTypesCases.viber.rawValue,
-        telegram = NavigationCases.FeedbackTypesCases.telegram.rawValue
+        guard let title = sender.currentTitle, let feedbackType = NavigationCases.Feedback(rawValue: title) else {return}
+        let cellphone = NavigationCases.Feedback.cellphone.rawValue,
+        viber = NavigationCases.Feedback.viber.rawValue,
+        telegram = NavigationCases.Feedback.telegram.rawValue
         
         switch feedbackType {
         case .cellphone:
@@ -305,13 +298,18 @@ private extension UserCartViewController {
         feedbackOption = selectedFeedbackType
         
         if feedbackOption == "", name == "", mark == "" {
-            feedbackOption = NavigationCases.FeedbackTypesCases.cellphone.rawValue
+            feedbackOption = NavigationCases.Feedback.cellphone.rawValue
             name = "Без Имени"
             mark = "Без Дополнений"
         }
         
         if adress == "" || cellphone == "" {
-            self.present(UIAlertController.classic(title: "Эттеншн!", message: "Мы не знаем всех необходимых данных, что бы осуществить доставку радости. Просим Вас ввести: Адресс доставки и Телефон, чтобы мы смогли подтвердить заказ"), animated: true)
+            self.present(UIAlertController.completionDoneTwoSec(title: "Эттеншн!", message: "Мы не знаем всех необходимых данных, что бы осуществить доставку радости. Просим Вас ввести: Адресс доставки и Телефон, чтобы мы смогли подтвердить заказ"), animated: true)
+            feedBackTopConstraint.constant = -cartTableView.frame.height
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+            
         }else{
             var jsonArray: [[String: Any]] = []
             
@@ -325,14 +323,20 @@ private extension UserCartViewController {
             let totalPrice = orderBill
             
             for _ in preOrder {
-                NetworkManager.shared.sendOrder(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: Date(), productDescription: jsonArray.remove(at:0), success: {
+                NetworkManager.shared.orderConfirm(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: Date(), productDescription: jsonArray.remove(at:0), success: {
                     
                     self.present(UIAlertController.completionDoneTwoSec(title: "Ваш заказ оформлен", message: "Мы свяжемся с Вам так скоро, как это возможно"), animated: true)
                     self.clientNameTextField.text = ""
                     self.clientAdressTextField.text = ""
                     self.clientCellPhoneTextField.text = ""
                     self.clientDescriptionTextField.text = ""
-                    CoreDataManager.shared.deleteAllData(entity: NavigationCases.UsersInfoCases.PreOrderEntity.rawValue) {
+                    self.orderPriceLabel.text = "0 грн"
+                    self.tableCountZeroView.isHidden = false
+                    self.feedBackTopConstraint.constant = 0
+                    UIView.animate(withDuration: 0.3) {
+                        self.view.layoutIfNeeded()
+                    }
+                    CoreDataManager.shared.deleteAllData(entity: NavigationCases.CoreData.PreOrderEntity.rawValue) {
                         self.preOrder.removeAll()
                         self.cartTableView.reloadData()
                     }

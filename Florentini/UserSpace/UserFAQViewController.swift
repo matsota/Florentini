@@ -20,10 +20,9 @@ class UserFAQViewController: UIViewController {
         
     }
     
-    
     //MARK: - TransitionMenu button Tapped
     @IBAction private func menuTapped(_ sender: UIButton) {
-        slideMethod(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
+        slideInTransitionMenu(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
     }
     
     //MARK: - Transition seletion
@@ -38,10 +37,8 @@ class UserFAQViewController: UIViewController {
     
     //MARK: - Transition Dismiss
     @IBAction private func transitionDismissTapped(_ sender: UIButton) {
-        slideMethod(for: self.transitionView, constraint: self.transitionViewLeftConstraint, dismissBy: self.transitionDismissButton)
+        slideInTransitionMenu(for: self.transitionView, constraint: self.transitionViewLeftConstraint, dismissBy: self.transitionDismissButton)
     }
-    
-    //MARK: Hide and show FAQs:
     
     //MARK: - Payment process
     @IBAction private func showHidePaymentProcessTapped(_ sender: UIButton) {
@@ -75,26 +72,23 @@ class UserFAQViewController: UIViewController {
         }
     }
     
-    //MARK: - Private
+    //MARK: - Private Implementation
     
-    //MARK: - Implementation
-    private let slidingMenu = SlideInTransitionMenu()
-    
-    //MARK: - View
+    //MARK: View
     @IBOutlet private weak var transitionView: UIView!
     
-    //MARK: - StackView
+    //MARK: StackView
     @IBOutlet private weak var paymentOptionsDescriptionStackView: UIStackView!
     @IBOutlet private weak var deliveryProcessDescriptionStackView: UIStackView!
     
-    //MARK: - Button
+    //MARK: Button
     @IBOutlet private weak var transitionDismissButton: UIButton!
     
-    //MARK: - Label Outlets
+    //MARK: Label Outlets
     @IBOutlet private weak var paymentProcessDescriptionLabel: UILabel!
     @IBOutlet private weak var feedbackDescriptionLabel: UILabel!
     
-    //MARK: - Constraint
+    //MARK: Constraint
     @IBOutlet private weak var transitionViewLeftConstraint: NSLayoutConstraint!
     
 }

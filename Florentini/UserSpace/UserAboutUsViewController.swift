@@ -22,11 +22,11 @@ class UserAboutUsViewController: UIViewController {
     
     //MARK: - TransitionMenu button Tapped
     @IBAction private func menuTapped(_ sender: UIButton) {
-        slideMethod(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
+        slideInTransitionMenu(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
     }
     
-    //MARK: - Transition seletion
-    @IBAction private func transitionAccepted(_ sender: UIButton) {
+    //MARK: - Transition confim
+    @IBAction private func transitionConfim(_ sender: UIButton) {
         guard let title = sender.currentTitle,
             let view = transitionView,
             let constraint = transitionViewLeftConstraint,
@@ -37,7 +37,7 @@ class UserAboutUsViewController: UIViewController {
     
     //MARK: - Transition Dismiss
     @IBAction private func transitionDismissTapped(_ sender: UIButton) {
-        slideMethod(for: self.transitionView, constraint: self.transitionViewLeftConstraint, dismissBy: self.transitionDismissButton)
+        slideInTransitionMenu(for: self.transitionView, constraint: self.transitionViewLeftConstraint, dismissBy: self.transitionDismissButton)
     }
     
     //MARK: - Send a review
@@ -45,10 +45,7 @@ class UserAboutUsViewController: UIViewController {
         reviewSent()
     }
     
-    //MARK: - Private
-    
-    //MARK: - Implementation
-    private let slidingMenu = SlideInTransitionMenu()
+    //MARK: - Private Implementation
     
     //MARK: ScrollView
     @IBOutlet private weak var scrollView: UIScrollView!
@@ -102,16 +99,9 @@ private extension UserAboutUsViewController {
 private extension UserAboutUsViewController {
     func reviewSent() {
         var name = nameTextField.text
+        let content = reviewTextView.text
         
-        let content = reviewTextView.text,
-        secretCode = "/WorkSpace",
-        secretCode2 = "Go/"
-        
-        if name == secretCode && content == secretCode2 {
-            let loginWorkSpaceVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.LoginWorkSpaceVC.rawValue) as? LoginWorkSpaceViewController
-            view.window?.rootViewController = loginWorkSpaceVC
-            view.window?.makeKeyAndVisible()
-        }else if content == "" {
+        if content == "" {
             self.present(UIAlertController.classic(title: "Эттеншн!", message: "Вы не ввели информацию, которой бы Вы хотели поделиться с нами"), animated: true)
         }else{
             if name == "" {name = "anonymous"}

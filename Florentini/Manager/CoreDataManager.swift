@@ -14,8 +14,8 @@ class CoreDataManager {
     static let shared = CoreDataManager()
     let device = UIDevice.current.identifierForVendor
     
-    //MARK: - Создание заказа/Добавление к заказу
-    func saveForCart(name: String, category: String, price: Int, quantity: Int, stock: Bool, imageData: Data, success: @escaping() -> Void, failure: @escaping() -> Void) {
+    //MARK: - Add to Cart
+    func addProduct(name: String, category: String, price: Int, quantity: Int, stock: Bool, imageData: Data, success: @escaping() -> Void, failure: @escaping() -> Void) {
         
         if imageData.isEmpty || name.isEmpty || category.isEmpty || price == 0 || quantity == 0  {
             failure()
@@ -33,13 +33,13 @@ class CoreDataManager {
         }
     }
     
-    //MARK: - Обновление количества продукта к Заказу
-    func updateCart(name: String, quantity: Int) {
+    //MARK: - Update product condition in the Cart
+    func cartUpdate(name: String, quantity: Int) {
         guard let preOrderEntity = try! PersistenceService.context.fetch(PreOrderEntity.fetchRequest()) as? [PreOrderEntity] else {return}
         if preOrderEntity.count > 0 {
             for currentOrder in preOrderEntity as [NSManagedObject] {
-                if name == currentOrder.value(forKey: NavigationCases.ProductCases.productName.rawValue) as? String{
-                    currentOrder.setValuesForKeys([NavigationCases.ProductCases.productQuantity.rawValue: Int64(quantity)])
+                if name == currentOrder.value(forKey: NavigationCases.Product.productName.rawValue) as? String{
+                    currentOrder.setValuesForKeys([NavigationCases.Product.productQuantity.rawValue: Int64(quantity)])
                     PersistenceService.saveContext()
                 }
             }
@@ -59,8 +59,8 @@ class CoreDataManager {
         }
     }
     
-    //MARK: - Удаление из Cart
-    func deleteFromCart(deleteWhere: [NSManagedObject], at indexPath: IndexPath) {
+    //MARK: - Product dismiss
+    func productDismiss(deleteWhere: [NSManagedObject], at indexPath: IndexPath) {
         let certainPosition = indexPath.row
         PersistenceService.context.delete(deleteWhere[certainPosition])
         
@@ -70,7 +70,8 @@ class CoreDataManager {
             print("CoreData Saving Error")
         }
     }
-    //MARK: - Удаление всего заказа
+    
+    //MARK: - Order deletion
     func deleteAllData(entity: String, success: @escaping() -> Void) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         fetchRequest.returnsObjectsAsFaults = false

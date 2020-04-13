@@ -77,7 +77,7 @@ class UserCatalogTableViewCell: UITableViewCell {
         productPriceLabel.text = "\(self.price) грн"
         productDescriptionLabel.text = description
         
-        let storagePath =  "\(NavigationCases.ProductCases.imageCollection.rawValue)/\(name)",
+        let storagePath =  "\(NavigationCases.Product.imageCollection.rawValue)/\(name)",
         storageRef = Storage.storage().reference(withPath: storagePath)
         
         productImageView.sd_setImage(with: storageRef, placeholderImage: nil) { (image, _, _, _) in

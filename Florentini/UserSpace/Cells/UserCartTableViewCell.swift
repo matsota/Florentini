@@ -57,10 +57,10 @@ class UserCartTableViewCell: UITableViewCell {
     func fill(name: String, category: String, price: Int, slider: Int, stock: Bool, imageData: Data) {
        self.stock = stock
         
-        if category == NavigationCases.ProductCategoriesCases.apiece.rawValue {
-            self.quantitySlider.maximumValue = Float(NavigationCases.MaxQuantityByCategoriesCases.hundred.rawValue)
+        if category == NavigationCases.ProductCategories.apiece.rawValue {
+            self.quantitySlider.maximumValue = Float(NavigationCases.MaxSliderValueByCategories.hundred.rawValue)
         }else{
-            self.quantitySlider.maximumValue = Float(NavigationCases.MaxQuantityByCategoriesCases.five.rawValue)
+            self.quantitySlider.maximumValue = Float(NavigationCases.MaxSliderValueByCategories.five.rawValue)
         }
         
         productNameLabel.text = name

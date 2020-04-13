@@ -22,7 +22,7 @@ class UserCatalogViewController: UIViewController {
     
     //MARK: - TransitionMenu button Tapped
     @IBAction private func menuTapped(_ sender: UIButton) {
-        slideMethod(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
+        slideInTransitionMenu(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
     }
     
     //MARK: - Transition seletion
@@ -37,7 +37,7 @@ class UserCatalogViewController: UIViewController {
     
     //MARK: - Decline to transition
     @IBAction func transitionDismissTapped(_ sender: UIButton) {
-        slideMethod(for: self.transitionView, constraint: self.transitionViewLeftConstraint, dismissBy: self.transitionDismissButton)
+        slideInTransitionMenu(for: self.transitionView, constraint: self.transitionViewLeftConstraint, dismissBy: self.transitionDismissButton)
     }
     //MARK: - Cart button Tapped
     @IBAction private func cartTapped(_ sender: UIButton) {
@@ -55,28 +55,24 @@ class UserCatalogViewController: UIViewController {
         selectionMethod(self, sender)
     }
     
-    //MARK: - Private
-    
-    //MARK: - Implementation
-    private let slidingMenu = SlideInTransitionMenu()
-    private let alert = UIAlertController()
+    //MARK: - Private Implementation
     private var productInfo = [DatabaseManager.ProductInfo]()
     private var selectedCategory: String?
     
-    //MARK: - View
+    //MARK: View
     @IBOutlet private weak var buttonsView: UIView!
     @IBOutlet private weak var transitionView: UIView!
     
-    //MARK: - Button Outlet
+    //MARK: Button Outlet
     @IBOutlet private var allFilterButtonsCollection: [DesignButton]!
     @IBOutlet private weak var filterButton: DesignButton!
     @IBOutlet private weak var cartButton: UIButton!
     @IBOutlet private weak var transitionDismissButton: UIButton!
     
-    //MARK: - TableView Outlet
+    //MARK: TableView Outlet
     @IBOutlet private weak var tableView: UITableView!
     
-    //MARK: - Constraint
+    //MARK: Constraint
     @IBOutlet private weak var transitionViewLeftConstraint: NSLayoutConstraint!
     
 }
@@ -118,7 +114,7 @@ extension UserCatalogViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.UserCatalogTVCell.rawValue, for: indexPath) as! UserCatalogTableViewCell,
+        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.CatalogTVCell.rawValue, for: indexPath) as! UserCatalogTableViewCell,
         fetch = productInfo[indexPath.row],
         name = fetch.productName,
         price = fetch.productPrice,
@@ -159,10 +155,10 @@ private extension UserCatalogViewController {
 //MARK: - Category Picked
 private extension UserCatalogViewController {
     func selectionMethod(_ class: UIViewController, _ sender: UIButton) {
-        guard let title = sender.currentTitle, let categories = NavigationCases.ProductCategoriesCases(rawValue: title) else {return}
+        guard let title = sender.currentTitle, let categories = NavigationCases.ProductCategories(rawValue: title) else {return}
         switch categories {
         case .apiece:
-            showOptionsMethod(option: NavigationCases.ProductCategoriesCases.apiece.rawValue)
+            showOptionsMethod(option: NavigationCases.ProductCategories.apiece.rawValue)
             NetworkManager.shared.downloadApieces(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
@@ -171,7 +167,7 @@ private extension UserCatalogViewController {
                 print(error.localizedDescription)
             }
         case .gift:
-            showOptionsMethod(option: NavigationCases.ProductCategoriesCases.gift.rawValue)
+            showOptionsMethod(option: NavigationCases.ProductCategories.gift.rawValue)
             NetworkManager.shared.downloadGifts(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
@@ -180,7 +176,7 @@ private extension UserCatalogViewController {
                 print(error.localizedDescription)
             }
         case .bouquet:
-            showOptionsMethod(option: NavigationCases.ProductCategoriesCases.bouquet.rawValue)
+            showOptionsMethod(option: NavigationCases.ProductCategories.bouquet.rawValue)
             NetworkManager.shared.downloadBouquets(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
@@ -189,7 +185,7 @@ private extension UserCatalogViewController {
                 print(error.localizedDescription)
             }
         case .stock:
-            showOptionsMethod(option: NavigationCases.ProductCategoriesCases.stock.rawValue)
+            showOptionsMethod(option: NavigationCases.ProductCategories.stock.rawValue)
             NetworkManager.shared.downloadStocks(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
@@ -214,7 +210,7 @@ extension UserCatalogViewController: UserCatalogTableViewCellDelegate {
             let stock = cell.stock,
             let imageData: Data = image?.pngData() as Data? else {return}
         
-        CoreDataManager.shared.saveForCart(name: name, category: category, price: price, quantity: 1, stock: stock, imageData: imageData, success: {
+        CoreDataManager.shared.addProduct(name: name, category: category, price: price, quantity: 1, stock: stock, imageData: imageData, success: {
             self.cartImageCondition()
             self.present(UIAlertController.completionDoneHalfSec(title: "Товар", message: "Добавлен"), animated: true)
         }) {

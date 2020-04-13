@@ -9,26 +9,15 @@
 import Foundation
 import Firebase
 
+//MARK: - Protocol
+protocol DocumentSerializable {
+    init?(dictionary: [String:Any])
+}
+
 class DatabaseManager {
     
-    //MARK: - Системные переменные
-    static let shared = DatabaseManager()
-    
-    //MARK: - Шаблон для информации о Сотруднике
-    struct EmployeeInfo {
-        var name: String
-        var position: String
-        
-        var dictionary: [String:Any]{
-            return [
-                NavigationCases.WorkerInfoCases.name.rawValue: name,
-                NavigationCases.WorkerInfoCases.position.rawValue: position
-            ]
-        }
-    }
-    
-    //MARK: - Шаблон для информации о Чате
-    struct ChatMessages {
+    //MARK: - About review
+    struct Review {
         var name: String
         var content: String
         var uid: String
@@ -36,10 +25,10 @@ class DatabaseManager {
         
         var dictionary: [String:Any] {
             return [
-                NavigationCases.MessagesCases.name.rawValue: name,
-                NavigationCases.MessagesCases.content.rawValue: content,
-                NavigationCases.MessagesCases.uid.rawValue: uid,
-                NavigationCases.MessagesCases.timeStamp.rawValue: timeStamp
+                NavigationCases.Review.name.rawValue: name,
+                NavigationCases.Review.content.rawValue: content,
+                NavigationCases.Review.uid.rawValue: uid,
+                NavigationCases.Review.timeStamp.rawValue: timeStamp
             ]
         }
     }
@@ -54,11 +43,11 @@ class DatabaseManager {
         
         var dictionary: [String:Any]{
             return [
-                NavigationCases.ProductCases.productName.rawValue: productName,
-                NavigationCases.ProductCases.productPrice.rawValue: productPrice,
-                NavigationCases.ProductCases.productDescription.rawValue: productDescription,
-                NavigationCases.ProductCases.productCategory.rawValue: productCategory,
-                NavigationCases.ProductCases.stock.rawValue: stock
+                NavigationCases.Product.productName.rawValue: productName,
+                NavigationCases.Product.productPrice.rawValue: productPrice,
+                NavigationCases.Product.productDescription.rawValue: productDescription,
+                NavigationCases.Product.productCategory.rawValue: productCategory,
+                NavigationCases.Product.stock.rawValue: stock
             ]
         }
     }
@@ -77,65 +66,30 @@ class DatabaseManager {
         
         var dictionary: [String:Any]{
             return [
-                NavigationCases.UsersInfoCases.totalPrice.rawValue: totalPrice,
-                NavigationCases.UsersInfoCases.name.rawValue: name,
-                NavigationCases.UsersInfoCases.adress.rawValue: adress,
-                NavigationCases.UsersInfoCases.cellphone.rawValue: cellphone,
-                NavigationCases.UsersInfoCases.feedbackOption.rawValue: feedbackOption,
-                NavigationCases.UsersInfoCases.mark.rawValue: mark,
-                NavigationCases.UsersInfoCases.timeStamp.rawValue: timeStamp,
-                NavigationCases.UsersInfoCases.currentDeviceID.rawValue: currentDeviceID,
-                NavigationCases.UsersInfoCases.deliveryPerson.rawValue: deliveryPerson
+                NavigationCases.UsersInfo.totalPrice.rawValue: totalPrice,
+                NavigationCases.UsersInfo.name.rawValue: name,
+                NavigationCases.UsersInfo.adress.rawValue: adress,
+                NavigationCases.UsersInfo.cellphone.rawValue: cellphone,
+                NavigationCases.UsersInfo.feedbackOption.rawValue: feedbackOption,
+                NavigationCases.UsersInfo.mark.rawValue: mark,
+                NavigationCases.UsersInfo.timeStamp.rawValue: timeStamp,
+                NavigationCases.UsersInfo.currentDeviceID.rawValue: currentDeviceID,
+                NavigationCases.UsersInfo.deliveryPerson.rawValue: deliveryPerson
             ]
         }
     }
-    
-    //MARK: Про детализацию заказа
-    struct OrderAddition {
-        var productCategory: String
-        var productName: String
-        var stock: Bool
-        var productPrice: Int
-        var productQuantity: Int
 
-        var dictionary: [String:Any]{
-            return [
-                NavigationCases.ProductCases.productCategory.rawValue: productCategory,
-                NavigationCases.ProductCases.productName.rawValue: productName,
-                NavigationCases.ProductCases.stock.rawValue: stock,
-                NavigationCases.ProductCases.productPrice.rawValue: productPrice,
-                NavigationCases.ProductCases.productQuantity.rawValue: productQuantity
-            ]
-        }
-    }
-    
 }
 
-//MARK: - OUT of Class
-//MARK: - Протокол шаблонов
-protocol DocumentSerializable {
-    init?(dictionary: [String:Any])
-}
-
-
-//MARK: - Extensions Init
-
-//MARK: Employee
-extension DatabaseManager.EmployeeInfo: DocumentSerializable {
-    init?(dictionary: [String : Any]) {
-        guard let name = dictionary[NavigationCases.WorkerInfoCases.name.rawValue] as? String,
-            let position = dictionary[NavigationCases.WorkerInfoCases.position.rawValue] as? String else {return nil}
-        self.init(name: name, position: position)
-    }
-}
+//MARK: - Extension
 
 //MARK: Про чат
-extension DatabaseManager.ChatMessages: DocumentSerializable {
+extension DatabaseManager.Review: DocumentSerializable {
     init?(dictionary: [String: Any]) {
-        guard let name = dictionary[NavigationCases.MessagesCases.name.rawValue] as? String,
-            let content = dictionary[NavigationCases.MessagesCases.content.rawValue] as? String,
-            let uid = dictionary[NavigationCases.MessagesCases.uid.rawValue] as? String,
-            let timeStamp = (dictionary[NavigationCases.MessagesCases.timeStamp.rawValue] as? Timestamp)?.dateValue() else {return nil}
+        guard let name = dictionary[NavigationCases.Review.name.rawValue] as? String,
+            let content = dictionary[NavigationCases.Review.content.rawValue] as? String,
+            let uid = dictionary[NavigationCases.Review.uid.rawValue] as? String,
+            let timeStamp = (dictionary[NavigationCases.Review.timeStamp.rawValue] as? Timestamp)?.dateValue() else {return nil}
         self.init(name: name, content: content, uid: uid, timeStamp: timeStamp)
     }
 }
@@ -143,11 +97,11 @@ extension DatabaseManager.ChatMessages: DocumentSerializable {
 //MARK: Про Продукт
 extension DatabaseManager.ProductInfo: DocumentSerializable {
     init?(dictionary: [String: Any]) {
-        guard let productName = dictionary[NavigationCases.ProductCases.productName.rawValue] as? String,
-            let productPrice = dictionary[NavigationCases.ProductCases.productPrice.rawValue] as? Int,
-            let productDescription = dictionary[NavigationCases.ProductCases.productDescription.rawValue] as? String,
-            let productCategory = dictionary[NavigationCases.ProductCases.productCategory.rawValue] as? String,
-            let stock = dictionary[NavigationCases.ProductCases.stock.rawValue] as? Bool else {return nil}
+        guard let productName = dictionary[NavigationCases.Product.productName.rawValue] as? String,
+            let productPrice = dictionary[NavigationCases.Product.productPrice.rawValue] as? Int,
+            let productDescription = dictionary[NavigationCases.Product.productDescription.rawValue] as? String,
+            let productCategory = dictionary[NavigationCases.Product.productCategory.rawValue] as? String,
+            let stock = dictionary[NavigationCases.Product.stock.rawValue] as? Bool else {return nil}
         self.init(productName: productName, productPrice: productPrice, productDescription: productDescription, productCategory: productCategory, stock: stock)
     }
 }
@@ -155,27 +109,16 @@ extension DatabaseManager.ProductInfo: DocumentSerializable {
 //MARK: Про Заказ
 extension DatabaseManager.Order: DocumentSerializable {
     init?(dictionary: [String: Any]) {
-        guard let totalPrice = dictionary[NavigationCases.UsersInfoCases.totalPrice.rawValue] as? Int64,
-            let userName = dictionary[NavigationCases.UsersInfoCases.name.rawValue] as? String,
-            let userAdress = dictionary[NavigationCases.UsersInfoCases.adress.rawValue] as? String,
-            let userCellphone = dictionary[NavigationCases.UsersInfoCases.cellphone.rawValue] as? String,
-            let feedbackOption = dictionary[NavigationCases.UsersInfoCases.feedbackOption.rawValue] as? String,
-            let userMark = dictionary[NavigationCases.UsersInfoCases.mark.rawValue] as? String,
-            let timeStamp = (dictionary[NavigationCases.UsersInfoCases.timeStamp.rawValue] as? Timestamp)?.dateValue(),
-            let currentDeviceID = dictionary[NavigationCases.UsersInfoCases.currentDeviceID.rawValue] as? String,
-        let deliveryPerson = dictionary[NavigationCases.UsersInfoCases.deliveryPerson.rawValue] as? String else {return nil}
+        guard let totalPrice = dictionary[NavigationCases.UsersInfo.totalPrice.rawValue] as? Int64,
+            let userName = dictionary[NavigationCases.UsersInfo.name.rawValue] as? String,
+            let userAdress = dictionary[NavigationCases.UsersInfo.adress.rawValue] as? String,
+            let userCellphone = dictionary[NavigationCases.UsersInfo.cellphone.rawValue] as? String,
+            let feedbackOption = dictionary[NavigationCases.UsersInfo.feedbackOption.rawValue] as? String,
+            let userMark = dictionary[NavigationCases.UsersInfo.mark.rawValue] as? String,
+            let timeStamp = (dictionary[NavigationCases.UsersInfo.timeStamp.rawValue] as? Timestamp)?.dateValue(),
+            let currentDeviceID = dictionary[NavigationCases.UsersInfo.currentDeviceID.rawValue] as? String,
+        let deliveryPerson = dictionary[NavigationCases.UsersInfo.deliveryPerson.rawValue] as? String else {return nil}
         self.init(totalPrice: totalPrice, name: userName, adress: userAdress, cellphone: userCellphone, feedbackOption: feedbackOption, mark: userMark, timeStamp: timeStamp, currentDeviceID: currentDeviceID, deliveryPerson: deliveryPerson)
     }
 }
 
-//MARK: Про детализацию заказа
-extension DatabaseManager.OrderAddition: DocumentSerializable {
-    init?(dictionary: [String: Any]) {
-        guard let productCategory = dictionary[NavigationCases.ProductCases.productCategory.rawValue] as? String,
-            let productName = dictionary[NavigationCases.ProductCases.productName.rawValue] as? String,
-            let stock = dictionary[NavigationCases.ProductCases.stock.rawValue] as? Bool,
-            let productPrice = dictionary[NavigationCases.ProductCases.productPrice.rawValue] as? Int,
-            let productQuantity = dictionary[NavigationCases.ProductCases.productQuantity.rawValue] as? Int else {return nil}
-        self.init(productCategory: productCategory, productName: productName, stock: stock, productPrice: productPrice, productQuantity: productQuantity)
-    }
-}
