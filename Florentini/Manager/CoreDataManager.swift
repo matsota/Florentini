@@ -47,15 +47,14 @@ class CoreDataManager {
     }
     
     //MARK: - Custom Core Data Saving support
-    @objc func fetchPreOrder(success: @escaping([PreOrderEntity]) -> (Void)) {
+    @objc func fetchPreOrder(success: @escaping([PreOrderEntity]) -> (Void), failure: @escaping(NSError) -> Void) {
         let fetchRequest: NSFetchRequest<PreOrderEntity> = PreOrderEntity.fetchRequest()
 
         do {
-            fetchRequest.propertiesToFetch = ["productName", "productPrice", "productQuantity", "productCategory", "stock"]
             let result = try PersistenceService.context.fetch(fetchRequest)
             success(result)
-        } catch {
-            print("CoreData Fetch Error")
+        } catch let error as NSError{
+            failure(error)
         }
     }
     

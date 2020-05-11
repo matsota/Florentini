@@ -133,7 +133,7 @@ private extension UserCartViewController {
     func forViewDidLoad() {
         transitionViewLeftConstraint.constant = -transitionView.bounds.width
         
-        CoreDataManager.shared.fetchPreOrder { (preOrderEntity) -> (Void) in
+        CoreDataManager.shared.fetchPreOrder(success: { (preOrderEntity) -> (Void) in
             self.preOrder = preOrderEntity
             
             if self.preOrder.count == 0 {
@@ -145,6 +145,9 @@ private extension UserCartViewController {
             self.orderBill = self.preOrder.map({$0.productPrice * $0.productQuantity}).reduce(0, +)
             self.orderPriceLabel.text = "\(self.orderBill) грн"
             self.cartTableView.reloadData()
+        }) { (error) in
+            self.present(UIAlertController.completionDoneTwoSec(title: "Ошибка!", message: "Что-то пошло не так"), animated: true)
+            print(error.localizedDescription)
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)

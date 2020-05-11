@@ -223,7 +223,7 @@ extension UserCatalogViewController: UserCatalogTableViewCellDelegate {
 private extension UserCatalogViewController {
     
     func cartImageCondition() {
-        CoreDataManager.shared.fetchPreOrder { (preOrderEntity) -> (Void) in
+        CoreDataManager.shared.fetchPreOrder( success: { (preOrderEntity) -> (Void) in
             let preOrderAmount = preOrderEntity.count
             
             if preOrderAmount == 0 {
@@ -233,6 +233,9 @@ private extension UserCatalogViewController {
                 let cartFill = UIImage(systemName: "cart.fill")
                 self.cartButton.setImage(cartFill, for: .normal)
             }
+        }) { (error) in
+            self.present(UIAlertController.completionDoneTwoSec(title: "Ошибка!", message: "Что-то пошло не так"), animated: true)
+            print(error.localizedDescription)
         }
     }
     
