@@ -16,6 +16,30 @@ protocol DocumentSerializable {
 
 class DatabaseManager {
     
+    //MARK: - About client
+    struct ClientInfo {
+        var name: String
+        var phone: String
+        var orderCount: Int
+        var deviceID: String
+        var lastAdress: String
+        //        var adressesDict: [String:Int]
+        //        var productDict: [String:Int]
+        
+        var dictionary: [String:Any] {
+            return [
+                NavigationCases.ForClientData.name.rawValue: name,
+                NavigationCases.ForClientData.phone.rawValue: phone,
+                NavigationCases.ForClientData.orderCount.rawValue: orderCount,
+                NavigationCases.ForClientData.deviceID.rawValue: deviceID,
+                NavigationCases.ForClientData.lastAdress.rawValue: lastAdress
+//                NavigationCases.ForClientData.adressesDict.rawValue: adressesDict,
+//                NavigationCases.ForClientData.productDict.rawValue: productDict
+            ]
+        }
+        
+    }
+    
     //MARK: - About review
     struct Review {
         var name: String
@@ -33,7 +57,7 @@ class DatabaseManager {
         }
     }
     
-    //MARK: - Шаблон Про Продукт (закачка)
+    //MARK: - About product info
     struct ProductInfo {
         var productName: String
         var productPrice: Int
@@ -52,7 +76,7 @@ class DatabaseManager {
         }
     }
     
-    //MARK: - Шаблон Про Заказ
+    //MARK: - About order
     struct Order {
         var totalPrice: Int64
         var name: String
@@ -78,12 +102,24 @@ class DatabaseManager {
             ]
         }
     }
-
+    
 }
 
 //MARK: - Extension
 
-//MARK: Про чат
+//MARK: For client
+extension DatabaseManager.ClientInfo: DocumentSerializable {
+    init?(dictionary: [String: Any]) {
+        guard let name = dictionary[NavigationCases.Review.name.rawValue] as? String,
+            let phone = dictionary[NavigationCases.ForClientData.phone.rawValue] as? String,
+            let orderCount = dictionary[NavigationCases.ForClientData.orderCount.rawValue] as? Int,
+            let deviceID = dictionary[NavigationCases.ForClientData.deviceID.rawValue] as? String,
+            let lastAdress = dictionary[NavigationCases.ForClientData.lastAdress.rawValue] as? String else {return nil}
+        self.init(name: name, phone: phone, orderCount: orderCount, deviceID: deviceID, lastAdress: lastAdress)
+    }
+}
+ 
+//MARK: For review
 extension DatabaseManager.Review: DocumentSerializable {
     init?(dictionary: [String: Any]) {
         guard let name = dictionary[NavigationCases.Review.name.rawValue] as? String,
@@ -94,7 +130,7 @@ extension DatabaseManager.Review: DocumentSerializable {
     }
 }
 
-//MARK: Про Продукт
+//MARK: For product info
 extension DatabaseManager.ProductInfo: DocumentSerializable {
     init?(dictionary: [String: Any]) {
         guard let productName = dictionary[NavigationCases.Product.productName.rawValue] as? String,
@@ -106,7 +142,7 @@ extension DatabaseManager.ProductInfo: DocumentSerializable {
     }
 }
 
-//MARK: Про Заказ
+//MARK: For order
 extension DatabaseManager.Order: DocumentSerializable {
     init?(dictionary: [String: Any]) {
         guard let totalPrice = dictionary[NavigationCases.UsersInfo.totalPrice.rawValue] as? Int64,
@@ -117,7 +153,7 @@ extension DatabaseManager.Order: DocumentSerializable {
             let userMark = dictionary[NavigationCases.UsersInfo.mark.rawValue] as? String,
             let timeStamp = (dictionary[NavigationCases.UsersInfo.timeStamp.rawValue] as? Timestamp)?.dateValue(),
             let currentDeviceID = dictionary[NavigationCases.UsersInfo.currentDeviceID.rawValue] as? String,
-        let deliveryPerson = dictionary[NavigationCases.UsersInfo.deliveryPerson.rawValue] as? String else {return nil}
+            let deliveryPerson = dictionary[NavigationCases.UsersInfo.deliveryPerson.rawValue] as? String else {return nil}
         self.init(totalPrice: totalPrice, name: userName, adress: userAdress, cellphone: userCellphone, feedbackOption: feedbackOption, mark: userMark, timeStamp: timeStamp, currentDeviceID: currentDeviceID, deliveryPerson: deliveryPerson)
     }
 }

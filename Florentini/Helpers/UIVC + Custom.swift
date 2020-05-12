@@ -32,16 +32,16 @@ extension UIViewController {
         let viewWidth = view.bounds.width
         button.isUserInteractionEnabled = !button.isUserInteractionEnabled
         
-        if distance.constant == -viewWidth {
+        if distance.constant == viewWidth {
             distance.constant = 0
-            UIView.animate(withDuration: 0.3) {
-                button.alpha = 0.5
+            UIView.animate(withDuration: 0.5) {
+                button.alpha = 0
                 self.view.layoutIfNeeded()
             }
         }else{
-            distance.constant = -viewWidth
-            UIView.animate(withDuration: 0.4) {
-                button.alpha = 0
+            distance.constant = viewWidth
+            UIView.animate(withDuration: 0.5) {
+                button.alpha = 0.5
                 self.view.layoutIfNeeded()
             }
         }

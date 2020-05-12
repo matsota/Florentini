@@ -92,7 +92,7 @@ private extension UserCatalogViewController {
     
     //MARK: Для ViewDidLoad
     func forViewDidLoad() {
-        NetworkManager.shared.downloadProducts(success: { productInfo in
+        NetworkManager.shared.downloadProductsInfo(success: { productInfo in
             self.productInfo = productInfo.shuffled()
             self.tableView.reloadData()
         }) { error in
@@ -177,7 +177,7 @@ private extension UserCatalogViewController {
             }
         case .bouquet:
             showOptionsMethod(option: NavigationCases.ProductCategories.bouquet.rawValue)
-            NetworkManager.shared.downloadBouquets(success: { productInfo in
+            NetworkManager.shared.downloadBouquetsInfo(success: { productInfo in
                 self.productInfo = productInfo
                 self.filterButton.isHidden = false
                 self.tableView.reloadData()

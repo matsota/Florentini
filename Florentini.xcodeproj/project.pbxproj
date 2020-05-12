@@ -52,6 +52,7 @@
 		8F4506D8242B8A1F00759C47 /* UserHomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeTableViewCell.swift; sourceTree = "<group>"; };
 		8F701E2D2425065400DA37EF /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		8F73656D243944A3004A7A81 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		8F76B2FC246ADA4A002E4B61 /* coreData 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "coreData 2.xcdatamodel"; sourceTree = "<group>"; };
 		8F9574282417AE7000A4EF6E /* UserCartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCartTableViewCell.swift; sourceTree = "<group>"; };
 		8FA196ED2438B6C200F795DF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		8FA80A9723FD65FA0015C878 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -102,6 +103,7 @@
 				8F2062AB23FF6292007C481A /* UIAlertController + Custom.swift */,
 				8F1778222427E19E00164C0D /* IBDesignable + Buttons.swift */,
 				8F4506D3242A811400759C47 /* UIVC + Custom.swift */,
+				8F2062A423FF555F007C481A /* NavigationCases.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -122,7 +124,6 @@
 				8F0E7BDD24214DAC004235A7 /* CoreDataManager.swift */,
 				8FA80A9723FD65FA0015C878 /* NetworkManager.swift */,
 				8FA80A9923FD660A0015C878 /* DatabaseManager.swift */,
-				8F2062A423FF555F007C481A /* NavigationCases.swift */,
 				8F2062A823FF5F94007C481A /* AuthenticationManager.swift */,
 			);
 			path = Manager;
@@ -543,6 +544,7 @@
 		8F0E7BB72421496C004235A7 /* FlorentiniModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				8F76B2FC246ADA4A002E4B61 /* coreData 2.xcdatamodel */,
 				8F0E7BB82421496C004235A7 /* coreData.xcdatamodel */,
 			);
 			currentVersion = 8F0E7BB82421496C004235A7 /* coreData.xcdatamodel */;

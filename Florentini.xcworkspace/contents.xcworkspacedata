@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Florentini/CoreData/ClientData+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:Florentini/CoreData/ClientData+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:Florentini.xcodeproj">
    </FileRef>
    <FileRef

@@ -23,7 +23,6 @@ class UserHomeViewController: UIViewController {
     //MARK: - TransitionMenu button tapped
     @IBAction private func menuTapped(_ sender: UIButton) {
         slideInTransitionMenu(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
-        print(transitionView.bounds.width, transitionViewLeftConstraint.constant, transitionView.alpha, transitionView.isUserInteractionEnabled)
     }
     
     //MARK: - Transition confirm

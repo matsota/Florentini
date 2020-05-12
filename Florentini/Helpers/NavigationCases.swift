@@ -32,6 +32,16 @@ class NavigationCases {
         
     }
     
+    //MARK: - First Collection path in Firebase
+    enum FirstCollectionRow: String, CaseIterable {
+        
+        case productInfo
+        case imageCollection
+        case order
+        case review
+        
+    }
+    
     //MARK: - Про Сообщения
     enum Review: String, CaseIterable {
         
@@ -39,7 +49,6 @@ class NavigationCases {
         case content
         case uid
         case timeStamp
-        case review
         
     }
     
@@ -104,7 +113,7 @@ class NavigationCases {
         case hundred = 100
         //        case halfHundred = 50
         case five = 5
-        case three = 3
+        //        case three = 3
         
     }
     
@@ -116,6 +125,19 @@ class NavigationCases {
         case bouquet = "Букеты"
         case stock = "Акции"
         
+    }
+    
+    
+    //MARK: Clients
+    
+    enum ForClientData: String, CaseIterable {
+        case name
+        case phone
+        case orderCount
+        case deviceID
+        case lastAdress
+        case adressesDict
+        case productDict
     }
     
 }

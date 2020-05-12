@@ -25,7 +25,7 @@ class NetworkManager {
         guard let currentDeviceID = CoreDataManager.shared.device else {return}
         let newReview = DatabaseManager.Review(name: name, content: content, uid: "\(currentDeviceID)", timeStamp: Date())
         
-        db.collection(NavigationCases.Review.review.rawValue).addDocument(data: newReview.dictionary) {
+        db.collection(NavigationCases.FirstCollectionRow.review.rawValue).addDocument(data: newReview.dictionary) {
             error in
             if let error = error {
                 failure(error)
@@ -40,7 +40,7 @@ class NetworkManager {
         guard let currentDeviceID = CoreDataManager.shared.device else {return}
         let newOrder = DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, currentDeviceID: "\(currentDeviceID)", deliveryPerson: "none")
         
-        db.collection(NavigationCases.UsersInfo.order.rawValue).document("\(currentDeviceID)").setData(newOrder.dictionary) {
+        db.collection(NavigationCases.FirstCollectionRow.order.rawValue).document("\(currentDeviceID)").setData(newOrder.dictionary) {
             error in
             if let error = error {
                 failure(error)
@@ -56,8 +56,8 @@ class NetworkManager {
     ///
     
     //MARK: - Download all products
-    func downloadProducts(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.Product.imageCollection.rawValue).getDocuments(completion: {
+    func downloadProductsInfo(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(NavigationCases.FirstCollectionRow.productInfo.rawValue).getDocuments(completion: {
             (querySnapshot, _) in
             let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
             success(productInfo)
@@ -65,8 +65,8 @@ class NetworkManager {
     }
     
     //MARK: - Only bouquets
-    func downloadBouquets(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.Product.imageCollection.rawValue).whereField(NavigationCases.Product.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategories.bouquet.rawValue).whereField(NavigationCases.Product.stock.rawValue, isEqualTo: false).getDocuments(completion: {
+    func downloadBouquetsInfo(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(NavigationCases.FirstCollectionRow.productInfo.rawValue).whereField(NavigationCases.Product.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategories.bouquet.rawValue).whereField(NavigationCases.Product.stock.rawValue, isEqualTo: false).getDocuments(completion: {
             (querySnapshot, _) in
             let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
             success(productInfo)
@@ -75,7 +75,7 @@ class NetworkManager {
     
     //MARK: - Only apieces
     func downloadApieces(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.Product.imageCollection.rawValue).whereField(NavigationCases.Product.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategories.apiece.rawValue).whereField(NavigationCases.Product.stock.rawValue, isEqualTo: false).getDocuments(completion: {
+        db.collection(NavigationCases.FirstCollectionRow.productInfo.rawValue).whereField(NavigationCases.Product.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategories.apiece.rawValue).whereField(NavigationCases.Product.stock.rawValue, isEqualTo: false).getDocuments(completion: {
             (querySnapshot, _) in
             let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
             success(productInfo)
@@ -84,7 +84,7 @@ class NetworkManager {
     
     //MARK: - Only gifts
     func downloadGifts(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.Product.imageCollection.rawValue).whereField(NavigationCases.Product.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategories.gift.rawValue).whereField(NavigationCases.Product.stock.rawValue, isEqualTo: false).getDocuments(completion: {
+        db.collection(NavigationCases.FirstCollectionRow.productInfo.rawValue).whereField(NavigationCases.Product.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategories.gift.rawValue).whereField(NavigationCases.Product.stock.rawValue, isEqualTo: false).getDocuments(completion: {
             (querySnapshot, _) in
             let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
             success(productInfo)
@@ -93,7 +93,7 @@ class NetworkManager {
     
     //MARK: - Only stock
     func downloadStocks(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.Product.imageCollection.rawValue).whereField(NavigationCases.Product.stock.rawValue, isEqualTo: true).getDocuments(completion: {
+        db.collection(NavigationCases.FirstCollectionRow.productInfo.rawValue).whereField(NavigationCases.Product.stock.rawValue, isEqualTo: true).getDocuments(completion: {
             (querySnapshot, _) in
             let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
             success(productInfo)
