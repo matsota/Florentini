@@ -101,7 +101,9 @@ private extension AboutUsViewController {
             self.present(UIAlertController.classic(title: "Эттеншн!", message: "Вы не ввели информацию, которой бы Вы хотели поделиться с нами"), animated: true)
         }else{
             if name == "" {name = "anonymous"}
-            NetworkManager.shared.sendReview(name: name!, content: content!, success: {
+            guard let currentDeviceID = CoreDataManager.shared.device else {return}
+            let newReview = DatabaseManager.Review(name: name!, content: content!, uid: "\(currentDeviceID)", timeStamp: Date())
+            NetworkManager.shared.sendReview(newReview: newReview, content: content!, success: {
                 self.present(UIAlertController.completionDoneTwoSec(title: "Благодарим Вас", message: "Мы очень рады, что у нас есть возможность заняться самоанализом!"), animated: true)
                 self.nameTextField.text = ""
                 self.reviewTextView.text = ""

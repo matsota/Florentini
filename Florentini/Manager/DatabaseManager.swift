@@ -87,6 +87,7 @@ class DatabaseManager {
         var timeStamp: Date
         var currentDeviceID: String
         var deliveryPerson: String
+        var orderID: String
         
         var dictionary: [String:Any]{
             return [
@@ -98,7 +99,8 @@ class DatabaseManager {
                 NavigationCases.UsersInfo.mark.rawValue: mark,
                 NavigationCases.UsersInfo.timeStamp.rawValue: timeStamp,
                 NavigationCases.UsersInfo.currentDeviceID.rawValue: currentDeviceID,
-                NavigationCases.UsersInfo.deliveryPerson.rawValue: deliveryPerson
+                NavigationCases.UsersInfo.deliveryPerson.rawValue: deliveryPerson,
+                NavigationCases.UsersInfo.orderID.rawValue: orderID
             ]
         }
     }
@@ -153,8 +155,9 @@ extension DatabaseManager.Order: DocumentSerializable {
             let userMark = dictionary[NavigationCases.UsersInfo.mark.rawValue] as? String,
             let timeStamp = (dictionary[NavigationCases.UsersInfo.timeStamp.rawValue] as? Timestamp)?.dateValue(),
             let currentDeviceID = dictionary[NavigationCases.UsersInfo.currentDeviceID.rawValue] as? String,
-            let deliveryPerson = dictionary[NavigationCases.UsersInfo.deliveryPerson.rawValue] as? String else {return nil}
-        self.init(totalPrice: totalPrice, name: userName, adress: userAdress, cellphone: userCellphone, feedbackOption: feedbackOption, mark: userMark, timeStamp: timeStamp, currentDeviceID: currentDeviceID, deliveryPerson: deliveryPerson)
+            let deliveryPerson = dictionary[NavigationCases.UsersInfo.deliveryPerson.rawValue] as? String,
+        let orderID = dictionary[NavigationCases.UsersInfo.orderID.rawValue] as? String else {return nil}
+        self.init(totalPrice: totalPrice, name: userName, adress: userAdress, cellphone: userCellphone, feedbackOption: feedbackOption, mark: userMark, timeStamp: timeStamp, currentDeviceID: currentDeviceID, deliveryPerson: deliveryPerson, orderID: orderID)
     }
 }
 

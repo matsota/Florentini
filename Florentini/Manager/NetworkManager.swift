@@ -22,10 +22,7 @@ class NetworkManager {
     ///
     
     //MARK: - Send review
-    func sendReview(name: String, content: String, success: @escaping() -> Void, failure: @escaping(Error) -> Void) {
-        guard let currentDeviceID = CoreDataManager.shared.device else {return}
-        let newReview = DatabaseManager.Review(name: name, content: content, uid: "\(currentDeviceID)", timeStamp: Date())
-        
+    func sendReview(newReview: DatabaseManager.Review, content: String, success: @escaping() -> Void, failure: @escaping(Error) -> Void) {
         db.collection(NavigationCases.FirstCollectionRow.review.rawValue).addDocument(data: newReview.dictionary) {
             error in
             if let error = error {
@@ -37,22 +34,27 @@ class NetworkManager {
     }
     
     //MARK: - Order Confirm
-    func orderConfirm(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, timeStamp: Date, productDescription: [String : Any], success: @escaping() -> Void, failure: @escaping(Error) -> Void) {
-        guard let currentDeviceID = CoreDataManager.shared.device else {return}
-        let newOrder = DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, currentDeviceID: "\(currentDeviceID)", deliveryPerson: "none")
+    func orderConfirm(totalPrice: Int64, name: String, adress: String, cellphone: String, feedbackOption: String, mark: String, timeStamp: Date, success: @escaping(DocumentReference) -> Void, failure: @escaping(Error) -> Void) {
         
+        guard let currentDeviceID = CoreDataManager.shared.device else {return}
         var ref: DocumentReference? = nil
         ref = db.collection(NavigationCases.FirstCollectionRow.order.rawValue).document()
         
-        ref!.setData(newOrder.dictionary) {
-            error in
+        
+        let newOrder = DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, currentDeviceID: "\(currentDeviceID)", deliveryPerson: "none", orderID: ref!.documentID)
+        
+        ref!.setData(newOrder.dictionary) { error in
             if let error = error {
                 failure(error)
             }else{
-                self.db.collection(NavigationCases.FirstCollectionRow.order.rawValue).document(ref!.documentID).collection("\(currentDeviceID)").document().setData(productDescription)
-                success()
+                guard let ref = ref else {return}
+                success(ref)
             }
         }
+    }
+    
+    func orderDescriptionConfirm(path: String, orderDescription: [String : Any]) {
+        self.db.collection(NavigationCases.FirstCollectionRow.order.rawValue).document(path).collection(NavigationCases.Product.orderDescription.rawValue).document().setData(orderDescription)
     }
     
     ///
@@ -108,10 +110,10 @@ class NetworkManager {
     //MARK: - crUd
     ///
     
-    func updateClientData(data: [String : Any], success: @escaping() -> Void, failure: @escaping(Error) -> Void) {
+    //MARK: - Update Client
+    func updateClientData(clientData: DatabaseManager.ClientInfo, success: @escaping() -> Void, failure: @escaping(Error) -> Void) {
         
-        guard let newData = DatabaseManager.ClientInfo(dictionary: data),
-            let currentDeviceID = CoreDataManager.shared.device else {return}
+        guard let currentDeviceID = CoreDataManager.shared.device else {return}
         var ref: DocumentReference? = nil
         ref = db.collection(NavigationCases.FirstCollectionRow.clientData.rawValue).document("\(currentDeviceID)")
         
@@ -127,11 +129,11 @@ class NetworkManager {
                             failure(error)
                         }else{
                             guard let oldData = DatabaseManager.ClientInfo(dictionary: documentSnapshot!.data()!) else {return}
-                            if newData.lastAdress != oldData.lastAdress || newData.name != oldData.name || newData.phone != oldData.phone {
+                            if clientData.lastAdress != oldData.lastAdress || clientData.name != oldData.name || clientData.phone != oldData.phone {
                                 ref?.collection(NavigationCases.ForClientData.adress.rawValue).addDocument(data:[NavigationCases.ForClientData.adress.rawValue: oldData.lastAdress, NavigationCases.ForClientData.name.rawValue: oldData.name, NavigationCases.ForClientData.phone.rawValue: oldData.phone]) { _ in
-                                ref?.updateData([NavigationCases.ForClientData.lastAdress.rawValue : newData.lastAdress])
-                                    ref?.updateData([NavigationCases.ForClientData.name.rawValue : newData.name])
-                                    ref?.updateData([NavigationCases.ForClientData.phone.rawValue: newData.phone])
+                                    ref?.updateData([NavigationCases.ForClientData.lastAdress.rawValue : clientData.lastAdress])
+                                    ref?.updateData([NavigationCases.ForClientData.name.rawValue : clientData.name])
+                                    ref?.updateData([NavigationCases.ForClientData.phone.rawValue: clientData.phone])
                                     success()
                                 }
                             }
@@ -139,7 +141,7 @@ class NetworkManager {
                         
                     })
                 }else{
-                    ref?.setData(newData.dictionary) { (error) in
+                    ref?.setData(clientData.dictionary) { (error) in
                         if let error = error {
                             print(error.localizedDescription)
                             failure(error)

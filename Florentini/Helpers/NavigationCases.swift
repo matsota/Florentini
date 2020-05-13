@@ -70,6 +70,7 @@ class NavigationCases {
         case productImageURL
         case imageCollection
         case stock
+        case orderDescription
         
     }
     
@@ -97,7 +98,7 @@ class NavigationCases {
         case timeStamp
         case currentDeviceID
         case deliveryPerson
-        
+        case orderID
         case cart
         
     }
