@@ -1,5 +1,5 @@
 //
-//  UserCartViewController.swift
+//  CartViewController.swift
 //  Florentini
 //
 //  Created by Andrew Matsota on 06.03.2020.
@@ -11,7 +11,7 @@ import FirebaseUI
 import CoreData
 
 
-class UserCartViewController: UIViewController {
+class CartViewController: UIViewController {
     
     //MARK: - Override
     override func viewDidLoad() {
@@ -32,7 +32,6 @@ class UserCartViewController: UIViewController {
             let view = transitionView,
             let constraint = transitionViewLeftConstraint,
             let button = transitionDismissButton else {return}
-        
         transitionPerform(by: title, for: view, with: constraint, dismiss: button)
     }
     
@@ -70,13 +69,16 @@ class UserCartViewController: UIViewController {
     
     //MARK: - Order confirmation
     @IBAction private func confirmTapped(_ sender: UIButton) {
-        confirm()
+        performConfirmation()
     }
     
     //MARK: - Private Implementation
     private var preOrder = [PreOrderEntity]()
     
-    private var selectedFeedbackType = String()
+    private var name: String?
+    private var phone: String?
+    
+    private var feedbackOption: String?
     private var orderBill = Int64()
     
     //MARK: Views
@@ -88,9 +90,6 @@ class UserCartViewController: UIViewController {
     //MARK: StackView
     @IBOutlet private weak var billStackView: UIStackView!
     
-    //MARK: ScrollView
-    @IBOutlet private weak var scrollView: UIScrollView!
-    
     //MARK: TableView Outlets
     @IBOutlet private weak var cartTableView: UITableView!
     
@@ -99,7 +98,10 @@ class UserCartViewController: UIViewController {
     @IBOutlet private weak var clientCellPhoneTextField: UITextField!
     @IBOutlet private weak var clientAdressTextField: UITextField!
     @IBOutlet private weak var clientDescriptionTextField: UITextField!
+    
+    //MARK: Label
     @IBOutlet private weak var orderPriceLabel: UILabel!
+    @IBOutlet private weak var clientsDataRemembered: UILabel!
     
     //MARK: Buttons Outlets
     @IBOutlet private var feedbackTypeBttnsCellection: [UIButton]!
@@ -107,6 +109,10 @@ class UserCartViewController: UIViewController {
     @IBOutlet private weak var emptyButtonForHide: UIButton!
     @IBOutlet private weak var feedBackBlankButton: DesignButton!
     @IBOutlet private weak var transitionDismissButton: UIButton!
+    
+    //MARK: - Switch
+    @IBOutlet private weak var savingClientsDataSwitch: UISwitch!
+    
     
     
     //MARK: Constrains Outlets
@@ -127,11 +133,14 @@ class UserCartViewController: UIViewController {
 //MARK: - Extention
 
 //MARK: - For Overrides
-private extension UserCartViewController {
+private extension CartViewController {
     
     //MARK: Для ViewDidLoad
     func forViewDidLoad() {
-        transitionViewLeftConstraint.constant = -transitionView.bounds.width
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        hideKeyboardWhenTappedAround()
         
         CoreDataManager.shared.fetchPreOrder(success: { (preOrderEntity) -> (Void) in
             self.preOrder = preOrderEntity
@@ -150,22 +159,31 @@ private extension UserCartViewController {
             print(error.localizedDescription)
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        hideKeyboardWhenTappedAround()
+        CoreDataManager.shared.fetchClientData(success: { (client) -> (Void) in
+            self.name = client.map({$0.name!}).first
+            self.phone = client.map({$0.phone!}).first
+            self.clientNameTextField.text = self.name
+            self.clientCellPhoneTextField.text = self.phone
+            if self.name != nil, self.phone != nil {
+                self.clientsDataRemembered.text = "Обновить Ваше имя или телефон?"
+            }
+        }) { (error) in
+            self.present(UIAlertController.completionDoneTwoSec(title: "Внимание", message: "Не получилось подтянуть ваши Имя и телефон из памяти"), animated: true)
+            print(error.localizedDescription)
+        }
     }
     
 }
 
 //MARK: - by Table View
-extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
+extension CartViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return preOrder.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = cartTableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.CartTVCell.rawValue, for: indexPath) as! UserCartTableViewCell
+        let cell = cartTableView.dequeueReusableCell(withIdentifier: NavigationCases.Transition.CartTVCell.rawValue, for: indexPath) as! UserCartTableViewCell
         
         cell.tag = indexPath.row
         cell.delegate = self
@@ -206,7 +224,7 @@ extension UserCartViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 //MARK: - Slider Values & Receipt changes
-extension UserCartViewController: UserCartTableViewCellDelegate {
+extension CartViewController: UserCartTableViewCellDelegate {
     
     func sliderValue(_ cell: UserCartTableViewCell) {
         guard let price = cell.productPrice, let name = cell.productName, let fetch = try! PersistenceService.context.fetch(PreOrderEntity.fetchRequest()) as? [PreOrderEntity] else {return}
@@ -226,7 +244,7 @@ extension UserCartViewController: UserCartTableViewCellDelegate {
 }
 
 //MARK: - Hide And Show Any
-private extension UserCartViewController {
+private extension CartViewController {
     
     @objc func keyboardWillShow(notification: Notification) {
         self.billStackView.isHidden = true
@@ -278,7 +296,7 @@ private extension UserCartViewController {
     }
     
     func showFeedbackOptions(option: String) {
-        selectedFeedbackType = option
+        feedbackOption = option
         feedbackTypeBttnsCellection.forEach { (buttons) in
             UIView.animate(withDuration: 0.2) {
                 buttons.isHidden = !buttons.isHidden
@@ -291,62 +309,89 @@ private extension UserCartViewController {
 }
 
 //MARK: - Send order from CoreData to Firebase
-private extension UserCartViewController {
+private extension CartViewController {
     
-    func confirm() {
-        guard let adress = clientAdressTextField.text, let cellphone = clientCellPhoneTextField.text else {return}
+    func performConfirmation() {
+        guard let name = self.clientNameTextField.text, let phone = self.clientCellPhoneTextField.text, let adress = self.clientAdressTextField.text else {return}
+        var mark = self.clientDescriptionTextField.text!
         
-        var name = clientNameTextField.text!,
-        mark = clientDescriptionTextField.text!,
-        feedbackOption = selectedFeedbackType
-        
-        if feedbackOption == "", name == "", mark == "" {
-            feedbackOption = NavigationCases.Feedback.cellphone.rawValue
-            name = "Без Имени"
+        if self.feedbackOption == nil && mark == "" {
+            self.feedbackOption = NavigationCases.Feedback.cellphone.rawValue
             mark = "Без Дополнений"
         }
         
-        if adress == "" || cellphone == "" {
-            self.present(UIAlertController.completionDoneTwoSec(title: "Эттеншн!", message: "Мы не знаем всех необходимых данных, что бы осуществить доставку радости. Просим Вас ввести: Адресс доставки и Телефон, чтобы мы смогли подтвердить заказ"), animated: true)
-            feedBackTopConstraint.constant = -cartTableView.frame.height
+        if name == "" || phone == "" || adress == "" {
+            self.present(UIAlertController.completionDoneTwoSec(title: "Эттеншн!", message: "Мы не знаем всех необходимых данных, что бы осуществить доставку радости. Просим Вас ввести: Имя, Телефон, Адресс доставки, чтобы мы смогли подтвердить заказ"), animated: true)
+            self.feedBackTopConstraint.constant = -self.cartTableView.frame.height
             UIView.animate(withDuration: 0.3) {
                 self.view.layoutIfNeeded()
             }
-            
+        }else if self.preOrder == [] {
+            self.present(UIAlertController.completionDoneTwoSec(title: "Эттеншн!", message: "Вы не выбрали ни единого товара"), animated: true)
         }else{
-            var jsonArray: [[String: Any]] = []
+            guard let currentDeviceID = CoreDataManager.shared.device else {return}
+            let clientData = DatabaseManager.ClientInfo(name: name, phone: phone, orderCount: 1, deviceID: "\(currentDeviceID)", lastAdress: adress)
             
-            for i in preOrder {
-                i.productImage = nil
-                let preOrderJSON = i.toJSON()
-                jsonArray.append(preOrderJSON)
+            NetworkManager.shared.updateClientData(data: clientData.dictionary, success: {
+                print("SUCCESS ADDED OR UPDATE")
+            }) { (error) in
+                print("ERROR: orderConfirm/ updateClientData :",error)
             }
-            print(jsonArray)
             
-            let totalPrice = orderBill
-            
-            for _ in preOrder {
-                NetworkManager.shared.orderConfirm(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: Date(), productDescription: jsonArray.remove(at:0), success: {
-                    
-                    self.present(UIAlertController.completionDoneTwoSec(title: "Ваш заказ оформлен", message: "Мы свяжемся с Вам так скоро, как это возможно"), animated: true)
-                    self.clientNameTextField.text = ""
-                    self.clientAdressTextField.text = ""
-                    self.clientCellPhoneTextField.text = ""
-                    self.clientDescriptionTextField.text = ""
-                    self.orderPriceLabel.text = "0 грн"
-                    self.tableCountZeroView.isHidden = false
-                    self.feedBackTopConstraint.constant = 0
-                    UIView.animate(withDuration: 0.3) {
-                        self.view.layoutIfNeeded()
+            let sendAnOrder = {
+                var jsonArray: [[String: Any]] = []
+                for i in self.preOrder {
+                    i.productImage = nil
+                    let preOrderJSON = i.toJSON()
+                    jsonArray.append(preOrderJSON)
+                }
+                
+                let totalPrice = self.orderBill
+
+                for _ in self.preOrder {
+                    NetworkManager.shared.orderConfirm(totalPrice: totalPrice, name: name, adress: adress, cellphone: phone, feedbackOption: self.feedbackOption!, mark: mark, timeStamp: Date(), productDescription: jsonArray.remove(at:0), success: {
+                        
+                        self.present(UIAlertController.completionDoneTwoSec(title: "Ваш заказ оформлен", message: "Мы свяжемся с Вам так скоро, как это возможно"), animated: true)
+                        self.clientAdressTextField.text = ""
+                        self.clientDescriptionTextField.text = ""
+                        self.orderPriceLabel.text = "0 грн"
+                        self.tableCountZeroView.isHidden = false
+                        self.feedBackTopConstraint.constant = 0
+                        UIView.animate(withDuration: 0.3) {
+                            self.view.layoutIfNeeded()
+                        }
+                        
+                        CoreDataManager.shared.deleteAllData(entity: NavigationCases.CoreDataCases.PreOrderEntity.rawValue, success:  {
+                            self.preOrder.removeAll()
+                            self.cartTableView.reloadData()
+                            self.tableCountZeroView.isHidden = false
+                        }) { error in
+                            self.present(UIAlertController.completionDoneTwoSec(title: "Внимание", message: "Состояние вашего заказа не изменилось"), animated: true)
+                        }
+                    }) { (error) in
+                        self.present(UIAlertController.completionDoneTwoSec(title: "Внимание", message: "Проблема с подключением к сети"), animated: true)
+                        print("Error in CartViewController, func confirm(): ", error.localizedDescription)
                     }
-                    CoreDataManager.shared.deleteAllData(entity: NavigationCases.CoreData.PreOrderEntity.rawValue) {
-                        self.preOrder.removeAll()
-                        self.cartTableView.reloadData()
+                }
+            }
+            
+            if self.savingClientsDataSwitch.isOn == true {
+                CoreDataManager.shared.deleteAllData(entity: NavigationCases.CoreDataCases.ClientData.rawValue, success: {
+                    guard let name = self.clientNameTextField.text, let phone = self.clientCellPhoneTextField.text else {
+                        self.present(UIAlertController.completionDoneTwoSec(title: "Эттеншн!", message: "Мы не знаем всех необходимых данных, что бы осуществить доставку радости. Просим Вас ввести: Имя, Телефон, Адресс доставки, чтобы мы смогли подтвердить заказ"), animated: true)
+                        return
+                    }
+                    CoreDataManager.shared.saveClientInfo(name: name, phone: phone, success: {
+                        sendAnOrder()
+                    }) {
+                        self.present(UIAlertController.completionDoneTwoSec(title: "Внимание", message: "Произошла ошибка в процессе обновления вашего Имени и телефона"), animated: true)
                     }
                 }) { (error) in
-                    self.present(UIAlertController.somethingWrong(), animated: true)
-                    print("Error in CartViewController, func confirm(): ", error.localizedDescription)
+                    self.present(UIAlertController.completionDoneTwoSec(title: "Внимание", message: "Произошла ошибка в процессе изменения вашего Имени и телефона"), animated: true)
+                    print(error.localizedDescription)
                 }
+            }else{
+                sendAnOrder()
             }
         }
     }

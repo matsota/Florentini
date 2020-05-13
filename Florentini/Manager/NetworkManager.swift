@@ -9,6 +9,7 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseUI
+import FirebaseDatabase
 
 class NetworkManager {
     
@@ -40,12 +41,15 @@ class NetworkManager {
         guard let currentDeviceID = CoreDataManager.shared.device else {return}
         let newOrder = DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, currentDeviceID: "\(currentDeviceID)", deliveryPerson: "none")
         
-        db.collection(NavigationCases.FirstCollectionRow.order.rawValue).document("\(currentDeviceID)").setData(newOrder.dictionary) {
+        var ref: DocumentReference? = nil
+        ref = db.collection(NavigationCases.FirstCollectionRow.order.rawValue).document()
+        
+        ref!.setData(newOrder.dictionary) {
             error in
             if let error = error {
                 failure(error)
             }else{
-                self.db.collection(NavigationCases.UsersInfo.order.rawValue).document("\(currentDeviceID)").collection("\(currentDeviceID)").document().setData(productDescription)
+                self.db.collection(NavigationCases.FirstCollectionRow.order.rawValue).document(ref!.documentID).collection("\(currentDeviceID)").document().setData(productDescription)
                 success()
             }
         }
@@ -99,7 +103,56 @@ class NetworkManager {
             success(productInfo)
         })
     }
-
+    
+    ///
+    //MARK: - crUd
+    ///
+    
+    func updateClientData(data: [String : Any], success: @escaping() -> Void, failure: @escaping(Error) -> Void) {
+        
+        guard let newData = DatabaseManager.ClientInfo(dictionary: data),
+            let currentDeviceID = CoreDataManager.shared.device else {return}
+        var ref: DocumentReference? = nil
+        ref = db.collection(NavigationCases.FirstCollectionRow.clientData.rawValue).document("\(currentDeviceID)")
+        
+        ref?.getDocument(completion: { (documentSnapshot, error) in
+            if let error = error {
+                print(error)
+            }else{
+                if documentSnapshot?.exists == true {
+                    let oldData = DatabaseManager.ClientInfo(dictionary: documentSnapshot!.data()!)
+                    ref?.updateData([NavigationCases.ForClientData.orderCount.rawValue: oldData!.orderCount + 1], completion: { _ in
+                        if let error = error {
+                            print(error.localizedDescription)
+                            failure(error)
+                        }else{
+                            guard let oldData = DatabaseManager.ClientInfo(dictionary: documentSnapshot!.data()!) else {return}
+                            if newData.lastAdress != oldData.lastAdress || newData.name != oldData.name || newData.phone != oldData.phone {
+                                ref?.collection(NavigationCases.ForClientData.adress.rawValue).addDocument(data:[NavigationCases.ForClientData.adress.rawValue: oldData.lastAdress, NavigationCases.ForClientData.name.rawValue: oldData.name, NavigationCases.ForClientData.phone.rawValue: oldData.phone]) { _ in
+                                ref?.updateData([NavigationCases.ForClientData.lastAdress.rawValue : newData.lastAdress])
+                                    ref?.updateData([NavigationCases.ForClientData.name.rawValue : newData.name])
+                                    ref?.updateData([NavigationCases.ForClientData.phone.rawValue: newData.phone])
+                                    success()
+                                }
+                            }
+                        }
+                        
+                    })
+                }else{
+                    ref?.setData(newData.dictionary) { (error) in
+                        if let error = error {
+                            print(error.localizedDescription)
+                            failure(error)
+                        }else{
+                            success()
+                        }
+                    }
+                }
+            }
+        })
+    }
+    
+    
 }
 
 //MARK: - Extensions

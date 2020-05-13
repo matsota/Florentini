@@ -1,5 +1,5 @@
 //
-//  UserCatalogViewController.swift
+//  CatalogViewController.swift
 //  Florentini
 //
 //  Created by Andrew Matsota on 19.02.2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserCatalogViewController: UIViewController {
+class CatalogViewController: UIViewController {
     
     //MARK: - Override
     
@@ -88,7 +88,7 @@ class UserCatalogViewController: UIViewController {
 //MARK: - Extention:
 
 //MARK: - For Overrides
-private extension UserCatalogViewController {
+private extension CatalogViewController {
     
     //MARK: Для ViewDidLoad
     func forViewDidLoad() {
@@ -107,14 +107,14 @@ private extension UserCatalogViewController {
 
 
 //MARK: - by TableView
-extension UserCatalogViewController: UITableViewDelegate, UITableViewDataSource {
+extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return productInfo.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.CatalogTVCell.rawValue, for: indexPath) as! UserCatalogTableViewCell,
+        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.Transition.CatalogTVCell.rawValue, for: indexPath) as! CatalogTableViewCell,
         fetch = productInfo[indexPath.row],
         name = fetch.productName,
         price = fetch.productPrice,
@@ -131,7 +131,7 @@ extension UserCatalogViewController: UITableViewDelegate, UITableViewDataSource 
 }
 
 //MARK: - Filter categories appearance
-private extension UserCatalogViewController {
+private extension CatalogViewController {
     func showOptionsMethod(option: String) {
         selectedCategory = option
         allFilterButtonsCollection.forEach { (buttons) in
@@ -153,7 +153,7 @@ private extension UserCatalogViewController {
 }
 
 //MARK: - Category Picked
-private extension UserCatalogViewController {
+private extension CatalogViewController {
     func selectionMethod(_ class: UIViewController, _ sender: UIButton) {
         guard let title = sender.currentTitle, let categories = NavigationCases.ProductCategories(rawValue: title) else {return}
         switch categories {
@@ -198,10 +198,10 @@ private extension UserCatalogViewController {
 }
 
 //MARK: - by Table View Cell Delegate
-extension UserCatalogViewController: UserCatalogTableViewCellDelegate {
+extension CatalogViewController: CatalogTableViewCellDelegate {
     
     //MARK: Adding to user's Cart
-    func addToCart(_ cell: UserCatalogTableViewCell) {
+    func addToCart(_ cell: CatalogTableViewCell) {
         
         let price = cell.price,
         image = cell.productImageView.image
@@ -220,7 +220,7 @@ extension UserCatalogViewController: UserCatalogTableViewCellDelegate {
 }
 
 //MARK: - Cart image condition
-private extension UserCatalogViewController {
+private extension CatalogViewController {
     
     func cartImageCondition() {
         CoreDataManager.shared.fetchPreOrder( success: { (preOrderEntity) -> (Void) in

@@ -1,5 +1,5 @@
 //
-//  UserAboutUsViewController.swift
+//  AboutUsViewController.swift
 //  Florentini
 //
 //  Created by Andrew Matsota on 19.02.2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserAboutUsViewController: UIViewController {
+class AboutUsViewController: UIViewController {
     
     //MARK: - Override
     
@@ -79,7 +79,7 @@ class UserAboutUsViewController: UIViewController {
 //MARK: - Extensions
 
 //MARK: - For Overrides
-private extension UserAboutUsViewController {
+private extension AboutUsViewController {
     
     //MARK: Для ViewDidLoad
     func forViewDidLoad() {
@@ -92,7 +92,7 @@ private extension UserAboutUsViewController {
 }
 
 //MARK: - Review method
-private extension UserAboutUsViewController {
+private extension AboutUsViewController {
     func reviewSent() {
         var name = nameTextField.text
         let content = reviewTextView.text
@@ -115,7 +115,7 @@ private extension UserAboutUsViewController {
 }
 
 //MARK: - Hide and Show Any
-private extension UserAboutUsViewController {
+private extension AboutUsViewController {
     
     @objc func keyboardWillShow(notification: Notification) {
         guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber, let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
@@ -139,7 +139,7 @@ private extension UserAboutUsViewController {
 }
 
 //MARK: - TextView Delegate + Custom
-extension UserAboutUsViewController: UITextViewDelegate {
+extension AboutUsViewController: UITextViewDelegate {
     
     func setTextViewPlaceholder(for textView: UITextView) {
         textView.text = "Введите текст"

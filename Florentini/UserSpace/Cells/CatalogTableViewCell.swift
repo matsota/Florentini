@@ -8,22 +8,22 @@
 import UIKit
 import FirebaseUI
 
-//MARK: - Protocol-User-Catalog-TableViewCell
-protocol UserCatalogTableViewCellDelegate: class {
+//MARK: - Protocol
+protocol CatalogTableViewCellDelegate: class {
     
-    func addToCart(_ cell: UserCatalogTableViewCell)
+    func addToCart(_ cell: CatalogTableViewCell)
     
 }
 
 //MARK: - Core Class
-class UserCatalogTableViewCell: UITableViewCell {
+class CatalogTableViewCell: UITableViewCell {
     
     //MARK: - Implementation
     var category: String?
     var price = Int()
     var stock: Bool?
     //delegate
-    weak var delegate: UserCatalogTableViewCellDelegate?
+    weak var delegate: CatalogTableViewCellDelegate?
     
     //MARK: View
     @IBOutlet weak var descriptionView: UIView!
@@ -59,12 +59,12 @@ class UserCatalogTableViewCell: UITableViewCell {
 //    svprogressHUD
 //    }
     
-    //MARK: - Добавление в Корзину
+    //MARK: - Add to cart
     @IBAction func addToBasketTapped(_ sender: DesignButton) {
         delegate?.addToCart(self)
     }
     
-    //MARK: - Заполнение Таблицы
+    //MARK: - Cells fill
     func fill(name: String, price: Int, description: String, category: String, stock: Bool) {
         imageActivityIndicator?.startAnimating()
         imageActivityIndicator?.isHidden = false

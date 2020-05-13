@@ -1,5 +1,5 @@
 //
-//  UserHomeViewController.swift
+//  HomeViewController.swift
 //  Florentini
 //
 //  Created by Andrew Matsota on 19.02.2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserHomeViewController: UIViewController {
+class HomeViewController: UIViewController {
 
     //MARK: - Override
     
@@ -75,7 +75,7 @@ class UserHomeViewController: UIViewController {
 //MARK: - Extention
 
 //MARK: - For Overrides
-private extension UserHomeViewController {
+private extension HomeViewController {
     
     //MARK: Для ViewDidLoad
     func forViewDidLoad() {
@@ -112,14 +112,14 @@ private extension UserHomeViewController {
 }
 
 //MARK: - by TableView
-extension UserHomeViewController: UITableViewDataSource, UITableViewDelegate {
+extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return productInfo.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.IDVC.HomeTVCell.rawValue, for: indexPath) as! UserHomeTableViewCell,
+        let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.Transition.HomeTVCell.rawValue, for: indexPath) as! HomeTableViewCell,
         fetch = productInfo[indexPath.row],
         name = fetch.productName,
         price = fetch.productPrice,
@@ -143,10 +143,10 @@ extension UserHomeViewController: UITableViewDataSource, UITableViewDelegate {
 //MARK: -
 
 //MARK: - by Table View Cell Delegate
-extension UserHomeViewController: UserHomeTableViewCellDelegate {
+extension HomeViewController: HomeTableViewCellDelegate {
     
     //MARK: Adding to user's Cart
-    func addToCart(_ cell: UserHomeTableViewCell) {
+    func addToCart(_ cell: HomeTableViewCell) {
         
         let price = cell.price,
         image = cell.cellImageView.image

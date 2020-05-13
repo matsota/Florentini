@@ -10,7 +10,7 @@
         <!--Home-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="UserHomeViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeVC" modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="HomeViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -75,7 +75,7 @@
                                 <rect key="frame" x="14" y="413.66666666666674" width="347" height="315.33333333333326"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="HomeTVCell" rowHeight="202" id="k3A-Hp-qqm" customClass="UserHomeTableViewCell" customModule="Florentini" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="HomeTVCell" rowHeight="202" id="k3A-Hp-qqm" customClass="HomeTableViewCell" customModule="Florentini" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="347" height="202"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="k3A-Hp-qqm" id="7gR-zW-VUg">
@@ -521,10 +521,10 @@
             </objects>
             <point key="canvasLocation" x="304.80000000000001" y="471.42857142857144"/>
         </scene>
-        <!--User Catalog View Controller-->
+        <!--Catalog View Controller-->
         <scene sceneID="TSk-nu-oMd">
             <objects>
-                <viewController storyboardIdentifier="CatalogVC" modalPresentationStyle="fullScreen" id="OQi-JB-ueU" customClass="UserCatalogViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CatalogVC" modalPresentationStyle="fullScreen" id="OQi-JB-ueU" customClass="CatalogViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Nad-HM-jQC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -579,7 +579,7 @@
                                 <rect key="frame" x="50" y="188" width="275" height="417"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CatalogTVCell" id="YJ6-Nq-sW7" customClass="UserCatalogTableViewCell" customModule="Florentini" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CatalogTVCell" id="YJ6-Nq-sW7" customClass="CatalogTableViewCell" customModule="Florentini" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="275" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YJ6-Nq-sW7" id="aEE-GD-3rs">
@@ -1132,10 +1132,10 @@
             </objects>
             <point key="canvasLocation" x="1222" y="473"/>
         </scene>
-        <!--User About Us View Controller-->
+        <!--About Us View Controller-->
         <scene sceneID="mgd-7Y-mfw">
             <objects>
-                <viewController storyboardIdentifier="FeedbackVC" modalPresentationStyle="fullScreen" id="hBY-02-QEg" customClass="UserAboutUsViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FeedbackVC" modalPresentationStyle="fullScreen" id="hBY-02-QEg" customClass="AboutUsViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SF9-Up-adH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1538,10 +1538,10 @@
             </objects>
             <point key="canvasLocation" x="2126" y="473"/>
         </scene>
-        <!--UserFAQ View Controller-->
+        <!--View Controller-->
         <scene sceneID="RYM-ze-ex3">
             <objects>
-                <viewController storyboardIdentifier="FAQVC" modalPresentationStyle="fullScreen" id="U9M-7H-DAO" customClass="UserFAQViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FAQVC" modalPresentationStyle="fullScreen" id="U9M-7H-DAO" customClass="FAQViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Flw-Jc-j1J">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2202,10 +2202,10 @@
             </objects>
             <point key="canvasLocation" x="2975" y="473"/>
         </scene>
-        <!--User Cart View Controller-->
+        <!--Cart View Controller-->
         <scene sceneID="FyY-Qe-81D">
             <objects>
-                <viewController storyboardIdentifier="UsersCartVC" id="MvW-Ha-Rkh" customClass="UserCartViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CartVC" id="MvW-Ha-Rkh" customClass="CartViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mVo-ay-RNy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2368,32 +2368,32 @@
                                 </connections>
                             </button>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Id7-T7-g7r">
-                                <rect key="frame" x="0.0" y="697" width="375" height="0.0"/>
+                                <rect key="frame" x="0.0" y="697" width="375" height="1"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5vd-4F-z3z">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Cbs-eS-WEF">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="225"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IqP-fC-TTf">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="94"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="aY4-GO-M1c">
-                                                        <rect key="frame" x="0.0" y="152" width="375" height="69"/>
+                                                        <rect key="frame" x="14" y="0.0" width="347" height="48.333333333333336"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="9nX-ec-hRj">
-                                                                <rect key="frame" x="0.0" y="0.0" width="221" height="69"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="204.33333333333334" height="48.333333333333336"/>
                                                                 <subviews>
                                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Введите свое прекрасное Имя" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="cBB-e9-NHz">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="221" height="20.333333333333332"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="204.33333333333334" height="13.333333333333334"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" textContentType="name"/>
                                                                     </textField>
                                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Введите свой номер телефона" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="tD1-XL-ned">
-                                                                        <rect key="frame" x="0.0" y="24.333333333333371" width="221" height="20.333333333333329"/>
+                                                                        <rect key="frame" x="0.0" y="17.333333333333371" width="204.33333333333334" height="13.666666666666664"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                         <textInputTraits key="textInputTraits" keyboardType="phonePad" textContentType="tel"/>
                                                                     </textField>
                                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Введите адресс доставки" textAlignment="natural" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="xiy-XW-V6R">
-                                                                        <rect key="frame" x="0.0" y="48.666666666666629" width="221" height="20.333333333333329"/>
+                                                                        <rect key="frame" x="0.0" y="35" width="204.33333333333334" height="13.333333333333336"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                         <textInputTraits key="textInputTraits" autocorrectionType="yes" textContentType="street-address"/>
                                                                     </textField>
@@ -2404,13 +2404,13 @@
                                                                 </constraints>
                                                             </stackView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rd0-MR-ty1">
-                                                                <rect key="frame" x="225" y="0.0" width="150" height="69"/>
+                                                                <rect key="frame" x="208.33333333333337" y="0.0" width="138.66666666666663" height="48.333333333333336"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="HsP-Ru-mFp">
-                                                                        <rect key="frame" x="3" y="3" width="144" height="63"/>
+                                                                        <rect key="frame" x="3" y="3" width="132.66666666666666" height="42.333333333333336"/>
                                                                         <subviews>
                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="BFW-42-suV" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="144" height="63"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="132.66666666666666" height="42.333333333333336"/>
                                                                                 <color key="backgroundColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                 <color key="tintColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -2428,7 +2428,7 @@
                                                                                 </connections>
                                                                             </button>
                                                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJo-Ok-EeM" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="144" height="63"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="132.66666666666666" height="42.333333333333336"/>
                                                                                 <color key="backgroundColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                 <state key="normal" title="По телефону">
@@ -2444,7 +2444,7 @@
                                                                                 </connections>
                                                                             </button>
                                                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cOm-8G-2Y9" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="144" height="63"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="132.66666666666666" height="42.333333333333336"/>
                                                                                 <color key="backgroundColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                 <state key="normal" title="Viber">
@@ -2460,7 +2460,7 @@
                                                                                 </connections>
                                                                             </button>
                                                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="oN1-s9-sxS" customClass="DesignButton" customModule="Florentini" customModuleProvider="target">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="144" height="63"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="132.66666666666666" height="42.333333333333336"/>
                                                                                 <color key="backgroundColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                 <state key="normal" title="Telegram">
@@ -2497,29 +2497,63 @@
                                                             <constraint firstItem="Rd0-MR-ty1" firstAttribute="width" secondItem="aY4-GO-M1c" secondAttribute="width" multiplier="0.4" id="Myb-oJ-aC4"/>
                                                         </constraints>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="wMj-OP-9Mg">
-                                                        <rect key="frame" x="0.0" y="225" width="375" height="0.0"/>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="top" borderStyle="roundedRect" placeholder="Если это необходимо, то тут введите дополнительную информацию." minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="RxZ-O1-WMM">
+                                                        <rect key="frame" x="14" y="52.333333333333371" width="347" height="33.666666666666657"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes"/>
+                                                    </textField>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="msz-OJ-vQB">
+                                                        <rect key="frame" x="14" y="90" width="347" height="0.0"/>
                                                         <subviews>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="top" borderStyle="roundedRect" placeholder="Если это необходимо, то тут введите дополнительную информацию." minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="RxZ-O1-WMM">
-                                                                <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes"/>
-                                                            </textField>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Запомнить Ваше имя и телефон?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XE4-f5-5sE">
+                                                                <rect key="frame" x="0.0" y="0.0" width="256.33333333333331" height="0.0"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                <color key="textColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="N3F-S2-bhG">
+                                                                <rect key="frame" x="260.33333333333331" y="0.0" width="88.666666666666686" height="0.0"/>
+                                                                <color key="onTintColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                <color key="thumbTintColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            </switch>
                                                         </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="N3F-S2-bhG" firstAttribute="width" secondItem="msz-OJ-vQB" secondAttribute="width" multiplier="0.25" id="m2n-UI-lHX"/>
+                                                        </constraints>
                                                     </stackView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k9k-5C-irF">
+                                                        <rect key="frame" x="0.0" y="94" width="375" height="0.0"/>
+                                                        <connections>
+                                                            <action selector="emptyButtonForHideTapped:" destination="MvW-Ha-Rkh" eventType="touchUpInside" id="MT4-79-VgZ"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
+                                                <color key="backgroundColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="225" id="vmq-uk-jYq"/>
+                                                    <constraint firstAttribute="trailing" secondItem="k9k-5C-irF" secondAttribute="trailing" id="2ou-eG-Sk2"/>
+                                                    <constraint firstItem="aY4-GO-M1c" firstAttribute="leading" secondItem="IqP-fC-TTf" secondAttribute="leading" constant="14" id="F4s-bJ-RVb"/>
+                                                    <constraint firstItem="k9k-5C-irF" firstAttribute="top" secondItem="msz-OJ-vQB" secondAttribute="bottom" constant="4" id="HDJ-Tg-nvU"/>
+                                                    <constraint firstItem="msz-OJ-vQB" firstAttribute="top" secondItem="RxZ-O1-WMM" secondAttribute="bottom" constant="4" id="HTV-D1-vEh"/>
+                                                    <constraint firstItem="aY4-GO-M1c" firstAttribute="top" secondItem="IqP-fC-TTf" secondAttribute="top" id="Owj-10-cgw"/>
+                                                    <constraint firstItem="k9k-5C-irF" firstAttribute="leading" secondItem="IqP-fC-TTf" secondAttribute="leading" id="Pjo-9S-1X0"/>
+                                                    <constraint firstItem="msz-OJ-vQB" firstAttribute="leading" secondItem="IqP-fC-TTf" secondAttribute="leading" constant="14" id="Q3l-pn-sQb"/>
+                                                    <constraint firstAttribute="trailing" secondItem="aY4-GO-M1c" secondAttribute="trailing" constant="14" id="SNd-Yx-4gJ"/>
+                                                    <constraint firstItem="RxZ-O1-WMM" firstAttribute="height" secondItem="cBB-e9-NHz" secondAttribute="height" multiplier="2.5" id="U1S-1w-T2W"/>
+                                                    <constraint firstItem="RxZ-O1-WMM" firstAttribute="leading" secondItem="IqP-fC-TTf" secondAttribute="leading" constant="14" id="YTO-tk-xvM"/>
+                                                    <constraint firstAttribute="bottom" secondItem="k9k-5C-irF" secondAttribute="bottom" id="YbX-GZ-WUn"/>
+                                                    <constraint firstAttribute="trailing" secondItem="msz-OJ-vQB" secondAttribute="trailing" constant="14" id="fXe-Nx-RLv"/>
+                                                    <constraint firstItem="RxZ-O1-WMM" firstAttribute="top" secondItem="aY4-GO-M1c" secondAttribute="bottom" constant="4" id="j8t-Qs-l71"/>
+                                                    <constraint firstAttribute="trailing" secondItem="RxZ-O1-WMM" secondAttribute="trailing" constant="14" id="ywk-be-97y"/>
                                                 </constraints>
-                                            </stackView>
+                                            </view>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="Cbs-eS-WEF" firstAttribute="trailing" secondItem="cr7-bu-kuW" secondAttribute="trailing" id="Vtc-OJ-4zP"/>
-                                            <constraint firstItem="Cbs-eS-WEF" firstAttribute="bottom" secondItem="cr7-bu-kuW" secondAttribute="bottom" id="bB5-LT-UuN"/>
-                                            <constraint firstItem="cr7-bu-kuW" firstAttribute="top" secondItem="Cbs-eS-WEF" secondAttribute="top" id="jvn-eu-vK1"/>
-                                            <constraint firstItem="Cbs-eS-WEF" firstAttribute="width" secondItem="MaM-7A-fIg" secondAttribute="width" id="km2-1B-jdd"/>
-                                            <constraint firstItem="Cbs-eS-WEF" firstAttribute="leading" secondItem="cr7-bu-kuW" secondAttribute="leading" id="ukv-Hf-jrL"/>
-                                            <constraint firstItem="aY4-GO-M1c" firstAttribute="top" secondItem="MaM-7A-fIg" secondAttribute="top" constant="4" id="vXF-ug-A64"/>
+                                            <constraint firstItem="IqP-fC-TTf" firstAttribute="width" secondItem="MaM-7A-fIg" secondAttribute="width" id="98i-WX-GKm"/>
+                                            <constraint firstItem="IqP-fC-TTf" firstAttribute="bottom" secondItem="cr7-bu-kuW" secondAttribute="bottom" id="Ajj-Kv-maJ"/>
+                                            <constraint firstItem="IqP-fC-TTf" firstAttribute="trailing" secondItem="cr7-bu-kuW" secondAttribute="trailing" id="CED-NY-MtH"/>
+                                            <constraint firstItem="IqP-fC-TTf" firstAttribute="bottom" secondItem="MaM-7A-fIg" secondAttribute="bottom" id="SPD-QF-EQR"/>
+                                            <constraint firstItem="IqP-fC-TTf" firstAttribute="top" secondItem="cr7-bu-kuW" secondAttribute="top" id="Z9l-nW-g1P"/>
+                                            <constraint firstItem="IqP-fC-TTf" firstAttribute="leading" secondItem="cr7-bu-kuW" secondAttribute="leading" id="sxN-gM-lXb"/>
                                         </constraints>
                                         <viewLayoutGuide key="contentLayoutGuide" id="cr7-bu-kuW"/>
                                         <viewLayoutGuide key="frameLayoutGuide" id="MaM-7A-fIg"/>
@@ -2533,13 +2567,6 @@
                                     <constraint firstAttribute="bottom" secondItem="5vd-4F-z3z" secondAttribute="bottom" id="nly-K3-d18"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" alpha="0.34999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k9k-5C-irF">
-                                <rect key="frame" x="0.0" y="697" width="375" height="0.0"/>
-                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <action selector="emptyButtonForHideTapped:" destination="MvW-Ha-Rkh" eventType="touchUpInside" id="MT4-79-VgZ"/>
-                                </connections>
-                            </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="O17-47-69m">
                                 <rect key="frame" x="0.0" y="698" width="375" height="66"/>
                                 <subviews>
@@ -2808,20 +2835,17 @@
                             <constraint firstItem="mXW-JG-pqg" firstAttribute="trailing" secondItem="Dy1-FX-ddD" secondAttribute="leading" id="3K9-O3-SoT"/>
                             <constraint firstItem="mXW-JG-pqg" firstAttribute="bottom" secondItem="Dy1-FX-ddD" secondAttribute="bottom" id="3es-ka-GoC"/>
                             <constraint firstItem="bCI-uY-sP4" firstAttribute="top" secondItem="LKz-J3-wKD" secondAttribute="bottom" id="6Ad-5Z-tGb"/>
+                            <constraint firstItem="O17-47-69m" firstAttribute="top" secondItem="Id7-T7-g7r" secondAttribute="bottom" id="6fo-wi-h5W"/>
                             <constraint firstItem="Dy1-FX-ddD" firstAttribute="bottom" secondItem="xyZ-uA-t0R" secondAttribute="bottom" constant="125" id="82S-Z3-7Dz"/>
                             <constraint firstItem="bCI-uY-sP4" firstAttribute="leading" secondItem="Dy1-FX-ddD" secondAttribute="leading" id="Api-kB-zzR"/>
                             <constraint firstItem="WzG-wx-sAy" firstAttribute="leading" secondItem="Dy1-FX-ddD" secondAttribute="leading" constant="14" id="BAb-uh-Z1m"/>
                             <constraint firstItem="Dy1-FX-ddD" firstAttribute="trailing" secondItem="Id7-T7-g7r" secondAttribute="trailing" id="Bjp-F6-gWJ"/>
                             <constraint firstItem="Dy1-FX-ddD" firstAttribute="trailing" secondItem="O17-47-69m" secondAttribute="trailing" id="Edj-WS-Kqi"/>
                             <constraint firstItem="xyZ-uA-t0R" firstAttribute="leading" secondItem="Dy1-FX-ddD" secondAttribute="leading" constant="14" id="FBv-de-bXL"/>
-                            <constraint firstItem="k9k-5C-irF" firstAttribute="height" secondItem="Id7-T7-g7r" secondAttribute="height" multiplier="1.2" id="FLY-wN-Ap8"/>
-                            <constraint firstItem="k9k-5C-irF" firstAttribute="leading" secondItem="Dy1-FX-ddD" secondAttribute="leading" id="GEk-uL-tYF"/>
-                            <constraint firstItem="Dy1-FX-ddD" firstAttribute="trailing" secondItem="k9k-5C-irF" secondAttribute="trailing" id="Grl-Xs-Va8"/>
                             <constraint firstItem="Id7-T7-g7r" firstAttribute="leading" secondItem="Dy1-FX-ddD" secondAttribute="leading" id="JhM-nz-tSP"/>
                             <constraint firstItem="LKz-J3-wKD" firstAttribute="top" secondItem="WzG-wx-sAy" secondAttribute="bottom" id="Klw-bD-Y6Y"/>
                             <constraint firstItem="Dy1-FX-ddD" firstAttribute="trailing" secondItem="bCI-uY-sP4" secondAttribute="trailing" id="LvA-ji-ZY6"/>
                             <constraint firstItem="Dy1-FX-ddD" firstAttribute="trailing" secondItem="xyZ-uA-t0R" secondAttribute="trailing" constant="14" id="Ndb-O6-mxf"/>
-                            <constraint firstItem="k9k-5C-irF" firstAttribute="top" secondItem="Id7-T7-g7r" secondAttribute="bottom" id="QcF-Ac-4sw"/>
                             <constraint firstItem="swu-Yi-mLF" firstAttribute="bottom" secondItem="Dy1-FX-ddD" secondAttribute="bottom" id="QpK-0t-kHm"/>
                             <constraint firstItem="swu-Yi-mLF" firstAttribute="leading" secondItem="mXW-JG-pqg" secondAttribute="trailing" id="QqZ-z8-2Rj"/>
                             <constraint firstItem="O17-47-69m" firstAttribute="leading" secondItem="Dy1-FX-ddD" secondAttribute="leading" id="Xep-C8-45B"/>
@@ -2835,7 +2859,6 @@
                             <constraint firstItem="Dy1-FX-ddD" firstAttribute="bottom" secondItem="LKz-J3-wKD" secondAttribute="bottom" constant="125" id="jZG-Pa-gVZ"/>
                             <constraint firstItem="Id7-T7-g7r" firstAttribute="top" secondItem="bCI-uY-sP4" secondAttribute="bottom" id="nzR-9q-DpY"/>
                             <constraint firstItem="mXW-JG-pqg" firstAttribute="width" secondItem="mVo-ay-RNy" secondAttribute="width" multiplier="0.65" id="utp-uf-1Bo"/>
-                            <constraint firstItem="Dy1-FX-ddD" firstAttribute="bottom" secondItem="k9k-5C-irF" secondAttribute="bottom" constant="81" id="zAO-xI-tv3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Dy1-FX-ddD"/>
                     </view>
@@ -2848,6 +2871,7 @@
                         <outlet property="clientCellPhoneTextField" destination="tD1-XL-ned" id="yUC-5S-iZJ"/>
                         <outlet property="clientDescriptionTextField" destination="RxZ-O1-WMM" id="l7n-Fk-nxH"/>
                         <outlet property="clientNameTextField" destination="cBB-e9-NHz" id="wpx-cE-NeD"/>
+                        <outlet property="clientsDataRemembered" destination="XE4-f5-5sE" id="5qz-qE-9GF"/>
                         <outlet property="emptyButtonForHide" destination="k9k-5C-irF" id="S3R-1L-xy5"/>
                         <outlet property="feebackTypeSelectorButton" destination="BFW-42-suV" id="q4N-cv-Drb"/>
                         <outlet property="feedBackBlankButton" destination="bCI-uY-sP4" id="gmo-Ny-kYF"/>
@@ -2855,14 +2879,14 @@
                         <outlet property="feedbackBlankView" destination="Id7-T7-g7r" id="YZY-mK-Dzz"/>
                         <outlet property="lowestConstraint" destination="eI6-YN-pBO" id="HCh-IK-QCo"/>
                         <outlet property="orderPriceLabel" destination="KI9-td-d1c" id="VGN-AK-s01"/>
-                        <outlet property="scrollView" destination="5vd-4F-z3z" id="G1v-4K-yKQ"/>
+                        <outlet property="savingClientsDataSwitch" destination="N3F-S2-bhG" id="Fh8-Tc-qZx"/>
                         <outlet property="tableCountZeroView" destination="xyZ-uA-t0R" id="grE-a2-myh"/>
                         <outlet property="transitionDismissButton" destination="swu-Yi-mLF" id="qqx-O8-E3K"/>
                         <outlet property="transitionView" destination="mXW-JG-pqg" id="fhE-YX-izC"/>
                         <outlet property="transitionViewLeftConstraint" destination="3K9-O3-SoT" id="qyj-UO-37k"/>
                         <outletCollection property="feedbackTypeBttnsCellection" destination="GJo-Ok-EeM" collectionClass="NSMutableArray" id="816-6y-OwR"/>
-                        <outletCollection property="feedbackTypeBttnsCellection" destination="cOm-8G-2Y9" collectionClass="NSMutableArray" id="8Po-cR-ceN"/>
                         <outletCollection property="feedbackTypeBttnsCellection" destination="oN1-s9-sxS" collectionClass="NSMutableArray" id="0I4-bL-ACZ"/>
+                        <outletCollection property="feedbackTypeBttnsCellection" destination="cOm-8G-2Y9" collectionClass="NSMutableArray" id="8Po-cR-ceN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZIC-Q9-PVy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -23,7 +23,6 @@ class UserCartTableViewCell: UITableViewCell {
     var productPrice: Int?
     var productCategory: String?
     var stock: Bool?
-    ///delegate
     weak var delegate: UserCartTableViewCellDelegate?
     
     
@@ -48,12 +47,12 @@ class UserCartTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    //MARK: - Прокрутка Слайдера
+    //MARK: - Slider selecting
     @IBAction func quantitySliderSelector(_ sender: UISlider) {
         delegate?.sliderValue(self)
     }
     
-    //MARK: - Заполнение таблицы
+    //MARK: - Cells fill
     func fill(name: String, category: String, price: Int, slider: Int, stock: Bool, imageData: Data) {
        self.stock = stock
         

@@ -1,5 +1,5 @@
 //
-//  UserHomeTableViewCell.swift
+//  HomeTableViewCellDelegate.swift
 //  Florentini
 //
 //  Created by Andrew Matsota on 25.03.2020.
@@ -9,28 +9,28 @@
 import UIKit
 import FirebaseUI
 
-//MARK: - Protocol-User-Catalog-TableViewCell
-protocol UserHomeTableViewCellDelegate: class {
+//MARK: - Protocol
+protocol HomeTableViewCellDelegate: class {
     
-    func addToCart(_ cell: UserHomeTableViewCell)
+    func addToCart(_ cell: HomeTableViewCell)
     
 }
 
-class UserHomeTableViewCell: UITableViewCell {
+class HomeTableViewCell: UITableViewCell {
 
     //MARK: - Implementation
     var category: String?
     var price = Int()
     var stock: Bool?
-    weak var delegate: UserHomeTableViewCellDelegate?
+    weak var delegate: HomeTableViewCellDelegate?
     
-    //MARK: - View Outlets
+    //MARK: - View
     @IBOutlet weak var productDesriptionView: UIView!
     
-    //MARK: - ImageView Outlets
+    //MARK: - ImageView
     @IBOutlet weak var cellImageView: UIImageView!
     
-    //MARK: - Label Outlets
+    //MARK: - Label
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productPriceLabel: UILabel!
     @IBOutlet weak var productDescriptionLabel: UILabel!

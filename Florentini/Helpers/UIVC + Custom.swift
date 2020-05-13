@@ -59,7 +59,7 @@ extension UIViewController {
     //MARK: To catalog
     func transitionToCatalogScreen(success: @escaping() -> Void) {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
-            let catalogVC = self.storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.CatalogVC.rawValue) as? UserCatalogViewController
+            let catalogVC = self.storyboard?.instantiateViewController(withIdentifier: NavigationCases.Transition.CatalogVC.rawValue) as? CatalogViewController
             self.view.window?.rootViewController = catalogVC
         }
         success()
@@ -68,7 +68,7 @@ extension UIViewController {
     //MARK: To feedback
     func transitionToFeedbackScreen(success: @escaping() -> Void) {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
-            let feedbackVC = self.storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.FeedbackVC.rawValue) as? UserAboutUsViewController
+            let feedbackVC = self.storyboard?.instantiateViewController(withIdentifier: NavigationCases.Transition.FeedbackVC.rawValue) as? AboutUsViewController
             self.view.window?.rootViewController = feedbackVC
         }
         success()
@@ -77,7 +77,7 @@ extension UIViewController {
     //MARK: To FAQ
     func transitionToFAQScreen(success: @escaping() -> Void) {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
-            let faqVC = self.storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.FAQVC.rawValue) as? UserFAQViewController
+            let faqVC = self.storyboard?.instantiateViewController(withIdentifier: NavigationCases.Transition.FAQVC.rawValue) as? FAQViewController
             self.view.window?.rootViewController = faqVC
         }
         success()
@@ -91,7 +91,7 @@ extension UIViewController {
     
     //MARK: To Cart
     func transitionToUsersCart() {
-        let usersCartVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.IDVC.UsersCartVC.rawValue) as? UserCartViewController
+        let usersCartVC = storyboard?.instantiateViewController(withIdentifier: NavigationCases.Transition.CartVC.rawValue) as? CartViewController
         view.window?.rootViewController = usersCartVC
         view.window?.makeKeyAndVisible()
     }

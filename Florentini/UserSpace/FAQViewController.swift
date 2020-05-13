@@ -1,5 +1,5 @@
 //
-//  UserFAQViewController.swift
+//  FAQViewController.swift
 //  Florentini
 //
 //  Created by Andrew Matsota on 19.02.2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserFAQViewController: UIViewController {
+class FAQViewController: UIViewController {
     
     //MARK: - Override
     

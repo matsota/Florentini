@@ -10,14 +10,19 @@ import Foundation
 
 class NavigationCases {
     
-    //MARK: - Для ViewController'ов
-    enum IDVC: String, CaseIterable {
+    enum Transition: String, CaseIterable {
         
-        case UsersCartVC
+        // - storyboard
+        
+        // - segue
+        
+        // - VC
+        case CartVC
         case CatalogVC
         case FeedbackVC
         case FAQVC
         
+        // - cell
         case CatalogTVCell
         case CartTVCell
         case HomeTVCell
@@ -26,9 +31,10 @@ class NavigationCases {
     }
     
     //MARK: - for CoreData
-    enum CoreData: String, CaseIterable {
+    enum CoreDataCases: String, CaseIterable {
         
         case PreOrderEntity
+        case ClientData
         
     }
     
@@ -39,6 +45,7 @@ class NavigationCases {
         case imageCollection
         case order
         case review
+        case clientData
         
     }
     
@@ -92,7 +99,6 @@ class NavigationCases {
         case deliveryPerson
         
         case cart
-        case order
         
     }
     
@@ -136,8 +142,10 @@ class NavigationCases {
         case orderCount
         case deviceID
         case lastAdress
+        case adress
         case adressesDict
         case productDict
+        case archiveData
     }
     
 }
