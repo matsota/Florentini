@@ -16,7 +16,6 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         forViewDidLoad()
-        print(AuthenticationManager.shared.currentUser?.uid as Any)
         
     }
     
@@ -79,7 +78,6 @@ private extension HomeViewController {
     
     //MARK: Для ViewDidLoad
     func forViewDidLoad() {
-        transitionViewLeftConstraint.constant = -transitionView.bounds.width
         
         NetworkManager.shared.downloadStocks(success: { productInfo in
             self.productInfo = productInfo.shuffled()

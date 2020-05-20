@@ -71,6 +71,10 @@ class NavigationCases {
         case imageCollection
         case stock
         case orderDescription
+        case productID
+        case searchArray
+        case voteCount
+        case voteAmount
         
     }
     

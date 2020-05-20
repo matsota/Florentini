@@ -64,6 +64,10 @@ class DatabaseManager {
         var productDescription: String
         var productCategory: String
         var stock: Bool
+        var productID: String
+        var searchArray: [String]
+        var voteCount: Int
+        var voteAmount: Int
         
         var dictionary: [String:Any]{
             return [
@@ -71,7 +75,11 @@ class DatabaseManager {
                 NavigationCases.Product.productPrice.rawValue: productPrice,
                 NavigationCases.Product.productDescription.rawValue: productDescription,
                 NavigationCases.Product.productCategory.rawValue: productCategory,
-                NavigationCases.Product.stock.rawValue: stock
+                NavigationCases.Product.stock.rawValue: stock,
+                NavigationCases.Product.productID.rawValue: productID,
+                NavigationCases.Product.searchArray.rawValue: searchArray,
+                NavigationCases.Product.voteCount.rawValue: voteCount,
+                NavigationCases.Product.voteAmount.rawValue: voteAmount
             ]
         }
     }
@@ -139,8 +147,12 @@ extension DatabaseManager.ProductInfo: DocumentSerializable {
             let productPrice = dictionary[NavigationCases.Product.productPrice.rawValue] as? Int,
             let productDescription = dictionary[NavigationCases.Product.productDescription.rawValue] as? String,
             let productCategory = dictionary[NavigationCases.Product.productCategory.rawValue] as? String,
-            let stock = dictionary[NavigationCases.Product.stock.rawValue] as? Bool else {return nil}
-        self.init(productName: productName, productPrice: productPrice, productDescription: productDescription, productCategory: productCategory, stock: stock)
+            let stock = dictionary[NavigationCases.Product.stock.rawValue] as? Bool,
+            let productID = dictionary[NavigationCases.Product.productID.rawValue] as? String,
+            let searchArray = dictionary[NavigationCases.Product.searchArray.rawValue] as? [String],
+            let voteCount = dictionary[NavigationCases.Product.voteCount.rawValue] as? Int,
+            let voteAmount = dictionary[NavigationCases.Product.voteAmount.rawValue] as? Int else {return nil}
+        self.init(productName: productName, productPrice: productPrice, productDescription: productDescription, productCategory: productCategory, stock: stock, productID: productID, searchArray: searchArray, voteCount: voteCount, voteAmount: voteAmount)
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  FAQViewController.swift
+//  FAQViewController .swift
 //  Florentini
 //
 //  Created by Andrew Matsota on 19.02.2020.
@@ -16,7 +16,6 @@ class FAQViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        transitionViewLeftConstraint.constant = -transitionView.bounds.width
         
     }
     

@@ -9,9 +9,11 @@
 import UIKit
 import UserNotifications
 
-class Notifications {
+class NotificationManager {
     
-    static func permitionRequest() {
+    static let shared = NotificationManager()
+    
+    func permitionRequest() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
             print("granted: ", granted)
         }

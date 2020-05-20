@@ -83,7 +83,6 @@ private extension AboutUsViewController {
     
     //MARK: Для ViewDidLoad
     func forViewDidLoad() {
-        transitionViewLeftConstraint.constant = -transitionView.bounds.width
         
         setTextViewPlaceholder(for: reviewTextView)
         
