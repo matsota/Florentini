@@ -268,13 +268,16 @@ private extension CartViewController {
     func hideAndShowFeedbackBlank() -> CGFloat {
         let up = UIImage(systemName: "chevron.up"),
         down = UIImage(systemName: "chevron.down")
-        
         var height = self.feedBackTopConstraint.constant
         if  height == 0.0 {
             height = -self.cartTableView.frame.height
+            self.feedbackBlankView.isHidden = false
+            self.feedBackBlankButton.alpha = 1
             self.feedBackBlankButton.setImage(down, for: .normal)
         }else{
             height = 0.0
+            self.feedBackBlankButton.alpha = 0.6
+            self.feedbackBlankView.isHidden = true
             self.feedBackBlankButton.setImage(up, for: .normal)
         }
         return height
@@ -323,7 +326,7 @@ private extension CartViewController {
         
         if name == "" || phone == "" || adress == "" {
             self.present(UIAlertController.completionDoneTwoSec(title: "Эттеншн!", message: "Мы не знаем всех необходимых данных, что бы осуществить доставку радости. Просим Вас ввести: Имя, Телефон, Адресс доставки, чтобы мы смогли подтвердить заказ"), animated: true)
-            self.feedBackTopConstraint.constant = -self.cartTableView.frame.height
+            feedBackTopConstraint.constant = hideAndShowFeedbackBlank()
             UIView.animate(withDuration: 0.3) {
                 self.view.layoutIfNeeded()
             }
