@@ -34,11 +34,6 @@
 		8FE3F69824035BE4003001CA /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F69524035BE4003001CA /* AboutUsViewController.swift */; };
 		8FE3F69924035BE4003001CA /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F69624035BE4003001CA /* CatalogViewController.swift */; };
 		8FE3F69D24035BED003001CA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F69B24035BED003001CA /* HomeViewController.swift */; };
-		8FE4A0AF24757CC4000927E4 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FE4A0AE24757CC4000927E4 /* Home.storyboard */; };
-		8FE4A0B224757CD7000927E4 /* Catalog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FE4A0B124757CD7000927E4 /* Catalog.storyboard */; };
-		8FE4A0B624757CF4000927E4 /* Cart.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FE4A0B524757CF4000927E4 /* Cart.storyboard */; };
-		8FE4A0B924757D0A000927E4 /* AboutUs.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FE4A0B824757D0A000927E4 /* AboutUs.storyboard */; };
-		8FE4A0BC24757D1F000927E4 /* FAQ.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FE4A0BB24757D1F000927E4 /* FAQ.storyboard */; };
 		8FFDA507240EC1D700A63A02 /* CatalogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFDA506240EC1D700A63A02 /* CatalogTableViewCell.swift */; };
 		E86CADEFD3FB618B8C6FB2C4 /* Pods_Florentini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6A7F0BFE6E9D9665F2F01FE /* Pods_Florentini.framework */; };
 /* End PBXBuildFile section */
@@ -75,11 +70,6 @@
 		8FE3F69524035BE4003001CA /* AboutUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
 		8FE3F69624035BE4003001CA /* CatalogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		8FE3F69B24035BED003001CA /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		8FE4A0AE24757CC4000927E4 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
-		8FE4A0B124757CD7000927E4 /* Catalog.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Catalog.storyboard; sourceTree = "<group>"; };
-		8FE4A0B524757CF4000927E4 /* Cart.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Cart.storyboard; sourceTree = "<group>"; };
-		8FE4A0B824757D0A000927E4 /* AboutUs.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AboutUs.storyboard; sourceTree = "<group>"; };
-		8FE4A0BB24757D1F000927E4 /* FAQ.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FAQ.storyboard; sourceTree = "<group>"; };
 		8FFDA506240EC1D700A63A02 /* CatalogTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogTableViewCell.swift; sourceTree = "<group>"; };
 		D6A7F0BFE6E9D9665F2F01FE /* Pods_Florentini.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Florentini.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E25E8B94760D73E4AD52FD3F /* Pods-Florentini.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Florentini.release.xcconfig"; path = "Target Support Files/Pods-Florentini/Pods-Florentini.release.xcconfig"; sourceTree = "<group>"; };
@@ -177,7 +167,6 @@
 			children = (
 				8FE3F69B24035BED003001CA /* HomeViewController.swift */,
 				8F4506D8242B8A1F00759C47 /* HomeTableViewCell.swift */,
-				8FE4A0AE24757CC4000927E4 /* Home.storyboard */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -187,7 +176,6 @@
 			children = (
 				8FE3F69624035BE4003001CA /* CatalogViewController.swift */,
 				8FFDA506240EC1D700A63A02 /* CatalogTableViewCell.swift */,
-				8FE4A0B124757CD7000927E4 /* Catalog.storyboard */,
 			);
 			path = Catalog;
 			sourceTree = "<group>";
@@ -197,7 +185,6 @@
 			children = (
 				8F0EEDF824129A3500948175 /* CartViewController.swift */,
 				8F9574282417AE7000A4EF6E /* UserCartTableViewCell.swift */,
-				8FE4A0B524757CF4000927E4 /* Cart.storyboard */,
 			);
 			name = Cart;
 			sourceTree = "<group>";
@@ -206,7 +193,6 @@
 			isa = PBXGroup;
 			children = (
 				8FE3F69524035BE4003001CA /* AboutUsViewController.swift */,
-				8FE4A0B824757D0A000927E4 /* AboutUs.storyboard */,
 			);
 			path = AboutUs;
 			sourceTree = "<group>";
@@ -215,7 +201,6 @@
 			isa = PBXGroup;
 			children = (
 				8FE3F69424035BE3003001CA /* FAQViewController.swift */,
-				8FE4A0BB24757D1F000927E4 /* FAQ.storyboard */,
 			);
 			path = FAQ;
 			sourceTree = "<group>";
@@ -298,15 +283,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8FE4A0B224757CD7000927E4 /* Catalog.storyboard in Resources */,
 				8F2062C323FF747B007C481A /* Main.storyboard in Resources */,
-				8FE4A0AF24757CC4000927E4 /* Home.storyboard in Resources */,
 				8FD4E4CD23FCD1D800C62FA5 /* LaunchScreen.storyboard in Resources */,
-				8FE4A0B924757D0A000927E4 /* AboutUs.storyboard in Resources */,
 				8FD4E4D523FCD2EB00C62FA5 /* GoogleService-Info.plist in Resources */,
 				8FD4E4CA23FCD1D800C62FA5 /* Assets.xcassets in Resources */,
-				8FE4A0B624757CF4000927E4 /* Cart.storyboard in Resources */,
-				8FE4A0BC24757D1F000927E4 /* FAQ.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
