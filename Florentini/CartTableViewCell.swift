@@ -9,21 +9,21 @@
 import UIKit
 
 //MARK: - Protocol-Basket-TableViewCell
-protocol UserCartTableViewCellDelegate: class {
+protocol CartTableViewCellDelegate: class {
     
-    func sliderValue(_ cell: UserCartTableViewCell)
+    func sliderValue(_ cell: CartTableViewCell)
     
 }
 
 //MARK: - Core Class
-class UserCartTableViewCell: UITableViewCell {
+class CartTableViewCell: UITableViewCell {
     
     //MARK: - Implementation
     var productName: String?
     var productPrice: Int?
     var productCategory: String?
     var stock: Bool?
-    weak var delegate: UserCartTableViewCellDelegate?
+    weak var delegate: CartTableViewCellDelegate?
     
     
     //MARK: ImageView

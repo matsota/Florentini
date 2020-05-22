@@ -25,7 +25,7 @@ class CoreDataManager {
             failure()
         }else{
             let preOrder = PreOrderEntity(context: PersistenceService.context)
-
+            
             preOrder.productName = name
             preOrder.productCategory = category
             preOrder.productPrice = Int64(price)
@@ -46,7 +46,7 @@ class CoreDataManager {
             let preOrder = ClientData(context: PersistenceService.context)
             preOrder.name = name
             preOrder.phone = phone
-
+            
             PersistenceService.saveContext()
             success()
         }
@@ -59,7 +59,7 @@ class CoreDataManager {
     //MARK: - Fetch PreOrder
     @objc func fetchPreOrder(success: @escaping([PreOrderEntity]) -> (Void), failure: @escaping(NSError) -> Void) {
         let fetchRequest: NSFetchRequest<PreOrderEntity> = PreOrderEntity.fetchRequest()
-
+        
         do {
             let result = try PersistenceService.context.fetch(fetchRequest)
             success(result)
@@ -67,11 +67,26 @@ class CoreDataManager {
             failure(error)
         }
     }
+    
+    @objc func cartIsEmpty(bar: UITabBarItem){
+        
+        let fetchRequest: NSFetchRequest<PreOrderEntity> = PreOrderEntity.fetchRequest(),
+        result = try? PersistenceService.context.fetch(fetchRequest)
+        
+        if result == [] {
+            bar.badgeValue = nil
+        }else{
+            let count = result!.count
+            bar.badgeColor = UIColor.pinkColorOfEnterprise
+            bar.badgeValue = "\(count)"
+        }
+    }
+    
     
     //MARK: - Fetch Client Data
     @objc func fetchClientData(success: @escaping([ClientData]) -> (Void), failure: @escaping(NSError) -> Void) {
         let fetchRequest: NSFetchRequest<ClientData> = ClientData.fetchRequest()
-
+        
         do {
             let result = try PersistenceService.context.fetch(fetchRequest)
             success(result)
@@ -80,29 +95,29 @@ class CoreDataManager {
         }
     }
     
-//    //MARK: - Only Client's Name
-//    func fetchClientName(failure: @escaping(NSError) -> Void) -> String? {
-//        var name: String?
-//        
-//        fetchClientData(success: { (data) -> (Void) in
-//            name = data.map({$0.name!}).first
-//        }) { (error) in
-//            failure(error)
-//        }
-//        return name
-//    }
-//    
-//    //MARK: - Only Client's Phone
-//    func fetchClientPhone(failure: @escaping(NSError) -> Void) -> String? {
-//        var phone: String?
-//        
-//        fetchClientData(success: { (data) -> (Void) in
-//            phone = data.map({$0.phone!}).first
-//        }) { (error) in
-//            failure(error)
-//        }
-//        return phone
-//    }
+    //    //MARK: - Only Client's Name
+    //    func fetchClientName(failure: @escaping(NSError) -> Void) -> String? {
+    //        var name: String?
+    //
+    //        fetchClientData(success: { (data) -> (Void) in
+    //            name = data.map({$0.name!}).first
+    //        }) { (error) in
+    //            failure(error)
+    //        }
+    //        return name
+    //    }
+    //
+    //    //MARK: - Only Client's Phone
+    //    func fetchClientPhone(failure: @escaping(NSError) -> Void) -> String? {
+    //        var phone: String?
+    //
+    //        fetchClientData(success: { (data) -> (Void) in
+    //            phone = data.map({$0.phone!}).first
+    //        }) { (error) in
+    //            failure(error)
+    //        }
+    //        return phone
+    //    }
     
     ///
     //MARK: - crUd

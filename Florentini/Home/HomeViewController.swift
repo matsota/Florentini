@@ -15,13 +15,8 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        forViewDidLoad()
+        forViewDidLoad()        
         
-    }
-    
-    //MARK: - TransitionMenu button tapped
-    @IBAction private func menuTapped(_ sender: UIButton) {
-        slideInTransitionMenu(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
     }
     
     //MARK: - Transition confirm
@@ -39,11 +34,6 @@ class HomeViewController: UIViewController {
         slideInTransitionMenu(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
     }
     
-    //MARK: - Cart button tapped
-    @IBAction private func cartTapped(_ sender: UIButton) {
-        transitionToUsersCart()
-    }
-    
     //MARK: - Private Implementation
     private var productInfo = [DatabaseManager.ProductInfo]()
     
@@ -55,7 +45,6 @@ class HomeViewController: UIViewController {
     @IBOutlet private weak var transitionView: UIView!
     
     //MARK: Button
-    @IBOutlet private weak var cartButton: UIButton!
     @IBOutlet private weak var transitionDismissButton: UIButton!
     
     //MARK: Contstraint
@@ -85,28 +74,9 @@ private extension HomeViewController {
         }) { error in
             print(error.localizedDescription)
         }
-        
-        transitionViewLeftConstraint.constant = -transitionView.bounds.width
-        cartImageCondition()
+
     }
     
-    //MARK: Проверна на наличие предзаказа, чтобы изменить / не изменять картинку Cart
-    func cartImageCondition() {
-        CoreDataManager.shared.fetchPreOrder(success: { (preOrderEntity) -> (Void) in
-            let preOrderAmount = preOrderEntity.count
-            
-            if preOrderAmount == 0 {
-                let cart = UIImage(systemName: "cart")
-                self.cartButton.setImage(cart, for: .normal)
-            }else{
-                let cartFill = UIImage(systemName: "cart.fill")
-                self.cartButton.setImage(cartFill, for: .normal)
-            }
-        }) { (error) in
-            self.present(UIAlertController.completionDoneTwoSec(title: "Ошибка!", message: "Что-то пошло не так"), animated: true)
-            print(error.localizedDescription)
-        }
-    }
 }
 
 //MARK: - by TableView
@@ -154,7 +124,6 @@ extension HomeViewController: HomeTableViewCellDelegate {
             let imageData: Data = image?.pngData() as Data? else {return}
         
         CoreDataManager.shared.addProduct(name: name, category: category, price: price, quantity: 1, stock: stock, imageData: imageData, success: {
-            self.cartImageCondition()
             self.present(UIAlertController.completionDoneHalfSec(title: "Товар", message: "Добавлен"), animated: true)
         }) {
             self.present(UIAlertController.completionDoneTwoSec(title: "Внимание!", message: "Произошла ошибка. Товар НЕ добавлен"), animated: true)

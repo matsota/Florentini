@@ -98,9 +98,6 @@ private extension CatalogViewController {
         }) { error in
             print(error.localizedDescription)
         }
-        
-        transitionViewLeftConstraint.constant = -transitionView.bounds.width
-        cartImageCondition()
     }
     
 }
@@ -211,7 +208,6 @@ extension CatalogViewController: CatalogTableViewCellDelegate {
             let imageData: Data = image?.pngData() as Data? else {return}
         
         CoreDataManager.shared.addProduct(name: name, category: category, price: price, quantity: 1, stock: stock, imageData: imageData, success: {
-            self.cartImageCondition()
             self.present(UIAlertController.completionDoneHalfSec(title: "Товар", message: "Добавлен"), animated: true)
         }) {
             self.present(UIAlertController.completionDoneTwoSec(title: "Внимание!", message: "Произошла ошибка. Товар НЕ добавлен"), animated: true)
@@ -219,27 +215,6 @@ extension CatalogViewController: CatalogTableViewCellDelegate {
     }
 }
 
-//MARK: - Cart image condition
-private extension CatalogViewController {
-    
-    func cartImageCondition() {
-        CoreDataManager.shared.fetchPreOrder( success: { (preOrderEntity) -> (Void) in
-            let preOrderAmount = preOrderEntity.count
-            
-            if preOrderAmount == 0 {
-                let cart = UIImage(systemName: "cart")
-                self.cartButton.setImage(cart, for: .normal)
-            }else{
-                let cartFill = UIImage(systemName: "cart.fill")
-                self.cartButton.setImage(cartFill, for: .normal)
-            }
-        }) { (error) in
-            self.present(UIAlertController.completionDoneTwoSec(title: "Ошибка!", message: "Что-то пошло не так"), animated: true)
-            print(error.localizedDescription)
-        }
-    }
-    
-}
 
 
 

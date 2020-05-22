@@ -13,17 +13,16 @@ import CoreData
 
 class CartViewController: UIViewController {
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        forViewWillAppear()
+        
+    }
+    
     //MARK: - Override
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        forViewDidLoad()
-        
-    }
-    
-    //MARK: - Transition menu tapped
-    @IBAction private func menuTapped(_ sender: UIButton) {
-        slideInTransitionMenu(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
     }
     
     //MARK: - Transition confirm
@@ -136,11 +135,13 @@ class CartViewController: UIViewController {
 private extension CartViewController {
     
     //MARK: Для ViewDidLoad
-    func forViewDidLoad() {
+    func forViewWillAppear() {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         hideKeyboardWhenTappedAround()
+        
+        CoreDataManager.shared.cartIsEmpty(bar: self.tabBarItem)
         
         CoreDataManager.shared.fetchPreOrder(success: { (preOrderEntity) -> (Void) in
             self.preOrder = preOrderEntity
@@ -183,7 +184,7 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = cartTableView.dequeueReusableCell(withIdentifier: NavigationCases.Transition.CartTVCell.rawValue, for: indexPath) as! UserCartTableViewCell
+        let cell = cartTableView.dequeueReusableCell(withIdentifier: NavigationCases.Transition.CartTVCell.rawValue, for: indexPath) as! CartTableViewCell
         
         cell.tag = indexPath.row
         cell.delegate = self
@@ -224,9 +225,9 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 //MARK: - Slider Values & Receipt changes
-extension CartViewController: UserCartTableViewCellDelegate {
+extension CartViewController: CartTableViewCellDelegate {
     
-    func sliderValue(_ cell: UserCartTableViewCell) {
+    func sliderValue(_ cell: CartTableViewCell) {
         guard let price = cell.productPrice, let name = cell.productName, let fetch = try! PersistenceService.context.fetch(PreOrderEntity.fetchRequest()) as? [PreOrderEntity] else {return}
         
         let sliderEquantion = Int(cell.quantitySlider.value) * price,

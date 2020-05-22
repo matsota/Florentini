@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F0BA4632477FB8200E9A261 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0BA4622477FB8200E9A261 /* TabBarViewController.swift */; };
+		8F0BA465247800D800E9A261 /* UIColor + Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0BA464247800D800E9A261 /* UIColor + Custom.swift */; };
 		8F0E7BB92421496C004235A7 /* FlorentiniModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F0E7BB72421496C004235A7 /* FlorentiniModel.xcdatamodeld */; };
 		8F0E7BDE24214DAC004235A7 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0E7BDD24214DAC004235A7 /* CoreDataManager.swift */; };
 		8F0EEDF924129A3500948175 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0EEDF824129A3500948175 /* CartViewController.swift */; };
@@ -19,7 +21,7 @@
 		8F4506D9242B8A1F00759C47 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4506D8242B8A1F00759C47 /* HomeTableViewCell.swift */; };
 		8F701E2E2425065400DA37EF /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F701E2D2425065400DA37EF /* PersistenceService.swift */; };
 		8F73656E243944A3004A7A81 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F73656D243944A3004A7A81 /* NotificationManager.swift */; };
-		8F9574292417AE7000A4EF6E /* UserCartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9574282417AE7000A4EF6E /* UserCartTableViewCell.swift */; };
+		8F9574292417AE7000A4EF6E /* CartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9574282417AE7000A4EF6E /* CartTableViewCell.swift */; };
 		8FA196EE2438B6C200F795DF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FA196ED2438B6C200F795DF /* AudioToolbox.framework */; };
 		8FA80A9823FD65FA0015C878 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA80A9723FD65FA0015C878 /* NetworkManager.swift */; };
 		8FA80A9A23FD660A0015C878 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA80A9923FD660A0015C878 /* DatabaseManager.swift */; };
@@ -40,6 +42,8 @@
 
 /* Begin PBXFileReference section */
 		684CBB7DD3C972328D14EE25 /* Pods-Florentini.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Florentini.debug.xcconfig"; path = "Target Support Files/Pods-Florentini/Pods-Florentini.debug.xcconfig"; sourceTree = "<group>"; };
+		8F0BA4622477FB8200E9A261 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		8F0BA464247800D800E9A261 /* UIColor + Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Custom.swift"; sourceTree = "<group>"; };
 		8F0E7BB82421496C004235A7 /* coreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coreData.xcdatamodel; sourceTree = "<group>"; };
 		8F0E7BDD24214DAC004235A7 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		8F0EEDF824129A3500948175 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
@@ -53,7 +57,7 @@
 		8F701E2D2425065400DA37EF /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		8F73656D243944A3004A7A81 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		8F76B2FC246ADA4A002E4B61 /* coreData 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "coreData 2.xcdatamodel"; sourceTree = "<group>"; };
-		8F9574282417AE7000A4EF6E /* UserCartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCartTableViewCell.swift; sourceTree = "<group>"; };
+		8F9574282417AE7000A4EF6E /* CartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewCell.swift; sourceTree = "<group>"; };
 		8FA196ED2438B6C200F795DF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		8FA80A9723FD65FA0015C878 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		8FA80A9923FD660A0015C878 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
@@ -102,8 +106,10 @@
 			children = (
 				8F2062AB23FF6292007C481A /* UIAlertController + Custom.swift */,
 				8F1778222427E19E00164C0D /* IBDesignable + Buttons.swift */,
+				8F0BA464247800D800E9A261 /* UIColor + Custom.swift */,
 				8F4506D3242A811400759C47 /* UIVC + Custom.swift */,
 				8F2062A423FF555F007C481A /* NavigationCases.swift */,
+				8F0BA4622477FB8200E9A261 /* TabBarViewController.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -184,7 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				8F0EEDF824129A3500948175 /* CartViewController.swift */,
-				8F9574282417AE7000A4EF6E /* UserCartTableViewCell.swift */,
+				8F9574282417AE7000A4EF6E /* CartTableViewCell.swift */,
 			);
 			name = Cart;
 			sourceTree = "<group>";
@@ -351,10 +357,12 @@
 				8FB439D0243E4A9400C3DC8B /* PreOrderEntity+CoreDataProperties.swift in Sources */,
 				8FA80A9823FD65FA0015C878 /* NetworkManager.swift in Sources */,
 				8FE3F69824035BE4003001CA /* AboutUsViewController.swift in Sources */,
+				8F0BA465247800D800E9A261 /* UIColor + Custom.swift in Sources */,
 				8F73656E243944A3004A7A81 /* NotificationManager.swift in Sources */,
 				8FE3F69724035BE4003001CA /* FAQViewController.swift in Sources */,
-				8F9574292417AE7000A4EF6E /* UserCartTableViewCell.swift in Sources */,
+				8F9574292417AE7000A4EF6E /* CartTableViewCell.swift in Sources */,
 				8FD4E4C123FCD1D800C62FA5 /* AppDelegate.swift in Sources */,
+				8F0BA4632477FB8200E9A261 /* TabBarViewController.swift in Sources */,
 				8FFDA507240EC1D700A63A02 /* CatalogTableViewCell.swift in Sources */,
 				8F4506D4242A811400759C47 /* UIVC + Custom.swift in Sources */,
 				8FD4E4C323FCD1D800C62FA5 /* SceneDelegate.swift in Sources */,

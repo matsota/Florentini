@@ -29,17 +29,26 @@ class HomeTableViewCell: UITableViewCell {
     
     //MARK: - ImageView
     @IBOutlet weak var cellImageView: UIImageView!
+    @IBOutlet weak var myBackgroundImage: UIImageView!
     
     //MARK: - Label
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productPriceLabel: UILabel!
     @IBOutlet weak var productDescriptionLabel: UILabel!
-
+    
+    //MARK: Constraint
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    
     //MARK: Activity Indicator
     @IBOutlet weak var imageActivityIndicator: UIActivityIndicatorView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        let darkBlur = UIBlurEffect(style: .prominent),
+        blurView = UIVisualEffectView(effect: darkBlur)
+        blurView.frame = myBackgroundImage.bounds
+        myBackgroundImage.addSubview(blurView)
         
     }
 

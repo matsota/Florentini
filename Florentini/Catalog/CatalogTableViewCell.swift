@@ -40,6 +40,7 @@ class CatalogTableViewCell: UITableViewCell {
     @IBOutlet weak var imageActivityIndicator: UIActivityIndicatorView!
     
 
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     
     //MARK: Override
     override func awakeFromNib() {
@@ -69,6 +70,8 @@ class CatalogTableViewCell: UITableViewCell {
         imageActivityIndicator?.startAnimating()
         imageActivityIndicator?.isHidden = false
         
+        
+        imageHeightConstraint.constant = productImageView.bounds.width
         self.stock = stock
         self.price = price
         self.category = category
