@@ -97,6 +97,8 @@ extension HomeViewController: HomeTableViewCellDelegate {
         
         CoreDataManager.shared.addProduct(name: name, category: category, price: price, quantity: 1, stock: stock, imageData: imageData, success: {
             self.present(UIAlertController.completionDoneHalfSec(title: "Товар", message: "Добавлен"), animated: true)
+            guard let cartItem = self.tabBarController?.tabBar.items?[0] else {return}
+            CoreDataManager.shared.cartIsEmpty(bar: cartItem)
         }) {
             self.present(UIAlertController.completionDoneTwoSec(title: "Внимание!", message: "Произошла ошибка. Товар НЕ добавлен"), animated: true)
         }

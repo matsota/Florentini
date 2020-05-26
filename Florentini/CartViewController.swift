@@ -60,9 +60,9 @@ class CartViewController: UIViewController {
         
     }
     
-    //MARK: - Cart button tapped
-    @IBAction private func feedBackBlankTapped(_ sender: Any) {
-        feedBackTopConstraint.constant = hideAndShowFeedbackBlank()
+    //MARK: - Feedback blank tapped
+    @IBAction private func feedbackBlankTapped(_ sender: Any) {
+        feedbackBlandSlidingConstraint.constant = hideAndShowFeedbackBlank()
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -81,7 +81,7 @@ class CartViewController: UIViewController {
     
     //MARK: - Hide feedback form
     @IBAction private func emptyButtonForHideTapped(_ sender: Any) {
-        feedBackTopConstraint.constant = hideAndShowFeedbackBlank()
+        feedbackBlandSlidingConstraint.constant = hideAndShowFeedbackBlank()
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -109,7 +109,7 @@ class CartViewController: UIViewController {
     @IBOutlet private weak var billStackView: UIStackView!
     
     //MARK: Scroll View
-    @IBOutlet weak var feedbackBlankScrollView: UIScrollView!
+    @IBOutlet private weak var feedbackBlankScrollView: UIScrollView!
     
     //MARK: TableView Outlets
     @IBOutlet private weak var cartTableView: UITableView!
@@ -126,9 +126,9 @@ class CartViewController: UIViewController {
     
     //MARK: Buttons Outlets
     @IBOutlet private var feedbackTypeBttnsCellection: [UIButton]!
-    @IBOutlet private weak var feebackTypeSelectorButton: UIButton!
+    @IBOutlet private weak var feebackTypeSelectionButton: UIButton!
     @IBOutlet private weak var emptyButtonForHide: UIButton!
-    @IBOutlet private weak var feedBackBlankButton: DesignButton!
+    @IBOutlet private weak var feedbackBlankButton: UIButton!
     
     //MARK: - Switch
     @IBOutlet private weak var savingClientsDataSwitch: UISwitch!
@@ -137,7 +137,8 @@ class CartViewController: UIViewController {
     
     //MARK: Constrains Outlets
     @IBOutlet private weak var lowestConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var feedBackTopConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var feedbackBlandSlidingConstraint: NSLayoutConstraint!
+    
     
 }
 
@@ -190,6 +191,8 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate {
             self.cartTableView.deleteRows(at: [indexPath], with: .automatic)
             self.orderBill = self.preOrder.map({$0.productPrice * $0.productQuantity}).reduce(0, +)
             self.orderPriceLabel.text = "\(self.orderBill) грн"
+            guard let cartItem = self.tabBarItem else {return}
+            CoreDataManager.shared.cartIsEmpty(bar: cartItem)
             self.cartTableView.reloadData()
             complition(true)
         }
@@ -225,8 +228,7 @@ private extension CartViewController {
     @objc func keyboardWillShow(notification: Notification) {
         self.billStackView.isHidden = true
         guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber, let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
-        lowestConstraint.constant = keyboardFrameValue.cgRectValue.height * 0.9
-        self.emptyButtonForHide.isHidden = true
+        lowestConstraint.constant = keyboardFrameValue.cgRectValue.height
         UIView.animate(withDuration: duration.doubleValue) {
             self.view.layoutIfNeeded()
         }
@@ -235,38 +237,27 @@ private extension CartViewController {
     @objc func keyboardWillHide(notification: Notification) {
         self.billStackView.isHidden = false
         guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber else {return}
-        lowestConstraint.constant = 14
-        if self.feedbackBlankScrollView.isHidden == true {
-            self.emptyButtonForHide.isHidden = true
-        }else{
-            self.emptyButtonForHide.isHidden = false
-        }
+        lowestConstraint.constant = 0
         UIView.animate(withDuration: duration.doubleValue) {
             self.view.layoutIfNeeded()
         }
     }
     
     func hideAndShowFeedbackBlank() -> CGFloat {
+        let right = UIImage(systemName: "chevron.right"),
+        left = UIImage(systemName: "chevron.left")
         
-        
-        let up = UIImage(systemName: "chevron.up"),
-        down = UIImage(systemName: "chevron.down")
-        
-        var height = self.feedBackTopConstraint.constant
-        if  height == 0.0 {
-            self.emptyButtonForHide.isHidden = false
-            self.feedbackBlankScrollView.isHidden = false
-            height = -self.cartTableView.bounds.height
-            self.feedBackBlankButton.alpha = 1
-            self.feedBackBlankButton.setImage(down, for: .normal)
+        var constraint = self.feedbackBlandSlidingConstraint.constant
+        if  constraint == 0.0 {
+            constraint = -feedbackBlankScrollView.bounds.width
+            self.emptyButtonForHide.alpha = 0.6
+            self.feedbackBlankButton.setImage(left, for: .normal)
         }else{
-            height = 0.0
-            self.emptyButtonForHide.isHidden = true
-            self.feedbackBlankScrollView.isHidden = true
-            self.feedBackBlankButton.alpha = 0.6
-            self.feedBackBlankButton.setImage(up, for: .normal)
+            constraint = 0.0
+            self.emptyButtonForHide.alpha = 0
+            self.feedbackBlankButton.setImage(right, for: .normal)
         }
-        return height
+        return constraint
     }
     
     func feedbackSelected(by sender: UIButton) {
@@ -288,12 +279,14 @@ private extension CartViewController {
     func showFeedbackOptions(option: String) {
         feedbackOption = option
         feedbackTypeBttnsCellection.forEach { (buttons) in
-            UIView.animate(withDuration: 0.2) {
-                buttons.isHidden = !buttons.isHidden
+            feebackTypeSelectionButton.isHidden = !feebackTypeSelectionButton.isHidden
+            buttons.isHidden = !buttons.isHidden
+            
+            UIView.animate(withDuration: 0.3) {
                 self.buttonsView.layoutIfNeeded()
             }
         }
-        feebackTypeSelectorButton.setTitle(option, for: .normal)
+        feebackTypeSelectionButton.setTitle(option, for: .normal)
     }
     
 }
@@ -312,8 +305,7 @@ private extension CartViewController {
         
         if name == "" || phone == "" || adress == "" {
             self.present(UIAlertController.completionDoneTwoSec(title: "Эттеншн!", message: "Мы не знаем всех необходимых данных, что бы осуществить доставку радости. Просим Вас ввести: Имя, Телефон, Адресс доставки, чтобы мы смогли подтвердить заказ"), animated: true)
-            hideAndShowFeedbackBlank()
-//            feedBackTopConstraint.constant = hideAndShowFeedbackBlank()
+            feedbackBlandSlidingConstraint.constant = hideAndShowFeedbackBlank()
             UIView.animate(withDuration: 0.3) {
                 self.view.layoutIfNeeded()
             }
@@ -349,7 +341,7 @@ private extension CartViewController {
                     self.clientDescriptionTextField.text = ""
                     self.orderPriceLabel.text = "0 грн"
                     self.tableCountZeroView.isHidden = false
-                    self.feedBackTopConstraint.constant = 0
+                    self.feedbackBlandSlidingConstraint.constant = 0
                     UIView.animate(withDuration: 0.3) {
                         self.view.layoutIfNeeded()
                     }

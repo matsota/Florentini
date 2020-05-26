@@ -111,7 +111,7 @@ class NavigationCases {
     //MARK: - About feedback options
     enum Feedback: String, CaseIterable {
         
-        case cellphone = "По телефону"
+        case cellphone = "Оператор"
         case viber = "Viber"
         case telegram = "Telegram"
         
