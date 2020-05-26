@@ -15,6 +15,7 @@ class CartViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
         forViewWillAppear()
         
     }
@@ -23,20 +24,6 @@ class CartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-    }
-    
-    //MARK: - Transition confirm
-    @IBAction func transitionConfirm(_ sender: UIButton) {
-        guard let title = sender.currentTitle,
-            let view = transitionView,
-            let constraint = transitionViewLeftConstraint,
-            let button = transitionDismissButton else {return}
-        transitionPerform(by: title, for: view, with: constraint, dismiss: button)
-    }
-    
-    //MARK: - Transition dismiss
-    @IBAction func transitionDismiss(_ sender: UIButton) {
-        slideInTransitionMenu(for: self.transitionView, constraint: self.transitionViewLeftConstraint, dismissBy: self.transitionDismissButton)
     }
     
     //MARK: - Cart button tapped
@@ -84,7 +71,6 @@ class CartViewController: UIViewController {
     @IBOutlet private weak var feedbackBlankView: UIView!
     @IBOutlet private weak var buttonsView: UIView!
     @IBOutlet private weak var tableCountZeroView: UIView!
-    @IBOutlet private weak var transitionView: UIView!
     
     //MARK: StackView
     @IBOutlet private weak var billStackView: UIStackView!
@@ -107,7 +93,6 @@ class CartViewController: UIViewController {
     @IBOutlet private weak var feebackTypeSelectorButton: UIButton!
     @IBOutlet private weak var emptyButtonForHide: UIButton!
     @IBOutlet private weak var feedBackBlankButton: DesignButton!
-    @IBOutlet private weak var transitionDismissButton: UIButton!
     
     //MARK: - Switch
     @IBOutlet private weak var savingClientsDataSwitch: UISwitch!
@@ -117,7 +102,6 @@ class CartViewController: UIViewController {
     //MARK: Constrains Outlets
     @IBOutlet private weak var lowestConstraint: NSLayoutConstraint!
     @IBOutlet private weak var feedBackTopConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var transitionViewLeftConstraint: NSLayoutConstraint!
     
 }
 

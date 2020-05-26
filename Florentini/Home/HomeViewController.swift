@@ -11,27 +11,16 @@ import UIKit
 class HomeViewController: UIViewController {
 
     //MARK: - Override
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+         forViewDidLoad()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        forViewDidLoad()        
+//        forViewDidLoad()        
         
-    }
-    
-    //MARK: - Transition confirm
-    @IBAction func transitionConfim(_ sender: UIButton) {
-        guard let title = sender.currentTitle,
-        let view = transitionView,
-        let constraint = transitionViewLeftConstraint,
-        let button = transitionDismissButton else {return}
-        
-        transitionPerform(by: title, for: view, with: constraint, dismiss: button)
-    }
-    
-    //MARK: - Transition dismiss
-    @IBAction func transitionDismiss(_ sender: UIButton) {
-        slideInTransitionMenu(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
     }
     
     //MARK: - Private Implementation
@@ -42,13 +31,10 @@ class HomeViewController: UIViewController {
     
     //MARK: View
     @IBOutlet private weak var noneStocksView: UIView!
-    @IBOutlet private weak var transitionView: UIView!
     
     //MARK: Button
-    @IBOutlet private weak var transitionDismissButton: UIButton!
     
     //MARK: Contstraint
-    @IBOutlet private weak var transitionViewLeftConstraint: NSLayoutConstraint!
     
 }
 

@@ -16,43 +16,18 @@ class CatalogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        forViewDidLoad()
+        NetworkManager.shared.downloadProductsInfo(success: { productInfo in
+            self.productInfo = productInfo.shuffled()
+            self.tableView.reloadData()
+        }) { error in
+            print(error.localizedDescription)
+        }
         
     }
     
     //MARK: - TransitionMenu button Tapped
     @IBAction private func menuTapped(_ sender: UIButton) {
-        slideInTransitionMenu(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
-    }
-    
-    //MARK: - Transition seletion
-    @IBAction func transitionAccepted(_ sender: UIButton) {
-        guard let title = sender.currentTitle,
-            let view = transitionView,
-            let constraint = transitionViewLeftConstraint,
-            let button = transitionDismissButton else {return}
         
-        transitionPerform(by: title, for: view, with: constraint, dismiss: button)
-    }
-    
-    //MARK: - Decline to transition
-    @IBAction func transitionDismissTapped(_ sender: UIButton) {
-        slideInTransitionMenu(for: self.transitionView, constraint: self.transitionViewLeftConstraint, dismissBy: self.transitionDismissButton)
-    }
-    //MARK: - Cart button Tapped
-    @IBAction private func cartTapped(_ sender: UIButton) {
-        transitionToUsersCart()
-    }
-    
-    //MARK: - Filter option appearance
-    @IBAction private func startFiltering(_ sender: DesignButton) {
-        guard let sender = sender.titleLabel!.text else {return}
-        showOptionsMethod(option: sender)
-    }
-    
-    //MARK: - Category Picker
-    @IBAction private func endFiltering(_ sender: DesignButton) {
-        selectionMethod(self, sender)
     }
     
     //MARK: - Private Implementation
@@ -60,20 +35,14 @@ class CatalogViewController: UIViewController {
     private var selectedCategory: String?
     
     //MARK: View
-    @IBOutlet private weak var buttonsView: UIView!
-    @IBOutlet private weak var transitionView: UIView!
+
     
     //MARK: Button Outlet
-    @IBOutlet private var allFilterButtonsCollection: [DesignButton]!
-    @IBOutlet private weak var filterButton: DesignButton!
-    @IBOutlet private weak var cartButton: UIButton!
-    @IBOutlet private weak var transitionDismissButton: UIButton!
     
     //MARK: TableView Outlet
     @IBOutlet private weak var tableView: UITableView!
     
     //MARK: Constraint
-    @IBOutlet private weak var transitionViewLeftConstraint: NSLayoutConstraint!
     
 }
 
@@ -86,22 +55,6 @@ class CatalogViewController: UIViewController {
 
 
 //MARK: - Extention:
-
-//MARK: - For Overrides
-private extension CatalogViewController {
-    
-    //MARK: Для ViewDidLoad
-    func forViewDidLoad() {
-        NetworkManager.shared.downloadProductsInfo(success: { productInfo in
-            self.productInfo = productInfo.shuffled()
-            self.tableView.reloadData()
-        }) { error in
-            print(error.localizedDescription)
-        }
-    }
-    
-}
-
 
 //MARK: - by TableView
 extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
@@ -127,71 +80,14 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-//MARK: - Filter categories appearance
+//MARK: - Filter categories
 private extension CatalogViewController {
-    func showOptionsMethod(option: String) {
-        selectedCategory = option
-        allFilterButtonsCollection.forEach { (buttons) in
-            if buttons.isHidden == true {
-                UIView.animate(withDuration: 0.2) {
-                    buttons.isHidden = false
-                    self.filterButton.isHidden = !self.buttonsView.isHidden
-                    self.buttonsView.layoutIfNeeded()
-                }
-            }else{
-                UIView.animate(withDuration: 0.2) {
-                    buttons.isHidden = true
-                    self.buttonsView.layoutIfNeeded()
-                }
-            }
-            filterButton.setTitle(option, for: .normal)
-        }
-    }
-}
 
-//MARK: - Category Picked
-private extension CatalogViewController {
-    func selectionMethod(_ class: UIViewController, _ sender: UIButton) {
-        guard let title = sender.currentTitle, let categories = NavigationCases.ProductCategories(rawValue: title) else {return}
-        switch categories {
-        case .apiece:
-            showOptionsMethod(option: NavigationCases.ProductCategories.apiece.rawValue)
-            NetworkManager.shared.downloadApieces(success: { productInfo in
-                self.productInfo = productInfo
-                self.filterButton.isHidden = false
-                self.tableView.reloadData()
-            }) { error in
-                print(error.localizedDescription)
-            }
-        case .gift:
-            showOptionsMethod(option: NavigationCases.ProductCategories.gift.rawValue)
-            NetworkManager.shared.downloadGifts(success: { productInfo in
-                self.productInfo = productInfo
-                self.filterButton.isHidden = false
-                self.tableView.reloadData()
-            }) { error in
-                print(error.localizedDescription)
-            }
-        case .bouquet:
-            showOptionsMethod(option: NavigationCases.ProductCategories.bouquet.rawValue)
-            NetworkManager.shared.downloadBouquetsInfo(success: { productInfo in
-                self.productInfo = productInfo
-                self.filterButton.isHidden = false
-                self.tableView.reloadData()
-            }) { error in
-                print(error.localizedDescription)
-            }
-        case .stock:
-            showOptionsMethod(option: NavigationCases.ProductCategories.stock.rawValue)
-            NetworkManager.shared.downloadStocks(success: { productInfo in
-                self.productInfo = productInfo
-                self.filterButton.isHidden = false
-                self.tableView.reloadData()
-            }) { error in
-                print(error.localizedDescription)
-            }
-        }
-    }
+    // - appearance
+    
+    
+    // - selected
+    
 }
 
 //MARK: - by Table View Cell Delegate

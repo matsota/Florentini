@@ -16,30 +16,14 @@ class AboutUsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        forViewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        setTextViewPlaceholder(for: reviewTextView)
+        hideKeyboardWhenTappedAround()
         
     }
-    
-    //MARK: - TransitionMenu button Tapped
-    @IBAction private func menuTapped(_ sender: UIButton) {
-        slideInTransitionMenu(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
-    }
-    
-    //MARK: - Transition confim
-    @IBAction private func transitionConfim(_ sender: UIButton) {
-        guard let title = sender.currentTitle,
-            let view = transitionView,
-            let constraint = transitionViewLeftConstraint,
-            let button = transitionDismissButton else {return}
-        
-        transitionPerform(by: title, for: view, with: constraint, dismiss: button)
-    }
-    
-    //MARK: - Transition Dismiss
-    @IBAction private func transitionDismissTapped(_ sender: UIButton) {
-        slideInTransitionMenu(for: self.transitionView, constraint: self.transitionViewLeftConstraint, dismissBy: self.transitionDismissButton)
-    }
-    
+
     //MARK: - Send a review
     @IBAction private func sendReviewTapped(_ sender: UIButton) {
         reviewSent()
@@ -49,13 +33,7 @@ class AboutUsViewController: UIViewController {
     
     //MARK: ScrollView
     @IBOutlet private weak var scrollView: UIScrollView!
-    
-    //MARK: View
-    @IBOutlet private weak var transitionView: UIView!
-    
-    //MARK: Button
-    @IBOutlet private weak var transitionDismissButton: UIButton!
-    
+    чы
     //MARK: TextField
     @IBOutlet private weak var nameTextField: UITextField!
     
@@ -64,8 +42,7 @@ class AboutUsViewController: UIViewController {
     
     //MARK: Constraint
     @IBOutlet private weak var scrollViewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var transitionViewLeftConstraint: NSLayoutConstraint!
-    
+
 }
 
 
@@ -78,17 +55,6 @@ class AboutUsViewController: UIViewController {
 
 //MARK: - Extensions
 
-//MARK: - For Overrides
-private extension AboutUsViewController {
-    
-    //MARK: Для ViewDidLoad
-    func forViewDidLoad() {
-        
-        setTextViewPlaceholder(for: reviewTextView)
-        
-    }
-    
-}
 
 //MARK: - Review method
 private extension AboutUsViewController {

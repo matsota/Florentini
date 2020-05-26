@@ -19,25 +19,6 @@ class FAQViewController: UIViewController {
         
     }
     
-    //MARK: - TransitionMenu button Tapped
-    @IBAction private func menuTapped(_ sender: UIButton) {
-        slideInTransitionMenu(for: transitionView, constraint: transitionViewLeftConstraint, dismissBy: transitionDismissButton)
-    }
-    
-    //MARK: - Transition seletion
-    @IBAction func transitionAccepted(_ sender: UIButton) {
-        guard let title = sender.currentTitle,
-        let view = transitionView,
-        let constraint = transitionViewLeftConstraint,
-        let button = transitionDismissButton else {return}
-
-        transitionPerform(by: title, for: view, with: constraint, dismiss: button)
-    }
-    
-    //MARK: - Transition Dismiss
-    @IBAction private func transitionDismissTapped(_ sender: UIButton) {
-        slideInTransitionMenu(for: self.transitionView, constraint: self.transitionViewLeftConstraint, dismissBy: self.transitionDismissButton)
-    }
     
     //MARK: - Payment process
     @IBAction private func showHidePaymentProcessTapped(_ sender: UIButton) {
@@ -73,33 +54,12 @@ class FAQViewController: UIViewController {
     
     //MARK: - Private Implementation
     
-    //MARK: View
-    @IBOutlet private weak var transitionView: UIView!
-    
     //MARK: StackView
     @IBOutlet private weak var paymentOptionsDescriptionStackView: UIStackView!
     @IBOutlet private weak var deliveryProcessDescriptionStackView: UIStackView!
-    
-    //MARK: Button
-    @IBOutlet private weak var transitionDismissButton: UIButton!
     
     //MARK: Label Outlets
     @IBOutlet private weak var paymentProcessDescriptionLabel: UILabel!
     @IBOutlet private weak var feedbackDescriptionLabel: UILabel!
     
-    //MARK: Constraint
-    @IBOutlet private weak var transitionViewLeftConstraint: NSLayoutConstraint!
-    
 }
-
-
-
-
-
-
-
-
-
-//MARK: - Extensions
-
-

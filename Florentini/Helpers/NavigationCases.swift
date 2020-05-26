@@ -17,6 +17,7 @@ class NavigationCases {
         // - segue
         
         // - VC
+        case TabBarVC
         case CartVC
         case CatalogVC
         case FeedbackVC
