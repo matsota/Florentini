@@ -102,12 +102,14 @@ class CartViewController: UIViewController {
     private var orderBill = Int64()
     
     //MARK: Views
-    @IBOutlet private weak var feedbackBlankView: UIView!
     @IBOutlet private weak var buttonsView: UIView!
     @IBOutlet private weak var tableCountZeroView: UIView!
     
     //MARK: StackView
     @IBOutlet private weak var billStackView: UIStackView!
+    
+    //MARK: Scroll View
+    @IBOutlet weak var feedbackBlankScrollView: UIScrollView!
     
     //MARK: TableView Outlets
     @IBOutlet private weak var cartTableView: UITableView!
@@ -224,6 +226,7 @@ private extension CartViewController {
         self.billStackView.isHidden = true
         guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber, let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
         lowestConstraint.constant = keyboardFrameValue.cgRectValue.height * 0.9
+        self.emptyButtonForHide.isHidden = true
         UIView.animate(withDuration: duration.doubleValue) {
             self.view.layoutIfNeeded()
         }
@@ -233,24 +236,34 @@ private extension CartViewController {
         self.billStackView.isHidden = false
         guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber else {return}
         lowestConstraint.constant = 14
+        if self.feedbackBlankScrollView.isHidden == true {
+            self.emptyButtonForHide.isHidden = true
+        }else{
+            self.emptyButtonForHide.isHidden = false
+        }
         UIView.animate(withDuration: duration.doubleValue) {
             self.view.layoutIfNeeded()
         }
     }
     
     func hideAndShowFeedbackBlank() -> CGFloat {
+        
+        
         let up = UIImage(systemName: "chevron.up"),
         down = UIImage(systemName: "chevron.down")
+        
         var height = self.feedBackTopConstraint.constant
         if  height == 0.0 {
-            height = -self.cartTableView.frame.height
-            self.feedbackBlankView.isHidden = false
+            self.emptyButtonForHide.isHidden = false
+            self.feedbackBlankScrollView.isHidden = false
+            height = -self.cartTableView.bounds.height
             self.feedBackBlankButton.alpha = 1
             self.feedBackBlankButton.setImage(down, for: .normal)
         }else{
             height = 0.0
+            self.emptyButtonForHide.isHidden = true
+            self.feedbackBlankScrollView.isHidden = true
             self.feedBackBlankButton.alpha = 0.6
-            self.feedbackBlankView.isHidden = true
             self.feedBackBlankButton.setImage(up, for: .normal)
         }
         return height
@@ -299,7 +312,8 @@ private extension CartViewController {
         
         if name == "" || phone == "" || adress == "" {
             self.present(UIAlertController.completionDoneTwoSec(title: "Эттеншн!", message: "Мы не знаем всех необходимых данных, что бы осуществить доставку радости. Просим Вас ввести: Имя, Телефон, Адресс доставки, чтобы мы смогли подтвердить заказ"), animated: true)
-            feedBackTopConstraint.constant = hideAndShowFeedbackBlank()
+            hideAndShowFeedbackBlank()
+//            feedBackTopConstraint.constant = hideAndShowFeedbackBlank()
             UIView.animate(withDuration: 0.3) {
                 self.view.layoutIfNeeded()
             }
