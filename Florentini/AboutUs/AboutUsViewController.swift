@@ -33,7 +33,7 @@ class AboutUsViewController: UIViewController {
     
     //MARK: ScrollView
     @IBOutlet private weak var scrollView: UIScrollView!
-    чы
+    
     //MARK: TextField
     @IBOutlet private weak var nameTextField: UITextField!
     
@@ -88,9 +88,9 @@ private extension AboutUsViewController {
         guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber, let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
         
         scrollViewBottomConstraint.constant -= keyboardFrameValue.cgRectValue.height
+        scrollView.setContentOffset(CGPoint(x: 0, y: keyboardFrameValue.cgRectValue.height), animated: false)
         UIView.animate(withDuration: duration.doubleValue) {
             self.view.layoutIfNeeded()
-            self.scrollView.setContentOffset(CGPoint(x: 0, y: keyboardFrameValue.cgRectValue.height + 50), animated: false)
         }
     }
     
@@ -110,7 +110,7 @@ extension AboutUsViewController: UITextViewDelegate {
     
     func setTextViewPlaceholder(for textView: UITextView) {
         textView.text = "Введите текст"
-        textView.textColor = .systemGray4
+        textView.textColor = .systemGray3
         textView.font = UIFont(name: "System", size: 13)
         
         textView.layer.borderWidth = 1
@@ -125,6 +125,9 @@ extension AboutUsViewController: UITextViewDelegate {
             textView.text = ""
             textView.textColor = .black
         }
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        setTextViewPlaceholder(for: reviewTextView)
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {

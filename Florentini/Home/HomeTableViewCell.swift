@@ -81,7 +81,6 @@ class HomeTableViewCell: UITableViewCell {
         
         cellImageView.sd_setImage(with: storageRef, placeholderImage: nil) { (image, _, _, _) in
             self.imageActivityIndicator?.stopAnimating()
-            self.imageActivityIndicator?.isHidden = true
         }
     }
 }

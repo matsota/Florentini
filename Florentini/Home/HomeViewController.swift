@@ -13,13 +13,19 @@ class HomeViewController: UIViewController {
     //MARK: - Override
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-         forViewDidLoad()
+        
+        // - fill tableView
+         NetworkManager.shared.downloadStocks(success: { productInfo in
+             self.productInfo = productInfo.shuffled()
+             self.tableView.reloadData()
+         }) { error in
+             print(error.localizedDescription)
+         }
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        forViewDidLoad()        
         
     }
     
@@ -32,10 +38,6 @@ class HomeViewController: UIViewController {
     //MARK: View
     @IBOutlet private weak var noneStocksView: UIView!
     
-    //MARK: Button
-    
-    //MARK: Contstraint
-    
 }
 
 
@@ -47,23 +49,6 @@ class HomeViewController: UIViewController {
 
 
 //MARK: - Extention
-
-//MARK: - For Overrides
-private extension HomeViewController {
-    
-    //MARK: Для ViewDidLoad
-    func forViewDidLoad() {
-        
-        NetworkManager.shared.downloadStocks(success: { productInfo in
-            self.productInfo = productInfo.shuffled()
-            self.tableView.reloadData()
-        }) { error in
-            print(error.localizedDescription)
-        }
-
-    }
-    
-}
 
 //MARK: - by TableView
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
@@ -82,6 +67,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         stock = fetch.stock
         
         cell.delegate = self
+        cell.imageActivityIndicator.startAnimating()
         
         if productInfo.count == 0 {
             noneStocksView.isHidden = false

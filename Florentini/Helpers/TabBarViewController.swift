@@ -16,6 +16,9 @@ class TabBarViewController: UITabBarController {
         tabBar.tintColor = UIColor.purpleColorOfEnterprise
         
         self.selectedIndex = 2
+        
+        let cartIndex = self.index(ofAccessibilityElement: 0)
+    
     }
 
 }
