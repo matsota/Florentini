@@ -15,13 +15,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mnV-X6-mYG">
-                                <rect key="frame" x="152" y="356" width="69.333333333333329" height="100"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mnV-X6-mYG">
+                                <rect key="frame" x="14" y="58" width="21" height="22"/>
+                                <color key="tintColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" image="slider.horizontal.3" catalog="system"/>
                                 <connections>
-                                    <action selector="menuTapped:" destination="OQi-JB-ueU" eventType="touchUpInside" id="jyw-TB-YQ7"/>
+                                    <action selector="filterTapped:" destination="OQi-JB-ueU" eventType="touchUpInside" id="jyw-TB-YQ7"/>
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="tl2-3d-0ds">
@@ -176,26 +175,74 @@
                                     <outlet property="delegate" destination="OQi-JB-ueU" id="20I-bZ-hWp"/>
                                 </connections>
                             </tableView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="a4I-RL-ke0">
+                                <rect key="frame" x="-240" y="44" width="240" height="685"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="separatorColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FilterTVCell" textLabel="DVT-hi-0vy" style="IBUITableViewCellStyleDefault" id="jx0-qu-vc2" customClass="FilterTableViewCell" customModule="Florentini" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="240" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jx0-qu-vc2" id="RvK-g6-eh9">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DVT-hi-0vy">
+                                                    <rect key="frame" x="15" y="0.0" width="210" height="43.666667938232422"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="OQi-JB-ueU" id="ZWw-OF-XiY"/>
+                                    <outlet property="delegate" destination="OQi-JB-ueU" id="vWP-7r-536"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KMR-EC-4Ch">
+                                <rect key="frame" x="0.0" y="44" width="375" height="685"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="filterTapped:" destination="OQi-JB-ueU" eventType="touchUpInside" id="2M8-JP-bEV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="tl2-3d-0ds" firstAttribute="top" secondItem="bLH-hn-wea" secondAttribute="top" id="4fs-G0-687"/>
                             <constraint firstItem="bLH-hn-wea" firstAttribute="trailing" secondItem="84w-IE-7Oq" secondAttribute="trailing" id="6m8-xn-rVC"/>
                             <constraint firstItem="bLH-hn-wea" firstAttribute="bottom" secondItem="Q7O-KL-dmB" secondAttribute="bottom" constant="14" id="91e-Zy-ANU"/>
+                            <constraint firstItem="mnV-X6-mYG" firstAttribute="leading" secondItem="bLH-hn-wea" secondAttribute="leading" constant="14" id="ChS-c2-bLx"/>
                             <constraint firstItem="84w-IE-7Oq" firstAttribute="bottom" secondItem="Q7O-KL-dmB" secondAttribute="top" id="HMF-Gd-sd3"/>
                             <constraint firstItem="Q7O-KL-dmB" firstAttribute="leading" secondItem="bLH-hn-wea" secondAttribute="leading" constant="14" id="Imr-od-LkF"/>
                             <constraint firstItem="bLH-hn-wea" firstAttribute="trailing" secondItem="tl2-3d-0ds" secondAttribute="trailing" id="LaP-Te-nNg"/>
+                            <constraint firstItem="bLH-hn-wea" firstAttribute="bottom" secondItem="KMR-EC-4Ch" secondAttribute="bottom" id="Mbb-GZ-J0s"/>
+                            <constraint firstItem="a4I-RL-ke0" firstAttribute="trailing" secondItem="bLH-hn-wea" secondAttribute="leading" id="POe-ut-Dgd"/>
+                            <constraint firstItem="a4I-RL-ke0" firstAttribute="top" secondItem="bLH-hn-wea" secondAttribute="top" id="S4q-aq-Awh"/>
+                            <constraint firstItem="a4I-RL-ke0" firstAttribute="width" secondItem="Nad-HM-jQC" secondAttribute="width" multiplier="0.64" id="Tcd-7J-qM0"/>
+                            <constraint firstItem="KMR-EC-4Ch" firstAttribute="leading" secondItem="a4I-RL-ke0" secondAttribute="trailing" id="ULu-ty-1eu"/>
                             <constraint firstItem="bLH-hn-wea" firstAttribute="leading" secondItem="tl2-3d-0ds" secondAttribute="leading" id="Wmb-Id-jcI"/>
                             <constraint firstItem="bLH-hn-wea" firstAttribute="trailing" secondItem="Q7O-KL-dmB" secondAttribute="trailing" constant="14" id="Yob-8s-AhJ"/>
+                            <constraint firstItem="KMR-EC-4Ch" firstAttribute="top" secondItem="bLH-hn-wea" secondAttribute="top" id="ZOp-3o-uGu"/>
+                            <constraint firstItem="bLH-hn-wea" firstAttribute="trailing" secondItem="KMR-EC-4Ch" secondAttribute="trailing" id="dv7-7c-Er5"/>
                             <constraint firstItem="84w-IE-7Oq" firstAttribute="top" secondItem="tl2-3d-0ds" secondAttribute="bottom" constant="4" id="ghu-jS-rFR"/>
                             <constraint firstItem="84w-IE-7Oq" firstAttribute="leading" secondItem="bLH-hn-wea" secondAttribute="leading" id="j3o-Kf-23F"/>
+                            <constraint firstItem="mnV-X6-mYG" firstAttribute="top" secondItem="bLH-hn-wea" secondAttribute="top" constant="14" id="rqL-2X-WvX"/>
+                            <constraint firstItem="bLH-hn-wea" firstAttribute="bottom" secondItem="a4I-RL-ke0" secondAttribute="bottom" id="tip-B0-8yX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bLH-hn-wea"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Каталог" image="photo" catalog="system" selectedImage="photo.fill" id="vgg-Aj-ih4"/>
                     <toolbarItems/>
                     <connections>
-                        <outlet property="tableView" destination="Q7O-KL-dmB" id="krl-HY-Y7C"/>
+                        <outlet property="catalogTableView" destination="Q7O-KL-dmB" id="krl-HY-Y7C"/>
+                        <outlet property="filterSlidingConstraint" destination="POe-ut-Dgd" id="NqC-TT-JUh"/>
+                        <outlet property="filterTableView" destination="a4I-RL-ke0" id="iYi-so-WfZ"/>
+                        <outlet property="hideFilterButton" destination="KMR-EC-4Ch" id="byh-TJ-2Zw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B2e-14-Wpb" sceneMemberID="firstResponder"/>

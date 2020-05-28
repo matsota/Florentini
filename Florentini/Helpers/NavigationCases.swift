@@ -24,8 +24,9 @@ class NavigationCases {
         case FAQVC
         
         // - cell
-        case CatalogTVCell
         case CartTVCell
+        case CatalogTVCell
+        case FilterTVCell
         case HomeTVCell
         
         
@@ -120,19 +121,16 @@ class NavigationCases {
     //MARK: - For slider value
     enum MaxSliderValueByCategories: Int {
         
-        case towHundred = 200
-        //        case hundredAndHalf = 150
-        case hundred = 100
-        //        case halfHundred = 50
+        case twentyFive = 25
         case five = 5
-        //        case three = 3
+        case three = 3
         
     }
     
     //MARK: - Categories
     enum ProductCategories: String, CaseIterable {
         
-        case apiece = "Поштучно"
+        case flower = "Цветы"
         case gift = "Подарки"
         case bouquet = "Букеты"
         case stock = "Акции"

@@ -56,8 +56,8 @@ class CartTableViewCell: UITableViewCell {
     func fill(name: String, category: String, price: Int, slider: Int, stock: Bool, imageData: Data) {
        self.stock = stock
         
-        if category == NavigationCases.ProductCategories.apiece.rawValue {
-            self.quantitySlider.maximumValue = Float(NavigationCases.MaxSliderValueByCategories.hundred.rawValue)
+        if category == NavigationCases.ProductCategories.flower.rawValue {
+            self.quantitySlider.maximumValue = Float(NavigationCases.MaxSliderValueByCategories.twentyFive.rawValue)
         }else{
             self.quantitySlider.maximumValue = Float(NavigationCases.MaxSliderValueByCategories.five.rawValue)
         }

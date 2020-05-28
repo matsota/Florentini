@@ -80,8 +80,8 @@ class NetworkManager {
     }
     
     //MARK: - Only apieces
-    func downloadApieces(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.FirstCollectionRow.productInfo.rawValue).whereField(NavigationCases.Product.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategories.apiece.rawValue).whereField(NavigationCases.Product.stock.rawValue, isEqualTo: false).getDocuments(completion: {
+    func downloadFlowerInfo(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(NavigationCases.FirstCollectionRow.productInfo.rawValue).whereField(NavigationCases.Product.productCategory.rawValue, isEqualTo: NavigationCases.ProductCategories.flower.rawValue).whereField(NavigationCases.Product.stock.rawValue, isEqualTo: false).getDocuments(completion: {
             (querySnapshot, _) in
             let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
             success(productInfo)
