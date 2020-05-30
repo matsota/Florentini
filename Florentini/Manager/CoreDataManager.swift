@@ -20,7 +20,6 @@ class CoreDataManager {
     ///
     //MARK: - Add to Cart
     func addProduct(name: String, category: String, price: Int, quantity: Int, stock: Bool, imageData: Data, success: @escaping() -> Void, failure: @escaping() -> Void) {
-        
         if imageData.isEmpty || name.isEmpty || category.isEmpty || price == 0 || quantity == 0  {
             failure()
         }else{
@@ -38,18 +37,20 @@ class CoreDataManager {
     }
     
     //MARK: - Save Client Data
-    func saveClientInfo(name: String, phone: String, success: @escaping() -> Void, failure: @escaping() -> Void) {
+    func saveClientInfo(name: String, phone: String) {
+        let preOrder = ClientData(context: PersistenceService.context)
+        preOrder.name = name
+        preOrder.phone = phone
         
-        if name.isEmpty || phone.isEmpty {
-            failure()
-        }else{
-            let preOrder = ClientData(context: PersistenceService.context)
-            preOrder.name = name
-            preOrder.phone = phone
-            
-            PersistenceService.saveContext()
-            success()
-        }
+        PersistenceService.saveContext()
+    }
+    
+    //MARK: - Save Client Data
+    func saveClientLastAdress(adress: String) {
+        let last = ClientsLastAdress(context: PersistenceService.context)
+        last.adress = adress
+        
+        PersistenceService.saveContext()
     }
     
     ///
@@ -69,7 +70,6 @@ class CoreDataManager {
     }
     
     @objc func cartIsEmpty(bar: UITabBarItem){
-        
         let fetchRequest: NSFetchRequest<PreOrderEntity> = PreOrderEntity.fetchRequest(),
         result = try? PersistenceService.context.fetch(fetchRequest)
         
@@ -86,6 +86,18 @@ class CoreDataManager {
     //MARK: - Fetch Client Data
     @objc func fetchClientData(success: @escaping([ClientData]) -> (Void), failure: @escaping(NSError) -> Void) {
         let fetchRequest: NSFetchRequest<ClientData> = ClientData.fetchRequest()
+        
+        do {
+            let result = try PersistenceService.context.fetch(fetchRequest)
+            success(result)
+        } catch let error as NSError{
+            failure(error)
+        }
+    }
+    
+    //MARK: - Fetch Client Adress
+    @objc func fetchClientsLastAdress(success: @escaping([ClientsLastAdress]) -> (Void), failure: @escaping(NSError) -> Void) {
+        let fetchRequest: NSFetchRequest<ClientsLastAdress> = ClientsLastAdress.fetchRequest()
         
         do {
             let result = try PersistenceService.context.fetch(fetchRequest)

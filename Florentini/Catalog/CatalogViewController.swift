@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct filterCellData {
+struct filterTVStruct {
     var opened = Bool()
     var title = String()
     var sectionData = [String]()
@@ -24,40 +24,36 @@ class CatalogViewController: UIViewController {
         
         NetworkManager.shared.downloadProductsInfo(success: { productInfo in
             self.productInfo = productInfo.shuffled()
+            print(productInfo)
             self.catalogTableView.reloadData()
         }) { error in
             print(error.localizedDescription)
         }
         
-        filterData = [filterCellData(opened: false, title: NavigationCases.ProductCategories.flower.rawValue, sectionData: flowers),
-                      filterCellData(opened: false, title: NavigationCases.ProductCategories.bouquet.rawValue, sectionData: bouqets),
-                      filterCellData(opened: false, title: NavigationCases.ProductCategories.gift.rawValue, sectionData: gifts)]
+        NetworkManager.shared.downloadFilteringDict(success: { (data) in
+            self.filterData = [filterTVStruct(opened: false, title: NavigationCases.ProductCategories.flower.rawValue, sectionData: data.flower),
+                               filterTVStruct(opened: false, title: NavigationCases.ProductCategories.bouquet.rawValue, sectionData: data.bouquet),
+                               filterTVStruct(opened: false, title: NavigationCases.ProductCategories.gift.rawValue, sectionData: data.gift)]
+            self.filterTableView.reloadData()
+        }) { (error) in
+            self.present(UIAlertController.completionDoneTwoSec(title: "Внимание", message: "Скорее всего произошла потеря соединения"), animated: true)
+            print("ERROR: CatalogViewController: viewDidLoad: downloadFilteringDict ", error.localizedDescription)
+        }
         
     }
     
-    let gifts = ["Все", "Вазы", "Гелиевые шарики", "Сладкое", "Корзины", "Фруктовые корзины", "Козины из сладостей", "Мягкие игрушки", "Открытки", "Торты"]
-    let flowers = ["Все", "Амараллис", "Ананас", "Антуриум", "Альстромерия", "Бамбук", "Брассика", "Бруния", "Ванда", "Гвоздика", "Гербера", "Гиацит", "Гипсофила", "Гортензия", "Ирис", "Калла", "Леукодендрон", "Лилия", "Орхидея Цимбидиум", "Пион", "Подсолнух", "Протея", "Ранункулюс", "Роза", "Роза Эквадор", "Роза Голландия", "Роза Кения", "Роза спрей", "Ромашка", "Хиперикум", "Тюльпан", "Фрезия", "Хелеборус", "Хлопок", "Хризантема", "Эрингиум", "Эустома"]
-    let bouqets = ["Все", "Авторские", "Из роз", "Из 101 розы", "Классические", "Недорогие букеты", "Свадебные", "Фруктовые", "Эксклюзивные", "В форме сердца", "В боксах", "Со сладостями", "C Шампанским"]
-    
     //MARK: - TransitionMenu button Tapped
     @IBAction private func filterTapped(_ sender: UIButton) {
-        if filterSlidingConstraint.constant == 0 {
-            filterSlidingConstraint.constant = filterTableView.bounds.width
-            hideFilterButton.alpha = 0.6
-        }else{
-            filterSlidingConstraint.constant = 0
-            hideFilterButton.alpha = 0
-        }
-        UIView.animate(withDuration: 0.3) {
+        filterSlidingConstraint.constant = hideUnhideFilter()
+        UIView.animate(withDuration: 0.5) {
             self.view.layoutIfNeeded()
         }
-        
     }
     
     //MARK: - Private Implementation
     private var productInfo = [DatabaseManager.ProductInfo]()
     private var selectedCategory: String?
-    private var filterData = [filterCellData]()
+    private var filterData = [filterTVStruct]()
     
     //MARK: View
     
@@ -89,7 +85,7 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
         if tableView == filterTableView {
             return filterData.count
         }else{
-            return filterData.count
+            return 1
         }
     }
     
@@ -125,14 +121,14 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.textLabel?.text = filterData[indexPath.section].title
                 cell.textLabel?.textColor = UIColor.pinkColorOfEnterprise
                 cell.backgroundColor = UIColor.purpleColorOfEnterprise
-                cell.textLabel?.font.withSize(24)
+                cell.textLabel?.font = UIFont.systemFont(ofSize: 20)
                 return cell
             }else{
                 let dataIndex = indexPath.row - 1
                 cell.textLabel?.text = filterData[indexPath.section].sectionData[dataIndex]
                 cell.textLabel?.textColor = UIColor.purpleColorOfEnterprise
                 cell.backgroundColor = UIColor.pinkColorOfEnterprise
-                cell.textLabel?.font.withSize(16)
+                cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
                 return cell
             }
         }
@@ -140,24 +136,51 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == filterTableView {
-//            let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.Transition.FilterTVCell.rawValue, for: indexPath) as! FilterTableViewCell
+            //            let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.Transition.FilterTVCell.rawValue, for: indexPath) as! FilterTableViewCell
             if indexPath.row == 0  {
                 filterData[indexPath.section].opened = !filterData[indexPath.section].opened
                 let section = IndexSet.init(integer: indexPath.section)
                 tableView.reloadSections(section, with: .none)
             }else{
-                let dataIndex = indexPath.row - 1
-                print(filterData[indexPath.section].sectionData[dataIndex])
+                let dataIndex = indexPath.row - 1,
+                title = filterData[indexPath.section].title,
+                sectionData = filterData[indexPath.section].sectionData[dataIndex]
+                
+                if sectionData == "Все"{
+                    print(title)
+                    NetworkManager.shared.downloadByCategory(category: title, success: { productInfo in
+                        print(productInfo)
+                        self.productInfo  = productInfo
+                        self.filterSlidingConstraint.constant = self.hideUnhideFilter()
+                        self.catalogTableView.reloadData()
+                    }) { error in
+                        self.present(UIAlertController.completionDoneTwoSec(title: "", message: ""), animated: true)
+                        print("ERROR: CatalogViewController: tableView/didSelectRowAt: downloadByCategory", error.localizedDescription)
+                    }
+                }else{
+                    print(title, sectionData)
+                }
             }
         }
     }
     
 }
 
-//MARK: - Filter categories
+//MARK: - Filter
 private extension CatalogViewController {
     
-    // - appearance
+    // - hide/unhide
+    func hideUnhideFilter() ->CGFloat {
+        var verticalContraint: CGFloat?
+        if filterSlidingConstraint.constant == 0 {
+            verticalContraint = filterTableView.bounds.width
+            hideFilterButton.alpha = 0.6
+        }else{
+            verticalContraint = 0
+            hideFilterButton.alpha = 0
+        }
+        return verticalContraint ?? 0
+    }
     
     
     // - selected

@@ -33,7 +33,7 @@ class CartViewController: UIViewController {
             self.cartTableView.reloadData()
         }) { (error) in
             self.present(UIAlertController.completionDoneTwoSec(title: "Ошибка!", message: "Что-то пошло не так"), animated: true)
-            print(error.localizedDescription)
+            print("CartViewController: viewWillAppear:  fetchPreOrder", error.localizedDescription)
         }
         
         CoreDataManager.shared.fetchClientData(success: { (client) -> (Void) in
@@ -42,11 +42,19 @@ class CartViewController: UIViewController {
             self.clientNameTextField.text = self.name
             self.clientCellPhoneTextField.text = self.phone
             if self.name != nil, self.phone != nil {
-                self.clientsDataRemembered.text = "Обновить Ваше имя или телефон?"
+                self.clientsDataIsExist.text = "Обновить Ваше имя или телефон?"
             }
         }) { (error) in
             self.present(UIAlertController.completionDoneTwoSec(title: "Внимание", message: "Не получилось подтянуть ваши Имя и телефон из памяти"), animated: true)
-            print(error.localizedDescription)
+            print("CartViewController: viewWillAppear:  fetchClientData", error.localizedDescription)
+        }
+        
+        CoreDataManager.shared.fetchClientsLastAdress(success: { (adress) -> (Void) in
+            let adress = adress.map({$0.adress!}).first
+            self.clientAdressTextField.text = adress
+        }) { (error) in
+            self.present(UIAlertController.completionDoneTwoSec(title: "Внимание", message: "Не получилось подтянуть ваш Адресс из памяти"), animated: true)
+            print("CartViewController: viewWillAppear:  fetchClientsLastAdress", error.localizedDescription)
         }
         
     }
@@ -122,7 +130,8 @@ class CartViewController: UIViewController {
     
     //MARK: Label
     @IBOutlet private weak var orderPriceLabel: UILabel!
-    @IBOutlet private weak var clientsDataRemembered: UILabel!
+    @IBOutlet private weak var clientsDataIsExist: UILabel!
+    @IBOutlet private weak var clientsAdressIsExist: UILabel!
     
     //MARK: Buttons Outlets
     @IBOutlet private var feedbackTypeBttnsCellection: [UIButton]!
@@ -132,6 +141,7 @@ class CartViewController: UIViewController {
     
     //MARK: - Switch
     @IBOutlet private weak var savingClientsDataSwitch: UISwitch!
+    @IBOutlet private weak var savingClientsLastAdressSwitch: UISwitch!
     
     
     
@@ -321,66 +331,64 @@ private extension CartViewController {
                 print("ERROR: orderConfirm/ updateClientData :",error)
             }
             
-            let sendAnOrder = {
-                var jsonArray: [[String: Any]] = []
-                for i in self.preOrder {
-                    i.productImage = nil
-                    let preOrderJSON = i.toJSON()
-                    jsonArray.append(preOrderJSON)
-                }
-                
-                let totalPrice = self.orderBill
-                
-                NetworkManager.shared.orderConfirm(totalPrice: totalPrice, name: name, adress: adress, cellphone: phone, feedbackOption: self.feedbackOption!, mark: mark, timeStamp: Date(), success: { ref in
-                    for _ in self.preOrder {
-                        NetworkManager.shared.orderDescriptionConfirm(path: ref.documentID, orderDescription: jsonArray.remove(at:0))
-                    }
-                    
-                    self.present(UIAlertController.completionDoneTwoSec(title: "Ваш заказ оформлен", message: "Мы свяжемся с Вам так скоро, как это возможно"), animated: true)
-                    self.clientAdressTextField.text = ""
-                    self.clientDescriptionTextField.text = ""
-                    self.orderPriceLabel.text = "0 грн"
-                    self.tableCountZeroView.isHidden = false
-                    self.feedbackBlandSlidingConstraint.constant = 0
-                    UIView.animate(withDuration: 0.3) {
-                        self.view.layoutIfNeeded()
-                    }
-                    
-                    CoreDataManager.shared.deleteAllData(entity: NavigationCases.CoreDataCases.PreOrderEntity.rawValue, success:  {
-                        self.preOrder.removeAll()
-                        self.cartTableView.reloadData()
-                        self.tableCountZeroView.isHidden = false
-                    }) { error in
-                        self.present(UIAlertController.completionDoneTwoSec(title: "Внимание", message: "Состояние вашего заказа не изменилось"), animated: true)
-                    }
-                }) { (error) in
-                    self.present(UIAlertController.completionDoneTwoSec(title: "Внимание", message: "Проблема с подключением к сети"), animated: true)
-                    print("Error in CartViewController, func confirm(): ", error.localizedDescription)
-                }
+            var jsonArray: [[String: Any]] = []
+            for i in self.preOrder {
+                i.productImage = nil
+                let preOrderJSON = i.toJSON()
+                jsonArray.append(preOrderJSON)
             }
             
-            if self.savingClientsDataSwitch.isOn == true {
-                CoreDataManager.shared.deleteAllData(entity: NavigationCases.CoreDataCases.ClientData.rawValue, success: {
-                    guard let name = self.clientNameTextField.text, let phone = self.clientCellPhoneTextField.text else {
-                        self.present(UIAlertController.completionDoneTwoSec(title: "Эттеншн!", message: "Мы не знаем всех необходимых данных, что бы осуществить доставку радости. Просим Вас ввести: Имя, Телефон, Адресс доставки, чтобы мы смогли подтвердить заказ"), animated: true)
-                        return
-                    }
-                    CoreDataManager.shared.saveClientInfo(name: name, phone: phone, success: {
-                        sendAnOrder()
-                    }) {
-                        self.present(UIAlertController.completionDoneTwoSec(title: "Внимание", message: "Произошла ошибка в процессе обновления вашего Имени и телефона"), animated: true)
-                    }
-                }) { (error) in
-                    self.present(UIAlertController.completionDoneTwoSec(title: "Внимание", message: "Произошла ошибка в процессе изменения вашего Имени и телефона"), animated: true)
-                    print(error.localizedDescription)
+            let totalPrice = self.orderBill
+            
+            NetworkManager.shared.orderConfirm(totalPrice: totalPrice, name: name, adress: adress, cellphone: phone, feedbackOption: self.feedbackOption!, mark: mark, timeStamp: Date(), success: { ref in
+                for _ in self.preOrder {
+                    NetworkManager.shared.orderDescriptionConfirm(path: ref.documentID, orderDescription: jsonArray.remove(at:0))
                 }
-            }else{
-                sendAnOrder()
+                
+                self.present(UIAlertController.completionDoneTwoSec(title: "Ваш заказ оформлен", message: "Мы свяжемся с Вам так скоро, как это возможно"), animated: true)
+                self.clientAdressTextField.text = ""
+                self.clientDescriptionTextField.text = ""
+                self.orderPriceLabel.text = "0 грн"
+                self.tableCountZeroView.isHidden = false
+                self.feedbackBlandSlidingConstraint.constant = 0
+                UIView.animate(withDuration: 0.3) {
+                    self.view.layoutIfNeeded()
+                }
+                
+                CoreDataManager.shared.deleteAllData(entity: NavigationCases.CoreDataCases.PreOrderEntity.rawValue, success:  {
+                    self.preOrder.removeAll()
+                    self.cartTableView.reloadData()
+                    self.tableCountZeroView.isHidden = false
+                }) { error in
+                    self.present(UIAlertController.completionDoneTwoSec(title: "Внимание", message: "Состояние вашего заказа не изменилось"), animated: true)
+                }
+            }) { (error) in
+                self.present(UIAlertController.completionDoneTwoSec(title: "Внимание", message: "Проблема с подключением к сети"), animated: true)
+                print("Error in CartViewController, func confirm(): ", error.localizedDescription)
+            }
+        }
+        
+        if self.savingClientsDataSwitch.isOn == true{
+            CoreDataManager.shared.deleteAllData(entity: NavigationCases.CoreDataCases.ClientData.rawValue, success: {
+                CoreDataManager.shared.saveClientInfo(name: name, phone: phone)
+            }) { (error) in
+                self.present(UIAlertController.completionDoneTwoSec(title: "Внимание", message: "Произошла ошибка в процессе изменения вашего Имени и телефона"), animated: true)
+                print("CartViewController: performConfirmation: savingClientsDataSwitch/deleteAllData: ", error.localizedDescription)
+            }
+        }
+        
+        if self.savingClientsLastAdressSwitch.isOn == true {
+            CoreDataManager.shared.deleteAllData(entity: NavigationCases.CoreDataCases.ClientsLastAdress.rawValue, success: {
+                CoreDataManager.shared.saveClientLastAdress(adress: adress)
+            }) { (error) in
+                self.present(UIAlertController.completionDoneTwoSec(title: "Внимание", message: "Произошла ошибка в процессе изменения вашего Имени и телефона"), animated: true)
+                print("CartViewController: performConfirmation: savingClientsLastAdressSwitch/deleteAllData: ", error.localizedDescription)
             }
         }
     }
     
 }
+
 
 
 

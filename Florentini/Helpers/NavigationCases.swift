@@ -32,11 +32,24 @@ class NavigationCases {
         
     }
     
+    //MARK: - Transtion Cases
+    
+    enum ScreenTranstion: String, CaseIterable {
+        
+        case homeScreen = "Главная"
+        case catalogScreen = "Каталог"
+        case feedbackScreen = "О нас"
+        case faqScreen = "FAQ"
+        case website = "Website"
+        
+    }
+    
     //MARK: - for CoreData
     enum CoreDataCases: String, CaseIterable {
         
         case PreOrderEntity
         case ClientData
+        case ClientsLastAdress
         
     }
     
@@ -48,16 +61,7 @@ class NavigationCases {
         case order
         case review
         case clientData
-        
-    }
-    
-    //MARK: - Про Сообщения
-    enum Review: String, CaseIterable {
-        
-        case name
-        case content
-        case uid
-        case timeStamp
+        case searchProduct
         
     }
     
@@ -80,20 +84,8 @@ class NavigationCases {
         
     }
     
-    //MARK: - Transtion Cases
-    
-    enum ScreenTranstion: String, CaseIterable {
-        
-        case homeScreen = "Главная"
-        case catalogScreen = "Каталог"
-        case feedbackScreen = "О нас"
-        case faqScreen = "FAQ"
-        case website = "Website"
-        
-    }
-    
     //MARK: - About Order attributes
-    enum UsersInfo: String, CaseIterable {
+    enum UserInfo: String, CaseIterable {
         
         case totalPrice
         case name
@@ -108,6 +100,37 @@ class NavigationCases {
         case cart
         
     }
+    
+    //MARK: - Про Сообщения
+    enum Review: String, CaseIterable {
+        
+        case name
+        case content
+        case uid
+        case timeStamp
+        
+    }
+    
+    //MARK: Clients
+    enum ForClientData: String, CaseIterable {
+        case name
+        case phone
+        case orderCount
+        case deviceID
+        case lastAdress
+        case adress
+        case adressesDict
+        case productDict
+        case archiveData
+    }
+    
+    //MARK: For Search
+    enum SearchProduct: String, CaseIterable {
+        
+        case mainDictionaries
+        
+    }
+
     
     //MARK: - About feedback options
     enum Feedback: String, CaseIterable {
@@ -135,21 +158,6 @@ class NavigationCases {
         case bouquet = "Букеты"
         case stock = "Акции"
         
-    }
-    
-    
-    //MARK: Clients
-    
-    enum ForClientData: String, CaseIterable {
-        case name
-        case phone
-        case orderCount
-        case deviceID
-        case lastAdress
-        case adress
-        case adressesDict
-        case productDict
-        case archiveData
     }
     
 }

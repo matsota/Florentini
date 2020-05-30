@@ -1018,14 +1018,15 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qoh-an-Ek4">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="685"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0PI-fC-QoK">
-                                                <rect key="frame" x="0.0" y="0.0" width="300" height="189.66666666666666"/>
+                                            <button opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="top" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0PI-fC-QoK">
+                                                <rect key="frame" x="0.0" y="0.0" width="300" height="172"/>
+                                                <state key="normal" image="banner1"/>
                                                 <connections>
                                                     <action selector="emptyButtonForHideTapped:" destination="MvW-Ha-Rkh" eventType="touchUpInside" id="0W9-Sr-0fh"/>
                                                 </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="0NK-q4-FEi">
-                                                <rect key="frame" x="14" y="189.66666666666663" width="272" height="306"/>
+                                                <rect key="frame" x="14" y="172" width="272" height="341"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Введите свое прекрасное Имя" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="cBB-e9-NHz">
                                                         <rect key="frame" x="0.0" y="0.0" width="272" height="34"/>
@@ -1158,23 +1159,42 @@
                                                             <constraint firstItem="N3F-S2-bhG" firstAttribute="width" secondItem="msz-OJ-vQB" secondAttribute="width" multiplier="0.25" id="m2n-UI-lHX"/>
                                                         </constraints>
                                                     </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sg9-st-ODO">
+                                                        <rect key="frame" x="0.0" y="310" width="272" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Запомнить адрес?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oew-rm-jw0">
+                                                                <rect key="frame" x="0.0" y="0.0" width="204" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                <color key="textColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="k6O-LN-3kk">
+                                                                <rect key="frame" x="204" y="0.0" width="70" height="31"/>
+                                                                <color key="onTintColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                <color key="thumbTintColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
+                                                    <constraint firstItem="sg9-st-ODO" firstAttribute="height" secondItem="msz-OJ-vQB" secondAttribute="height" id="a8W-3Q-JZo"/>
                                                     <constraint firstItem="Rd0-MR-ty1" firstAttribute="height" secondItem="cBB-e9-NHz" secondAttribute="height" multiplier="2.5" id="dGQ-JN-Ot2"/>
                                                     <constraint firstItem="tD1-XL-ned" firstAttribute="height" secondItem="cBB-e9-NHz" secondAttribute="height" id="fZY-3l-bMb"/>
+                                                    <constraint firstItem="k6O-LN-3kk" firstAttribute="width" secondItem="N3F-S2-bhG" secondAttribute="width" id="hIw-JV-P7w"/>
                                                     <constraint firstItem="xiy-XW-V6R" firstAttribute="height" secondItem="cBB-e9-NHz" secondAttribute="height" id="hgN-Ch-81s"/>
                                                     <constraint firstItem="RxZ-O1-WMM" firstAttribute="height" secondItem="cBB-e9-NHz" secondAttribute="height" multiplier="2" id="nqh-yT-EC2"/>
                                                 </constraints>
                                             </stackView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tUI-jq-v9J">
-                                                <rect key="frame" x="0.0" y="495.66666666666657" width="300" height="189.33333333333331"/>
+                                            <button opaque="NO" alpha="0.5" contentMode="bottom" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tUI-jq-v9J">
+                                                <rect key="frame" x="0.0" y="513" width="300" height="172"/>
+                                                <state key="normal" image="logo"/>
                                                 <connections>
                                                     <action selector="emptyButtonForHideTapped:" destination="MvW-Ha-Rkh" eventType="touchUpInside" id="8Ew-oH-OQj"/>
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.83918827770000004" green="0.71519988779999999" blue="0.83530753849999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstItem="0PI-fC-QoK" firstAttribute="top" secondItem="Qoh-an-Ek4" secondAttribute="top" id="0FZ-hd-XhQ"/>
                                             <constraint firstAttribute="trailing" secondItem="0PI-fC-QoK" secondAttribute="trailing" id="Bqx-Cy-xX5"/>
@@ -1258,7 +1278,8 @@
                         <outlet property="clientCellPhoneTextField" destination="tD1-XL-ned" id="yUC-5S-iZJ"/>
                         <outlet property="clientDescriptionTextField" destination="RxZ-O1-WMM" id="l7n-Fk-nxH"/>
                         <outlet property="clientNameTextField" destination="cBB-e9-NHz" id="wpx-cE-NeD"/>
-                        <outlet property="clientsDataRemembered" destination="XE4-f5-5sE" id="5qz-qE-9GF"/>
+                        <outlet property="clientsAdressIsExist" destination="Oew-rm-jw0" id="2HS-Fz-yKO"/>
+                        <outlet property="clientsDataIsExist" destination="XE4-f5-5sE" id="5qz-qE-9GF"/>
                         <outlet property="emptyButtonForHide" destination="QEP-Dk-YAb" id="1tA-Mc-Pb8"/>
                         <outlet property="feebackTypeSelectionButton" destination="BFW-42-suV" id="q4N-cv-Drb"/>
                         <outlet property="feedbackBlandSlidingConstraint" destination="lDQ-RL-2kV" id="hHb-2k-u56"/>
@@ -1267,6 +1288,7 @@
                         <outlet property="lowestConstraint" destination="kT5-Ii-tn7" id="aM2-jk-IeI"/>
                         <outlet property="orderPriceLabel" destination="KI9-td-d1c" id="VGN-AK-s01"/>
                         <outlet property="savingClientsDataSwitch" destination="N3F-S2-bhG" id="Fh8-Tc-qZx"/>
+                        <outlet property="savingClientsLastAdressSwitch" destination="k6O-LN-3kk" id="YmJ-qD-vqh"/>
                         <outlet property="tableCountZeroView" destination="xyZ-uA-t0R" id="grE-a2-myh"/>
                         <outletCollection property="feedbackTypeBttnsCellection" destination="GJo-Ok-EeM" collectionClass="NSMutableArray" id="816-6y-OwR"/>
                         <outletCollection property="feedbackTypeBttnsCellection" destination="cOm-8G-2Y9" collectionClass="NSMutableArray" id="8Po-cR-ceN"/>

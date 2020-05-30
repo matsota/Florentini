@@ -84,6 +84,23 @@ class DatabaseManager {
         }
     }
     
+    //MARK: About product filtering
+    struct ProductFilter {
+        var flower: [String]
+        var bouquet: [String]
+        var gift: [String]
+        
+        var dictionary: [String: Any]{
+            return [
+                NavigationCases.ProductCategories.flower.rawValue: flower,
+                NavigationCases.ProductCategories.bouquet.rawValue: bouquet,
+                NavigationCases.ProductCategories.gift.rawValue: gift
+            ]
+            
+        }
+        
+    }
+    
     //MARK: - About order
     struct Order {
         var totalPrice: Int64
@@ -99,16 +116,16 @@ class DatabaseManager {
         
         var dictionary: [String:Any]{
             return [
-                NavigationCases.UsersInfo.totalPrice.rawValue: totalPrice,
-                NavigationCases.UsersInfo.name.rawValue: name,
-                NavigationCases.UsersInfo.adress.rawValue: adress,
-                NavigationCases.UsersInfo.cellphone.rawValue: cellphone,
-                NavigationCases.UsersInfo.feedbackOption.rawValue: feedbackOption,
-                NavigationCases.UsersInfo.mark.rawValue: mark,
-                NavigationCases.UsersInfo.timeStamp.rawValue: timeStamp,
-                NavigationCases.UsersInfo.currentDeviceID.rawValue: currentDeviceID,
-                NavigationCases.UsersInfo.deliveryPerson.rawValue: deliveryPerson,
-                NavigationCases.UsersInfo.orderID.rawValue: orderID
+                NavigationCases.UserInfo.totalPrice.rawValue: totalPrice,
+                NavigationCases.UserInfo.name.rawValue: name,
+                NavigationCases.UserInfo.adress.rawValue: adress,
+                NavigationCases.UserInfo.cellphone.rawValue: cellphone,
+                NavigationCases.UserInfo.feedbackOption.rawValue: feedbackOption,
+                NavigationCases.UserInfo.mark.rawValue: mark,
+                NavigationCases.UserInfo.timeStamp.rawValue: timeStamp,
+                NavigationCases.UserInfo.currentDeviceID.rawValue: currentDeviceID,
+                NavigationCases.UserInfo.deliveryPerson.rawValue: deliveryPerson,
+                NavigationCases.UserInfo.orderID.rawValue: orderID
             ]
         }
     }
@@ -156,20 +173,34 @@ extension DatabaseManager.ProductInfo: DocumentSerializable {
     }
 }
 
+//MARK: For product filtering
+extension DatabaseManager.ProductFilter: DocumentSerializable {
+    init?(dictionary: [String: Any]) {
+        guard let flower = dictionary[NavigationCases.ProductCategories.flower.rawValue] as? [String],
+        let bouquet = dictionary[NavigationCases.ProductCategories.bouquet.rawValue] as? [String],
+        let gift = dictionary[NavigationCases.ProductCategories.gift.rawValue] as? [String] else {return nil}
+        self.init(flower: flower, bouquet: bouquet, gift: gift)
+    }
+}
+
 //MARK: For order
 extension DatabaseManager.Order: DocumentSerializable {
     init?(dictionary: [String: Any]) {
-        guard let totalPrice = dictionary[NavigationCases.UsersInfo.totalPrice.rawValue] as? Int64,
-            let userName = dictionary[NavigationCases.UsersInfo.name.rawValue] as? String,
-            let userAdress = dictionary[NavigationCases.UsersInfo.adress.rawValue] as? String,
-            let userCellphone = dictionary[NavigationCases.UsersInfo.cellphone.rawValue] as? String,
-            let feedbackOption = dictionary[NavigationCases.UsersInfo.feedbackOption.rawValue] as? String,
-            let userMark = dictionary[NavigationCases.UsersInfo.mark.rawValue] as? String,
-            let timeStamp = (dictionary[NavigationCases.UsersInfo.timeStamp.rawValue] as? Timestamp)?.dateValue(),
-            let currentDeviceID = dictionary[NavigationCases.UsersInfo.currentDeviceID.rawValue] as? String,
-            let deliveryPerson = dictionary[NavigationCases.UsersInfo.deliveryPerson.rawValue] as? String,
-        let orderID = dictionary[NavigationCases.UsersInfo.orderID.rawValue] as? String else {return nil}
+        guard let totalPrice = dictionary[NavigationCases.UserInfo.totalPrice.rawValue] as? Int64,
+            let userName = dictionary[NavigationCases.UserInfo.name.rawValue] as? String,
+            let userAdress = dictionary[NavigationCases.UserInfo.adress.rawValue] as? String,
+            let userCellphone = dictionary[NavigationCases.UserInfo.cellphone.rawValue] as? String,
+            let feedbackOption = dictionary[NavigationCases.UserInfo.feedbackOption.rawValue] as? String,
+            let userMark = dictionary[NavigationCases.UserInfo.mark.rawValue] as? String,
+            let timeStamp = (dictionary[NavigationCases.UserInfo.timeStamp.rawValue] as? Timestamp)?.dateValue(),
+            let currentDeviceID = dictionary[NavigationCases.UserInfo.currentDeviceID.rawValue] as? String,
+            let deliveryPerson = dictionary[NavigationCases.UserInfo.deliveryPerson.rawValue] as? String,
+        let orderID = dictionary[NavigationCases.UserInfo.orderID.rawValue] as? String else {return nil}
         self.init(totalPrice: totalPrice, name: userName, adress: userAdress, cellphone: userCellphone, feedbackOption: feedbackOption, mark: userMark, timeStamp: timeStamp, currentDeviceID: currentDeviceID, deliveryPerson: deliveryPerson, orderID: orderID)
     }
 }
 
+
+//let gifts = ["Все", "Вазы", "Гелиевые шарики", "Сладкое", "Корзины", "Фруктовые корзины", "Козины из сладостей", "Мягкие игрушки", "Открытки", "Торты"]
+//let flowers = ["Все", "Амараллис", "Ананас", "Антуриум", "Альстромерия", "Бамбук", "Брассика", "Бруния", "Ванда", "Гвоздика", "Гербера", "Гиацит", "Гипсофила", "Гортензия", "Ирис", "Калла", "Леукодендрон", "Лилия", "Орхидея Цимбидиум", "Пион", "Подсолнух", "Протея", "Ранункулюс", "Роза", "Роза Эквадор", "Роза Голландия", "Роза Кения", "Роза спрей", "Ромашка", "Хиперикум", "Тюльпан", "Фрезия", "Хелеборус", "Хлопок", "Хризантема", "Эрингиум", "Эустома"]
+//let bouqets = ["Все", "Авторские", "Из роз", "Из 101 розы", "Классические", "Недорогие букеты", "Свадебные", "Фруктовые", "Эксклюзивные", "В форме сердца", "В боксах", "Со сладостями"]

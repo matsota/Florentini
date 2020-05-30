@@ -21,6 +21,14 @@ class NetworkManager {
     //MARK: - Crud
     ///
     
+    func createRefs(gifts: [String], bouquets: [String], flowers: [String]) {
+        let data: [String:Any] = ["Букеты": bouquets,
+                                  "Цветы": flowers,
+                                  "Подарки": gifts
+        ]
+        db.collection(NavigationCases.FirstCollectionRow.searchProduct.rawValue).document(NavigationCases.SearchProduct.mainDictionaries.rawValue).setData(data)
+    }
+    
     //MARK: - Send review
     func sendReview(newReview: DatabaseManager.Review, content: String, success: @escaping() -> Void, failure: @escaping(Error) -> Void) {
         db.collection(NavigationCases.FirstCollectionRow.review.rawValue).addDocument(data: newReview.dictionary) {
@@ -61,12 +69,48 @@ class NetworkManager {
     //MARK: - cRud
     ///
     
+    //MARK: - Download Strings for  filtering
+    func downloadFilteringDict(success: @escaping(DatabaseManager.ProductFilter) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(NavigationCases.FirstCollectionRow.searchProduct.rawValue).document(NavigationCases.SearchProduct.mainDictionaries.rawValue).getDocument { (documentSnapshot, error) in
+            if let error = error {
+                failure(error)
+            }else{
+                guard let data = DatabaseManager.ProductFilter(dictionary: documentSnapshot!.data()!) else {return}
+                success(data)
+            }
+        }
+    }
+    
     //MARK: - Download all products
     func downloadProductsInfo(success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
         db.collection(NavigationCases.FirstCollectionRow.productInfo.rawValue).getDocuments(completion: {
             (querySnapshot, _) in
             let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
             success(productInfo)
+        })
+    }
+    
+    func downloadByCategory(category: String, success: @escaping(_ productInfo: [DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(NavigationCases.FirstCollectionRow.productInfo.rawValue).whereField(NavigationCases.Product.productCategory.rawValue, isEqualTo: category).getDocuments(completion: {
+            (querySnapshot, error) in
+            if let error = error {
+                failure(error)
+            }else{
+                let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
+                success(productInfo)
+            }
+        })
+    }
+    
+    func downloadBySubCategory(category: String, subCategory: String, success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
+        db.collection(NavigationCases.FirstCollectionRow.productInfo.rawValue).whereField(NavigationCases.Product.productCategory.rawValue, isEqualTo: category).whereField(NavigationCases.Product.stock.rawValue, isEqualTo: false).getDocuments(completion: {
+            (querySnapshot, error) in
+            if let error = error {
+                failure(error)
+            }else{
+                let productInfo = querySnapshot!.documents.compactMap{DatabaseManager.ProductInfo(dictionary: $0.data())}
+                success(productInfo)
+            }
         })
     }
     
