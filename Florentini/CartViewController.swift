@@ -21,13 +21,11 @@ class CartViewController: UIViewController {
         
         CoreDataManager.shared.fetchPreOrder(success: { (preOrderEntity) -> (Void) in
             self.preOrder = preOrderEntity
-            
             if self.preOrder.count == 0 {
                 self.tableCountZeroView.isHidden = false
             }else{
                 self.tableCountZeroView.isHidden = true
             }
-            
             self.orderBill = self.preOrder.map({$0.productPrice * $0.productQuantity}).reduce(0, +)
             self.orderPriceLabel.text = "\(self.orderBill) грн"
             self.cartTableView.reloadData()
@@ -61,7 +59,6 @@ class CartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         hideKeyboardWhenTappedAround()
