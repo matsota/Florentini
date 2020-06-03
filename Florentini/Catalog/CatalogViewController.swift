@@ -14,12 +14,11 @@ struct filterTVStruct {
     var sectionData = [String]()
 }
 
-class CatalogViewController: UIViewController {
+class CatalogViewController: UIViewController{
     
     //MARK: - Override
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.viewDidLoad()
         NetworkManager.shared.downloadProductsInfo(success: { productInfo in
             self.productInfo = productInfo.shuffled()
             self.catalogTableView.reloadData()
@@ -27,7 +26,6 @@ class CatalogViewController: UIViewController {
             self.present(UIAlertController.completionDoneTwoSec(title: "Внимание", message: "Скорее всего произошла потеря соединения"), animated: true)
             print("ERROR: CatalogViewController: viewWillAppear: downloadProductsInfo ", error.localizedDescription)
         }
-        
         NetworkManager.shared.downloadFilteringDict(success: { (data) in
             self.filterData = [filterTVStruct(opened: false, title: NavigationCases.ProductCategories.flower.rawValue, sectionData: data.flower),
                                filterTVStruct(opened: false, title: NavigationCases.ProductCategories.bouquet.rawValue, sectionData: data.bouquet),
@@ -42,10 +40,11 @@ class CatalogViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSearchBar()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         hideKeyboardWhenTappedAround()
+        setupSearchBar()
         
     }
     
@@ -112,10 +111,13 @@ extension CatalogViewController: UISearchResultsUpdating {
     private func setupSearchBar() {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.automaticallyShowsCancelButton = false
+
         let searchBar = searchController.searchBar
+        searchBar.placeholder = "Начните Поиск"
+        searchBar.showsCancelButton = false
+        searchBar.enablesReturnKeyAutomatically = false
+        searchBar.returnKeyType = .done
         catalogTableView.tableHeaderView = searchBar
-        
     }
     
 }
@@ -257,20 +259,11 @@ private extension CatalogViewController {
     }
     
     @objc func keyboardWillShow(notification: Notification) {
-        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber, let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
-        //        lowestConstraint.constant = keyboardFrameValue.cgRectValue.height
-        
-        UIView.animate(withDuration: duration.doubleValue) {
-            self.view.layoutIfNeeded()
-        }
+        setupSearchBar()
     }
     
     @objc func keyboardWillHide(notification: Notification) {
         setupSearchBar()
-        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber else {return}
-        UIView.animate(withDuration: duration.doubleValue) {
-            self.view.layoutIfNeeded()
-        }
     }
 }
 

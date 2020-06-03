@@ -16,7 +16,6 @@ class CartViewController: UIViewController {
     //MARK: - Override
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
         CoreDataManager.shared.cartIsEmpty(bar: self.tabBarItem)
         
         CoreDataManager.shared.fetchPreOrder(success: { (preOrderEntity) -> (Void) in
