@@ -103,7 +103,7 @@ class NetworkManager {
     }
     
     func downloadBySubCategory(category: String, subCategory: String, success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.FirstCollectionRow.productInfo.rawValue).whereField(NavigationCases.Product.productCategory.rawValue, isEqualTo: category).whereField(NavigationCases.Product.stock.rawValue, isEqualTo: false).getDocuments(completion: {
+        db.collection(NavigationCases.FirstCollectionRow.productInfo.rawValue).whereField(NavigationCases.Product.productCategory.rawValue, isEqualTo: category).whereField(NavigationCases.Product.productSubCategory.rawValue, isEqualTo: subCategory).getDocuments(completion: {
             (querySnapshot, error) in
             if let error = error {
                 failure(error)

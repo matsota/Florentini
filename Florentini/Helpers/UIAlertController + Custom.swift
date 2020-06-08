@@ -10,7 +10,7 @@ import UIKit
 
 extension UIAlertController {
     
-    //MARK: - Classic Alert с одной кнопкой "ОК" c возможностью кастомизировать Tittle&Message
+    //MARK: - Classic Alert with only "ОК" button and empty title&message
     static func classic (title: String, message: String) -> (UIAlertController){
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "ОК",  style: .default) {(action) in}
@@ -19,7 +19,7 @@ extension UIAlertController {
         return (alertController)
     }
     
-    //MARK: - Classic Alert с одной кнопкой "ОК" БЕЗ возможности кастомизировать Tittle&Message
+    //MARK: - Classic Alert with only "ОК" button for some error
     static func somethingWrong() -> (UIAlertController){
         let alertController = UIAlertController(title: "Упс!", message: "Что-то пошло не так", preferredStyle: .alert)
         let action = UIAlertAction(title: "ОК",  style: .default) {(action) in}

@@ -63,6 +63,7 @@ class DatabaseManager {
         var productPrice: Int
         var productDescription: String
         var productCategory: String
+        var productSubCategory: String
         var stock: Bool
         var productID: String
         var searchArray: [String]
@@ -75,6 +76,7 @@ class DatabaseManager {
                 NavigationCases.Product.productPrice.rawValue: productPrice,
                 NavigationCases.Product.productDescription.rawValue: productDescription,
                 NavigationCases.Product.productCategory.rawValue: productCategory,
+                NavigationCases.Product.productSubCategory.rawValue: productSubCategory,
                 NavigationCases.Product.stock.rawValue: stock,
                 NavigationCases.Product.productID.rawValue: productID,
                 NavigationCases.Product.searchArray.rawValue: searchArray,
@@ -164,12 +166,13 @@ extension DatabaseManager.ProductInfo: DocumentSerializable {
             let productPrice = dictionary[NavigationCases.Product.productPrice.rawValue] as? Int,
             let productDescription = dictionary[NavigationCases.Product.productDescription.rawValue] as? String,
             let productCategory = dictionary[NavigationCases.Product.productCategory.rawValue] as? String,
+            let productSubCategory  = dictionary[NavigationCases.Product.productSubCategory.rawValue] as? String,
             let stock = dictionary[NavigationCases.Product.stock.rawValue] as? Bool,
             let productID = dictionary[NavigationCases.Product.productID.rawValue] as? String,
             let searchArray = dictionary[NavigationCases.Product.searchArray.rawValue] as? [String],
             let voteCount = dictionary[NavigationCases.Product.voteCount.rawValue] as? Int,
             let voteAmount = dictionary[NavigationCases.Product.voteAmount.rawValue] as? Int else {return nil}
-        self.init(productName: productName, productPrice: productPrice, productDescription: productDescription, productCategory: productCategory, stock: stock, productID: productID, searchArray: searchArray, voteCount: voteCount, voteAmount: voteAmount)
+        self.init(productName: productName, productPrice: productPrice, productDescription: productDescription, productCategory: productCategory, productSubCategory: productSubCategory, stock: stock, productID: productID, searchArray: searchArray, voteCount: voteCount, voteAmount: voteAmount)
     }
 }
 

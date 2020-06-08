@@ -72,6 +72,7 @@ class NavigationCases {
         case productPrice
         case productQuantity
         case productCategory
+        case productSubCategory
         case productDescription
         case productImageURL
         case imageCollection

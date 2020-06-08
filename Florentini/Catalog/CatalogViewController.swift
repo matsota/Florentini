@@ -44,7 +44,6 @@ class CatalogViewController: UIViewController{
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         hideKeyboardWhenTappedAround()
-        setupSearchBar()
         
     }
     
@@ -61,18 +60,15 @@ class CatalogViewController: UIViewController{
     private var selectedCategory: String?
     private var filterData = [filterTVStruct]()
     
-    private var searchController = UISearchController(searchResultsController: nil)
     private var filteredProductsBySearchController: [DatabaseManager.ProductInfo]?
-    private var searchBarIsEmpty: Bool {
-        guard let text = searchController.searchBar.text else {return false}
-        return text.isEmpty
-    }
-    private var isFiltering: Bool {
-        return searchController.isActive && !searchBarIsEmpty
-    }
+    private var searchActivity = false
+    
+    //MARK: Search Bar
+    @IBOutlet private weak var mySearchBar: UISearchBar!
+    
     
     //MARK: Button
-    @IBOutlet weak var hideFilterButton: UIButton!
+    @IBOutlet private weak var hideFilterButton: UIButton!
     
     //MARK: TableView
     @IBOutlet private weak var catalogTableView: UITableView!
@@ -93,31 +89,28 @@ class CatalogViewController: UIViewController{
 //MARK: - Extention:
 
 //MARK: - Search Results
-extension CatalogViewController: UISearchResultsUpdating {
+extension CatalogViewController: UISearchBarDelegate {
     
-    func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearch(search: searchController.searchBar.text!)
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText != "" {
+            filteredProductsBySearchController = productInfo?.filter({ (data) -> Bool in
+                searchActivity = true
+                return data.searchArray.contains { (string) -> Bool in
+                    string.prefix(searchText.count).lowercased() == searchText.lowercased()
+                }
+            })
+            self.catalogTableView.reloadData()
+        }else{
+            searchBar.placeholder = "Начните поиск"
+            self.searchActivity = false
+            self.catalogTableView.reloadData()
+        }
     }
     
-    private func filterContentForSearch(search text: String) {
-        filteredProductsBySearchController = productInfo?.filter({ (data: DatabaseManager.ProductInfo) -> Bool in
-            return data.searchArray.contains { (string) -> Bool in
-                string.lowercased().contains(text.lowercased())
-            }
-        })
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.placeholder = "Начните поиск"
         catalogTableView.reloadData()
-    }
-    
-    private func setupSearchBar() {
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-
-        let searchBar = searchController.searchBar
-        searchBar.placeholder = "Начните Поиск"
-        searchBar.showsCancelButton = false
-        searchBar.enablesReturnKeyAutomatically = false
-        searchBar.returnKeyType = .done
-        catalogTableView.tableHeaderView = searchBar
     }
     
 }
@@ -134,7 +127,7 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == catalogTableView {
-            if isFiltering {
+            if searchActivity {
                 return filteredProductsBySearchController?.count ?? 0
             }
             return productInfo?.count ?? 0
@@ -154,7 +147,7 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
             cell.tag = indexPath.row
             var fetch: DatabaseManager.ProductInfo?
             
-            if isFiltering {
+            if searchActivity {
                 fetch = self.filteredProductsBySearchController?[cell.tag]
             }else{
                 fetch = self.productInfo?[cell.tag]
@@ -169,7 +162,7 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
             cell.fill(name: name, price: price, description: description, category: category, stock: stock)
             return cell
         }else{
-            let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.Transition.FilterTVCell.rawValue, for: indexPath) as! FilterTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.Transition.FilterTVCell.rawValue, for: indexPath)
             if indexPath.row == 0 {
                 cell.textLabel?.text = filterData[indexPath.section].title
                 cell.textLabel?.textColor = UIColor.pinkColorOfEnterprise
@@ -199,13 +192,13 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
                 sectionData = filterData[indexPath.section].sectionData[dataIndex]
                 
                 if sectionData == "Все"{
-                    NetworkManager.shared.downloadByCategory(category: title, success: { productInfo in
+                    NetworkManager.shared.downloadByCategory(category: title, success: { data in
                         self.filterSlidingConstraint.constant = self.hideUnhideFilter()
                         UIView.animate(withDuration: 0.3) {
                             self.view.layoutIfNeeded()
                         }
                         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
-                            self.productInfo  = productInfo
+                            self.productInfo  = data
                             self.catalogTableView.reloadData()
                         }
                     }) { error in
@@ -213,7 +206,19 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
                         print("ERROR: CatalogViewController: tableView/didSelectRowAt: downloadByCategory", error.localizedDescription)
                     }
                 }else{
-                    print(title, sectionData)
+                    NetworkManager.shared.downloadBySubCategory(category: title, subCategory: sectionData, success: { (data) in
+                        self.filterSlidingConstraint.constant = self.hideUnhideFilter()
+                        UIView.animate(withDuration: 0.3) {
+                            self.view.layoutIfNeeded()
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
+                            self.productInfo = data
+                            self.catalogTableView.reloadData()
+                        }
+                    }) { (error) in
+                        self.present(UIAlertController.completionDoneTwoSec(title: "", message: ""), animated: true)
+                        print("ERROR: CatalogViewController: didSelectRowAt: downloadBySubCategory: ", error.localizedDescription)
+                    }
                 }
             }
         }
@@ -246,7 +251,7 @@ extension CatalogViewController: CatalogTableViewCellDelegate {
 //MARK: - Hide and show Any
 private extension CatalogViewController {
     
-    func hideUnhideFilter() ->CGFloat {
+    func hideUnhideFilter() -> CGFloat {
         var verticalContraint: CGFloat?
         if filterSlidingConstraint.constant == 0 {
             verticalContraint = filterTableView.bounds.width
@@ -259,11 +264,11 @@ private extension CatalogViewController {
     }
     
     @objc func keyboardWillShow(notification: Notification) {
-        setupSearchBar()
+        
     }
     
     @objc func keyboardWillHide(notification: Notification) {
-        setupSearchBar()
+        
     }
 }
 

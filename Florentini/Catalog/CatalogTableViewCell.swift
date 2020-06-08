@@ -39,9 +39,6 @@ class CatalogTableViewCell: UITableViewCell {
     //MARK: - Activity Indicator
     @IBOutlet weak var imageActivityIndicator: UIActivityIndicatorView!
     
-
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
-    
     //MARK: Override
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -54,13 +51,6 @@ class CatalogTableViewCell: UITableViewCell {
         }
     }
     
-//    ovveride prepareForReuse dobavit' UIImageView = nil {
-//    консельнуть загрузку картинки(отменить)
-//    Алерты - убрать нетворк. перенести в клажуру
-//    добавить к некоторым активитиИндикаторы к процесса связанными с сетью
-//    svprogressHUD
-//    }
-    
     //MARK: - Add to cart
     @IBAction func addToBasketTapped(_ sender: DesignButton) {
         delegate?.addToCart(self)
@@ -72,7 +62,7 @@ class CatalogTableViewCell: UITableViewCell {
         imageActivityIndicator?.isHidden = false
         
         
-        imageHeightConstraint.constant = productImageView.bounds.width
+//        imageHeightConstraint.constant = productImageView.bounds.width
         self.stock = stock
         self.price = price
         self.category = category
