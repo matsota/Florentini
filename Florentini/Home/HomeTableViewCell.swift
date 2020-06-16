@@ -64,7 +64,7 @@ class HomeTableViewCell: UITableViewCell {
     }
 
     //MARK: - Заполнение Таблицы
-    func fill(name: String, price: Int, description: String, category: String, stock: Bool) {
+    func fill(id: String, name: String, price: Int, description: String, category: String, stock: Bool) {
         imageActivityIndicator?.startAnimating()
         imageActivityIndicator?.isHidden = false
         
@@ -72,7 +72,7 @@ class HomeTableViewCell: UITableViewCell {
         self.stock = stock
         self.category = category
         
-        let storagePath =  "\(NavigationCases.Product.imageCollection.rawValue)/\(name)",
+        let storagePath =  "\(NavigationCases.FirstCollectionRow.productImages.rawValue)/\(id)",
         storageRef = Storage.storage().reference(withPath: storagePath)
     
         productNameLabel.text = name

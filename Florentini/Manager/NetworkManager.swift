@@ -21,12 +21,22 @@ class NetworkManager {
     //MARK: - Crud
     ///
     
-    func createRefs(gifts: [String], bouquets: [String], flowers: [String]) {
-        let data: [String:Any] = ["Букеты": bouquets,
-                                  "Цветы": flowers,
-                                  "Подарки": gifts
+    func createRefs() {
+        let gifts = ["Все", "Вазы", "Гелиевые шарики", "Сладкое", "Корзины", "Фруктовые корзины", "Козины из сладостей", "Мягкие игрушки", "Открытки", "Торты"]
+        let flowers = ["Все", "Амараллис", "Ананас", "Антуриум", "Альстромерия", "Бамбук", "Брассика", "Бруния", "Ванда", "Гвоздика", "Гербера", "Гиацит", "Гипсофила", "Гортензия", "Ирис", "Калла", "Леукодендрон", "Лилия", "Орхидея Цимбидиум", "Пион", "Подсолнух", "Протея", "Ранункулюс", "Роза", "Роза Эквадор", "Роза Голландия", "Роза Кения", "Роза спрей", "Ромашка", "Хиперикум", "Тюльпан", "Фрезия", "Хелеборус", "Хлопок", "Хризантема", "Эрингиум", "Эустома"]
+        let bouquet = ["Все", "Авторские", "Из роз", "Из 101 розы", "Классические", "Недорогие букеты", "Свадебные", "Фруктовые", "Эксклюзивные", "В форме сердца", "В боксах", "Со сладостями"]
+        
+        
+        let data: [String:Any] = [NavigationCases.ProductCategories.bouquet.rawValue: bouquet,
+                                  NavigationCases.ProductCategories.flower.rawValue: flowers,
+                                  NavigationCases.ProductCategories.gift.rawValue: gifts
         ]
-        db.collection(NavigationCases.FirstCollectionRow.searchProduct.rawValue).document(NavigationCases.SearchProduct.mainDictionaries.rawValue).setData(data)
+        let data2: [String:Any] = [NavigationCases.ProductCategories.bouquet.rawValue: NavigationCases.ProductCategories.bouquet.rawValue,
+                                  NavigationCases.ProductCategories.flower.rawValue: NavigationCases.ProductCategories.flower.rawValue,
+                                  NavigationCases.ProductCategories.gift.rawValue: NavigationCases.ProductCategories.gift.rawValue
+        ]
+        db.collection(NavigationCases.FirstCollectionRow.searchProduct.rawValue).document(NavigationCases.SearchProduct.productSubCategory.rawValue).setData(data)
+        db.collection(NavigationCases.FirstCollectionRow.searchProduct.rawValue).document(NavigationCases.SearchProduct.productCategory.rawValue).setData(data2)
     }
     
     //MARK: - Send review
@@ -69,9 +79,9 @@ class NetworkManager {
     //MARK: - cRud
     ///
     
-    //MARK: - Download Strings for  filtering
+    //MARK: - Download Strings for filtering Table View
     func downloadFilteringDict(success: @escaping(DatabaseManager.ProductFilter) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.FirstCollectionRow.searchProduct.rawValue).document(NavigationCases.SearchProduct.mainDictionaries.rawValue).getDocument { (documentSnapshot, error) in
+        db.collection(NavigationCases.FirstCollectionRow.searchProduct.rawValue).document(NavigationCases.SearchProduct.productSubCategory.rawValue).getDocument { (documentSnapshot, error) in
             if let error = error {
                 failure(error)
             }else{
@@ -103,7 +113,7 @@ class NetworkManager {
     }
     
     func downloadBySubCategory(category: String, subCategory: String, success: @escaping([DatabaseManager.ProductInfo]) -> Void, failure: @escaping(Error) -> Void) {
-        db.collection(NavigationCases.FirstCollectionRow.productInfo.rawValue).whereField(NavigationCases.Product.productCategory.rawValue, isEqualTo: category).whereField(NavigationCases.Product.productSubCategory.rawValue, isEqualTo: subCategory).getDocuments(completion: {
+        db.collection(NavigationCases.FirstCollectionRow.productInfo.rawValue).whereField(NavigationCases.SearchProduct.productSubCategory.rawValue, isEqualTo: category).whereField(NavigationCases.Product.productSubCategory.rawValue, isEqualTo: subCategory).getDocuments(completion: {
             (querySnapshot, error) in
             if let error = error {
                 failure(error)

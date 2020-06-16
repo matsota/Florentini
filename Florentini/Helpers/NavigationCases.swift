@@ -57,7 +57,7 @@ class NavigationCases {
     enum FirstCollectionRow: String, CaseIterable {
         
         case productInfo
-        case imageCollection
+        case productImages
         case order
         case review
         case clientData
@@ -75,7 +75,6 @@ class NavigationCases {
         case productSubCategory
         case productDescription
         case productImageURL
-        case imageCollection
         case stock
         case orderDescription
         case productID
@@ -128,7 +127,8 @@ class NavigationCases {
     //MARK: For Search
     enum SearchProduct: String, CaseIterable {
         
-        case mainDictionaries
+        case productCategory
+        case productSubCategory
         
     }
 

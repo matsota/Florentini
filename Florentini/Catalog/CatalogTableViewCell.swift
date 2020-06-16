@@ -57,7 +57,7 @@ class CatalogTableViewCell: UITableViewCell {
     }
     
     //MARK: - Cells fill
-    func fill(name: String, price: Int, description: String, category: String, stock: Bool) {
+    func fill(id: String, name: String, price: Int, description: String, category: String, stock: Bool) {
         imageActivityIndicator?.startAnimating()
         imageActivityIndicator?.isHidden = false
         
@@ -71,7 +71,7 @@ class CatalogTableViewCell: UITableViewCell {
         productPriceLabel.text = "\(self.price) грн"
         productDescriptionLabel.text = description
         
-        let storagePath =  "\(NavigationCases.Product.imageCollection.rawValue)/\(name)",
+        let storagePath =  "\(NavigationCases.FirstCollectionRow.productImages.rawValue)/\(id)",
         storageRef = Storage.storage().reference(withPath: storagePath)
         
         productImageView.sd_setImage(with: storageRef, placeholderImage: nil) { (image, _, _, _) in

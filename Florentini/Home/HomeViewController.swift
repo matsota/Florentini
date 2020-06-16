@@ -64,7 +64,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         price = fetch.productPrice,
         description = fetch.productDescription,
         category = fetch.productCategory,
-        stock = fetch.stock
+        stock = fetch.stock,
+        id = fetch.productID
         
         cell.delegate = self
         cell.imageActivityIndicator.startAnimating()
@@ -73,7 +74,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             noneStocksView.isHidden = false
         }else{
             noneStocksView.isHidden = true
-            cell.fill(name: name, price: price, description: description, category: category, stock: stock)
+            cell.fill(id: id, name: name, price: price, description: description, category: category, stock: stock)
         }
         return cell
     }

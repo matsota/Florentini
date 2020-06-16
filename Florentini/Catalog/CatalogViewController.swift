@@ -19,6 +19,7 @@ class CatalogViewController: UIViewController{
     //MARK: - Override
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        NetworkManager.shared.createRefs()
         NetworkManager.shared.downloadProductsInfo(success: { productInfo in
             self.productInfo = productInfo.shuffled()
             self.catalogTableView.reloadData()
@@ -57,11 +58,10 @@ class CatalogViewController: UIViewController{
     
     //MARK: - Private Implementation
     private var productInfo: [DatabaseManager.ProductInfo]?
-    private var selectedCategory: String?
-    private var filterData = [filterTVStruct]()
-    
-    private var filteredProductsBySearchController: [DatabaseManager.ProductInfo]?
+    private var filteredProductInfoBySearchBar: [DatabaseManager.ProductInfo]?
     private var searchActivity = false
+    private var filterData = [filterTVStruct]()
+    private var selectedCategory: String?
     
     //MARK: Search Bar
     @IBOutlet private weak var mySearchBar: UISearchBar!
@@ -93,7 +93,7 @@ extension CatalogViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText != "" {
-            filteredProductsBySearchController = productInfo?.filter({ (data) -> Bool in
+            filteredProductInfoBySearchBar = productInfo?.filter({ (data) -> Bool in
                 searchActivity = true
                 return data.searchArray.contains { (string) -> Bool in
                     string.prefix(searchText.count).lowercased() == searchText.lowercased()
@@ -128,7 +128,7 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == catalogTableView {
             if searchActivity {
-                return filteredProductsBySearchController?.count ?? 0
+                return filteredProductInfoBySearchBar?.count ?? 0
             }
             return productInfo?.count ?? 0
         }else{
@@ -144,11 +144,13 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == catalogTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.Transition.CatalogTVCell.rawValue, for: indexPath) as! CatalogTableViewCell
+            cell.delegate = self
             cell.tag = indexPath.row
+            
             var fetch: DatabaseManager.ProductInfo?
             
             if searchActivity {
-                fetch = self.filteredProductsBySearchController?[cell.tag]
+                fetch = self.filteredProductInfoBySearchBar?[cell.tag]
             }else{
                 fetch = self.productInfo?[cell.tag]
             }
@@ -156,10 +158,11 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
                 let price = fetch?.productPrice,
                 let description = fetch?.productDescription,
                 let category = fetch?.productCategory,
-                let stock = fetch?.stock else {return cell}
+                let stock = fetch?.stock,
+                let id = fetch?.productID else {return cell}
             
-            cell.delegate = self
-            cell.fill(name: name, price: price, description: description, category: category, stock: stock)
+            
+            cell.fill(id: id, name: name, price: price, description: description, category: category, stock: stock)
             return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: NavigationCases.Transition.FilterTVCell.rawValue, for: indexPath)
@@ -189,9 +192,9 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
             }else{
                 let dataIndex = indexPath.row - 1,
                 title = filterData[indexPath.section].title,
-                sectionData = filterData[indexPath.section].sectionData[dataIndex]
+                subCategory = filterData[indexPath.section].sectionData[dataIndex]
                 
-                if sectionData == "Все"{
+                if subCategory == "Все"{
                     NetworkManager.shared.downloadByCategory(category: title, success: { data in
                         self.filterSlidingConstraint.constant = self.hideUnhideFilter()
                         UIView.animate(withDuration: 0.3) {
@@ -206,7 +209,7 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
                         print("ERROR: CatalogViewController: tableView/didSelectRowAt: downloadByCategory", error.localizedDescription)
                     }
                 }else{
-                    NetworkManager.shared.downloadBySubCategory(category: title, subCategory: sectionData, success: { (data) in
+                    NetworkManager.shared.downloadBySubCategory(category: title, subCategory: subCategory, success: { (data) in
                         self.filterSlidingConstraint.constant = self.hideUnhideFilter()
                         UIView.animate(withDuration: 0.3) {
                             self.view.layoutIfNeeded()
