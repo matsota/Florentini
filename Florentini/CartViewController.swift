@@ -197,14 +197,18 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate {
             self.cartTableView.deleteRows(at: [indexPath], with: .automatic)
             self.orderBill = self.preOrder.map({$0.productPrice * $0.productQuantity}).reduce(0, +)
             self.orderPriceLabel.text = "\(self.orderBill) грн"
-            guard let cartItem = self.tabBarItem else {return}
-            CoreDataManager.shared.cartIsEmpty(bar: cartItem)
             self.cartTableView.reloadData()
+            print(self.preOrder.count)
+            guard let bar = self.tabBarController?.tabBar.items?[0] else {return}
+            CoreDataManager.shared.cartIsEmpty(bar: bar)
             complition(true)
         }
         action.backgroundColor = .red
         return action
     }
+    
+    
+    
     
 }
 

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zon-cP-hsz">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--О нас-->
+        <scene sceneID="Tcd-Pz-okS">
+            <objects>
+                <viewController storyboardIdentifier="FeedbackVC" modalPresentationStyle="fullScreen" id="MXR-6o-ydc" customClass="AboutUsViewController" customModule="Florentini" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JGN-6y-CT4">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="banner1" translatesAutoresizingMaskIntoConstraints="NO" id="6ZS-oV-HRG">
+                                <rect key="frame" x="0.0" y="88" width="414" height="100"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="c3r-gA-acj">
+                                <rect key="frame" x="0.0" y="88" width="414" height="100"/>
+                                <color key="backgroundColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="Q0B-db-Ha5"/>
+                                </constraints>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
+                            </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KyN-rj-KGZ">
+                                <rect key="frame" x="0.0" y="188" width="414" height="625"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hXv-4K-HNd">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="690"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="grO-Y4-4ki">
+                                                <rect key="frame" x="14" y="14" width="386" height="326"/>
+                                                <string key="text">Вас приветствует Florentini - многогранный сервис доставки и предоставления приятнейших впечатлений и счастливых эмоций! Наш талантливый, молодой и увлеченный коллектив умеет прислушиваться к каждому пожеланию заказчика, трансформируя его запрос в уникальное оригинальное предложение. А своевременная и качественная доставка цветов по Киеву поразит Вас своим ориентированным на потребителя обслуживанием, ведь наша задача - увидеть улыбку дорогого и важного для Вас человека. Когда желаемый результат достигнут - лучшей наградой для Florentini станет неоднократное обращение заказчика как подтверждение его удовлетворенности предоставленными услугами. Мы хотим быть полезными для каждого человека, обратившегося в нашу компанию, и надеемся на длительное и качественное сотрудничество. Но разве одним только Киевом мы станем ограничиваться? Мы хотим дарить людям радость и ощущать Вашу благодарность по всей Украине, что возможно, ведь Florentini занимается доставкой цветов и подарков во всех крупных городах и регионах нашей прекрасной страны. А дальше - больше!</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="banner2" translatesAutoresizingMaskIntoConstraints="NO" id="hms-43-wTj">
+                                                <rect key="frame" x="0.0" y="557" width="414" height="44"/>
+                                            </imageView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="tSF-Z3-WvI">
+                                                <rect key="frame" x="14" y="354" width="386" height="247"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Желаете оставить отзыв?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kYK-9k-DQ3">
+                                                        <rect key="frame" x="0.0" y="0.0" width="386" height="34"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Введите свое имя" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cXz-Ps-41D">
+                                                        <rect key="frame" x="0.0" y="39" width="386" height="34"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="34" id="vrR-6H-h5y"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KsT-xG-ytG">
+                                                        <rect key="frame" x="0.0" y="78" width="386" height="120"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="120" id="xVf-H9-ANI"/>
+                                                        </constraints>
+                                                        <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="MXR-6o-ydc" id="iYw-CI-jVY"/>
+                                                        </connections>
+                                                    </textView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JYj-FI-8wA">
+                                                        <rect key="frame" x="0.0" y="203" width="386" height="44"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="44" id="6CL-WJ-nTs"/>
+                                                        </constraints>
+                                                        <state key="normal" title="Отправить">
+                                                            <color key="titleColor" red="0.86263459919999996" green="0.75103574989999999" blue="0.84706956150000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="sendReviewTapped:" destination="MXR-6o-ydc" eventType="touchUpInside" id="tys-9C-gBi"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="kYK-9k-DQ3" firstAttribute="height" secondItem="cXz-Ps-41D" secondAttribute="height" id="8Jq-UU-OeX"/>
+                                                </constraints>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="U8E-4S-gxI">
+                                                <rect key="frame" x="14" y="615" width="386" height="61"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Заказы онлайн принимаются круглосуточно" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5c-Ce-V1K">
+                                                        <rect key="frame" x="0.0" y="0.0" width="386" height="17"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <color key="textColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Номер телефона: +38 097 338 83 33" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JZF-zf-vWd">
+                                                        <rect key="frame" x="0.0" y="22" width="386" height="17"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <color key="textColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email:  florentini@mail.com" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vM6-4E-obF">
+                                                        <rect key="frame" x="0.0" y="44" width="386" height="17"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <color key="textColor" red="0.17789673810000001" green="0.1103161201" blue="0.31374308470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="hms-43-wTj" secondAttribute="trailing" id="5mV-dt-crc"/>
+                                            <constraint firstItem="U8E-4S-gxI" firstAttribute="top" secondItem="tSF-Z3-WvI" secondAttribute="bottom" constant="14" id="97n-P1-HRX"/>
+                                            <constraint firstAttribute="trailing" secondItem="tSF-Z3-WvI" secondAttribute="trailing" constant="14" id="9Dg-79-2Qe"/>
+                                            <constraint firstItem="grO-Y4-4ki" firstAttribute="leading" secondItem="hXv-4K-HNd" secondAttribute="leading" constant="14" id="AHE-L6-JHn"/>
+                                            <constraint firstItem="hms-43-wTj" firstAttribute="leading" secondItem="hXv-4K-HNd" secondAttribute="leading" id="N5K-Ra-Zr0"/>
+                                            <constraint firstAttribute="trailing" secondItem="grO-Y4-4ki" secondAttribute="trailing" constant="14" id="V5F-Zh-32d"/>
+                                            <constraint firstItem="hms-43-wTj" firstAttribute="height" secondItem="JYj-FI-8wA" secondAttribute="height" id="ZVL-Zc-XyK"/>
+                                            <constraint firstItem="tSF-Z3-WvI" firstAttribute="top" secondItem="grO-Y4-4ki" secondAttribute="bottom" constant="14" id="fyb-mx-ZA6"/>
+                                            <constraint firstItem="grO-Y4-4ki" firstAttribute="top" secondItem="hXv-4K-HNd" secondAttribute="top" constant="14" id="hhe-my-PNy"/>
+                                            <constraint firstAttribute="bottom" secondItem="U8E-4S-gxI" secondAttribute="bottom" constant="14" id="mWO-iz-ON3"/>
+                                            <constraint firstItem="U8E-4S-gxI" firstAttribute="leading" secondItem="hXv-4K-HNd" secondAttribute="leading" constant="14" id="pQZ-JV-R3T"/>
+                                            <constraint firstAttribute="trailing" secondItem="U8E-4S-gxI" secondAttribute="trailing" constant="14" id="qNq-ku-EYU"/>
+                                            <constraint firstItem="tSF-Z3-WvI" firstAttribute="leading" secondItem="hXv-4K-HNd" secondAttribute="leading" constant="14" id="y88-q5-wRh"/>
+                                            <constraint firstItem="hms-43-wTj" firstAttribute="centerY" secondItem="JYj-FI-8wA" secondAttribute="centerY" id="z7l-Iw-4AB"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.81185215710000003" green="0.71545660499999997" blue="0.82354193929999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstItem="hXv-4K-HNd" firstAttribute="trailing" secondItem="Sfz-ks-ec7" secondAttribute="trailing" id="8jE-vN-gsA"/>
+                                    <constraint firstItem="hXv-4K-HNd" firstAttribute="top" secondItem="Sfz-ks-ec7" secondAttribute="top" id="DAV-gx-5Ui"/>
+                                    <constraint firstItem="hXv-4K-HNd" firstAttribute="bottom" secondItem="Sfz-ks-ec7" secondAttribute="bottom" id="PYP-6t-joW"/>
+                                    <constraint firstItem="hXv-4K-HNd" firstAttribute="width" secondItem="hif-ZI-vYb" secondAttribute="width" id="nDv-XQ-iJu"/>
+                                    <constraint firstItem="hXv-4K-HNd" firstAttribute="leading" secondItem="Sfz-ks-ec7" secondAttribute="leading" id="nr2-1L-Q96"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="Sfz-ks-ec7"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="hif-ZI-vYb"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="hcw-P5-cVd" firstAttribute="bottom" secondItem="KyN-rj-KGZ" secondAttribute="bottom" id="B44-7k-xuJ"/>
+                            <constraint firstItem="6ZS-oV-HRG" firstAttribute="leading" secondItem="hcw-P5-cVd" secondAttribute="leading" id="OX4-bi-QzI"/>
+                            <constraint firstItem="KyN-rj-KGZ" firstAttribute="top" secondItem="c3r-gA-acj" secondAttribute="bottom" id="P1I-AV-3ue"/>
+                            <constraint firstItem="6ZS-oV-HRG" firstAttribute="height" secondItem="c3r-gA-acj" secondAttribute="height" id="YPE-ZE-lSk"/>
+                            <constraint firstItem="6ZS-oV-HRG" firstAttribute="top" secondItem="hcw-P5-cVd" secondAttribute="top" id="ZIp-bV-rDF"/>
+                            <constraint firstItem="c3r-gA-acj" firstAttribute="top" secondItem="hcw-P5-cVd" secondAttribute="top" id="cpf-mK-VDX"/>
+                            <constraint firstItem="hcw-P5-cVd" firstAttribute="trailing" secondItem="6ZS-oV-HRG" secondAttribute="trailing" id="deU-N3-2bV"/>
+                            <constraint firstItem="KyN-rj-KGZ" firstAttribute="trailing" secondItem="hcw-P5-cVd" secondAttribute="trailing" id="dnJ-Jd-HDa"/>
+                            <constraint firstItem="c3r-gA-acj" firstAttribute="trailing" secondItem="hcw-P5-cVd" secondAttribute="trailing" id="eZH-Ca-fCx"/>
+                            <constraint firstItem="KyN-rj-KGZ" firstAttribute="leading" secondItem="hcw-P5-cVd" secondAttribute="leading" id="fz6-08-Ihy"/>
+                            <constraint firstItem="c3r-gA-acj" firstAttribute="leading" secondItem="hcw-P5-cVd" secondAttribute="leading" id="mU9-Dj-Vai"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="hcw-P5-cVd"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="О нас" id="2pN-AA-Uje"/>
+                    <connections>
+                        <outlet property="nameTextField" destination="cXz-Ps-41D" id="CQy-Gs-c6K"/>
+                        <outlet property="reviewTextView" destination="KsT-xG-ytG" id="fP7-lV-tGo"/>
+                        <outlet property="scrollView" destination="KyN-rj-KGZ" id="vrV-5P-FJy"/>
+                        <outlet property="scrollViewBottomConstraint" destination="PYP-6t-joW" id="rRM-f3-esa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H1A-4N-sn2" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4705.7971014492759" y="472.76785714285711"/>
+        </scene>
+        <!--Связь-->
+        <scene sceneID="3GY-m9-mIi">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Zon-cP-hsz" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Связь" image="house" catalog="system" selectedImage="house.fill" id="Mwl-vj-drA"/>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="uMb-Kg-Lca">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="MXR-6o-ydc" kind="relationship" relationship="rootViewController" id="Hiy-io-ZKD"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dMa-xn-m28" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4706" y="-244"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="banner1" width="322" height="75"/>
+        <image name="banner2" width="1440" height="225"/>
+        <image name="house" catalog="system" width="128" height="110"/>
+        <image name="house.fill" catalog="system" width="128" height="106"/>
+        <image name="logo" width="4252" height="2126"/>
+    </resources>
+</document>
