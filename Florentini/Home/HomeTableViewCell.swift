@@ -22,6 +22,7 @@ class HomeTableViewCell: UITableViewCell {
     var category: String?
     var price = Int()
     var stock: Bool?
+    var productID: String?
     weak var delegate: HomeTableViewCellDelegate?
     
     //MARK: - View
@@ -68,9 +69,7 @@ class HomeTableViewCell: UITableViewCell {
         imageActivityIndicator?.startAnimating()
         imageActivityIndicator?.isHidden = false
         
-        self.price = price
-        self.stock = stock
-        self.category = category
+        self.price = price ; self.stock = stock ; self.category = category ; self.productID = id
         
         let storagePath =  "\(NavigationCases.FirstCollectionRow.productImages.rawValue)/\(id)",
         storageRef = Storage.storage().reference(withPath: storagePath)

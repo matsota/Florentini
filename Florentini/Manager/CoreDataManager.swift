@@ -19,7 +19,7 @@ class CoreDataManager {
     //MARK: - Crud
     ///
     //MARK: - Add to Cart
-    func addProduct(name: String, category: String, price: Int, quantity: Int, stock: Bool, imageData: Data, success: @escaping() -> Void, failure: @escaping() -> Void) {
+    func addProduct(productID: String, name: String, category: String, price: Int, quantity: Int, stock: Bool, imageData: Data, success: @escaping() -> Void, failure: @escaping() -> Void) {
         if imageData.isEmpty || name.isEmpty || category.isEmpty || price == 0 || quantity == 0  {
             failure()
         }else{
@@ -30,6 +30,7 @@ class CoreDataManager {
             preOrder.productPrice = Int64(price)
             preOrder.productQuantity = Int64(quantity)
             preOrder.stock = stock
+            preOrder.productID = productID
             preOrder.productImage = imageData
             PersistenceService.saveContext()
             success()

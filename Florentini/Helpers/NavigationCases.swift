@@ -58,7 +58,7 @@ class NavigationCases {
         
         case productInfo
         case productImages
-        case order
+        case newOrders
         case review
         case clientData
         case searchProduct

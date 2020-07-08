@@ -56,7 +56,7 @@ class NetworkManager {
         
         guard let currentDeviceID = CoreDataManager.shared.device else {return}
         var ref: DocumentReference? = nil
-        ref = db.collection(NavigationCases.FirstCollectionRow.order.rawValue).document()
+        ref = db.collection(NavigationCases.FirstCollectionRow.newOrders.rawValue).document()
         
         
         let newOrder = DatabaseManager.Order(totalPrice: totalPrice, name: name, adress: adress, cellphone: cellphone, feedbackOption: feedbackOption, mark: mark, timeStamp: timeStamp, currentDeviceID: "\(currentDeviceID)", deliveryPerson: "none", orderID: ref!.documentID)
@@ -72,7 +72,7 @@ class NetworkManager {
     }
     
     func orderDescriptionConfirm(path: String, orderDescription: [String : Any]) {
-        self.db.collection(NavigationCases.FirstCollectionRow.order.rawValue).document(path).collection(NavigationCases.Product.orderDescription.rawValue).document().setData(orderDescription)
+        self.db.collection(NavigationCases.FirstCollectionRow.newOrders.rawValue).document(path).collection(NavigationCases.Product.orderDescription.rawValue).document().setData(orderDescription)
     }
     
     ///

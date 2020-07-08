@@ -22,6 +22,7 @@ class CatalogTableViewCell: UITableViewCell {
     var category: String?
     var price = Int()
     var stock: Bool?
+    var productID: String?
     //delegate
     weak var delegate: CatalogTableViewCellDelegate?
     
@@ -61,11 +62,7 @@ class CatalogTableViewCell: UITableViewCell {
         imageActivityIndicator?.startAnimating()
         imageActivityIndicator?.isHidden = false
         
-        
-//        imageHeightConstraint.constant = productImageView.bounds.width
-        self.stock = stock
-        self.price = price
-        self.category = category
+        self.stock = stock ; self.price = price ; self.category = category ; self.productID = id
         
         productNameLabel.text = name
         productPriceLabel.text = "\(self.price) грн"

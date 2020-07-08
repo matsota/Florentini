@@ -356,6 +356,8 @@ private extension CartViewController {
                 }
                 
                 CoreDataManager.shared.deleteAllData(entity: NavigationCases.CoreDataCases.PreOrderEntity.rawValue, success:  {
+                    guard let tabBar = self.tabBarController?.tabBar.items?[0] else {return}
+                    CoreDataManager.shared.cartIsEmpty(bar: tabBar)
                     self.preOrder.removeAll()
                     self.cartTableView.reloadData()
                     self.tableCountZeroView.isHidden = false
